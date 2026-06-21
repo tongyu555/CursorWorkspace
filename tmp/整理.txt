@@ -1,0 +1,709 @@
+恒大测试环境VPN :
+
+    服务器地址 : https://vpn.datasw.com:6442/
+
+集团正式环境VPN:
+
+    服务器地址 : https://36.111.132.251:6442
+
+
+4a人力账号 : W8547815@HQ
+
+
+开发环境:
+
+spark-beeline -u jdbc:hive2://172.18.2.42:18000/zxvmax --showHeader=true --color=true
+spark-sql --master spark://172.18.2.42:7077 --total-executor-cores 4 --executor-memory 20g --driver-memory 40g --conf spark.sql.adaptive.enabled=false
+
+打印表头
+spark-sql --conf "spark.sql.repl.print.header=false"
+
+
+集团环境vpn登录地址 : https://36.111.132.251:6442
+
+
+田-证书: abc123 dtsw@2022001
+
+集团环境 :
+
+	跳板机 :
+	
+		10.37.45.19    10022
+
+		root    CTndps  E65!9*wkQ
+		
+	前置机密码 : 
+	
+		Qzj@2021#!
+		
+	集团密码 : QW%$wa68dtsw
+	
+登录集团spark-sql :
+
+	jujt 10.37.67.101 (10.37.67.102)
+	
+	命令 : ss251    登录spark
+
+
+跳转到前置机节点：
+
+jump_qz 36
+
+36机前置机省份
+
+登录spark-sql
+
+spark-sql --master yarn --name wrydz_yiqing --driver-memory 10G --executor-memory 10G --num-executors 20 --database hsdlake -S
+
+登录ftp
+
+1. ftp user:password@ip:port
+
+2. ftp       open ip port        
+
+登录sftp
+
+sftp -P 22 ftpuser@133.0.237.31
+
+
+远端到本地 :
+
+scp 命令: scp redpeak@10.254.120.133:/home/hypergalaxy/edgecomputor/datom_1.0.3/conf.zip /tmp
+
+
+scp prendata_jt@132.121.107.155:/home/hypergalaxy/edgecomputor/datom_1.0.3/ER-MRS-8.137.178.54-5.0-20220427144500-R1.zip /tmp
+ 
+
+
+登录开发环境VPN:
+
+申言凯   M0E3A1G6*E$q8
+
+contend_start_time : ${filename:getDelimitedField("5","-"):toDate("yyyyMMddHHmmss"):format("yyyy-MM-dd HH:mm:ss")}
+
+
+/NDS-L/NDS-LN/output/north_output/NORTHFILE/MR/FDD-LTE
+
+
+
+clickhouse删数据 : 
+    
+alter table dw_mnt_file_collect_list_local ON CLUSTER cluster_6shards_0replicas drop partition (210000,'2022-02-26');
+
+
+ls -l |  grep "^-"|wc -l   // 统计当前文件夹下文件的个数
+
+
+curl ftp://132.121.107.26:2121/4G/DPI/S1mme/20220424'/' --user prendata_jt:Pd#@20_06_05_jt  grep .gz >/data1/lc/20220424-26.csv
+
+curl sftp://10.254.106.142:22/data2/data/61/mme/20220510'/' --user redpeak:Qzj@2021#!  grep .gz >/tmp/20220510_tmp.csv
+
+hadoop fs -count viewfs://nsX/vmax_ns7/zxvmax/telecom/lte/subject/lte_subject_pmkpis_h/*/p_date=2022-05-16  | awk '{fileNum+=$2;size+=$3} END {print fileNum,size}'
+
+----------------------------------------------------------------------------------------------------------------------------
+
+共建共享数据采集 :
+
+
+内蒙共享集群登录 :
+
+1. 登入集团节点 : vmax65147 	ssh  10.37.65.147    E65!9*wkQ
+
+2. 登录内蒙古节点 : ssh 10.227.1.201      CtgTeleDB!23  (需要kerberos认证)
+
+kerberos认证 : kinit -kt /etc/security/keytabs/hdfs.headless.keytab   hdfs-dtsw@DATASW.COM
+
+hadoop fs -count viewfs://nsX/vmax_ns7/zxvmax/telecom/lte/subject/lte_subject_pmkpis_h/*/p_date=2022-05-16  | awk '{fileNum+=$2;size+=$3} END {print fileNum,size}'
+
+
+scp -r root@10.37.67.101:/var/tmp/fact_nr_cm_projdata /var  集团 => 147(nifi)
+scp -r root@10.141.248.33:/tmp/lte_cm_projdata /var/tmp   147(nifi) => 内蒙古
+
+10.227.1.200 gjgx-wlj-0003.datasw gjgx-wlj-0003
+10.227.1.242 gjgx-wlj-0045.datasw gjgx-wlj-0045
+10.227.1.243 gjgx-wlj-0046.datasw gjgx-wlj-0046
+
+10.37.65.147 vmax65147 10.141.248.33
+10.37.65.148 vmax65148 10.141.248.34
+10.37.65.149 vmax65149 10.141.248.35
+
+-- 执行sql文件
+spark-sql --silent --master yarn --name jiajian10113_phone18302862937 --database 'hsdlake' --num-executors 60 --executor-memory 6g --driver-memory 10g --conf spark.driver.maxResultSize=10G -S -f  /home/redpeak/hyc/qz_tools/log/sql/wr_s1mme_cell_5g_heyan/wr_s1mme_cell_5g_heyan_530000_2022-05-11_NULL.sql
+
+
+gbase查询数据并导出保存到本地文件中 :
+
+rmt: select * from dm_5g_all_pm_pgnb_md where day='2022-07-28' into outfile '/root/zyt/dm_5g_all_pm_pgnb_md.csv';
+
+
+ADMA调度相关命令 :
+
+    安装 : sudo yum install libxml2 
+    
+           sudo yum install libxml2-devel
+
+           验证 : xml2-config --version
+
+    检测xml文件格式 : xmllint  xml文件名
+    
+    热补丁 : hotpatching -e -p 10000 -d 2022-09-02 dw_mnt_file_collect_list_d
+    
+    检查是否配置表依赖 : hotpatching -s dm_user_nrmr_cellkey_d -t spark
+    
+    
+    
+-- 减少小文件，开启自适应框架
+
+set spark.sql.adaptive.enabled = true;
+set spark.sql.adaptive.minNumPostShufflePartitions = 1;
+set spark.sql.adaptive.maxNumPostShufflePartitions = 1000;
+set spark.sql.adaptive.shuffle.targetPostShuffleInputSize = 512435456;
+set spark.sql.adaptive.shuffle.targetPostShuffleRowCount = 100000000;
+
+
+SET hive.enforce.bucketing=TRUE; 
+SET hive.exec.compress.output=TRUE; 
+SET mapred.output.compress=TRUE; 
+SET mapred.output.compression.codec=org.apache.hadoop.io.compress.GzipCodec; 
+SET io.compression.codecs=org.apache.hadoop.io.compress.GzipCodec;
+set spark.sql.adaptive.enabled = true;
+set spark.sql.adaptive.shuffle.targetPostShuffleInputSize = 134217728;
+set spark.sql.adaptive.shuffle.targetPostShuffleRowCount = 10000000;
+
+
+--------------------------------------------------------------------------------------------
+
+视频播放加速 :
+
+document.getElementsByTagName ('video') [0].playbackRate=4
+document.querySelector("video").playbackRate="16"
+
+Globle speed插件
+
+
+元数据开发任务配置 :
+
+    置信度 : confidence="90"
+    
+    翻牌延时 : confidencedelay="10"
+    
+前置环境 :  confidencepercent="0" confidencedelay="120"
+    
+    
+grep -r "confidence=" ./
+
+---------------------------------------------------------------------------------------------
+
+导出前置机/集团任务血缘关系(按省份)
+
+1. 连接集团核心服务器 : ssh 10.35.1.194    QW%$wa68dtsw
+
+2. 登录pg库 : psql -Upostgres -h10.35.1.194 -p5832 password=DAF26$*hjs637 -ddtsw_data_assets
+
+3. 查询 : 
+
+COPY 
+(
+    select 
+        provincecode,
+        projectname,
+        taskname,
+        inputtable,
+        outputtable 
+    from 
+        task_info_all_tmp 
+    where 
+        provincecode='230000' 
+    and day='2023-06-01' 
+    and calclocation=1 
+    group by provincecode,projectname,taskname,inputtable,outputtable
+) TO 
+'/home/postgres/jituan20230724.csv' WITH csv;
+
+(备注 ; calclocation 1:前置任务 , 2:核心任务 ; 会导出文件到/home/postgres/路径下 , 注意更改文件名)
+
+
+psql -U username -d database -f input.sql -o output.txt
+
+
+
+-- git账号配置
+
+git config --global user.name 10289
+git config --global user.email zhang.yutong@datasw.com
+
+查看 :
+git config user.name
+git config user.email
+
+
+生成密匙 :
+cd ~/.ssh
+ssh-keygen -t rsa -C "zhang.yutong@datasw.com"
+
+git@codehub.devtao.datasw.com:genb2y16gc/co-construction-and-sharing-data-cleaning.git
+git@codehub.devtao.datasw.com:genb2y16gc/co-construction-and-sharing-data-cleaning.git
+
+
+
+初始化仓库 : 
+rm -rf .git
+git init
+
+关联远程仓库 :
+git remote add origin git@codehub.devtao.datasw.com:data/telecom_group/5gc_spark_bulkload_to_hbase.git
+
+
+
+创建本地分支 :
+git checkout -b dev_zyt
+git pull origin dev_zyt
+git push -u origin dev_zyt
+
+
+git fetch origin dev_zyt
+git merge origin/master
+
+
+添加像项目提交 :
+
+git add .
+git commit -m "Initial commit"
+
+
+-- 查询核心全量的任务
+COPY (select projectname,taskname,inputtable,outputtable from task_info_all_tmp where day='2023-07-01' and calclocation=2 group  by projectname,taskname,inputtable,outputtable) TO '/home/postgres/hexin_all_20230701.csv' WITH csv;
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+注意 : ! ! !
+
+    ADMA 同步hive 到 gbase任务 注意省分区一定要是provincecode  ! ! !  , gbase表和hive表都应该是这个字段才可以 ! ! !  , 不能用 p_provincecode ! ! ! 
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+模型开发需注意 :
+
+-- 前置环境31省建表
+    
+10.37.45.19     /home/wrydz/qz_tools/run_search.sh
+
+使用命令 : run_search.sh   create_table.sql
+
+-- 前置环境任务测试
+
+(测试环境) 前置算法任务测试 :
+
+    1. 登恒大VPN , 连接 172.18.0.32服务器 , 账号密码 :  redpeak/redpeak
+    
+        spark-sql -S -database hsdlake --jars /home/redpeak/zyt/ArrayOpe-1.0-SNAPSHOT.jar
+        
+    2. Ambari界面 : 172.18.0.32:8080    admin/admin 
+    
+    3. 任务面板界面 : http://172.18.0.32:3005/index/overview   system/system 
+
+-- 集团环境任务测试
+ 
+(测试环境) 集团算法任务测试 :
+
+    1. ADMA任务部署服务器 : ssh 10.37.65.181(19跳)  QW%$wa68dtsw
+    
+       scp /home/zyt/resident_sync.zip root@10.37.65.181:/home/netnumen/ems/ums-server/utils/vmax-metadata-manager/metadata/dtsw_app/feature/union
+    
+       部署路径 : /home/netnumen/ems/ums-server/utils/vmax-metadata-manager/metadata
+              
+       spark测试服务器 : 10.37.65.22   QW%$wa68dtsw    spark-sql -S -database zxvmax
+       
+       ADMA地址 : https://10.37.65.23:26180/vmaxsecurityproxy/pages/admaEntranceLogin.html#/login   admin Guoy1q2w3e
+       
+       
+${
+    filename:matches('.*_\d{14}\..*'):ifElse(
+        ${filename:substringBefore('.'):substringAfterLast('_'):toDate('yyyyMMddHHmmss'):format('HH'):toNumber()},
+        ${filename:matches('.*_\d{14}_.*'):ifElse(
+            ${filename:substringBeforeLast('_'):substringAfterLast('_'):toDate('yyyyMMddHHmmss'):format('HH'):toNumber()},
+            "99"
+        )}
+    )   
+}
+
+
+******************************************************************************************************************************************************************
+
+检测hdfs上的路径下文件是否能够正常解压 :
+
+hdfs dfs -ls <HDFS目录路径> |  '{print $8}' | while read -r file; do gzip -d "$file" >/dev/null 2>&1 && echo "$file: Success" || echo "$file: Failed"; done
+
+hdfs dfs -ls <HDFS目录路径> | awk '{print $8}' | while read -r file; do hdfs dfs -text "$file" >/dev/null 2>&1 && echo "$file: Success" || echo "$file: Failed"; done
+
+
+检测hdfs上路径下的文件是否可以正常cat :
+
+hdfs dfs -ls hdfs://ns1/zxvmax/telecom/lte/ods/ods_pscp_s1mme_front_5min/p_provincecode=320000/p_date=2023-09-13/p_hour=20/p_quarter=1/*/ | awk '{print $8}' | while read -r file; do hdfs dfs -cat "$file" >/dev/null 2>&1 && echo "$file: Success" || echo "$file: Failed"; done
+
+hdfs dfs -ls /zxvmax/telecom/lte/ods/ods_4gdpi_http_e2e_telecom_q/p_provincecode=620000/p_date=2023-10-23/p_hour=21/p_quarter=3 | awk '{print $8}' | while read -r file; do hdfs dfs -cat "$file" >/dev/null 2>&1 && echo "$file: Success" || echo "$file: Failed"; done
+
+
+hdfs dfs -ls hdfs://ns1/zxvmax/telecom/5g/ods/ods_5gdpi_http_e2e_telecom_origin_q/p_provincecode=120000/p_date=2023-11-06/p_hour=4/p_quarter=3/ | awk '{print $8}' | while read -r file; do hdfs dfs -cat "$file" >/dev/null 2>&1 && echo "$file: Success" || echo "$file: Failed"; done
+
+
+检测hdfs路径下的文件是否有损坏 :
+
+hadoop fsck hdfs://ns1/zxvmax/telecom/lte/ods/ods_pscp_s1mme_front_5min/p_provincecode=320000/p_date=2023-09-13/p_hour=20/p_quarter=1 -files -blocks -locations
+
+hadoop fsck hdfs://ns1/zxvmax/telecom/lte/ods/ods_pscp_s1mme_front_5min/p_provincecode=320000/p_date=2023-09-13/p_hour=20/p_quarter=1/*/ -files -blocks -locations -racks -list-corruptfileblocks
+
+
+--------------------------------------------------
+
+yarn 查询日志 : yarn logs -applicationId application_1693292123084_34449  > LOG
+
+ yarn logs -applicationId application_1684914964733_11983 > log.txt
+ yarn logs -applicationId application_1706516526170_1271869 > log.txt
+
+
+---------------------------------------------------------------------------------
+10.37.45.19 服务器上的数据下载导本地方法 :
+
+1. 登录远程桌面 : 
+
+10.37.45.98   tanping    Dtsw@2023.2
+wk
+2. 打开ftp应用 , 连接以下ip及端口
+
+sftp://root@10.37.45.19:10022
+
+3. 将目标文件下载至 : C:\users/tanpin  目录中 (其它目录可能下载会失败)
+
+4. 将该文件复制导个人目录中
+
+5. 在4a的个人目录中下载该文件到本地
+
+
+-----------------------------------------------------------------------------------
+
+跳板机上封装的跳转命令 : /usr/bin/tzl
+
+
+yarn application -list |grep fact_5g_user_ci_list_h|awk '{print$1}'|xargs yarn application -kill
+
+yarn application -list |grep dm_cobase_cu_site_list_d_sync_2024-02-05|awk '{print$1}'|xargs yarn application -kill
+
+yarn application -list |grep snyc_2024-02-09|awk '{print$1}'|xargs yarn application -kill
+
+yarn application -list |grep 2Hbase|awk '{print$1}'|xargs yarn application -kill
+
+----------------------------------------------------------------------------------
+
+datax同步任务一定要注意 :
+
+summary.xml文件中的路径配置 :
+
+不能配置成 : viewfs://nsX/vmax_ns7/zxvmax/telecom/5g/aggr/aggr_5gdpi_vonr_gm_base_h
+
+要配置成 : /vmax_ns7/zxvmax/telecom/5g/aggr/aggr_5gdpi_vonr_gm_base_h
+
+否则会报错 :
+
+INFO - 2023-12-05 19:01:26.036 [main] WARN  ConfigParser - 插件[hdfsreader,]加载失败，1s后重试... Exception:Code:[Framework-12], Description:[DataX插件初始化错误, 该问题通常是由于DataX安装错误引起，请联系您的运维解决 .].  - 插件加载失败，未完成指定插件加载:[, hdfsreader] 
+INFO - 2023-12-05 19:01:27.095 [main] ERROR Engine - 
+INFO - 
+INFO - 经DataX智能分析,该任务最可能的错误原因是:
+INFO - com.alibaba.datax.common.exception.DataXException: Code:[Framework-12], Description:[DataX插件初始化错误, 该问题通常是由于DataX安装错误引起，请联系您的运维解决 .].  - 插件加载失败，未完成指定插件加载:[, hdfsreader]
+
+或者 :
+
+ERROR - java.lang.IllegalArgumentException: [findObjectInMap]关键词路径解析异常，请检查json文件或关键词路径
+INFO - the str of getString is:null
+INFO - the pathList is List(errorLimit)
+ERROR - java.lang.IllegalArgumentException: [findObjectInMap]关键词路径解析异常，请检查json文件或关键词路径
+INFO - the pathList is List(speedLimit)
+ERROR - java.lang.IllegalArgumentException: [findObjectInMap]关键词路径解析异常，请检查json文件或关键词路径
+INFO - the str of getString is:null
+INFO - the pathList is List(runRam)
+ERROR - java.lang.IllegalArgumentException: [findObjectInMap]关键词路径解析异常，请检查json文件或关键词路径
+INFO - the str of getString is:null
+INFO - --------PROCESS--------runRam is : 1
+INFO - the pathList is List(readerSet)
+ERROR - java.lang.IllegalArgumentException: [findObjectInMap]关键词路径解析异常，请检查json文件或关键词路径
+java.lang.Exception: #&action run error#&,null
+
+
+windows键盘注册表设置 :
+
+InitialKeyboardIndicators   默认值 : 2147483648
+
+
+-- ADMA配置任务region
+
+配置文件 : /home/netnumen/ems/ums-server/utils/vmax-conf/datasourceconfig.xml
+
+任务修改summary文件中的制式
+
+
+
+/home/netnumen/ems/ums-server/utils/vmax-metadata-manager/log/UploadMetaData
+
+-- hive 表新增字段
+ALTER TABLE dm_railway_new_city_stat_d ADD COLUMN rsrp2100m_rate double;
+ALTER TABLE dm_expressway_new_city_stat_d ADD COLUMN rsrp2100m_rate double;
+
+ALTER TABLE dm_expressway_new_city_stat_d ADD COLUMNS (rsrp2100m_rate double);
+ALTER TABLE dm_railway_new_city_stat_d ADD COLUMNS (rsrp2100m_rate double);
+
+
+ALTER TABLE dm_cobase_cell_4g_list_d_sync ADD COLUMNS (tac int,pci int);
+ALTER TABLE dm_cobase_cell_5g_list_d_sync ADD COLUMNS (tac int,pci int);
+
+
+
+ALTER TABLE dm_railway_part_index_rsrp_d ADD COLUMNS (geom string);
+ALTER TABLE dm_expressway_part_index_rsrp_d ADD COLUMNS (geom string);
+
+ALTER TABLE dm_45g_rru_count_d ADD COLUMNS (band_width_dl_5g string);
+
+-- 两经纬度之间的距离算法
+round(6378.138*2*asin(sqrt(pow(sin((s1.plan_latitude*PI()/180-s2.plan_latitude/180*pi())/2),2)+cos(s1.plan_latitude*PI()/180)*cos(s2.plan_latitude/180*pi())*POW(sin((s1.plan_longitude*PI()/180 - s2.plan_longitude*PI()/180)/2),2)))*1000)
+
+
+show create table as serde; 显示完整的建表语句
+
+
+
+/ums-server/utils/vmax-metadata-manager/metadata/dw_api/originaltable/spark/summaries_tab_dtsw_py_sjtj_d.xml
+
+
+-- 经纬度栅格互相转换
+create temporary function MultiLonLatToGrid as 'com.gstools.impala.MultiLonLatToGrid';
+create temporary function MultiGridToLonLat as 'com.gstools.impala.MultiGridToLonLat';
+create temporary function LonLatDistance as 'com.gstools.impala.LonLatDistance';
+
+-- 栅格转经纬度
+,SPLIT(MultiGridToLonLat(regionid, cast(x_offset as int), cast(y_offset as int), 20),',') as arr_lonlat
+
+
+,(cast(arr_lonlat[0] as double)+cast(arr_lonlat[2] as double))/2 as longitude
+,(cast(arr_lonlat[1] as double)+cast(arr_lonlat[3] as double))/2 as latitude
+
+
+-- 经纬度转栅格
+,split(MultiLonLatToGrid(lon,lat, 20), ',')   as arr_grid
+
+,cast(arr_grid[0] as int) as regionid  --中心经纬度栅格id
+,cast(arr_grid[1] as int) as x_offset_20
+,cast(arr_grid[2] as int) as y_offset_20
+
+
+
+-- 网络数据处理系统稽核任务新增厂家
+
+5g-mro 前置任务:  dq_datasource_5g_cell_list_h
+
+
+
+
+
+-- sql解析替换变量
+\$[^\$]*\.p_date[^\$]*\$
+\$[^\$]*\.p_provincecode[^\$]*\$     
+
+
+
+\$[^.$]+\.([^$]+)\$       ${\1}
+
+
+
+for day in {16..19};do hotpatching -e -p 440000 -d 2025-01-$day aggr_4gcm_nodeb_distance_stat_d;done
+
+for day in {16..19};do hotpatching -e -p 440000 -d 2025-01-$day dm_4gcm_pcd_distance_stat_d;done
+
+
+
+####恒大测试ck 172.18.2.24/centos
+
+####集团ClickHouse地址
+
+10.37.65.107、10.37.65.108、10.37.65.109、10.37.65.110、10.37.65.111、10.37.65.112、
+#10.37.65.107 作为kafka接入服务器，查询使用110
+
+clickhouse-client -d dq_dm --host vmax65108 --port 9000 -udefault --password -m -n
+
+B8WmXrWf@nJg
+
+####集团pg库 10.37.49.74
+psql -Upostgres -h10.37.49.74 -p5832 password=U_tywg_2013
+
+
+数据质量稽核系统验证码 : 112358
+
+
+
+adma更改指定省份指定任务的资源配置 :
+
+drivercore    drivermem    execore   exemem     exenum
+
+curl -k -H "Content-Type:application/json" -H "Authorization:administrator:SdzV4wj1ufh3+X1PgIQXj7ld9gc=" "https://127.0.0.1:8889/dataprocess/decision/setbyalgorithm?algorithm=aggr_5gdpi_http_base_h&provincecode=130000&resource=1,6144,2,12288,40"
+
+curl -k -H "Content-Type:application/json" -H "Authorization:administrator:SdzV4wj1ufh3+X1PgIQXj7ld9gc=" "https://127.0.0.1:8889/dataprocess/decision/setbyalgorithm?algorithm=aggr_5gdpi_http_base_h&provincecode=440000&resource=1,6144,2,12288,40"
+
+curl -k -H "Content-Type:application/json" -H "Authorization:administrator:SdzV4wj1ufh3+X1PgIQXj7ld9gc=" "https://127.0.0.1:8889/dataprocess/decision/setbyalgorithm?algorithm=aggr_5gdpi_http_base_h&provincecode=320000&resource=1,6144,2,12288,40"
+
+
+curl -k -H "Content-Type:application/json" -H "Authorization:administrator:SdzV4wj1ufh3+X1PgIQXj7ld9gc=" "https://127.0.0.1:8889/dataprocess/decision/setbyalgorithm?algorithm=aggr_5gdpi_http_base_h&provincecode=430000&resource=1,6144,2,12288,40"
+
+
+curl -k -H "Content-Type:application/json" -H "Authorization:administrator:SdzV4wj1ufh3+X1PgIQXj7ld9gc=" "https://127.0.0.1:8889/dataprocess/decision/setbyalgorithm?algorithm=aggr_5gdpi_http_base_h&provincecode=510000&resource=1,6144,2,12288,40"
+
+
+curl -k -H "Content-Type:application/json" -H "Authorization:administrator:SdzV4wj1ufh3+X1PgIQXj7ld9gc=" "https://127.0.0.1:8889/dataprocess/decision/setbyalgorithm?algorithm=aggr_5gdpi_http_base_h&provincecode=530000&resource=1,6144,2,12288,40"
+
+
+
+
+
+
+curl -k -H "Content-Type:application/json" -H "Authorization:administrator:SdzV4wj1ufh3+X1PgIQXj7ld9gc=" "https://127.0.0.1:8889/dataprocess/decision/setbyalgorithm?algorithm=fact_5gdpi_http_e2e_telecom_q&provincecode=440000&resource=1,6144,4,16384,40"
+
+
+curl -k -H "Content-Type:application/json" -H "Authorization:administrator:SdzV4wj1ufh3+X1PgIQXj7ld9gc=" "https://127.0.0.1:8889/dataprocess/decision/setbyalgorithm?algorithm=fact_5gdpi_http_e2e_telecom_q&provincecode=320000&resource=1,6144,4,16384,40"
+
+
+
+curl -k -H "Content-Type:application/json" -H "Authorization:administrator:SdzV4wj1ufh3+X1PgIQXj7ld9gc=" "https://127.0.0.1:8889/dataprocess/decision/setbyalgorithm?algorithm=fact_5gdpi_http_e2e_telecom_q&provincecode=320000&resource=1,6144,4,16384,40"
+
+
+
+curl -k -H "Content-Type:application/json" -H "Authorization:administrator:SdzV4wj1ufh3+X1PgIQXj7ld9gc=" "https://127.0.0.1:8889/dataprocess/decision/setbyalgorithm?algorithm=fact_5gdpi_http_e2e_telecom_q&provincecode=130000&resource=1,6144,4,12288,36"
+
+
+curl -k -H "Content-Type:application/json" -H "Authorization:administrator:SdzV4wj1ufh3+X1PgIQXj7ld9gc=" "https://127.0.0.1:8889/dataprocess/decision/setbyalgorithm?algorithm=fact_5gdpi_http_e2e_telecom_q&provincecode=430000&resource=1,6144,4,16384,40"
+
+
+
+find . -type f  -name "*.xml" -o -name "*.sql" -exec sed -i 's/aggr_45gmr_user_trips_info_d/aggr_45gmr_user_trips_info_d_temp/g;s/aggr_45gmr_user_trips_main_d/aggr_45gmr_user_trips_main_d_temp/g;s/aggr_45gmr_user_trips_detail_d/aggr_45gmr_user_trips_detail_d_temp/g' {} +
+
+
+
+find . -type f  -name "*.xml" -exec sed -i 's/aggr_45gmr_user_trips_info_d/aggr_45gmr_user_trips_info_d_temp/g;s/aggr_45gmr_user_trips_main_d/aggr_45gmr_user_trips_main_d_temp/g;s/aggr_45gmr_user_trips_detail_d/aggr_45gmr_user_trips_detail_d_temp/g' {} +
+
+
+前置 H3 ansible 使用
+
+
+10.37.65.150
+
+ansible -i /home/CTndps/h3_host20241121 h3 -m copy -a "src=/home/CTndps/yanzheng_20241127.sql  dest=/home/dtsw  mode=777"
+
+
+ansible -i /home/CTndps/h3_host20241121  h3  -m shell -a "ls /home/dtsw/create_table.sql"
+
+
+ansible -i /home/CTndps/h3_host20241121  h3  -m shell -a "export PATH=$PATH:/opt/TDP/spark/bin; cd /opt/TDP/spark/bin/; /home/dtsw/bin/ki; nohup /home/dtsw/bin/spk -f /home/dtsw/create_table.sql > /home/dtsw/create_table.log 2>&1 &"
+
+
+ansible -i /home/CTndps/h3_host20241121  h3  -m shell -a "cat /home/dtsw/create_table.log"
+
+
+稽核平台验证码 : 112358
+
+
+HBase数据查询 :
+
+scan 'default:ods_5gdpi_n1n2_e2e_telecom_20250305', {LIMIT => 5}
+scan 'default:ods_5g_amf_telecom_20240514', {LIMIT => 5}
+scan 'default:ods_5g_smf_telecom_tmp1', {LIMIT => 5}
+scan 'default:ods_5gdpi_n1n2_e2e_telecom_tmp1', {LIMIT => 5}
+scan 'default:ods_5gdpi_n40_e2e_telecom_tmp1', {LIMIT => 5}
+
+
+
+scan 'nifi_cache:cache_s1uhttps', {LIMIT => 5}
+
+
+核心kafka数据查询 :
+
+/opt/TDP/kafka/bin/kafka-console-consumer.sh --bootstrap-server vmax108100:9092 --topic 4g_cdr_s1mme_result_110000 --consumer.config /opt/TDP/kafka/config/scram_init.properties --max-messages 10
+
+/opt/TDP/kafka/bin/kafka-console-consumer.sh --bootstrap-server vmax108100:9092 --topic 5G_n1n2_location_result_110000 --consumer.config /opt/TDP/kafka/config/scram_init.properties --max-messages 10
+
+/opt/TDP/kafka/bin/kafka-console-consumer.sh --bootstrap-server vmax108100:9092 --topic dw_volte_sip_gx_result_110000 --consumer.config /opt/TDP/kafka/config/scram_init.properties --max-messages 100
+
+
+云脉密码 :  J80rv!#4TM*j
+
+easyconnect ; Zyt010169
+
+
+
+adma调整任务资源 :
+
+curl -k -H "Content-Type:application/json" -H "Authorization:administrator:SdzV4wj1ufh3+X1PgIQXj7ld9gc=" "https://127.0.0.1:8889/dataprocess/decision/setbyalgorithm?algorithm=aggr_nr_coverage_base_usr_refactor_q&provincecode=440000&resource=1,6144,2,12288,36"
+
+
+前置kafka查询lag : 
+
+/opt/TDP/kafka/bin/kafka-consumer-groups.sh --bootstrap-server ynqzj65211:9092 --consumer.config  --group 5g_n1n2_location_group  --describe 
+
+
+/opt/TDP/kafka/bin/kafka-consumer-groups.sh   --bootstrap-server 10.254.87.13:9092   --group 5g_n1n2_location_group   --describe --command-config /opt/TDP/kafka/config/client.properties
+
+代码提交规范: 
+代码归档规范参见《德特赛维技术有限公司代码管理规范》，同时代码提交需遵循以下要求：
+1)作者、版本号、分支等信息系统自带不加入到注释信息。
+2)注释描述包括动词加描述组成
+3)工程代码提交规范
+4)归档时限要求每天下班之前提交一次至远程分支，先pull，再push！
+规定操作动词如下：
+Add  新增      Mod  修改     Del  删除     Fixed  修复     Optimize  优化
+注释描述结构如下：
+[Mod]   StringUtil类增加encode方法
+[Fixed]   首页列表中文乱码问题
+
+
+
+``` 密码管理
+云电脑 : w8547815hq#1819083
+密码 : Zyt010169!
+
+人力账号密码已修改 : 
+Zyt010169!   2025-11-28
+Zyt5201314!  2026-02-28
+
+
+中汇wifi账号密码 :
+
+账号 : 15502976630
+密码 : 450162
+
+
+恒大wifi认证 :
+
+DTSW_Guest_5G
+1n$6sa20_SnW
+
+上网认证
+tempuser
+1n$6sa20_SnW
+
+
+-- 4A password 
+Zyt961011       
+Zyt961012   20250217
+Zyt961013   20250612
+Zyt961014   20250911
+Zyt961015   20251209
+Zyt961016   20250309
+```
+
+
+-- adma 调度
+Zyt961019
+
+
+
+
+export HADOOP_USER_NAME=mr
+
+
+
+adma  dgis文件保存目录 : /data5/webgisdata/download/dgis

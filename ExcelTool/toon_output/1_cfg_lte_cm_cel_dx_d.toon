@@ -1,0 +1,110 @@
+theme_domain: 工参主数据
+table_name: cfg_lte_cm_cel_dx_d
+table_name_chinese: 4G电信工参小区汇聚结果表
+data_frequency: day
+primary_key: 数据描述
+source_table_name[8]{源表英文名, 源表中文名, 别名, 任务描述, 备注, 是否主表}:
+  itg_cm_lte_cel_d, 4G电信工参小区原始表, A, A表为主表，关联各表数据，最终生成小区维度的汇聚结果数据, 过滤条件：col_status <> 3, 是
+  itg_cm_lte_ant_d, 4G电信工参天线原始表, B, null, A left join B，关联条件：A.ant_code = B.ant_code and A.p_provincecode = B.p_provincecode, null
+  itg_cm_lte_enb_d, 4G电信工参基站原始表, C, null, A left join C，关联条件：A.related_enb_id = C.enb_id and A.p_provincecode = C.p_provincecode, null
+  itg_cm_lte_room_d, 4G电信工参室分原始表, D, null, A left join D，关联条件：A.room_code = D.room_code and A.p_provincecode = D.p_provincecode, null
+  itg_cm_lte_rru_d, 4G电信工参RRU原始表, E, null, A left join E，关联条件：A.cel_code = E.cel_object_rdn and A.p_provincecode = E.p_provincecode, null
+  itg_cm_lte_sit_d, 4G电信工参站址原始表, F, null, B left join F，关联条件：B.related_sit_code = F.sit_code and B.p_provincecode = F.p_provincecode, null
+  cfg_town_config_stats, 统计局省市区乡镇配置表, G, null, A left join G，关联条件：A.tjj_county_id = G.districtcode and A.p_provincecode = G.p_provincecode，回填省市区信息。注意：G表只取省市区字段，按照districtcode去重后再关联, null
+  cfg_town_config_stats, 统计局省市区乡镇配置表, G1, null, A left join G1，关联条件：A.tjj_town_id = G1.towncode and A.p_provincecode = G1.p_provincecode，回填乡镇名称, null
+fields[95]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  oid, string, 小区cellkey, A, null, "concat(related_enb_id,'_',cel_id)", null, null, 维度, 无, 无
+  cellid, int, 小区ID, A, cel_id, 直取, null, null, 维度, 无, 无
+  lc_name, string, 小区名称, A, null, "regexp_replace(userlabel,\",\",\"&\")", null, null, 维度, 无, 无
+  province_id, string, 省/自治区/直辖市ID, A, p_provincecode, null, null, null, 维度, 无, 无
+  city_id, int, 区/市/县/旗ID, G, citycode, 关联回填, null, null, 维度, 无, 无
+  district_id, int, 区县ID, A, tjj_county_id, 直取, null, null, 维度, 无, 无
+  enodebid, int, 基站ID, A, related_enb_id, 直取, null, null, 维度, 无, 无
+  enodebname, string, 基站名称, C, null, "regexp_replace(zh_label,\",\",\"&\")", null, null, 维度, 无, 无
+  enodeblon, double, 基站经度, "F|C", 优先取基站，再取站址, 基站：longitude； 站址：longitude, null, null, 维度, 无, 无
+  enodeblat, double, 基站纬度, "F|C", 优先取基站，再取站址, 基站：latitude； 站址：latitude, null, null, 维度, 无, 无
+  enodebtype, string, Enodeb类型, C, enb_type, null, null, null, 维度, 无, 无
+  pci, string, 物理小区标识, A, pci, null, null, null, 维度, 无, 无
+  vendor_id, int, 厂商ID , A, null, case WHEN vendor_id = '7' THEN '2' else vendor_id end, null, null, 维度, 无, 无
+  is_rru_sec, int, 是否天线与RRU一体化, B, is_rru_integrated, 直取, null, null, 维度, 无, 无
+  cover_hotspot_type, string, "小区热点类型\n0:无\n1:校园\n2:风景区\n3:交通枢纽\n4:集贸市场\n5:会展中心\n6:体育场\n7:商业中心\n8:大型企业\n9:医院\n10:港口\n11:住宅小区:\n12:营业厅\n13:星级宾馆\n14:办公楼宇\n15:公墓\n99:其它", B, cover_hotspot_type, 直取, null, null, 维度, 无, 无
+  cover_road_type, string, "小区道路类型\n0:无\n1:市区\n2:县城\n3:高铁\n4:高速\n5:铁路\n6:地铁\n7:航道\n8:国道\n9:省道\n10:县道\n11:乡道", B, cover_road_type, 直取, null, null, 维度, 无, 无
+  celllon, double, 小区经度, BCDEF, 经纬度取值顺序：室分>天线>RRU>基站>站址, 室分：longitude； 天线：longitude； RRU：longitude； 基站：longitude； 站址：longitude, null, null, 维度, 无, 无
+  celllat, double, 小区纬度, BCDEF, 经纬度取值顺序：室分>天线>RRU>基站>站址, 室分：latitude； 天线：latitude； RRU：latitude； 基站：latitude； 站址：latitude, null, null, 维度, 无, 无
+  rru_model, string, RRU型号, null, null, 置null, null, null, 维度, 无, 无
+  is_div_power_sec, string, 是否分扇区功率, null, null, 置null, null, null, 维度, 无, 无
+  div_ant_pitchangle_1, double, 分扇区1天线俯仰角, null, null, 置null, null, null, 维度, 无, 无
+  div_ant_pitchangle_2, double, 分扇区2天线俯仰角, null, null, 置null, null, null, 维度, 无, 无
+  div_ant_pitchangle_3, double, 分扇区3天线俯仰角, null, null, 置null, null, null, 维度, 无, 无
+  div_ant_pitchangle_4, double, 分扇区4天线俯仰角, null, null, 置null, null, null, 维度, 无, 无
+  div_power_sec_1, double, 分扇区1功率, null, null, 置null, null, null, 维度, 无, 无
+  div_power_sec_2, double, 分扇区2功率, null, null, 置null, null, null, 维度, 无, 无
+  div_power_sec_3, double, 分扇区3功率, null, null, 置null, null, null, 维度, 无, 无
+  div_power_sec_4, double, 分扇区4功率, null, null, 置null, null, null, 维度, 无, 无
+  ant_direct_type, string, 天线方向类型, B, dirction_type, 直取, null, null, 维度, 无, 无
+  ant_azimuth, int, 方向角, B, azimuth, null, null, null, 维度, 无, 无
+  ant_pitchangle, int, 天线俯仰角, null, null, 置null, null, null, 维度, 无, 无
+  cover_type, string, "小区覆盖类型\n1:室外覆盖\n2:室分覆盖\n3:室外和室分同时覆盖", A, cover_type, 直取, null, null, 维度, 无, 无
+  tac, bigint, TAC, A, tac, null, null, null, 维度, 无, 无
+  sys_type, string, 系统类型, null, null, 置null, null, null, 维度, 无, 无
+  work_state, string, 工作状态, null, null, 置null, null, null, 维度, 无, 无
+  hbwd, double, 天线水平波瓣角, B, beamwidth_horizontal, 直取, null, null, 维度, 无, 无
+  ant_preset_electangle, double, 天线预设电子下倾角, null, null, 置null, null, null, 维度, 无, 无
+  electricaldowntilt, double, 电子下倾角, B, inner_downtilt, 直取, null, null, 维度, 无, 无
+  mechanicaldowntilt, double, 机械下倾角, B, downtilt_mechanical, 直取, null, null, 维度, 无, 无
+  ant_high, double, 天线挂高, B, ant_height, 直取, null, null, 维度, 无, 无
+  isrrupullaway, int, 是否拉远, null, null, 置null, null, null, 维度, 无, 无
+  phy_site_name, string, 物理站点名称, C, null, "regexp_replace(zh_label,\",\",\"&\")", null, null, 维度, 无, 无
+  vendor_name, string, 厂家, A, null, "case WHEN vendor_name like '%中兴%' THEN 'ZTE'\n                      WHEN vendor_name like '%华为%' THEN 'Huawei'\n                      WHEN vendor_name like '%诺基亚%' THEN 'Nokia'\n                      WHEN vendor_name like '%爱立信%' THEN 'Ericsson'\n                      WHEN vendor_name like '%大唐%' THEN 'Datang'\n                      WHEN vendor_name like '%贝尔%' THEN 'Beier'\n                      WHEN vendor_name like '%烽火%' THEN 'Fenghuo'\n                 else null end", null, null, 维度, 无, 无
+  cover_area_type, string, "小区区域类型\n1:密集市区\n2:市区\n3:县城\n4:郊区\n5:平原农村\n6:水域农村\n7:丘陵农村\n8:山区农村\n9:城中村", B, cover_area_type, 直取, null, null, 维度, 无, 无
+  bandclass, string, 频段分类，例如：1.8G, A, null, "case WHEN freq_pointno_dl >= 0    AND freq_pointno_dl <= 599 THEN '2.1G'\n                         WHEN freq_pointno_dl >= 1200 AND freq_pointno_dl <= 1949 THEN '1.8G'\n                         WHEN freq_pointno_dl >= 2400 AND freq_pointno_dl <= 2649 THEN '800M'\n                    else 'Other' end", null, null, 维度, 无, 无
+  is_border_sector, string, 是否边境小区, null, null, 置null, null, null, 维度, 无, 无
+  border_on_city, int, 边境城市, null, null, 置null, null, null, 维度, 无, 无
+  day_no, string, 更新日期, A, p_date, 直取, null, null, 维度, 无, 无
+  eutraband, int, 频段指示，例如：39, A, bandindicator, 直取, null, null, 维度, 无, 无
+  dlfrequency, double, 下行频率, A, freq_dl, 直取, null, null, 维度, 无, 无
+  local_cellid, int, 本地小区ID, null, null, 置null, null, null, 维度, 无, 无
+  city_name, string, 区/市/县/旗名称, G, city, 关联回填, null, null, 维度, 无, 无
+  district_name, string, 区县名, G, district, 关联回填, null, null, 维度, 无, 无
+  dl_earfcn, bigint, 下行频点号, A, freq_pointno_dl, 直取, null, null, 维度, 无, 无
+  dlband, double, 频点下行带宽, A, bandwidth_dl, 直取, null, null, 维度, 无, 无
+  ulband, double, 频点上行带宽, A, bandwidth_ul, 直取, null, null, 维度, 无, 无
+  vbwd, double, 垂直波瓣角, B, beamwidth_vertical, 直取, null, null, 维度, 无, 无
+  is_nbiot, int, 是否NBIoT小区，0：否，1：是, A, null, case when bandwidth_dl = 0.2 then 1 else 0 end, null, null, 维度, 无, 无
+  ant_code, string, 天线编码, A, ant_code, 直取, null, null, 维度, 无, 无
+  opposite_nat_name, string, 对端国家名称, B, opposite_nat_name, 直取, null, null, 维度, 无, 无
+  opposite_prv_name, string, 对端省份名称, B, opposite_prv_name, 直取, null, null, 维度, 无, 无
+  opposite_reg_name, string, 对端地市名称, B, opposite_reg_name, 直取, null, null, 维度, 无, 无
+  col_status, int, 采集状态, A, col_status, 直取, null, null, 维度, 无, 无
+  stand_province_id, bigint, 统计局省编码, A, p_provincecode, 直取, null, null, 维度, 无, 无
+  stand_province, string, 统计局省名称, G, province, 关联回填, null, null, 维度, 无, 无
+  stand_city_id, bigint, 统计局城市编码, G, citycode, 关联回填, null, null, 维度, 无, 无
+  stand_city, string, 统计局城市名称, G, city, 关联回填, null, null, 维度, 无, 无
+  stand_county_id, bigint, 统计局区县编码, G, districtcode, 关联回填, null, null, 维度, 无, 无
+  stand_county, string, 统计局区县名称, G, district, 关联回填, null, null, 维度, 无, 无
+  tjj_town_id, bigint, 统计局乡镇编码, A, tjj_town_id, 直取, null, null, 维度, 无, 无
+  tjj_town, string, 统计局乡镇名称, G1, town, 关联回填, null, null, 维度, 无, 无
+  rru_serialid, string, RRU的电子序列号, E, serialid, 直取, null, null, 维度, 无, 无
+  roomlon, double, 室分经度, D, longitude, 直取, null, null, 维度, 无, 无
+  roomlat, double, 室分纬度, D, latitude, 直取, null, null, 维度, 无, 无
+  antlon, double, 天线经度, B, longitude, 直取, null, null, 维度, 无, 无
+  antlat, double, 天线纬度, B, latitude, 直取, null, null, 维度, 无, 无
+  rrulon, double, RRU经度, E, longitude, 直取, null, null, 维度, 无, 无
+  rrulat, double, RRU纬度, E, latitude, 直取, null, null, 维度, 无, 无
+  sitelon, double, 站址经度, F, longitude, 直取, null, null, 维度, 无, 无
+  sitelat, double, 站址纬度, F, latitude, 直取, null, null, 维度, 无, 无
+  enb_region_id, int, 基站-城市编码, G, citycode, 关联回填, null, null, 维度, 无, 无
+  enb_region_name, string, 基站-城市名称, G, city, 关联回填, null, null, 维度, 无, 无
+  cel_region_id, int, 小区-城市编码, G, citycode, 关联回填, null, null, 维度, 无, 无
+  cel_region_name, string, 小区-城市名称, G, city, 关联回填, null, null, 维度, 无, 无
+  enb_ip_address, string, 基站IPV4地址, C, ip_address, 直取, null, null, 维度, 无, 无
+  room_property, int, 室分性质, D, room_property, 直取, null, null, 维度, 无, 无
+  boundary_type, int, 边界类型, B, boundary_type, 直取, null, null, 维度, 无, 无
+  sit_address, string, 站址地址, F, sit_address, 直取, null, null, 维度, 无, 无
+  sit_code, string, 站址编码, F, sit_code, 直取, null, null, 维度, 无, 无
+  sit_name, string, 站址名称, F, sit_name, 直取, null, null, 维度, 无, 无
+  travelpro_code, string, 铁塔站址编码, F, travelpro_code, 直取, null, null, 维度, 无, 无
+  travelpro_name, string, 铁塔站址名称, F, travelpro_name, 直取, null, null, 维度, 无, 无
+  tower_property, int, 站址塔桅产权方, F, tower_property, 直取, null, null, 维度, 无, 无
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

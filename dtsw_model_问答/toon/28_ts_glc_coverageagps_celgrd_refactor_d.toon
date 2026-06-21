@@ -1,0 +1,30 @@
+theme_domain: 覆盖分析
+table_name: ts_glc_coverageagps_celgrd_refactor_d
+table_name_chinese: 4G AGPS MR小区栅格共享天表
+data_frequency: day
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 备注}:
+  aggr_lte_coverageagps_base_refactor_d, 4G AGPS MR小区栅格覆盖指标天表, A, 过滤条件：data_source=0
+fields[22]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  citycode, int, 城市编码, A, citycode, 直取, null, null, 维度, 无, 无
+  districtcode, int, 区县编码, A, districtcode, 直取, null, null, 维度, 无, 无
+  regionid, int, 栅格编码, A, regionid, 直取, null, null, 维度, 无, 无
+  x_offset_20, int, 栅格坐标x轴偏移, A, x_offset, 直取, null, null, 维度, 无, 无
+  y_offset_20, int, 栅格坐标y轴偏移, A, y_offset, 直取, null, null, 维度, 无, 无
+  avgmrlon, double, MR平均经度, A, null, sum(totalmrlon)/sum(validlonlat_totalmrcount), null, null, 指标, 无, "[73,136]"
+  avgmrlat, double, MR平均纬度, A, null, sum(totalmrlat)/sum(validlonlat_totalmrcount), null, null, 指标, 无, "[2,54]"
+  cellkey, string, 小区cellkey, null, cellkey, 直取, null, null, 维度, 无, 无
+  dlearfcn, int, 下行频点, null, dlearfcn, 直取, null, null, 维度, 无, 无
+  rsrp_level1mrcount, bigint, "RSRP在[-75,+∞）范围内的MR数目", A, null, sum(rsrp_level1mrcount), null, null, 指标, 无, >=0
+  rsrp_level2mrcount, bigint, "RSRP在[-85,-75）范围内的MR数目", A, null, sum(rsrp_level2mrcount), null, null, 指标, 无, >=0
+  rsrp_level3mrcount, bigint, "RSRP在[-95,-85）范围内的MR数目", A, null, sum(rsrp_level3mrcount), null, null, 指标, 无, >=0
+  rsrp_level4mrcount, bigint, "RSRP在[-100,-95）范围内的MR数目", A, null, sum(rsrp_level4mrcount), null, null, 指标, 无, >=0
+  rsrp_level5mrcount, bigint, "RSRP在[-105,-100）范围内的MR数目", A, null, sum(rsrp_level5mrcount), null, null, 指标, 无, >=0
+  rsrp_level6mrcount, bigint, "RSRP在[-115,-105）范围内的MR数目", A, null, sum(rsrp_level6mrcount), null, null, 指标, 无, >=0
+  rsrp_level7mrcount, bigint, "RSRP在（-∞,-115）范围内的MR数目", A, null, sum(rsrp_level7mrcount), null, null, 指标, 无, >=0
+  totalrsrp, bigint, RSRP总值, A, null, sum(totalrsrp), null, null, 指标, 无, <0
+  avgrsrp, double, RSRP平均值, A, null, sum(totalrsrp)/sum(rsrpcount), null, null, 指标, 无, "[-140,-43]"
+  overlap_mrcount, bigint, 重叠覆盖MR数目, A, null, sum(overlap_mrcount), null, null, 指标, 无, >=0
+  overlap_mrratio, double, 重叠覆盖MR率, A, null, sum(overlap_mrcount)/sum(rsrpcount), null, null, 指标, 无, "[0,1]"
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

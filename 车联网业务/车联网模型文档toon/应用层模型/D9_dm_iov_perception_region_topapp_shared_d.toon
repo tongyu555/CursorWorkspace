@@ -1,0 +1,31 @@
+theme_domain: 车联网
+table_name: dm_iov_perception_region_topapp_shared_d
+table_name_chinese: 车联网区域topapp感知天表
+data_frequency: day
+primary_key: 数据描述
+source_table_name[2]{来源系统, 源表英文名, 源表中文名, 别名, 备注, 是否主表}:
+  dtsw, aggr_4gdpi_celluserappip_d, 4g全业务应用4大维度天表, a, "第一步：从ab表取出省市区县、servicetype、app_name作维度，汇聚时长、话单数、感知、流量等，再分别排序，每个维度每类取top5；--R1\n第二步：a、b表分别按第一步的方法算出4G、5G的数据；--R2\n第三步：R1 left join R2 on 主键字段。", 是
+  dtsw, aggr_5gdpi_celluserappip_d, 5g全业务应用4大维度天表, b, null, 是
+fields[22]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 日期, null, null, null, null, null, 维度, null, null
+  provincecode, int, 拜访地省份, ab, provincecode, 全国维度时，置null; 省市维度时直取, null, null, 维度, null, null
+  citycode, int, 拜访地地市, ab, citycode, 全国省维度时，置null; 市维度时直取, null, null, 维度, null, null
+  data_level, int, 数据等级, ab, null, "0：全国维度\n1：省维度\n2：市维度", null, "0：全国维度\n1：省维度\n2：市维度", 维度, 枚举, {0，1，2}
+  top_type, string, top5类别, ab, null, 分别使用service_duration、service_flux、xdr_cnt、perception_good_ratio字段值按维度倒序排名，每个类别、每个数据等级只取前top5。, null, "duration:时长\nflux：流量\nxdr_cnt：话单数\nperception：感知", 维度, 枚举, {duration、flux、xdr_cnt、perception}
+  top_num, int, top5序号, ab, null, 分别使用service_duration、service_flux、total_cnt、perception_good_ratio字段值按维度倒序排名，每个类别、每个数据等级只取前top5。, null, "1：top1\n~\n5：top5", 维度, 枚举, {1，2，3，4，5}
+  sevicetype, string, 业务应用对应规范ID, ab, sevicetype, 直取, null, null, 维度, null, null
+  app_name, string, servicetype与DPI业务类型表关联获取具体业务名称, ab, app_name, 直取, null, null, 维度, null, null
+  service_duration, double, 业务时长, ab, service_duration, sum, null, 排序字段, 指标, ms, "[0,∞)"
+  service_flux, double, 业务流量, ab, service_flux, sum, null, 排序字段, 指标, Byte, "[0,∞)"
+  xdr_cnt, bigint, 总话单数, ab, total_cnt, sum, null, 排序字段, 指标, 个, "[0,∞)"
+  perception_good_ratio, double, 总感知优良率, ab, null, (sum(total_cnt)-sum(total_badcnt))/sum(total_cnt), null, 排序字段, 指标, 比例, "[0,1]"
+  lte_service_duration, double, 4G业务时长, a, service_duration, sum, null, null, 指标, ms, "[0,∞)"
+  lte_service_flux, double, 4G业务流量, a, service_flux, sum, null, null, 指标, Byte, "[0,∞)"
+  lte_xdr_cnt, bigint, 4G总话单数, a, total_cnt, sum, null, null, 指标, 个, "[0,∞)"
+  lte_perception_good_ratio, double, 4G总感知优良率, a, null, (sum(total_cnt)-sum(total_badcnt))/sum(total_cnt), null, null, 指标, 比例, "[0,1]"
+  nr_service_duration, double, 5G业务时长, b, service_duration, sum, null, null, 指标, ms, "[0,∞)"
+  nr_service_flux, double, 5G业务流量, b, service_flux, sum, null, null, 指标, Byte, "[0,∞)"
+  nr_xdr_cnt, bigint, 5G总话单数, b, total_cnt, sum, null, null, 指标, 个, "[0,∞)"
+  nr_perception_good_ratio, double, 5G总感知优良率, b, null, (sum(total_cnt)-sum(total_badcnt))/sum(total_cnt), null, null, 指标, 比例, "[0,1]"
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, p_date, null, null, null, null, null, null, null, null

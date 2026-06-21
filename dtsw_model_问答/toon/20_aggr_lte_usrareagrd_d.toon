@@ -1,0 +1,25 @@
+theme_domain: 用户感知
+table_name: aggr_lte_usrareagrd_d
+table_name_chinese: 4G用户区域栅格聚区天表
+data_frequency: day
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 任务描述}:
+  aggr_lte_coverage_resident_usrgrd_d, 4G MR用户常驻栅格覆盖指标天表, A, 过滤条件：period_totalmrcount>=2
+fields[17]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 日期, A, null, 直取, null, null, 维度, 无, 无
+  imsi, string, 用户imsi, A, null, 直取, null, null, 维度, 无, 无
+  msisdn, string, 用户号码, A, null, 直取, null, null, 维度, 无, 无
+  imei, string, 用户imei, A, null, 直取, null, null, 维度, 无, 无
+  area_id, string, 区域ID, A, null, DBSCAN聚区获取, null, null, 维度, 无, 无
+  area_regionid, string, 区域栅格ID, A, null, DBSCAN聚区获取, null, null, 维度, 无, 无
+  area_x_offset_20, string, 区域栅格X轴20米偏移, A, null, DBSCAN聚区获取, null, null, 维度, 无, 无
+  area_y_offset_20, string, 区域栅格Y轴20米偏移, A, null, DBSCAN聚区获取, null, null, 维度, 无, 无
+  area_lon, double, 区域中心经度, A, null, DBSCAN聚区获取, null, null, 维度, 无, 无
+  area_lat, double, 区域中心纬度, A, null, DBSCAN聚区获取, null, null, 维度, 无, 无
+  regionid, int, 栅格ID, A, null, regionid, null, null, 维度, 无, 无
+  x_offset_20, int, 栅格X轴20米偏移, A, null, x_offset_20, null, null, 维度, 无, 无
+  y_offset_20, int, 栅格Y轴20米偏移, A, null, y_offset_20, null, null, 维度, 无, 无
+  center_lon, double, 栅格中心经度, A, null, 栅格转经纬度, null, null, 维度, 无, 无
+  center_lat, double, 栅格中心纬度, A, null, 栅格转经纬度, null, null, 维度, 无, 无
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

@@ -1,0 +1,23 @@
+theme_domain: 车联网
+table_name: dm_iov_perception_user_app_d
+table_name_chinese: 用户应用感知天表
+data_frequency: "D: Daily"
+primary_key: 数据描述
+source_table_name[2]{源表英文名, 源表中文名, 别名, 备注, 是否主表}:
+  aggr_4gdpi_celluserappip_d, 4g全业务应用4大维度时刻表, a, "ab表取对应字段union all   ，再按msisdn,imsi,imei,servicetype维度汇聚", 是
+  aggr_5gdpi_celluserappip_d, 5g全业务应用4大维度时刻表, b, null, 是
+fields[14]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  provincecode, int, 省, null, null, null, null, null, null, null, null
+  day, string, 天, null, null, null, null, null, null, null, null
+  msisdn, string, 用户号码, ab, msisdn, 直取, null, null, null, null, null
+  imsi, string, 用户imsi, ab, imsi, 直取, null, null, null, null, null
+  imei, string, 用户imei, ab, imei, 直取, null, null, null, null, null
+  servicetype, string, 业务应用ID, ab, servicetype, 直取, null, null, null, null, null
+  app_type, string, 一级应用类型名称, ab, app_type, 直取, null, null, null, null, null
+  sub_app_name, string, 二级应用类型名称, ab, app_name, 直取, null, null, null, null, null
+  service_cnt, bigint, 业务次数, ab, total_cnt, sum(total_cnt), null, null, null, null, null
+  service_duration, bigint, 业务时长_分钟, ab, service_duration, sum(service_duration)/60000, null, 应用取TOP3, null, 分钟, null
+  service_flux_mb, double, 业务流量MB, ab, service_flux, sum(service_flux)/1024/1024, null, null, null, MByte, null
+  data_score, double, 数据业务评分, ab, "is_poorquality_num,total_num", (1-sum(is_poorquality_num)/sum(total_num))*100, null, 应用感知, null, null, null
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天, null, null, null, null, null, null, null, null

@@ -1,0 +1,30 @@
+theme_domain: 信令感知
+table_name: aggr_lte_s1mme_failcause_base_refactor_h
+table_name_chinese: S1MME接口失败原因基础共享小时表
+data_frequency: hour
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 备注}:
+  aggr_lte_dpi_s1mme_failcause_base_h, S1MME接口失败原因基础小时表, A, "过滤条件：procedure_status in (1,255)"
+fields[22]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围, nan}:
+  day, string, 日期, null, p_date, 直取, null, null, 维度, 无, 无, null
+  hour, int, 小时, null, p_hour, 直取, null, null, 维度, 无, 无, null
+  citycode, int, 城市编码, B, citycode, 直取, null, null, 维度, 无, 无, null
+  city, string, 城市名称, B, city, 直取, null, null, 维度, 无, 无, null
+  districtcode, int, 区县编码, B, districtcode, 直取, null, null, 维度, 无, 无, null
+  district, string, 区县名称, B, district, 直取, null, null, 维度, 无, 无, null
+  home_province, string, 归属省份编码, A, home_province, 直取, null, null, 维度, 无, 无, null
+  interface, int, 接口类型, A, interface, 直取, null, null, 维度, 无, 无, null
+  procedure_type, int, 流程类型, A, procedure_type, 直取, null, null, 维度, 无, 无, null
+  rat, int, RAT类型, A, rat, 直取, null, null, 维度, 无, 无, null
+  mmeipadd, string, MMEIP地址, A, mmeipadd, 直取, null, null, 维度, 无, 无, null
+  apn, string, APN, A, apn, 直取, null, null, 维度, 无, 无, null
+  cellkey, string, 小区, A, cellkey, 直取, null, null, 维度, 无, 无, null
+  msisdn, string, 用户号码, A, msisdn, 直取, null, null, 维度, 无, 无, null
+  imsi, string, IMSI号, A, imsi, 直取, null, null, 维度, 无, 无, null
+  imei, string, IMEI号, A, imei, 直取, null, null, 维度, 无, 无, null
+  failure_cause_group, bigint, 流程失败响应消息, A, failure_cause_group, 直取, null, null, 维度, 无, 无, null
+  failure_cause, bigint, 失败原因, A, failure_cause, 直取, null, null, 维度, 无, 无, null
+  fail_cnt, bigint, 失败次数, A, null, sum(record_cnt), null, null, 指标, 无, >=0, null
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null, null

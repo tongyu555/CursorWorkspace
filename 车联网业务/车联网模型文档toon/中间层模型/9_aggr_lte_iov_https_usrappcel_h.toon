@@ -1,0 +1,32 @@
+theme_domain: 数据业务感知
+table_name: aggr_lte_iov_https_usrappcel_h
+table_name_chinese: 4G DPI HTTPS业务用户小区app小时表
+data_frequency: hour
+primary_key: 数据描述
+source_table_name[3]{源表英文名, 源表中文名, 别名, 任务描述}:
+  aggr_4gdpi_https_e2e_telecom_h, 4G DPI HTTPS业务基础小时表, A, null
+  cfg_dpi_servicetype, DPI业务码表, B, A left join B，关联条件：A.servicetype = B.servicetype
+  cfg_iov_usr_list, 车联网用户清单配置表, C, A inner join C，关联条件：A.msisdn = C.msisdn
+fields[22]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围, nan}:
+  day, string, 日期, A, p_date, 直取, null, null, 维度, 无, 无, "`day` string,"
+  hour, int, 小时, A, p_hour, 直取, null, null, 维度, 无, 无, "`hour` int,"
+  provincecode, int, 省编码, A, p_provincecode, 直取, null, null, 维度, 无, 无, "`provincecode` int,"
+  citycode, int, 市编码, A, citycode, 直取, null, null, 维度, 无, 无, "`citycode` int,"
+  districtcode, int, 区县编码, A, districtcode, 直取, null, null, 维度, 无, 无, "`districtcode` int,"
+  cellkey, string, "小区唯一标识：\"小区基站号\"_\"小区编号\"", A, cellkey, 直取, null, null, 维度, 无, 无, "`cellkey` string,"
+  imsi, string, 国际移动用户识别码, A, imsi, 直取, null, null, 维度, 无, 无, "`imsi` string,"
+  msisdn, string, 用户号码, A, msisdn, 直取, null, null, 维度, 无, 无, "`msisdn` string,"
+  imei, string, 终端识别码, A, imei, 直取, null, null, 维度, 无, 无, "`imei` string,"
+  servicetype, string, 业务应用分类ID, A, servicetype, 直取, null, null, 维度, 无, 无, "`servicetype` string,"
+  app_type, string, 业务应用大类, A, "substr(servicetype,1,2)", "substr(servicetype,1,2)", null, null, 维度, 无, 无, "`app_type` string,"
+  app_name, string, 业务名称, B, servicetype_name, 直取, null, null, 维度, 无, 无, "`app_name` string,"
+  min_starttime, string, 最小开始时间, A, min(min_starttime), min(min_starttime), null, null, 指标, 无, 无, "`min_starttime` string,"
+  max_endtime, string, 最大结束时间, A, max(max_endtime), max(max_endtime), null, null, 指标, 无, 无, "`max_endtime` string,"
+  total_cnt, bigint, 总话单数, A, sum(process_num), sum(process_num), null, null, 指标, 无, >=0, "`total_cnt` bigint,"
+  abnormal_cnt, bigint, 总质差话单数, A, sum(abnormal_cnt), sum(abnormal_cnt), null, null, 指标, 无, >=0, "`abnormal_cnt` bigint,"
+  abnormal_rate, double, 总质差话单占比, A, sum(abnormal_cnt)/sum(process_num), sum(abnormal_cnt)/sum(process_num), null, null, 指标, 无, "[0,1]", "`abnormal_rate` double,"
+  duration, bigint, 业务时长(ms), A, sum(duration_sum), sum(duration_sum), null, null, 指标, ms, >=0, "`duration` bigint,"
+  flux, bigint, 业务流量(byte), A, sum(outputoctets_sum+inputoctets_sum), sum(outputoctets_sum+inputoctets_sum), null, null, 指标, byte, >=0, "`flux` bigint,"
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null, null

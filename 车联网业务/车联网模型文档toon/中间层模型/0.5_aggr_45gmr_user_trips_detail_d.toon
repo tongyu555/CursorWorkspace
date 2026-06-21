@@ -1,0 +1,27 @@
+theme_domain: 数据业务感知
+table_name: aggr_45gmr_user_trips_detail_d
+table_name_chinese: 45G 车载用户轨迹路段详细信息天表
+data_frequency: 天
+primary_key: 数据描述
+source_table_name[2]{源表英文名, 源表中文名, 别名, 任务描述}:
+  fact_45gmr_location_h, 45G 车载用户位置事实表, A, FlINK每日的批处理任务：根据最近距离取值算法，关联MR经纬度和路网数据的端点
+  osm_road_split_vertices_pgr, 全国路网拓扑表, B, null
+fields[18]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  mdn, string, 用户号码, A, mdn, 直取, null, null, 维度, 无, 无
+  imsi, string, 国际移动用户识别码, A, imsi, 直取, null, null, 维度, 无, 无
+  segment_id, string, 用户路段id，例如13512123456#20240904#1, A, null, 反转(mdn)#(p_date)#segment_rn, null, null, 维度, 无, 无
+  segment_rn, int, "用户行程次序，如：1,2,3", A, null, 使用动静识别算法，计算出停驻地后，对全天轨迹进行切分，然后得到出行次序, null, null, 维度, 无, 无
+  datetime, List<long>, 测量时间，同一个端点有多个时间时，用$隔开, A, datetime, 经过该道路端点的MR的时间, null, null, 维度, 无, 无
+  route_point_id, string, 匹配的道路端点id（可以应用于路径规划）, "A|B", null, 先使用卡尔曼滤波对运动的MR经纬度进行修正，使用聚类算法对停驻状态的MR进行修正，然后将修正后的MR拟合到最近的道路端点，取该端点的id, null, null, 维度, 无, 无
+  route_point_lon, double, 道路端点经度, "A|B", null, 道路端点经度, null, null, 维度, 无, >=0
+  route_point_lat, double, 道路端点维度, "A|B", null, 道路端点纬度, null, null, 维度, 无, >=0
+  rsrp, float, rsrp, "A|B", null, route_point_id聚合后取MR的rsrp平均值, null, null, 指标, 无, 无
+  rsrq, float, rsrq, "A|B", null, route_point_id聚合后取MR的rsrq平均值, null, null, 指标, 无, 无
+  enodebid, int, 基站enodebid, A, enodebid, 直取, null, null, 维度, 无, 无
+  cellid, int, 基站cellid, A, cellid, 直取, null, null, 维度, 无, 无
+  rattype, string, 网络类型（4G、5G）, A, rattype, 直取, null, null, 维度, 无, 无
+  p_region, int, 厂商分区, A, p_region, 直取, null, null, 维度, 无, 无
+  mr_cnt, int, mr 个数, "A|B", null, route_point_id聚合后统计MR个数, null, null, 指标, 无, >=0
+  etl_time, string, "表加工时间（示例：2017-07-17T00:55:000）", null, null, 系统加工时间, null, null, 纬度, 无, 无
+  p_provincecode, int, null, null, null, null, null, null, null, null, null
+  p_date, string, null, null, null, null, null, null, null, null, null

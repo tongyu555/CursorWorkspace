@@ -1,0 +1,18 @@
+theme_domain: 表英文名
+table_name: 表中文名
+table_name_chinese: 数据描述
+data_frequency: 最小时间分区
+primary_key: null
+source_table_name[0]:
+fields[11]{内部编号, 索引, 项目名称, 数据层级, 主题域, 表英文名, 表中文名, 数据描述, 汇聚维度, 数据时间粒度, 最小时间分区, 计算位置, 是否同步, 生命周期（存储周期单位：天）, 前向表, 支撑应用/系统, 新建/升级, 备注, 同步数据库}:
+  0, 0, 网络数据处理系统, 维度层, 工参主数据, cfg_town_config_stats, 统计局省市区乡镇配置表, 统计局省市区乡镇配置表, 无, /, /, 核心, null, /, null, null, 新建, null, null
+  1, 1, 网络数据处理系统, 维度层, 工参主数据, cfg_lte_cm_cel_dx_d, 4G电信工参小区汇聚结果表, 4G电信工参小区汇聚结果表, 小区, 天, 天, 核心, null, 365, "itg_cm_lte_ant_d|itg_cm_lte_cel_d|itg_cm_lte_enb_d|itg_cm_lte_room_d|itg_cm_lte_rru_d|itg_cm_lte_sit_d|cfg_town_config_stats", null, 新建, 替换cfg_sector_lte_refactor, null
+  2, 2, 网络数据处理系统, 维度层, 工参主数据, cfg_lte_cm_cel_info_wd, 4G电联工参小区汇聚结果滚动周表, 4G电联工参小区汇聚结果滚动周表, 小区, 天, 天, 核心, null, 365, "cfg_lte_cm_cel_info_dx_d|dm_cobase_cell_4g_list_d|cfg_lte_rectification|cfg_lte_cm_cel_info|cfg_town_config_stats|dm_4gcm_datacheck_dx_index_d|dm_4gcm_datacheck_lt_index_d", null, 新建, 替换lte_cm_projdata_refactor_d, null
+  3, 3, 网络数据处理系统, 维度层, 工参主数据, cfg_lte_cm_cel_info, 4G电联工参小区汇聚结果滚动周表(无天分区), 4G电联工参小区汇聚结果滚动周表(无天分区), 小区, 天, /, 核心, null, /, cfg_lte_cm_cel_info_wd, null, 新建, 替换lte_cm_projdata_refactor, null
+  4, 4, 网络数据处理系统, 维度层, 工参主数据, cfg_lte_cm_cel_info_reduce_wd, 4G电联工参小区汇聚结果字段裁剪滚动周表, 4G电联工参小区汇聚结果字段裁剪滚动周表, 小区, 天, 天, 核心, null, 365, cfg_lte_cm_cel_info_wd, null, 新建, 替换dw_lte_cm_projdata_refactor_d, null
+  5, 5, 网络数据处理系统, 维度层, 工参主数据, cfg_nr_cm_cel_dx_d, 5G电信工参小区汇聚结果表, 5G电信工参小区汇聚结果表, 小区, 天, 天, 核心, null, 365, "itg_cm_nr_dx_cdu_d|itg_cm_nr_dx_gnb_d|itg_cm_nr_dx_site_d|itg_cm_nr_dx_dvs_d|itg_cm_nr_dx_aau_d|itg_cm_nr_dx_prru_d|itg_cm_nr_dx_ant_d|itg_cm_lte_enb_d|cfg_town_config_stats|cfg_town_config_stats", null, 新建, 替换 fact_nr_cm_dx_projdata, null
+  6, 6, 网络数据处理系统, 维度层, 工参主数据, cfg_nr_cm_cel_lt_d, 5G联通工参小区汇聚结果表, 5G联通工参小区汇聚结果表, 小区, 天, 天, 核心, null, 365, "itg_cm_nr_lt_cdu_d|itg_cm_nr_lt_gnb_d|itg_cm_nr_lt_aau_d|itg_cm_nr_lt_prru_d|cfg_town_config_stats|cfg_town_config_stats", null, 新建, 替换fact_nr_cm_dx_projdata, null
+  7, 7, 网络数据处理系统, 维度层, 工参主数据, cfg_nr_cm_cel_info_d, 5G电联工参小区汇聚结果天表, 5G电联工参小区汇聚结果天表, 小区, 天, 天, 核心, null, 365, "cfg_nr_cm_cel_dx_d|cfg_nr_cm_cel_lt_d", null, 新建, 替换fact_nr_cm_projdata_refactor_front_d, null
+  8, 8, 网络数据处理系统, 维度层, 工参主数据, cfg_nr_cm_cel_info_wd, 5G电联工参小区汇聚结果滚动周表, 5G电联工参小区汇聚结果滚动周表, 小区, 天, 天, 核心, null, 365, "cfg_nr_cm_cel_info_d|cfg_nr_rectification|cfg_nr_cm_cel_info|cfg_town_config_stats|dm_5gcm_datacheck_dx_index_d|dm_5gcm_datacheck_lt_index_d", null, 新建, 替换fact_nr_cm_projdata_refactor_d与fact_nr_cm_projdata_d, null
+  9, 9, 网络数据处理系统, 维度层, 工参主数据, cfg_nr_cm_cel_info, 5G电联工参小区汇聚结果滚动周表(无天分区), 5G电联工参小区汇聚结果滚动周表(无天分区), 小区, 天, 天, 核心, null, 365, cfg_nr_cm_cel_info_wd, null, 新建, 替换fact_nr_cm_projdata_refactor与fact_nr_cm_projdata, null
+  10, 10, 网络数据处理系统, 维度层, 工参主数据, cfg_nr_cm_cel_info_reduce_wd, 5G电联工参小区汇聚结果字段裁剪滚动周表, 5G电联工参小区汇聚结果字段裁剪滚动周表, 小区, 天, 天, 核心, null, 365, cfg_nr_cm_cel_info_wd, null, 新建, 替换dw_nr_cm_projdata_d, null

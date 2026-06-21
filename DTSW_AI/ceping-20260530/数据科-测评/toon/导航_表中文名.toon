@@ -1,0 +1,17 @@
+theme_domain: 一级分类
+table_name: 表中文名
+table_name_chinese: 数据描述
+data_frequency: null
+primary_key: null
+source_table_name[0]:
+fields[10]{序号检查, 表名核查, 内部编号, 索引, 项目名称, 数据层级, 主题域, 一级分类, 二级分类, 表英文名, 表中文名, 数据描述, 备注, 汇聚维度, 时间粒度, 数据量(分区), 存储位置, 数据来源, 创建人, 创建时间, 最近修改时间, 生命周期（存储周期单位：天）, 前向表}:
+  1, 1, QI93, 跳转, DITO, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_pay_stat_qt, 我支付统计datatable季表, 我支付统计datatable季表, pay-data table, 区域, 季度, null, HDFS, null, null, null, null, 永久, null
+  1, 1, QI94, 跳转, DITO, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_pay_stat_y, 我支付统计datatable年表, 我支付统计datatable年表, pay-data table, 区域, 年, null, HDFS, null, null, null, null, 永久, null
+  1, 1, QI95, 跳转, DITO, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_useapp_stat_d, 我使用app统计datatable天表, 我使用app统计datatable天表, useapp-data table, 区域, 天, null, HDFS, null, null, null, null, 永久, null
+  1, 1, QI96, 跳转, DITO, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_useapp_stat_w, 我使用app统计datatable周表, 我使用app统计datatable周表, useapp-data table, 区域, 周, null, HDFS, null, null, null, null, 永久, null
+  1, 1, QI97, 跳转, DITO, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_useapp_stat_m, 我使用app统计datatable月表, 我使用app统计datatable月表, useapp-data table, 区域, 月, null, HDFS, null, null, null, null, 永久, null
+  1, 1, QI98, 跳转, DITO, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_useapp_stat_qt, 我使用app统计datatable季表, 我使用app统计datatable季表, useapp-data table, 区域, 季度, null, HDFS, null, null, null, null, 永久, null
+  1, 1, QI99, 跳转, DITO, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_useapp_stat_y, 我使用app统计datatable年表, 我使用app统计datatable年表, useapp-data table, 区域, 年, null, HDFS, null, null, null, null, 永久, null
+  1, 1, QI100, 跳转, DITO, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_usenetwork_stat_d, 我使用network统计datatable天表, 我使用network统计datatable天表, usenetwork-data table, 区域, 天, null, HDFS, null, null, null, null, 永久, null
+  1, 1, QI101, 跳转, DITO, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_usenetwork_stat_w, 我使用network统计datatable周表, 我使用network统计datatable周表, usenetwork-data table, 区域, 周, null, HDFS, null, null, null, null, 永久, null
+  1, 1, QI102, 跳转, DITO, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_usenetwork_stat_m, 我使用network统计datatable月表, 我使用network统计datatable月表, usenetwork-data table, 区域, 月, null, HDFS, null, null, null, null, 永久, null

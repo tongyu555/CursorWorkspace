@@ -1,0 +1,156 @@
+theme_domain: 工参主数据
+table_name: cfg_lte_cm_cel_info_wd
+table_name_chinese: 4G电联工参小区汇聚结果滚动周表
+data_frequency: day
+primary_key: 数据描述
+source_table_name[7]{源表英文名, 源表中文名, 别名, 备注, 是否主表, 任务描述}:
+  cfg_lte_cm_cel_dx_d, 4G电信工参小区汇聚结果表, A, 取T-1账期数据, 是, null
+  dm_cobase_cell_4g_list_d, 4G联通工参小区汇聚结果表, B, 取T-2账期数据, null, 先通过区县编码关联G表回填统计局省市区名称与编码
+  cfg_lte_rectification, 4G纠偏管理配置表, C, null, null, null
+  cfg_lte_cm_cel_info, 4G电联工参小区汇聚结果滚动周表(无天分区), D, "取day_no往前推7天出现的reportcellkey\nfull  join  (A UNION B) , 先取AB表的数据 , 再取D表的数据", null, null
+  cfg_town_config_stats, 统计局省市区乡镇配置表, G, null, null, null
+  dm_4gcm_datacheck_dx_index_d, 电信工参稽核天表, H, null, null, null
+  dm_4gcm_datacheck_lt_index_d, 联通工参稽核天表, I, null, null, null
+fields[142]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  province, string, 省名称, null, null, "CASE\n    WHEN $xxx.p_provincecode$ = 110000 THEN '北京'\n    WHEN $xxx.p_provincecode$ = 120000 THEN '天津'\n    WHEN $xxx.p_provincecode$ = 130000 THEN '河北'\n    WHEN $xxx.p_provincecode$ = 140000 THEN '山西'\n    WHEN $xxx.p_provincecode$ = 150000 THEN '内蒙古'\n    WHEN $xxx.p_provincecode$ = 210000 THEN '辽宁'\n    WHEN $xxx.p_provincecode$ = 220000 THEN '吉林'\n    WHEN $xxx.p_provincecode$ = 230000 THEN '黑龙江'\n    WHEN $xxx.p_provincecode$ = 310000 THEN '上海'\n    WHEN $xxx.p_provincecode$ = 320000 THEN '江苏'\n    WHEN $xxx.p_provincecode$ = 330000 THEN '浙江'\n    WHEN $xxx.p_provincecode$ = 340000 THEN '安徽'\n    WHEN $xxx.p_provincecode$ = 350000 THEN '福建'\n    WHEN $xxx.p_provincecode$ = 360000 THEN '江西'\n    WHEN $xxx.p_provincecode$ = 370000 THEN '山东'\n    WHEN $xxx.p_provincecode$ = 410000 THEN '河南'\n    WHEN $xxx.p_provincecode$ = 420000 THEN '湖北'\n    WHEN $xxx.p_provincecode$ = 430000 THEN '湖南'\n    WHEN $xxx.p_provincecode$ = 440000 THEN '广东'\n    WHEN $xxx.p_provincecode$ = 450000 THEN '广西'\n    WHEN $xxx.p_provincecode$ = 460000 THEN '海南'\n    WHEN $xxx.p_provincecode$ = 500000 THEN '重庆'\n    WHEN $xxx.p_provincecode$ = 510000 THEN '四川'\n    WHEN $xxx.p_provincecode$ = 520000 THEN '贵州'\n    WHEN $xxx.p_provincecode$ = 530000 THEN '云南'\n    WHEN $xxx.p_provincecode$ = 540000 THEN '西藏'\n    WHEN $xxx.p_provincecode$ = 610000 THEN '陕西'\n    WHEN $xxx.p_provincecode$ = 620000 THEN '甘肃'\n    WHEN $xxx.p_provincecode$ = 630000 THEN '青海'\n    WHEN $xxx.p_provincecode$ = 640000 THEN '宁夏'\n    WHEN $xxx.p_provincecode$ = 650000 THEN '新疆'\nEND", null, null, null, null, null
+  city, string, 城市名称, ABDGC, 优先取C表statistics_bureau_city_name, A：city_name, B：关联G表回填city, null, "D:city_name", null, null
+  district, string, 区县名称, ABDGC, 优先取C表statistics_bureau_district_name, A：district_name, B：关联G表回填district, null, "D:district_name", null, null
+  isrrusector, int, 是否天线与RRU一体化, ABD, null, A：is_rru_sec, B：置null, null, "D:is_rru_sec", null, null
+  isrrupullaway, int, 是否拉远, ABD, null, A：isrrupullaway, B：置null, null, "D:isrrupullaway", null, null
+  geoattribute, string, "小区热点类型\n0:无\n1:校园\n2:风景区\n3:交通枢纽\n4:集贸市场\n5:会展中心\n6:体育场\n7:商业中心\n8:大型企业\n9:医院\n10:港口\n11:住宅小区:\n12:营业厅\n13:星级宾馆\n14:办公楼宇\n15:公墓\n99:其它", ABD, null, A：cover_hotspot_type, B：置null, 山东需求, "D:cover_hotspot_type", null, null
+  covertype, string, "小区覆盖类型\n1:室外覆盖\n2:室分覆盖\n3:室外和室分同时覆盖", ABD, null, A：cover_type, "B：if(indoor_flag=1,2,1)", null, "D:cover_type", null, null
+  networkstandard, string, 网络制式, ABD, null, 直接赋值：LTEFDD, null, null, null, null, null
+  subnetworkid, int, 网络ID, ABD, null, 置null, null, null, null, null, null
+  meid, int, meid号, ABD, null, 置null, null, null, null, null, null
+  enodebname, string, 基站名称, ABCD, 优先取C表enodeb_name, A：enodebname, B：enodeb_name, null, "D:enodebname", null, null
+  enodebid, int, 基站ID, ABD, null, A：enodebid, B：enodebid, null, "D:enodebid", null, null
+  enodebtype, string, Enodeb类型, ABD, null, A：enodebtype, B：置null, null, "D:enodebtype", null, null
+  enodeblon, double, 基站经度, ABD, null, A：enodeblon, B：置null, null, "D:enodeblon", null, null
+  enodeblat, double, 基站纬度, ABD, null, A：enodeblat, B：置null, null, "D:enodeblat", null, null
+  mcc, string, MCC编码, ABD, null, 置null, null, null, null, null, null
+  mnc, string, MNC编码, ABD, null, 置null, null, null, null, null, null
+  mme, int, MME编码, ABD, null, 置null, null, null, null, null, null
+  cellname, string, 小区名称, ABCD, 优先取C表cell_name, A：lc_name, B：cell_name, null, "D:lc_name", null, null
+  cid, int, 小区ID, ABD, null, A：cellid, B：cellid, null, "D:cellid", null, null
+  celltype, string, 小区类型, ABD, null, 置null, null, null, null, null, null
+  rattypeid, int, 网络类型ID, ABD, null, 直接赋值：6, null, null, null, null, null
+  powerdivisiontype, int, 功率类型, ABD, null, 置null, null, null, null, null, null
+  powerdivisionid, int, 功率ID, ABD, null, 置null, null, null, null, null, null
+  celllon, double, 小区经度, ABCD, 优先取C表cell_lon, A：celllon, B：cell_lon, null, "D:celllon", null, null
+  celllat, double, 小区纬度, ABCD, 优先取C表cell_lat, A：celllat, B：cell_lat, null, "D:celllat", null, null
+  active, int, 是否在线, ABD, null, 置null, null, null, null, null, null
+  tac, int, TAC值, ABD, null, A：tac, B：tac, null, "D:tac", null, null
+  plmnnum, int, 使用方, ABD, null, 置null, null, null, null, null, null
+  height, double, 天线挂高, ABD, null, A：ant_high, B：置null, null, "D:ant_high", null, null
+  azimuth, double, 方向角, ABCD, 优先取C表azimuth, A：ant_azimuth, B：azimuth, null, "D:ant_azimuth", null, null
+  antenna, string, 天线, ABD, null, 置null, null, null, null, null, null
+  antennagain, double, 天线增益, ABD, null, 置null, null, null, null, null, null
+  hbwd, double, 天线水平波瓣角, ABD, null, A：hbwd, B：置null, null, "D:hbwd", null, null
+  vbwd, double, 垂直波瓣角, ABD, null, A：vbwd, B：置null, null, "D:vbwd", null, null
+  mechanicaldowntilt, double, 机械下倾角, ABD, null, A：mechanicaldowntilt, B：置null, null, "D:mechanicaldowntilt", null, null
+  electricaldowntilt, double, 电子下倾角, ABD, null, A：electricaldowntilt, B：置null, null, "D:electricaldowntilt", null, null
+  rspower, double, 参考信号功率, ABD, null, 置null, null, null, null, null, null
+  pci, int, 物理小区标识, ABD, null, A：pci, B：pci, null, "D:pci", null, null
+  coverageradius, int, 覆盖范围, ABD, null, 置null, null, null, null, null, null
+  calculationradius, int, 覆盖半径, ABD, null, 置null, null, null, null, null, null
+  propagationmodel, string, 信号传播模型, ABD, null, 置null, null, null, null, null, null
+  covercharacter, string, 室内外覆盖标识(0：室内；1：室外), ABD, null, "A：CASE WHEN (sectorinfo.cover_type = '1' or sectorinfo.cover_type = '3') THEN '1'\n             WHEN sectorinfo.cover_type = '2' THEN 0 else null end", "B：if(indoor_flag=1,0,1)", null, "D:CASE WHEN (sectorinfo.cover_type = '1' or sectorinfo.cover_type = '3') THEN '1'\n             WHEN sectorinfo.cover_type = '2' THEN 0 else null end", null, null
+  pcigroupid, int, PCI组, ABD, null, 置null, null, null, null, null, null
+  eutraband, int, 频段指示，例如：39, ABD, null, A：eutraband, B：置null, null, "D:eutraband", null, null
+  dlband, double, 频点下行带宽, ABD, null, A：dlband, B：bandwidth_dl, null, "D:dlband", null, null
+  dlfrequency, double, 下行频率, ABD, null, A：dlfrequency, B：置null, null, "D:dlfrequency", null, null
+  ulband, double, 频点上行带宽, ABD, null, A：ulband, B：置null, null, "D:ulband", null, null
+  ulfrequency, double, 上行频率, ABD, null, 置null, null, null, null, null, null
+  numberofreceptionantennaports, int, 接收天线端口数量, ABD, null, 置null, null, null, null, null, null
+  numberoftransmissionantennaports, int, 发送天线端口数量, ABD, null, 置null, null, null, null, null, null
+  ueantennarxport, int, UE接收天线端口, ABD, null, 置null, null, null, null, null, null
+  ueantennatxport, int, UE发射天线端口, ABD, null, 置null, null, null, null, null, null
+  transmissionloss, double, 传输损耗, ABD, null, 置null, null, null, null, null, null
+  receptionloss, double, 接收损耗, ABD, null, 置null, null, null, null, null, null
+  diversitysupportul, int, 上行差异化支持, ABD, null, 置null, null, null, null, null, null
+  diversitysupportdl, int, 下行差异化支持, ABD, null, 置null, null, null, null, null, null
+  trafficloadthresholdul, double, 上行流量阈值, ABD, null, 置null, null, null, null, null, null
+  trafficloadthresholddl, double, 下行流量阈值, ABD, null, 置null, null, null, null, null, null
+  maxpower, double, 最大功率, ABD, null, 置null, null, null, null, null, null
+  celltransmitpower, double, 小区传输功率, ABD, null, 置null, null, null, null, null, null
+  subframeswitch, int, 子帧, ABD, null, 置null, null, null, null, null, null
+  noisefigure, double, 噪声图, ABD, null, 置null, null, null, null, null, null
+  icocpowerratio, int, icoc功率比, ABD, null, 置null, null, null, null, null, null
+  minreusedistance, int, 最小重复使用距离, ABD, null, 置null, null, null, null, null, null
+  is_nbiot, int, 是否NBIoT小区，0：否，1：是, ABD, null, A：is_nbiot, B：置null, null, "D:is_nbiot", null, null
+  devicetype, int, 设备类型, ABD, null, 置null, null, null, null, null, null
+  vendor, string, 厂家名称, ABD, null, A：vendor_name, "B：case        when vendor='中兴' then 'ZTE'\n                    when vendor='华为' then 'Huawei'\n                    when vendor='爱立信' then 'Ericsson'\n                    when vendor='诺基亚' then 'Nokia'\n                    when vendor='大唐' then 'Datang'\n                    else null end", null, "D:vendor_name", null, null
+  provincecode, int, 省编码, ABD, null, A：p_provincecode, B：p_provincecode, null, "D:p_provincecode", null, null
+  citycode, int, 城市编码, ABCD, 优先取C表statistics_bureau_citycode, A：city_id, B：关联G表回填citycode, null, "D:city_id", null, null
+  districtcode, int, 区县编码, ABCD, 优先取C表statistics_bureau_districtcode, A：district_id, B：districtcode, null, "D:district_id", null, null
+  cellshape, string, 小区形状, ABD, null, 置null, null, null, null, null, null
+  cellcolor, string, 小区颜色, ABD, null, 置null, null, null, null, null, null
+  bsid, string, 基站ID, ABD, null, 置null, null, null, null, null, null
+  bbtcode, string, BBU类型代码, ABD, null, 置null, null, null, null, null, null
+  gcname, string, 地理小区名称, ABD, null, 置null, null, null, null, null, null
+  slotno, int, 槽位号, ABD, null, 置null, null, null, null, null, null
+  freqcapability, int, 频率能力, ABD, null, 置null, null, null, null, null, null
+  supercell, string, 超级小区, ABD, null, 置null, null, null, null, null, null
+  cpid, int, 循环前缀ID, ABD, null, 置null, null, null, null, null, null
+  omm, string, 操作维护管理, ABD, null, 置null, null, null, null, null, null
+  icontype, string, 图标类型, ABD, null, 置null, null, null, null, null, null
+  iconcolor, string, 图标颜色, ABD, null, 置null, null, null, null, null, null
+  boardtype, int, 板卡类型, ABD, null, 置null, null, null, null, null, null
+  fsboard, tinyint, 前向板, ABD, null, 置null, null, null, null, null, null
+  productcode, string, 产品代码, ABD, null, 置null, null, null, null, null, null
+  pa, int, 功率PA, ABD, null, 置null, null, null, null, null, null
+  pb, int, 功率PB, ABD, null, 置null, null, null, null, null, null
+  softversion, string, 软件版本, ABD, null, 置null, null, null, null, null, null
+  citycharacter, int, "小区区域类型\n1:密集市区\n2:市区\n3:县城\n4:郊区\n5:平原农村\n6:水域农村\n7:丘陵农村\n8:山区农村\n9:城中村", ABD, null, A：cover_area_type, B：置null, null, "D:cover_area_type", null, null
+  reportcellkey, string, 小区cellkey, ABD, null, A：oid, B：cellkey, null, "D:oid", null, null
+  dl_earfcn, int, 下行频点号, ABD, null, A：dl_earfcn, B：freq_dl, null, "D:dl_earfcn", null, null
+  rru_model, string, RRU型号, ABD, null, A：rru_model, B：rru_model, null, "D:rru_model", null, null
+  is_div_power_sec, string, 是否分扇区功率, ABD, null, A：is_div_power_sec, B：置null, null, "D:is_div_power_sec", null, null
+  div_ant_pitchangle_1, double, 分扇区1天线俯仰角, ABD, null, A：div_ant_pitchangle_1, B：置null, null, "D:div_ant_pitchangle_1", null, null
+  div_ant_pitchangle_2, double, 分扇区2天线俯仰角, ABD, null, A：div_ant_pitchangle_2, B：置null, null, "D:div_ant_pitchangle_2", null, null
+  div_ant_pitchangle_3, double, 分扇区3天线俯仰角, ABD, null, A：div_ant_pitchangle_3, B：置null, null, "D:div_ant_pitchangle_3", null, null
+  div_ant_pitchangle_4, double, 分扇区4天线俯仰角, ABD, null, A：div_ant_pitchangle_4, B：置null, null, "D:div_ant_pitchangle_4", null, null
+  div_power_sec_1, double, 分扇区1功率, ABD, null, A：div_power_sec_1, B：置null, null, "D:div_power_sec_1", null, null
+  div_power_sec_2, double, 分扇区2功率, ABD, null, A：div_power_sec_2, B：置null, null, "D:div_power_sec_2", null, null
+  div_power_sec_3, double, 分扇区3功率, ABD, null, A：div_power_sec_3, B：置null, null, "D:div_power_sec_3", null, null
+  div_power_sec_4, double, 分扇区4功率, ABD, null, A：div_power_sec_4, B：置null, null, "D:div_power_sec_4", null, null
+  ant_direct_type, string, 天线方向类型, ABD, null, A：ant_direct_type, B：置null, null, "D:ant_direct_type", null, null
+  ant_pitchangle, int, 天线俯仰角, ABD, null, A：ant_pitchangle, B：置null, null, "D:ant_pitchangle", null, null
+  sys_type, string, 系统类型, ABD, null, A：sys_type, B：置null, null, "D:sys_type", null, null
+  work_state, string, 工作状态, ABD, null, A：work_state, B：置null, null, "D:work_state", null, null
+  ant_preset_electangle, double, 天线预设电下倾角, ABD, null, A：ant_preset_electangle, B：置null, null, "D:ant_preset_electangle", null, null
+  bandclass, string, 频段分类，例如：1.8G, ABD, null, A：bandclass, B：freq, null, "D:bandclass", null, null
+  is_border_sector, string, 是否边境小区, ABD, null, A：is_border_sector, B：置null, null, "D:is_border_sector", null, null
+  border_on_city, int, 边境城市, ABD, null, A：border_on_city, B：置null, null, "D:border_on_city", null, null
+  day_no, string, 更新日期, ABD, null, A：day_no, B：day, null, "D:day_no", null, null
+  local_cellid, int, 本地小区ID, ABD, null, A：local_cellid, B：置null, null, "D:local_cellid", null, null
+  areatype, string, "小区区域类型\n1:密集市区\n2:市区\n3:县城\n4:郊区\n5:平原农村\n6:水域农村\n7:丘陵农村\n8:山区农村\n9:城中村", ABD, null, A：cover_area_type, B：置null, 山东需求, "D:cover_area_type", null, null
+  coverroadtype, string, "小区道路类型\n0:无\n1:市区\n2:县城\n3:高铁\n4:高速\n5:铁路\n6:地铁\n7:航道\n8:国道\n9:省道\n10:县道\n11:乡道", ABD, null, A：cover_road_type, B：置null, 山东需求, "D:cover_road_type", null, null
+  ant_code, string, 天线编码, ABD, null, A：ant_code, B：置null, null, "D:ant_code", null, null
+  opposite_nat_name, string, 对端国家名称, ABD, null, A：opposite_nat_name, B：置null, null, "D:opposite_nat_name", null, null
+  opposite_prv_name, string, 对端省份名称, ABCD, 优先取C表opposite_province, A：opposite_prv_name, B：置null, 山东需求, "D:opposite_prv_name", null, null
+  opposite_reg_name, string, 对端地市名称, ABCD, 优先取C表opposite_city, A：opposite_reg_name, B：置null, 山东需求, "D:opposite_reg_name", null, null
+  col_status, int, 采集状态, ABD, null, A：col_status, B：置null, null, "D:col_status", null, null
+  stand_province_id, bigint, 统计局省编码, ABD, null, A：p_provincecode, B：置null, null, "D:p_provincecode", null, null
+  stand_province, string, 统计局省名称, ABCD, 优先取C表statistics_bureau_province_name, A：stand_province, B：置null, null, "D:stand_province", null, null
+  stand_city_id, bigint, 统计局城市编码, ABCD, 优先取C表statistics_bureau_citycode, A：stand_city_id, B：置null, null, "D:stand_city_id", null, null
+  stand_city, string, 统计局城市名称, ABCD, 优先取C表statistics_bureau_city_name, A：stand_city, B：置null, null, "D:stand_city", null, null
+  stand_county_id, bigint, 统计局区县编码, ABCD, 优先取C表statistics_bureau_districtcode, A：stand_county_id, B：置null, null, "D:stand_county_id", null, null
+  stand_county, string, 统计局区县名称, ABCD, 优先取C表statistics_bureau_district_name, A：stand_county, B：置null, null, "D:stand_county", null, null
+  tjj_town_id, bigint, 统计局乡镇编码, ABCD, 优先取C表statistics_bureau_towncode, A：tjj_town_id, B：置null, null, "D:tjj_town_id", null, null
+  tjj_town, string, 统计局乡镇名称, ABCD, 优先取C表statistics_bureau_town_name, A：tjj_town, B：置null, null, "D:tjj_town", null, null
+  rru_serialid, string, RRU的电子序列号, ABD, null, A：rru_serialid, B：置null, null, "D:rru_serialid", null, null
+  master_operators, string, 承建方, ABD, null, A：赋值'电信', B：赋值'联通', null, "D:A表：赋值'电信'；B表：赋值'联通'", null, null
+  mod3, int, 模3值, ABD, null, A：int(pci%3), B：int(pci%3), null, "D:int(pci%3)", null, null
+  enb_ip_address, string, 基站IPV4地址, ABD, null, A：enb_ip_address, B：置null, 山东需求, "D:enb_ip_address", null, null
+  room_property, int, 室分性质, ABD, null, A：room_property, B：置null, 山东需求, "D:room_property", null, null
+  electricaldowntilt, double, 电子下倾角, ABD, null, A：electricaldowntilt, B：置null, 山东需求, "D:electricaldowntilt", null, null
+  boundary_type, int, 边界类型, ABD, null, A：boundary_type, B：置null, 山东需求, "D:boundary_type", null, null
+  sit_address, string, 站址地址, ABD, null, A：sit_address, B：置null, 山东需求, "D:sit_address", null, null
+  sit_code, string, 站址编码, ABD, null, A：sit_code, B：置null, 山东需求, "D:sit_code", null, null
+  sit_name, string, 站址名称, ABD, null, A：sit_name, B：置null, 山东需求, "D:sit_name", null, null
+  travelpro_code, string, 铁塔站址编码, ABD, null, A：travelpro_code, B：置null, 山东需求, "D:travelpro_code", null, null
+  travelpro_name, string, 铁塔站址名称, ABD, null, A：travelpro_name, B：置null, 山东需求, "D:travelpro_name", null, null
+  tower_property, int, 站址塔桅产权方, ABD, null, A：tower_property, B：置null, 山东需求, "D:tower_property", null, null
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

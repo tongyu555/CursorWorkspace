@@ -1,0 +1,126 @@
+theme_domain: null
+table_name: fact_4gdpi_https_e2e_telecom_h
+table_name_chinese: 4G DPI HTTPS业务事实表
+data_frequency: hour
+primary_key: 数据描述
+source_table_name[3]{源表英文名, 源表中文名, 别名, 备注}:
+  ods_4gdpi_https_e2e_telecom_q, 4G DPI HTTPS业务明细表, A, null
+  lte_cm_projdata, 4G电信工参, B, 先将B表与B1表合并，若存在相同cellkey，则保留B表数据；
+  lte_cucc_cm_projdata, 4G联通工参, B1, null
+fields[116]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围, nan}:
+  interface, string, "接口类型：\n1、S1-U\n4、S11\n6、S5/S8\n7、S2a\n13、Gn/Gp\n14、L2TP（3/4G LAC--LNS）", null, null, null, null, null, null, null, null, null
+  provincecode, int, 省编码, null, null, null, null, null, null, null, null, null
+  day, string, 日期，具体到天, null, null, null, null, null, null, null, null, null
+  hour, int, 小时, null, null, null, null, null, null, null, null, null
+  imsi, string, 参见3GPP TS 23.003，2.2章节, null, null, null, null, null, null, null, null, null
+  msisdn, string, MSISDN, null, null, null, null, null, null, null, null, null
+  imei, string, 终端IMEI/IMEISV。保持信令抽取的原样，无需进行IMEI和IMEISV间的转化。在eHRPD场景下，使用MEID填充。, null, null, null, null, null, null, null, null, null
+  apn, string, User-Name，参见[RFC 2865]., null, null, null, null, null, null, null, null, null
+  destinationip, string, Destination，标准协议字段, null, null, null, null, null, null, null, null, null
+  destinationport, int, Destination Port，标准协议字段, null, null, null, null, null, null, null, null, null
+  sourceip, string, Source，标准协议字段, null, null, null, null, null, null, null, null, null
+  sourceport, int, Source Port，标准协议字段, null, null, null, null, null, null, null, null, null
+  sgwip, string, SGW在GTP-U上的IP地址, null, null, null, null, null, null, null, null, null
+  mmeip, string, MME在GTP-C上的IP地址, null, null, null, null, null, null, null, null, null
+  pgwip, string, 用户在GTP-U和PMIPv6会话时使用的PGW IP地址。如[RFC 2002]定义, null, null, null, null, null, null, null, null, null
+  ecgi, string, 输出为” MCC-MNC-ECI”格式，每段均要求按照Integer类型输出。如：460-11-123456, null, null, null, null, null, null, null, null, null
+  tai, string, 输出为” MCC-MNC-TAC”格式，每段均要求按照Integer类型输出。如：460-11-65535, null, null, null, null, null, null, null, null, null
+  visitedplmnid, string, MCC+MNC, null, null, null, null, null, null, null, null, null
+  rattype, tinyint, RAT类型：取各接口码流中携带的值，DPI设备不做修改。如果接入类型为5G NR，将RAT值改写为10。, null, null, null, null, null, null, null, null, null
+  protocolid, int, 根据端口号和协议特征等分析得出, null, null, null, null, null, null, null, null, null
+  servicetype, string, 根据端口号和协议特征等分析得出，按照业务大类（两位）+业务小类（四位）+业务细分（两位）固定8位长度的方式填写，业务的大类、小类及细分类别填写遵照《中国电信统一DPI主要业务识别列表》, null, null, null, null, null, null, null, null, null
+  starttime, string, 网络数据流监控统计得出, null, null, null, null, null, null, null, null, null
+  endtime, string, 网络数据流监控统计得出, null, null, null, null, null, null, null, null, null
+  duration, int, 根据业务流开始和结束统计得出的时间, null, null, null, null, null, null, null, null, null
+  inputoctets, int, 根据IP报文统计得出, null, null, null, null, null, null, null, null, null
+  outputoctets, int, 根据IP报文统计得出, null, null, null, null, null, null, null, null, null
+  inputpacket, int, 根据IP报文统计得出, null, null, null, null, null, null, null, null, null
+  outputpacket, int, 根据IP报文统计得出, null, null, null, null, null, null, null, null, null
+  pdnconnectionid, string, DPI设备自动生成，以session开始的时间戳为ID号，同一个用户中的该ID相同表明是同一次PDN连接中的不同记录，格式为yyyymmddhhmmss（24小时制）, null, null, null, null, null, null, null, null, null
+  bearerid, int, GTP-C消息和GTP-U中获取，并进行匹配, null, null, null, null, null, null, null, null, null
+  bearerqos, string, 从GTP-C消息中获取BearerID对应的QoS, null, null, null, null, null, null, null, null, null
+  recordclosecause, int, DPI设备自动生成，数字编号（0：session释放；1：业务应用结束；2：业务应用等待超时；3：用户位置（TAI）变化；4：用户接入方式变化）, null, null, null, null, null, null, null, null, null
+  enbip, string, ENB的IPv4或IPv6地址, null, null, null, null, null, null, null, null, null
+  sgwport, int, 对于S1-U口，填写SGW端口, null, null, null, null, null, null, null, null, null
+  enbport, int, 对于S1-U口，填写eNB端口, null, null, null, null, null, null, null, null, null
+  enbgtp_teid, int, 对于S1-U口，填写该业务对应承载的eNB侧GTP-TEID, null, null, null, null, null, null, null, null, null
+  sgwgtp_teid, int, 对于S1-U口，填写该业务对应承载的SGW侧GTP-TEID, null, null, null, null, null, null, null, null, null
+  pgwport, int, pgwport, null, null, null, null, null, null, null, null, null
+  mme_ue_s1ap_id, bigint, MME分配的S1AP ID, null, null, null, null, null, null, null, null, null
+  enb_ue_s1ap_id, bigint, ENodeB分配的S1AP ID, null, null, null, null, null, null, null, null, null
+  mme_group_id, int, MME Group ID和MME Code一起唯一确定一个MME, null, null, null, null, null, null, null, null, null
+  mme_code, int, MME Group ID和MME Code一起唯一确定一个MME, null, null, null, null, null, null, null, null, null
+  enbid, int, 基站ID, null, null, null, null, null, null, null, null, null
+  home_province, int, "用户的归属地省份，枚举定义参见附录G。\n对国际漫入用户时，该字段填写用户归属运营商PLMN。", null, null, null, null, null, null, null, null, null
+  userip, string, 终端用户的IPv4或IPv6地址。, null, null, null, null, null, null, null, null, null
+  userport, int, 用户的四层端口号, null, null, null, null, null, null, null, null, null
+  l4protocol, tinyint, "L4协议类型：\n0：TCP\n1：UDP", null, null, null, null, null, null, null, null, null
+  appserverip, string, 访问服务器的IPv4或IPv6地址，如无则填全F, null, null, null, null, null, null, null, null, null
+  appserver_port, int, 访问的服务器的端口, null, null, null, null, null, null, null, null, null
+  ultcpreorderingpacket, int, "上行TCP乱序报文数\nL4协议非TCP传输时，此字段填0", null, null, null, null, null, null, null, null, null
+  dltcpreorderingpacket, int, "下行TCP乱序报文数\n非TCP传输时，此字段填0", null, null, null, null, null, null, null, null, null
+  ultcp_retranspacket, int, "上行TCP重传报文数\n非TCP传输时，此字段填0", null, null, null, null, null, null, null, null, null
+  dltcp_retranspacket, int, "下行TCP重传报文数\n非TCP传输时，此字段填0", null, null, null, null, null, null, null, null, null
+  tcpsetupresponsedelay, int, "TCP建链响应时延（ms）\n非TCP传输时，此字段填0", null, null, null, null, null, null, null, null, null
+  tcpsetupackdelay, int, "TCP建链确认时延（ms）\n非TCP传输时，此字段填0", null, null, null, null, null, null, null, null, null
+  ulipfragpacks, int, 以内层IP包的分片为准, null, null, null, null, null, null, null, null, null
+  dlipfragpacks, int, 以内层IP包的分片为准, null, null, null, null, null, null, null, null, null
+  delay_setup_firsttransaction, int, "TCP建链成功到第一条事务请求的时延（ms）\n没有事务的时候可以不填写，此时填0", null, null, null, null, null, null, null, null, null
+  delay_firsttransaction_firstrespackt, int, "第一条事务请求到其第一个响应包时延（ms）\n没有事务的时候可以不填写，此时填0", null, null, null, null, null, null, null, null, null
+  windowsize, int, "窗口大小，TCP 建链协商后的窗口\n非TCP传输时，此字段填0", null, null, null, null, null, null, null, null, null
+  msssize, int, "MSS尺寸，TCP层的最大分段大小\n非TCP传输时，此字段填0", null, null, null, null, null, null, null, null, null
+  tcpsynnumber, tinyint, TCP SYN的次数，一次TCP流多次SYN的数值，此值至少为1；非TCP传输时，此字段填0, null, null, null, null, null, null, null, null, null
+  tcpconnectstate, tinyint, "TCP连接状态指示\n0：成功；1：失败", null, null, null, null, null, null, null, null, null
+  sessionstopflag, tinyint, 1：结束；2：未结束, null, null, null, null, null, null, null, null, null
+  ue_ambr_ul, int, 上行UE AMBR，单位：Kbps, null, null, null, null, null, null, null, null, null
+  ue_ambr_dl, int, 下行UE AMBR，单位：Kbps, null, null, null, null, null, null, null, null, null
+  apn_ambr_ul, int, 上行APN AMBR，单位：Kbps, null, null, null, null, null, null, null, null, null
+  apn_ambr_dl, int, 下行APN AMBR，单位：Kbps, null, null, null, null, null, null, null, null, null
+  bearer_qci, int, 当前业务流所属承载的QCI。, null, null, null, null, null, null, null, null, null
+  syntime, bigint, SYN时间戳, null, null, null, null, null, null, null, null, null
+  synacktime, bigint, SYNACK时间戳, null, null, null, null, null, null, null, null, null
+  acktime, bigint, ACK时间戳, null, null, null, null, null, null, null, null, null
+  destinationurl, string, 用户访问的目标网站的URL。, null, null, null, null, null, null, null, null, null
+  actiontime, bigint, 首个HTTP请求的时间戳, null, null, null, null, null, null, null, null, null
+  firstresptime, bigint, 第一个数据响应包的时间戳, null, null, null, null, null, null, null, null, null
+  lastpacktime, bigint, 最后一个数据包时间戳, null, null, null, null, null, null, null, null, null
+  lastacktime, bigint, 最后一个ACK确认包的时间戳, null, null, null, null, null, null, null, null, null
+  firstfinacktime, bigint, 第一个TCP FinAck包时间戳, null, null, null, null, null, null, null, null, null
+  dnsquerytime, bigint, DNS关联流的请求时间戳。无关联流，此字段填写0, null, null, null, null, null, null, null, null, null
+  dnsresponsetime, bigint, DNS关联流的应答时间戳。无关联流，此字段填写0, null, null, null, null, null, null, null, null, null
+  dnsflowid, bigint, HTTP流与DNS流的关联ID。无关联流时，此字段填写0, null, null, null, null, null, null, null, null, null
+  domainname, string, 外部网站的域名, null, null, null, null, null, null, null, null, null
+  host, string, 主机名, null, null, null, null, null, null, null, null, null
+  firstscreenfintime, bigint, 首屏完成时间戳，默认值0。算法见《中国电信移动互联网业务感知质量评价细则》, null, null, null, null, null, null, null, null, null
+  sslhandshakestarttime, bigint, SSL握手开始时间戳, null, null, null, null, null, null, null, null, null
+  sslhandshakeendtime, bigint, SSL握手结束时间戳, null, null, null, null, null, null, null, null, null
+  nodebid, bigint, 4G eNodeBID/5G gNBID, null, null, null, null, null, null, null, null, null
+  cellid, bigint, 小区ID, null, null, null, null, null, null, null, null, ta
+  cellkey, string, cellkey, null, null, null, null, null, null, null, null, ta
+  tacid, bigint, tacid，取imei前8位, null, null, null, null, null, null, null, null, ta
+  province, int, 拜访地省份编码, A, p_provincecode, 直取, null, 升级算法, null, null, null, null
+  city, int, 拜访地地市编码, "B|B1", "B：citycode\nB1：citycode", 直取, null, 升级算法, null, null, null, null
+  area, int, 拜访地区县编码, "B|B1", "B：districtcode\nB1：districtcode", 直取, null, 升级算法, null, null, null, null
+  dnsquerydelay, bigint, DNS查询时延, null, null, null, null, null, null, null, null, null
+  delay_syntime_dnsresponsetime, bigint, DNS建立完成到TCP握手时延, null, null, null, null, null, null, null, null, null
+  tcpsetupdelay, bigint, TCP建立时延, null, null, null, null, null, null, null, null, null
+  httpwebrspdelay, bigint, 网页首包时延，也叫网页响应时延, null, null, null, null, null, null, null, null, null
+  httpwebdspdelay, bigint, 网页显示时延，也叫网页完整打开时延, null, null, null, null, null, null, null, null, ta
+  httpwebscreendelay, bigint, 网页首屏时延, null, null, null, null, null, null, null, null, ta
+  delay_acktime_actiontime, bigint, TCP建立完成到首个HTTP请求的时延, null, null, null, null, null, null, null, null, ta
+  delay_actiontime_firstpackettime, bigint, 首个HTTPs请求到第一个数据响应包的时延, null, null, null, null, null, null, null, null, null
+  delay_actiontime_firstresptime, bigint, 首个HTTPs请求到第一个HTTPs数据响应包的时延, null, null, null, null, null, null, null, null, ta
+  delay_lastpacktime_dnsortcp, bigint, DNS请求/TCP请求到最后一个数据包的时延, null, null, null, null, null, null, null, null, null
+  delay_firstresptime_lastpacktime, bigint, 第一个HTTPs响应包到最后一个数据包的时延, null, null, null, null, null, null, null, null, null
+  delay_firstpackettime_lastpacktime, bigint, 第一个数据响应包到最后一个数据包的时延, null, null, null, null, null, null, null, null, null
+  delay_lastpacktime_lastacktime, bigint, 最后一个数据包到最后一个ACK的时延, null, null, null, null, null, null, null, null, null
+  delay_firstfinacktime_lastacktime, bigint, 最后一个ACK到首次挥手的时延, null, null, null, null, null, null, null, null, null
+  http_throughput, bigint, HTTPs下载速率, null, null, null, null, null, null, null, null, null
+  ul_or_dl, bigint, 是否是用户发给服务器的数据, null, null, null, null, null, null, null, null, null
+  perception_type, int, 话单类型, null, null, null, null, null, null, null, null, null
+  sslhandshakereqcount, bigint, SSL握手请求次数, null, null, null, null, null, null, null, null, null
+  sslhandshakefailurecount, bigint, SSL握手失败次数, null, null, null, null, null, null, null, null, null
+  is_abnormal, int, 是否质差话单, A, null, case when tcpsetupresponsedelay>= 100 or tcpsetupackdelay>=100  or ultcpreorderingpacket/outputpacket>=0.05 or dltcpreorderingpacket/inputpacket>=0.05 or ultcp_retranspacket/outputpacket>=0.1 or dltcp_retranspacket/inputpacket>=0.1  then 1 else 0 end, null, 新增字段, 指标, 无, "0,1", null
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null, null

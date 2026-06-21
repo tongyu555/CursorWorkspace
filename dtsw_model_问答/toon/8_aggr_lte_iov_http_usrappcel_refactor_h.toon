@@ -1,0 +1,32 @@
+theme_domain: 数据感知
+table_name: aggr_lte_iov_http_usrappcel_refactor_h
+table_name_chinese: 4G_DPI_http车联网用户小区app维度小时表
+data_frequency: hour
+primary_key: 数据描述
+source_table_name[3]{源表英文名, 源表中文名, 别名, 是否主表, 任务描述}:
+  aggr_lte_dpi_http_usrappcel_h, 4G_DPI_http用户小区app维度小时表, A, 是, null
+  cfg_dpi_servicetype, DPI业务码表, B, null, A left join B，关联条件：A.servicetype = B.servicetype
+  cfg_iov_usr_list, 车联网用户清单配置表, C, null, A inner join C，关联条件：A.msisdn = C.msisdn
+fields[22]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 日期, A, p_date, 直取, null, null, 维度, 无, 无
+  hour, int, 小时, A, p_hour, 直取, null, null, 维度, 无, 无
+  provincecode, int, 省编码, A, p_provincecode, 直取, null, null, 维度, 无, 无
+  citycode, int, 市编码, A, citycode, 直取, null, null, 维度, 无, 无
+  districtcode, int, 区县编码, A, districtcode, 直取, null, null, 维度, 无, 无
+  cellkey, string, "小区唯一标识：\"小区基站号\"_\"小区编号\"", A, cellkey, 直取, null, null, 维度, 无, 无
+  imsi, string, 国际移动用户识别码, A, imsi, 直取, null, null, 维度, 无, 无
+  msisdn, string, 用户号码, A, msisdn, 直取, null, null, 维度, 无, 无
+  imei, string, 终端识别码, A, imei, 直取, null, null, 维度, 无, 无
+  servicetype, string, 业务应用分类ID, A, servicetype, 直取, null, null, 维度, 无, 无
+  app_type, string, 业务应用大类, A, null, "substr(servicetype,1,2)", null, null, 维度, 无, 无
+  app_name, string, 业务名称, B, servicetype_name, 直取, null, null, 维度, 无, 无
+  min_starttime, string, 最小开始时间, A, null, min(min_starttime), null, null, 指标, 无, 无
+  max_endtime, string, 最大结束时间, A, null, max(max_endtime), null, null, 指标, 无, 无
+  total_cnt, bigint, 总话单数, A, null, sum(record_cnt), null, null, 指标, 无, >=0
+  abnormal_cnt, bigint, 总质差话单数, A, null, sum(abnormal_cnt), null, null, 指标, 无, >=0
+  abnormal_rate, double, 总质差话单占比, A, null, sum(abnormal_cnt)/sum(record_cnt), null, null, 指标, 无, "[0,1]"
+  duration, bigint, 业务时长(ms), A, null, sum(duration), null, null, 指标, ms, >=0
+  flux, bigint, 业务流量(byte), A, null, "sum(nvl(outputoctets,0)+nvl(inputoctets,0))", null, null, 指标, byte, >=0
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null

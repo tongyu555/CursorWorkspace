@@ -1,0 +1,56 @@
+theme_domain: 信令感知
+table_name: aggr_nbiot_s1mme_apnusrcel_h
+table_name_chinese: 4G_DPI_S1MME用户小区APN维度指标裁剪小时表
+data_frequency: hour
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 备注, 是否主表}:
+  aggr_lte_dpi_s1mme_base_h, 4G_DPI_S1MME基础维度小时汇聚表(无定界定位), A, "过滤条件：(length(regexp_replace(trim(msisdn),'^86',''))=13 or msisdn like '%141%')", 是
+fields[48]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 时间, A, p_date, 直取, null, null, 维度, 无, 无
+  hour, tinyint, 时段, A, p_hour, 直取, null, null, 维度, 无, 无
+  imsi, string, 用户IMSI（字符串格式）, A, imsi, 直取, null, null, 维度, 无, 无
+  msisdn, string, 用户号码（字符串格式）, A, msisdn, 直取, null, null, 维度, 无, 无
+  tai, bigint, 位置区码, A, tai, 直取, null, null, 维度, 无, 无
+  ecgi, string, UE所在小区的ECGI, A, ecgi, 直取, null, null, 维度, 无, 无
+  apn, string, 网络接入技术, A, apn, 直取, null, null, 维度, 无, 无
+  home_province, string, 漫入用户的归属地省份, A, home_province, 直取, null, null, 维度, 无, 无
+  attach_succ_num, bigint, 附着成功次数, A, null, sum(case when procedure_type=1 and procedure_status=0 then record_cnt else 0 end), null, null, 指标, 次, >=0
+  attach_fail_num, bigint, 附着失败次数, A, null, "sum(case when procedure_type=1 and procedure_status in (1,255) then record_cnt else 0 end)", null, null, 指标, 次, >=0
+  attach_tau_succ_num, bigint, 用户定期上报位置成功次数, A, null, "sum(case when procedure_type in (1,5) and procedure_status=0 then record_cnt else 0 end)", null, null, 指标, 次, >=0
+  attach_tau_fail_num, bigint, 用户定期上报位置失败次数, A, null, "sum(case when procedure_type in (1,5) and procedure_status in (1,255) then record_cnt else 0 end)", null, null, 指标, 次, >=0
+  service_succ_num, bigint, 服务请求建立成功次数, A, null, sum(case when procedure_type=2 and procedure_status=0 then record_cnt else 0 end), null, null, 指标, 次, >=0
+  service_fail_num, bigint, 服务请求建立失败次数, A, null, "sum(case when procedure_type=2 and procedure_status in (1,255) then record_cnt else 0 end)", null, null, 指标, 次, >=0
+  pdn_connect_succ_num, bigint, 对应PGW成功次数, A, null, sum(case when procedure_type=7 and procedure_status=0 then record_cnt else 0 end), null, null, 指标, 次, >=0
+  pdn_connect_fail_num, bigint, 对应PGW失败次数, A, null, "sum(case when procedure_type=7 and procedure_status in (1,255) then record_cnt else 0 end)", null, null, 指标, 次, >=0
+  uecontext_release_succ_num, bigint, 上下文成功次数, A, null, sum(case when procedure_type=20 and procedure_status=0 then record_cnt else 0 end), null, null, 指标, 次, >=0
+  uecontext_release_tau_fail_num, bigint, 上下文失败次数, A, null, "sum(case when procedure_type=20 and procedure_status in (1,255) then record_cnt else 0 end)", null, null, 指标, 次, >=0
+  identity_auth_secure_succ_num, bigint, 认证鉴权成功次数, A, null, "sum(case when procedure_type in (29,30,31) and procedure_status=0 then record_cnt else 0 end)", null, null, 指标, 次, >=0
+  identity_auth_secure_fail_num, bigint, 认证鉴权失败次数, A, null, "sum(case when procedure_type in (29,30,31) and procedure_status in (1,255) then record_cnt else 0 end)", null, null, 指标, 次, >=0
+  cpservice_succ_num, bigint, 控制面相关成功次数, A, null, sum(case when procedure_type=103 and procedure_status=0 then record_cnt else 0 end), null, null, 指标, 次, >=0
+  cpservice_fail_num, bigint, 控制面相关失败次数, A, null, "sum(case when procedure_type=103 and procedure_status in (1,255) then record_cnt else 0 end)", null, null, 指标, 次, >=0
+  x2_succ_num, bigint, x2切换成功次数, A, null, sum(case when procedure_type=14 and procedure_status=0 then record_cnt else 0 end), null, null, 指标, 次, >=0
+  x2_fail_num, bigint, x2切换失败次数, A, null, "sum(case when procedure_type=14 and procedure_status in (1,255) then record_cnt else 0 end)", null, null, 指标, 次, >=0
+  s1_succ_num, bigint, s1切换成功次数, A, null, "sum(case when procedure_type in (15,16) and procedure_status=0 then record_cnt else 0 end)", null, null, 指标, 次, >=0
+  s1_fail_num, bigint, s1切换失败次数, A, null, "sum(case when procedure_type in (15,16) and procedure_status in (1,255) then record_cnt else 0 end)", null, null, 指标, 次, >=0
+  initial_context_setup_success_sum, int, Initial_context_setup成功次数, A, null, sum(case when procedure_type=18 and procedure_status=0 then record_cnt else 0 end), null, null, 指标, 次, >=0
+  initial_context_setup_fail_sum, int, Initial_context_setup失败次数, A, null, "sum(case when procedure_type=18 and procedure_status in (1,255) then record_cnt else 0 end)", null, null, 指标, 次, >=0
+  erab_setup_success_sum, int, e-rab建立成功次数, A, null, sum(case when procedure_type=100 and procedure_status=0 then record_cnt else 0 end), null, null, 指标, 次, >=0
+  erab_setup_fail_sum, int, e-rab建立失败次数, A, null, "sum(case when procedure_type=100 and procedure_status in (1,255) then record_cnt else 0 end)", null, null, 指标, 次, >=0
+  erab_modify_success_sum, int, e-rab修改成功次数, A, null, sum(case when procedure_type=101 and procedure_status=0 then record_cnt else 0 end), null, null, 指标, 次, >=0
+  erab_modify_fail_sum, int, e-rab修改失败次数, A, null, "sum(case when procedure_type=101 and procedure_status in (1,255) then record_cnt else 0 end)", null, null, 指标, 次, >=0
+  other_procedure_succ_num, bigint, 其余流程类型成功次数, A, null, "sum(case when procedure_type not in (20, 103, 29, 30, 31, 1, 5, 109, 7) and procedure_status=0 then record_cnt else 0 end", null, null, 指标, 次, >=0
+  other_procedure_fail_num, bigint, 其余流程类型失败次数, A, null, "sum(case when procedure_type not in (20, 103, 29, 30, 31, 1, 5, 109, 7) and procedure_status in (1,255) then record_cnt else 0 end", null, null, 指标, 次, >=0
+  nbcelevel_0_sum, int, NB终端上报覆盖等级值为0的次数, A, null, sum(case when nbcelevel=0 then record_cnt else 0 end), null, null, 指标, 次, >=0
+  nbcelevel_1_sum, int, NB终端上报覆盖等级值为1的次数, A, null, sum(case when nbcelevel=1 then record_cnt else 0 end), null, null, 指标, 次, >=0
+  nbcelevel_2_sum, int, NB终端上报覆盖等级值为2的次数, A, null, sum(case when nbcelevel=2 then record_cnt else 0 end), null, null, 指标, 次, >=0
+  nbcelevel_other_sum, int, NB终端上报覆盖等级值为其他的次数, A, null, sum(case when nbcelevel>=3 then record_cnt else 0 end), null, null, 指标, 次, >=0
+  bearerstatus_1_sum, int, 承载建立成功次数, A, null, sum(case when bearerstatus = 1 record_cnt else 0 end), null, null, 指标, 次, >=0
+  bearerstatus_2_sum, int, 承载建立失败次数, A, null, sum(case when bearerstatus = 2 record_cnt else 0 end), null, null, 指标, 次, >=0
+  bearerstatus_3_sum, int, 承载修改成功次数, A, null, sum(case when bearerstatus = 3 record_cnt else 0 end), null, null, 指标, 次, >=0
+  bearerstatus_4_sum, int, 承载修改失败次数, A, null, sum(case when bearerstatus = 4 record_cnt else 0 end), null, null, 指标, 次, >=0
+  bearerstatus_5_sum, int, 承载释放成功次数, A, null, sum(case when bearerstatus = 5 record_cnt else 0 end), null, null, 指标, 次, >=0
+  bearerstatus_6_sum, int, 承载释放失败次数, A, null, sum(case when bearerstatus = 6 record_cnt else 0 end), null, null, 指标, 次, >=0
+  bearerstatus_other_sum, int, 其他承载次数, A, null, sum(case when bearerstatus = 0 record_cnt else 0 end), null, null, 指标, 次, >=0
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null

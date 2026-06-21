@@ -1,0 +1,17 @@
+theme_domain: 一级分类
+table_name: 表中文名
+table_name_chinese: 数据描述
+data_frequency: null
+primary_key: null
+source_table_name[0]:
+fields[10]{序号检查, 表名核查, 内部编号, 索引, 数据层级, 主题域, 一级分类, 二级分类, 表英文名, 表中文名, 数据描述, 备注, 汇聚维度, 时间粒度, 数据量(分区), 推送数据库, 存储位置, 数据来源, 创建人, 创建时间, 最近修改时间, 生命周期（存储周期单位：天）, 前向表, 支撑应用/系统, 是否API, 版本号}:
+  1, 1, QI83, 跳转, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_area_m, 4类问卷反馈优良区域维度指标月表（除engage help), 4类问卷反馈优良区域维度指标月表（除engage help), null, 区域, 月, null, 同步doris, HDFS, null, null, null, null, 永久, null, 客开-问卷调查, null, null
+  1, 1, QI84, 跳转, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_ovsat_m, 4类问卷反馈优良区域维度指标月表, 4类问卷反馈优良区域维度指标月表, null, 区域, 月, null, 同步doris, HDFS, null, null, null, null, 永久, null, 客开-问卷调查, null, null
+  1, 1, QI85, 跳转, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_joinol_stat_d, 我加入online统计datatable天表, 我加入online统计datatable天表, null, 区域, 月, null, 同步doris, HDFS, null, null, null, null, 永久, null, 客开-问卷调查, null, null
+  1, 1, QI86, 跳转, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_joinol_stat_w, 我加入online统计datatable周表, 我加入online统计datatable周表, null, 区域, 周, null, 同步doris, HDFS, null, null, null, null, 永久, null, 客开-问卷调查, null, null
+  1, 1, QI87, 跳转, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_joinol_stat_m, 我加入online统计datatable月表, 我加入online统计datatable月表, null, 区域, 月, null, 同步doris, HDFS, null, null, null, null, 永久, null, 客开-问卷调查, null, null
+  1, 1, QI88, 跳转, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_joinol_stat_qt, 我加入online统计datatable季表, 我加入online统计datatable季表, null, 区域, 季度, null, 同步doris, HDFS, null, null, null, null, 永久, null, 客开-问卷调查, null, null
+  1, 1, QI89, 跳转, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_joinol_stat_y, 我加入online统计datatable年表, 我加入online统计datatable年表, null, 区域, 年, null, 同步doris, HDFS, null, null, null, null, 永久, null, 客开-问卷调查, null, null
+  1, 1, QI90, 跳转, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_pay_stat_d, 我支付统计datatable天表, 我支付统计datatable天表, null, 区域, 天, null, 同步doris, HDFS, null, null, null, null, 永久, null, 客开-问卷调查, null, null
+  1, 1, QI91, 跳转, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_pay_stat_w, 我支付统计datatable周表, 我支付统计datatable周表, null, 区域, 周, null, 同步doris, HDFS, null, null, null, null, 永久, null, 客开-问卷调查, null, null
+  1, 1, QI92, 跳转, 应用层, 客开-问卷调查, 问卷, 指标, dm_questionnaire_datatable_pay_stat_m, 我支付统计datatable月表, 我支付统计datatable月表, null, 区域, 月, null, 同步doris, HDFS, null, null, null, null, 永久, null, 客开-问卷调查, null, null

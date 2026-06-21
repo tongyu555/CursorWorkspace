@@ -1,0 +1,115 @@
+theme_domain: null
+table_name: aggr_4gdpi_https_base_q
+table_name_chinese: 4G HTTPS基础时刻表
+data_frequency: quarter
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 别名, 是否主表}:
+  定制网接入表, A, 是
+fields[107]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, timestamp, 上报时间，具体到天, A, null, p_date, null, null, 维度, 无, 无
+  hour, int, 小时, A, null, p_hour, null, null, 维度, 无, 0-23
+  quarter, int, 时刻, A, null, p_quarter, null, null, 维度, 无, 0-3
+  provincecode, int, 拜访地省份, A, null, provincecode, null, null, 维度, 无, 360000-360000
+  citycode, int, 城市编码, A, null, null, null, null, 维度, 无, -99-361181
+  districtcode, int, 区县编码, A, null, null, null, null, 维度, 无, -659-842333
+  sgwip, string, sgwip, A, null, sgwip, null, null, 维度, 无, 无
+  enbip, string, enbip, A, null, enbip, null, null, 维度, 无, 无
+  apn, string, APN, A, null, apn, null, null, 维度, 无, 无
+  tai, string, 跟踪区标识, A, null, tai, null, null, 维度, 无, 0-0
+  rattype, int, 无线接入类型, A, null, rattype, null, null, 维度, 无, 0-10
+  nodebid, bigint, eNodeBID, A, ecgi, 解析出基站id, null, null, 维度, 无, 4097-14560394
+  cellid, bigint, 小区ID, A, ecgi, 解析出小区id, null, null, 维度, 无, 0-217872534
+  cellkey, string, cellkey, A, ecgi, 解析出基站id与小区id用_连接, null, null, 维度, 无, 无
+  imsi, string, 永久用户标识, A, null, imsi, null, null, 维度, 无, 无
+  msisdn, string, 手机号码, A, null, msisdn, null, null, 维度, 无, 8613001224774-861410493568079
+  imei, string, imei, A, null, imei, null, null, 维度, 无, 无
+  tacid, int, 终端类型标识, A, null, "left(imei,8)", null, null, 维度, 无, 0-99999999
+  home_province, string, 归属省份, A, null, home_province, null, null, 维度, 无, 110000-650000
+  servicetype, string, 业务应用, A, null, servicetype, null, null, 维度, 无, 1000100-88888888
+  visitedplmnid, string, 拜访网络标识, A, null, 直接赋值, null, null, 维度, 无, 46001-46011
+  business_type, string, 业务类型（im、web、game、other）, A, null, "case when ((servicetype>=01000101 and servicetype<01999901) or (servicetype>=04000100 and servicetype<04999901)) and (servicetype not in (01000212,01004600,01001300)) then 'im' when ((servicetype>=13000100 and servicetype<13999901) or (servicetype>=16000100 and servicetype<16999901) or (servicetype>=10000101 servicetype<10999901) or (servicetype >=07000100 and servicetype as<07999901) or (servicetype>=19000100 and servicetype<19999901) or (servicetype>=09000101 and servicetype<09007201) or (servicetype>=06000101 and servicetype<06999901) or (servicetype>=08000101 and servicetype<08999901) or (servicetype>=11000101 and servicetype<11999901) or (servicetype>=14000101 and servicetype<14999901) or (servicetype>=17000101 and servicetype<17999901) or (servicetype>=18000101 and servicetype<18999901)) and (servicetyp not in(09000101,09000601,09000701,09000801,09001800,09001900,09002000,09001202,01000212,01001300,01004600,09000603)) then 'web' when servicetype>=05000100 and servicetype<05999901 then 'game' else 'other' end", null, null, 维度, null, null
+  duration_sum, bigint, 持续时间，单位毫秒，根据业务流开始和结束统计得出的时间, A, null, sum(duration), null, null, 指标, 毫秒, 0-40685867792
+  tcpsetupresponsedelay_sum, bigint, TCP建链响应时延_sum, A, null, sum(TCPSetupResponseDelay), null, null, 指标, ms, 0-49658730
+  tcpsetupackdelay_sum, bigint, TCP建链确认时延_sum, A, null, sum(TCPSetupACKDelay), null, null, 指标, ms, 0-34873883
+  outputoctets_sum, bigint, 上行流量(byte), A, null, SUM(OutputOctets), null, null, 指标, byte, -1626927039-46995408955
+  inputoctets_sum, bigint, 下行流量(byte), A, null, SUM(InputOctets), null, null, 指标, byte, -4263811793-126795723462
+  inputpacket_sum, bigint, 发给用户的业务数据包数量, A, null, SUM(InputPacket), null, null, 指标, 个, 0-100848595
+  outputpacket_sum, bigint, 用户发出的业务数据包数量, A, null, SUM(OutputPacket), null, null, 指标, 个, 0-101114039
+  timeusage_sum, bigint, 实际产生流量的时长，单位为毫秒。, A, null, SUM(duration), null, null, 指标, 毫秒, 0-856815505
+  ultcpreorderingpacket_sum, bigint, 上行TCP乱序报文数，L4协议，非TCP传输时，此字段填0, A, null, sum(ULTCPReorderingPacket), null, null, 指标, 个, 0-3123316
+  dltcpreorderingpacket_sum, bigint, 下行TCP乱序报文数，非TCP传输时，此字段填0, A, null, sum(DLTCPReorderingPacket), null, null, 指标, 个, 0-16708843
+  ultcp_retranspacket_sum, bigint, 上行TCP重传报文数，非TCP传输时，此字段填0, A, null, sum(ULTCP_RetransPacket), null, null, 指标, 个, 0-326777
+  dltcp_retranspacket_sum, bigint, 下行TCP重传报文数，非TCP传输时，此字段填0, A, null, sum(DLTCP_RetransPacket), null, null, 指标, 个, 0-1089931
+  tcpsynnumber_sum, bigint, TCP建链尝试次数, A, null, sum(TCPSynNumber), null, null, 指标, 次, -88-1031021
+  tcpconnectsuccnumber_sum, bigint, TCP连接成功次数, A, null, sum(case when TCPConnectState =0 then TCPSynNumber else 0 end), null, null, 指标, 次, -88-46278
+  ulipfragpacks_sum, bigint, UL_IP_FRAG_PACKETS, A, null, sum(ULIPFragPacks), null, null, 指标, 个, 0-95384
+  dlipfragpacks_sum, bigint, DL_IP_FRAG_PACKETS, A, null, sum(DLIPFragPacks), null, null, 指标, 个, 0-342840
+  dnsqueryreqcount, bigint, DNS查询请求次数, A, null, count(case when DNSQueryTime is not null then 1 else null end), null, null, 指标, 次, 0-6281884000
+  dnsqueryrspcount, bigint, DNS查询响应次数, A, null, count(case when DNSResponseTime is not null then 1 else null end), null, null, 指标, 次, 0-1026373
+  tcpsetupresponsedelay_avg, bigint, TCP建链响应时延_avg, A, null, avg(TCPSetupResponseDelay), null, null, 指标, 毫秒, 0-8552224
+  tcpsetupackdelay_avg, bigint, TCP建链确认时延_avg, A, null, avg(TCPSetupACKDelay), null, null, 指标, 毫秒, 0-11864496
+  tcpsetupdelay_avg, bigint, TCP建立时延(ms)_avg, A, null, avg(tcpsetupdelay), null, null, 指标, 毫秒, 0-14629757
+  delay_setup_firsttransaction_avg, bigint, TCP建链成功到第一条事务请求的时延_avg（ms）, A, null, avg(Delay_Setup_FirstTransaction), null, null, 指标, 毫秒, 0-3475307
+  delay_firsttransaction_firstrespackt_avg, bigint, 第一条事务请求到其第一个响应包时延_avg（ms）, A, null, avg(Delay_FirstTransaction_FirstResPackt), null, null, 指标, 毫秒, 0-600017
+  tcpsynnumber_avg, bigint, TCP建链尝试次数_avg, A, null, avg(TCPSynNumber), null, null, 指标, 次, -22-37
+  dnsquerydelay_avg, bigint, DNS查询时延_avg, A, null, avg(dnsquerydelay), null, null, 指标, 毫秒, 0-822315
+  delay_syntime_dnsresponsetime_avg, bigint, DNS到TCP建链的时延_avg, A, null, avg(delay_SYNtime_DNSResponseTime), null, null, 指标, 毫秒, 0-1711072841095
+  httpwebrspdelay_avg, bigint, 网页响应(首包)时延_avg(ms), A, null, avg(httpwebrspdelay), null, null, 指标, 毫秒, 0-1711072841335
+  httpwebdspdelay_avg, bigint, 网页显示(打开)时长_avg(ms), A, null, avg(httpwebdspdelay), null, null, 指标, 毫秒, 0-1711072841379
+  httpwebscreendelay_avg, bigint, 网页首屏时延_avg(ms), A, null, avg(httpwebscreendelay), null, null, 指标, 毫秒, 0-762937789
+  delay_acktime_actiontime_avg, bigint, TCP建链成功到首个HTTP请求的时延_avg（ms）, A, null, 置null, null, null, 指标, 毫秒, 0-466236844
+  delay_actiontime_firstpackettime_avg, bigint, 首个HTTP请求到第一个数据响应包的时延_avg（ms）, A, null, 置null, null, null, 指标, 毫秒, 0-6701867
+  delay_actiontime_firstresptime_avg, bigint, 首个HTTP请求到第一个HTTP响应包的时延_avg（ms）, A, null, 置null, null, null, 指标, 毫秒, -121392--1
+  delay_lastpacktime_dnsortcp_avg, bigint, 首个HTTP请求到最后一个数据包的时延_avg, A, null, 置null, null, null, 指标, 毫秒, 1-1711072841378
+  delay_firstresptime_lastpacktime_avg, bigint, 第一个HTTP响应包到最后一个数据包时延_avg, A, null, 置null, null, null, 指标, 毫秒, 0-604797006
+  delay_firstpackettime_lastpacktime_avg, bigint, 第一个数据响应包到最后一个数据包的时延_avg, A, null, 置null, null, null, 指标, 毫秒, 0-604797006
+  delay_lastpacktime_lastacktime_avg, bigint, 最后一个数据包到最后一个ACK的时延_avg, A, null, 置null, null, null, 指标, 毫秒, 0-135414944
+  delay_firstfinacktime_lastacktime_avg, bigint, 最后一个ACK到首次挥手的时延_avg, A, null, 置null, null, null, 指标, 毫秒, 0-5095574
+  tcpreorderingpacketratio, bigint, TCP乱序占比, A, null, sum(ULTCPReorderingPacket+DLTCPReorderingPacket)/sum(OutputPacket+InputPacket), null, null, 指标, 率, 0-1
+  ultcpreorderingpacketratio, bigint, 上行TCP乱序占比, A, null, sum(ULTCPReorderingPacket)/sum(OutputPacket), null, null, 指标, 率, 0-10
+  dltcpreorderingpacketratio, bigint, 下行TCP乱序占比, A, null, sum(DLTCPReorderingPacket)/sum(InputPacket), null, null, 指标, 率, 0-1
+  tcp_retranspacketratio, bigint, TCP重传占比, A, null, sum(ULTCP_RetransPacket+DLTCP_RetransPacket)/sum(OutputPacket+InputPacket), null, null, 指标, 率, 0-2.625
+  ultcp_retranspacketratio, bigint, 上行TCP重传占比, A, null, sum(ULTCP_RetransPacket)/sum(OutputPacket), null, null, 指标, 率, 0-92
+  dltcp_retranspacketratio, bigint, 下行TCP重传占比, A, null, sum(DLTCP_RetransPacket)/sum(InputPacket), null, null, 指标, 率, 0-40
+  tcpconnfail_sum, bigint, TCP连接失败次数, A, null, sum(case when TCPConnectState=1 then  1  else 0 end), null, null, 指标, 个, 0-56415
+  tcpconnreq_sum, bigint, 上行TCP建立请求次数, A, null, sum(case when TCPSynNumber>0 then 1 else 0 end), null, null, 指标, 个, 0-1025853
+  tcpconnulsuc_sum, bigint, 上行TCP建立成功次数, A, null, sum(case when TCPSetupResponseDelay>0 then  1 else 0 end), null, null, 指标, 个, 0-1025656
+  tcpconndlsuc_sum, bigint, 下行TCP建立成功次数, A, null, sum(case when TCPSetupResponseDelay>0 and TCPSetupACKDelay>0 then  1 else 0 end), null, null, 指标, 个, 0-1025571
+  tcpsetupdelay_sum, bigint, TCP建立时延(ms)_求和, A, null, sum(TCPSetupResponseDelay+TCPSetupACKDelay), null, null, 指标, MS, 0-57058750
+  tcpsetupresponsedelay_seg_1, bigint, TCP建链响应时延_seg_1, A, null, count( case when TCPSetupResponseDelay>#tcpsetupresponsedelay_seg_1_1st# and TCPSetupResponseDelay<=#tcpsetupresponsedelay_seg_1_2nd# then 1 else null end), null, null, 指标, 个, 0-1130906
+  tcpsetupresponsedelay_seg_2, bigint, TCP建链响应时延_seg_2, A, null, count( case when TCPSetupResponseDelay>#tcpsetupresponsedelay_seg_2_1st# and TCPSetupResponseDelay<=#tcpsetupresponsedelay_seg_2_2nd# then 1 else null end), null, null, 指标, 个, 0-114728
+  tcpsetupresponsedelay_seg_3, bigint, TCP建链响应时延_seg_3, A, null, count( case when TCPSetupResponseDelay>#tcpsetupresponsedelay_seg_3_1st# and TCPSetupResponseDelay<=#tcpsetupresponsedelay_seg_3_2nd# then 1 else null end), null, null, 指标, 个, 0-17747
+  tcpsetupresponsedelay_seg_4, bigint, TCP建链响应时延_seg_4, A, null, count( case when TCPSetupResponseDelay>#tcpsetupresponsedelay_seg_4_1st# and TCPSetupResponseDelay<=#tcpsetupresponsedelay_seg_4_2nd# then 1 else null end), null, null, 指标, 个, 0-31478
+  tcpsetupresponsedelay_seg_5, bigint, TCP建链响应时延_seg_5, A, null, count( case when TCPSetupResponseDelay>#tcpsetupresponsedelay_seg_5_1st# and TCPSetupResponseDelay<=#tcpsetupresponsedelay_seg_5_2nd# then 1 else null end), null, null, 指标, 个, 0-46164
+  tcpsetupackdelay_seg_1, bigint, TCP建链确认时延_seg_1, A, null, count( case when tcpsetupackdelay>#tcpsetupackdelay_seg_1_1st# and tcpsetupackdelay<=#tcpsetupackdelay_seg_1_2nd# then 1 else null end), null, null, 指标, 个, 0-1113938
+  tcpsetupackdelay_seg_2, bigint, TCP建链确认时延_seg_2, A, null, count( case when tcpsetupackdelay>#tcpsetupackdelay_seg_2_1st# and tcpsetupackdelay<=#tcpsetupackdelay_seg_2_2nd# then 1 else null end), null, null, 指标, 个, 0-160409
+  tcpsetupackdelay_seg_3, bigint, TCP建链确认时延_seg_3, A, null, count( case when tcpsetupackdelay>#tcpsetupackdelay_seg_3_1st# and tcpsetupackdelay<=#tcpsetupackdelay_seg_3_2nd# then 1 else null end), null, null, 指标, 个, 0-10726
+  tcpsetupackdelay_seg_4, bigint, TCP建链确认时延_seg_4, A, null, count( case when tcpsetupackdelay>#tcpsetupackdelay_seg_4_1st# and tcpsetupackdelay<=#tcpsetupackdelay_seg_4_2nd# then 1 else null end), null, null, 指标, 个, 0-3855
+  tcpsetupackdelay_seg_5, bigint, TCP建链确认时延_seg_5, A, null, count( case when tcpsetupackdelay>#tcpsetupackdelay_seg_5_1st# and tcpsetupackdelay<=#tcpsetupackdelay_seg_5_2nd# then 1 else null end), null, null, 指标, 个, 0-8725
+  tcpsetupresponsedelay_cnt, bigint, TCP建链响应次数, A, null, sum(case when TCPSetupResponseDelay>0   then 1 else 0  end), null, null, 指标, 个, 0-1025656
+  tcpsetupackdelay_cnt, bigint, TCP建链确认次数, A, null, sum(case when tcpsetupackdelay>0   then 1 else 0  end), null, null, 指标, 个, 0-1025727
+  delay_setup_firsttransaction_sum, bigint, TCP建链成功到第一条事务请求的时延_sum（ms）, A, null, sum(Delay_Setup_FirstTransaction), null, null, 指标, MS, 0-238232115
+  delay_setup_firsttransaction_cnt_sum, bigint, TCP事务首次请求次数, A, null, sum(case when Delay_Setup_FirstTransaction>0 then 1 else 0 end), null, null, 指标, 个, 0-953527
+  delay_firsttransaction_firstrespackt_sum, bigint, 第一条事务请求到其第一个响应包时延_sum（ms）, A, null, sum(Delay_FirstTransaction_FirstResPackt), null, null, 指标, MS, 0-16900389
+  delay_firsttransaction_firstrespackt_cnt_sum, bigint, TCP事务首次响应次数, A, null, sum(case when Delay_FirstTransaction_FirstResPackt>0 then 1 else 0 end), null, null, 指标, 个, 0-1025496
+  outputoctets_above500_sum, bigint, 大包业务上行流量(>=500KB), A, null, sum(case when outputoctets>=500*1024 then outputoctets  else 0 end), null, null, 指标, KB, 0-18487483785
+  outputoctets_above500_cnt_sum, bigint, 上行大包条数(>=500KB), A, null, sum(case when outputoctets>=500*1024 then 1  else 0 end), null, null, 指标, 个, 0-751
+  outputoctets_above500_highdelay_cnt, bigint, 上行大包高时延条数（>100ms）, A, null, sum(case when outputoctets>=500*1024 and  tcpsetupresponsedelay>#tcpsetupresponsedelay_highdelay#  then 1  else 0 end), null, null, 指标, 个, 0-70
+  inputoctets_above500_sum, bigint, 大包业务下行流量(>=500KB), A, null, sum(case when inputoctets>=500*1024 then inputoctets  else 0 end), null, null, 指标, KB, 0-45023524772
+  inputoctets_above500_cnt_sum, bigint, 下行大包条数(>=500KB), A, null, sum(case when inputoctets>=500*1024 then 1  else 0 end), null, null, 指标, 个, 0-21956
+  inputoctets_above500_highdelay_cnt, bigint, 下行大包高时延条数（>100ms）, A, null, sum(case when inputoctets>=500*1024  and tcpsetupackdelay>#tcpsetupackdelay_highdelay#   then 1  else 0 end), null, null, 指标, 个, 0-905
+  firstscreenfin_cnt_sum, bigint, 网页首屏完成次数, A, null, sum(case when cast(FirstScreenFinTime as bigint)>0 and (cast(DNSQueryTime as bigint)>0 or cast(SynTime as bigint)>0) then 1 else 0 end), null, null, 指标, 个, 0-0
+  firstscreenfindelay_sum, bigint, 网页首屏总时延(ms), A, null, sum(case when cast(FirstScreenFinTime as bigint)>0 and cast(DNSQueryTime as bigint)>0 then cast(FirstScreenFinTime as bigint)-cast(DNSQueryTime as bigint)  when cast(FirstScreenFinTime as bigint)>0 and cast(SynTime as bigint)>0 then cast(FirstScreenFinTime as bigint)-cast(SynTime as bigint)  else 0 end), null, null, 指标, MS, 0-71917695
+  xdr_suc_cnt_sum, bigint, xdr成功条数, A, null, sum(case when tcpconnectstate=0 or sessionstopflag=1 then 1 else 0 end), null, null, 指标, 个, 0-1026373
+  is_poor_ultcp_retranspacket_num, bigint, tcp上行重传率质差话单数, A, null, sum(CASE WHEN (ultcp_retranspacket)/(outputpacket) >= 0.1 THEN 1  ELSE 0 END ), null, null, null, 个, null
+  is_poor_dltcp_retranspacket_num, bigint, tcp下行重传率质差话单数, A, null, sum(CASE WHEN (dltcp_retranspacket)/(inputpacket) >= 0.1 THEN 1  ELSE 0 END), null, null, null, 个, null
+  is_poor_ultcpreorderingpacket_num, bigint, tcp上行乱序率质差话单数, A, null, sum(CASE WHEN (ultcpreorderingpacket)/(outputpacket) >= 0.05 THEN 1  ELSE 0 END ), null, null, null, 个, null
+  is_poor_dltcpreorderingpacket_num, bigint, tcp下行乱序率质差话单数, A, null, sum(CASE WHEN (dltcpreorderingpacket)/(inputpacket) >= 0.05 THEN 1  ELSE 0 END ), null, null, null, 个, null
+  is_poor_tcpsetupresponsedelay_num, bigint, tcp建链响应时延质差话单数, A, null, "sum(if(tcpsetupresponsedelay >= 100,1,0))", null, null, null, 个, null
+  is_poor_tcpsetupackdelay_num, bigint, tcp建链确认时延质差话单数, A, null, "sum(if(tcpsetupackdelay >= 100,1,0)  )", null, null, null, 个, null
+  is_poorquality_num, bigint, 质差话单数, A, null, 前6个只要一个质差则置1否则0, null, null, null, null, null
+  total_num, bigint, 总话单数, A, null, count(1), null, null, null, 个, null
+  p_provincecode, int, 省分区, null, null, null, null, null, null, 无, 360000-360000
+  p_date, string, 天分区, null, null, null, null, null, null, 无, 无
+  p_hour, int, 小时分区, null, null, null, null, null, null, 无, 0-24
+  p_quarter, int, 时刻分区, null, null, null, null, null, null, null, null

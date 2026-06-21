@@ -1,0 +1,24 @@
+1. 支撑业务 : 4G位置数据 , 5G位置数据 , Volte位置数据 ; 为对公众提供服务对外产品
+2. 实时程序要求 : 从信令生成到发布给下游位置能力系统总时长要求在10分钟以内
+3. 功能介绍
+  a. 前置集群
+    i. 源数据采集(SFTP)
+      1. NIFI组件解析推送前置Kafka供实时程序消费
+      2. NIFI组件解析推送前置HDFS , 离线清洗任务的贴源表
+    ii. 实时程序部署
+      1. 消费前置Kafka数据 , 写入前置hdfs , 写入核心kafka
+      2. 前置kafka数据  +   工参数据 => 核心输出kafka + 前置hdfs
+      3. 写入核心kafka使用sasl框架下的SCRAM加密
+      4. 数据处理的并行度设置成前置kafka的partition的数量
+    iii. 结果数据落盘写入前置HDFS
+      1. 该结果主要用于数据质量验证集监控
+  b. 核心集群
+    i. 结果数据推送核心kafka
+      1. 提供给下游位置能力子系统应用端使用
+  c. 实时程序遇到的生产问题及优化
+    i. checkpoint效率优化
+      1. 5g实时程序checkpoint storage方式优化(JobManagerCheckpointStorage => FileSystemCheckpointStorage )
+      2.  工参表使用Broadcast广播流保存到checkpoint中导致checkpoint数据量过大 , 容易失败 ; 调整为采用RichMapFunction在open方法中将工参加载到HashMap中 , 在map方案中实现关联 , 减少checkpoint数据量
+    ii. 文件写入HDFS优化
+      1. 文件写入HDFS滚动策略 , 会有写入找不到历史文件导致checkpoint失败而报错的问题
+      2. 官方写法出现写入滚动时间不生效的情况 ; 升级后将滚动时间判断与checkpoint同步进行 , 规避该问题

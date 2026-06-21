@@ -1,0 +1,32 @@
+theme_domain: 数据感知
+table_name: aggr_lte_dpi_game_index_reduce_cel_d
+table_name_chinese: 4G_DPI_game小区维度指标裁剪天表
+data_frequency: day
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 是否主表}:
+  aggr_lte_dpi_game_cel_d, 4G_DPI_game小区维度天表, A, 是
+fields[24]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  clttime, timestamp, 上报时间, A, p_date, 直取, null, null, 维度, 无, yyyy-mm-dd
+  enodebid, bigint, 基站ID, A, null, "split(cellkey,\"_\")[0]", null, null, 维度, 无, 无
+  cellid, bigint, 小区ID, A, null, "split(cellkey,\"_\")[1]", null, null, 维度, 无, 无
+  rat, tinyint, 接入类型, A, rattype, 直取, null, null, 维度, 无, 无
+  province, int, 省名称, A, p_provincecode, 直取, null, null, 维度, 无, 6位数编码
+  city, int, 市名称, A, citycode, 直取, null, null, 维度, 无, 6位数编码
+  area, int, 区编码, A, districtcode, 直取, null, null, 维度, 无, 6位数编码
+  qoe_game, int, 游戏的qoe, A, null, "10000 - 10000*(sum(nvl(abnormal_cnt,0))/sum(nvl(record_cnt,0)))", null, null, 指标, 无, "[0,10000]"
+  gamereq, bigint, 游戏请求次数, A, null, sum(record_cnt), null, null, 指标, 无, >0
+  gamedelay, bigint, 游戏交互时延(多次业务的交互时延之和), A, null, sum(tcpsetupdelay_avg*tcpsetupdelay_cnt), null, null, 指标, ms, >0
+  uplink_flux, int, 上行流量, A, null, sum(outputoctets_sum/1024), null, null, 指标, KB, >0
+  downlink_flux, int, 下行流量, A, null, sum(inputoctets_sum/1024), null, null, 指标, KB, >0
+  utimeusage, bigint, 实际产生上行流量的时长, A, null, sum(duration_sum/1000), null, null, 指标, s, >=0
+  dtimeusage, bigint, 实际产生下行流量的时长, A, null, sum(duration_sum/1000), null, null, 指标, s, >=0
+  duration, int, 持续时长, A, null, sum(duration_sum/1000), null, null, 指标, s, >=0
+  uplink_kbps, int, 上行流速, A, null, sum(ul_flux_throughput)/sum(ul_duration_throughput), null, null, 指标, kbps, >0
+  downlink_kbps, int, 下行流速, A, null, sum(dl_flux_throughput)/sum(dl_duration_throughput), null, null, 指标, kbps, >0
+  times_abnormals, bigint, 异常话单次数, A, null, sum(abnormal_cnt), null, null, 指标, 无, >=0
+  denisity, int, 异常密度, A, null, sum(abnormal_cnt_max), null, null, 指标, 无, >=0
+  times_excellentgamedelay, bigint, 游戏交互时延优秀次数, A, null, sum(times_excellentgamedelay), null, null, 指标, 无, >=0
+  times_inferiorgamedelay, bigint, 游戏交互时延劣质次数, A, null, sum(times_inferiorgamedelay), null, null, 指标, 无, >=0
+  times_wellgamedelay, bigint, 游戏交互时延良好次数, A, null, sum(times_wellgamedelay), null, null, 指标, 无, >=0
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

@@ -1,0 +1,66 @@
+2026-04-20 13:36:17,477 ERROR org.apache.spark.sql.execution.datasources.FileFormatWriter: Aborting job null.
+org.apache.spark.sql.catalyst.errors.package$TreeNodeException: execute, tree:
+Exchange(coordinator id: 376284476) hashpartitioning(provincecode#145, cast(gnbid#129 as int), cast(cellid#130 as int), 200), coo
+rdinator[target post-shuffle partition size: 512435456]
++- *Project [coalesce(day#289, day#141) AS day#126, vendor#150, province_name#77 AS province#127, city#152, district#153, provinc
+ecode#145, citycode#155, districtcode#156, plmnnum#157L, master_operators#158, ne_belong#159, gnbname#164, cellname#165, split(gn
+bid#166, -)[1] AS gnbid#129, split(cellid#167, -)[2] AS cellid#130, cellkey#146 AS cellkey#131, pci#171, cover_lerver#174, indoor
+_flag#175, freq#177, freq_pointno_dl#181, bandwidth_dl#183, ant_mechanicaldowntilt#203, cell_longitude#212, ... 11 more fields]
+   +- *BroadcastHashJoin [provincecode#145], [provincecode#76], LeftOuter, BuildRight
+      :- *Project [day#141, vendor#150, city#152, district#153, provincecode#145, citycode#155, districtcode#156, plmnnum#157L, m
+aster_operators#158, ne_belong#159, gnbname#164, cellname#165, gnbid#166, cellid#167, cellkey#146, pci#171, cover_lerver#174, ind
+oor_flag#175, freq#177, freq_pointno_dl#181, bandwidth_dl#183, ant_mechanicaldowntilt#203, cell_longitude#212, cell_latitude#213,
+ ... 12 more fields]
+      :  +- *BroadcastHashJoin [provincecode#145, cellkey#146], [provincecode#294, cellkey#304], LeftOuter, BuildRight
+      :     :- *Project [day#141, vendor#150, city#152, district#153, 110000 AS provincecode#145, citycode#155, districtcode#156,
+ plmnnum#157L, master_operators#158, ne_belong#159, gnbname#164, cellname#165, gnbid#166, cellid#167, cellkey#142 AS cellkey#146,
+ pci#171, cover_lerver#174, indoor_flag#175, freq#177, freq_pointno_dl#181, bandwidth_dl#183, ant_mechanicaldowntilt#203, cell_lo
+ngitude#212, cell_latitude#213, ... 9 more fields]
+      :     :  +- SortMergeJoin [provincecode#154, cellkey#142], [provincecode#271, cellkey#144], LeftOuter
+      :     :     :- *Sort [provincecode#154 ASC NULLS FIRST, cellkey#142 ASC NULLS FIRST], false, 0
+      :     :     :  +- Exchange(coordinator id: 1604710092) hashpartitioning(provincecode#154, cellkey#142, 200), coordinator[ta
+rget post-shuffle partition size: 512435456]
+      :     :     :     +- Project [date#149 AS day#141, vendor#150, city#152, district#153, provincecode#154, citycode#155, districtcode#156, plmnnum#157L, master_operators#158, ne_belong#159, gnbname#164, cellname#165, gnbid#166, cellid#167, cellkey#168 AS cellkey#142, pci#171, cover_lerver#174, indoor_flag#175, freq#177, freq_pointno_dl#181, bandwidth_dl#183, ant_mechanicaldowntilt#203, cell_longitude#212, cell_latitude#213, ... 7 more fields]
+      :     :     :        +- Filter (isnotnull(HiveSimpleUDF#com.zte.bigdata.DistanceOfLatLon(cell_latitude#213,cell_longitude#212,reference_latitude#140,reference_longitude#139)) && (HiveSimpleUDF#com.zte.bigdata.DistanceOfLatLon(cell_latitude#213,cell_longitude#212,reference_latitude#140,reference_longitude#139) > 100.0))
+      :     :     :           +- *BroadcastHashJoin [p_provincecode#231, cellkey#168], [p_provincecode#250, cellkey#138], LeftOuter, BuildRight
+      :     :     :              :- *Filter (((isnotnull(plmnnum#157L) && (plmnnum#157L = 46011)) && (size(split(gnbid#166, ;)) = 1)) && (size(split(cellid#167, ;)) = 1))
+      :     :     :              :  +- HiveTableScan [date#149, vendor#150, city#152, district#153, provincecode#154, citycode#15
+      12,reference_latitude#140,reference_longitude#139)) && (HiveSimpleUDF#com.zte.bigdata.DistanceOfLatLon(cell_latitude#213,cell_lon
+gitude#212,reference_latitude#140,reference_longitude#139) > 100.0))
+      :     :     :           +- *BroadcastHashJoin [p_provincecode#231, cellkey#168], [p_provincecode#250, cellkey#138], LeftOut
+er, BuildRight
+      :     :     :              :- *Filter (((isnotnull(plmnnum#157L) && (plmnnum#157L = 46011)) && (size(split(gnbid#166, ;)) =
+ 1)) && (size(split(cellid#167, ;)) = 1))
+      :     :     :              :  +- HiveTableScan [date#149, vendor#150, city#152, district#153, provincecode#154, citycode#15
+5, districtcode#156, plmnnum#157L, master_operators#158, ne_belong#159, gnbname#164, cellname#165, gnbid#166, cellid#167, cellkey#168, pci#171, cover_lerver#174, indoor_flag#175, freq#177, freq_pointno_dl#181, bandwidth_dl#183, ant_mechanicaldowntilt#203, cell_longitude#212, cell_latitude#213, ... 5 more fields], HiveTableRelation `zxvmax`.`dw_nr_cm_projdata_d`, org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, [date#149, vendor#150, province#151, city#152, district#153, provincecode#154, citycode#155, districtcode#156, plmnnum#157L, master_operators#158, ne_belong#159, master_gnbname#160, master_cellname#161, master_gnbid#162, master_cellid#163, gnbname#164, cellname#165, gnbid#166, cellid#167, cellkey#168, celdu_id_local#169, tac#170, pci#171, ssbfrequency#172L, ... 58 more fields], [p_provincecode#231, p_date#232], [isnotnull(p_date#232), isnotnull(p_provincecode#231), (p_provincecode#231 = 110000), (p_date#232 = 2026-04-19)]
+      :     :     :              +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, int, true], input[1, string, true]))
+      :     :     :                 +- *HashAggregate(keys=[p_provincecode#250, cellkey#138, reference_longitude#139, reference_latitude#140], functions=[], output=[p_provincecode#250, cellkey#138, reference_longitude#139, reference_latitude#140])
+      :     :     :                    +- Exchange(coordinator id: 1701595631) UnknownPartitioning(19), coordinator[target post-shuffle partition size: 512435456]
+      :     :     :                       +- *HashAggregate(keys=[p_provincecode#250, cellkey#138, reference_longitude#139, reference_latitude#140], functions=[], output=[p_provincecode#250, cellkey#138, reference_longitude#139, reference_latitude#140])
+      :     :     :                          +- *Project [p_provincecode#250, concat(cast(nodebid#243 as string), _, cast(cellid#244 as string)) AS cellkey#138, celllon#247 AS reference_longitude#139, celllat#246 AS reference_latitude#140]
+      :     :     :                             +- *FileScan parquet zxvmax.dm_5gcm_evaluate_cell_info_d[nodebid#243,cellid#244,celllat#246,celllon#247,p_provincecode#250,p_date#251] Batched: true, Format: Parquet, Location: PrunedInMemoryFileIndex[viewfs://nsX/vmax_ns5/zxvmax/telecom/nr/dm/dm_5gcm_evaluate_cell_info_d/p..., PartitionCount: 1, PartitionFilters: [isnotnull(p_provincecode#250), isnotnull(p_date#251), (p_provincecode#250 = 110000), (p_date#251..., PushedFilters: [], ReadSchema: struct<nodebid:int,cellid:int,celllat:double,celllon:double>
+      :     :     +- *Sort [provincecode#271 ASC NULLS FIRST, cellkey#144 ASC NULLS FIRST], false, 0
+      :     :        +- Exchange(coordinator id: 1604710092) hashpartitioning(provincecode#271, cellkey#144, 200), coordinator[target post-shuffle partition size: 512435456]
+      :     :           +- *HashAggregate(keys=[provincecode#271, cellkey#144], functions=[], output=[provincecode#271, cellkey#144])
+:
+lkey#144])
+      :     :                    +- *Project [provincecode#271, concat(cast(enodeb_id#283 as string), _, cast(cell_id#282 as string)) AS cellkey#144]
+      :     :                       +- *Filter (((isnotnull(provincecode#271) && isnotnull(white_type#284)) && (provincecode#271 = 110000)) && (white_type#284 = 经纬度异常))
+      :     :                          +- HiveTableScan [provincecode#271, enodeb_id#283, cell_id#282, white_type#284], HiveTableRelation `zxvmax`.`cfg_5gcm_cell_whitelist`, org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe, [provincecode#271, province_name#272, citycode#273, city_name#274, districtcode#275, district_name#276, master_operators#277, ne_belong#278, plmn#279L, cell_name#280, enodeb_name#281, cell_id#282, enodeb_id#283, white_type#284, remarks#285, create_time#286, update_time#287]
+      :     +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, int, true], input[1, string, true]))
+      :        +- *HashAggregate(keys=[provincecode#294, cellkey#304, abnormal_days#323, day#289], functions=[], output=[provincecode#294, cellkey#304, abnormal_days#323, day#289])
+      :           +- Exchange(coordinator id: 41166632) hashpartitioning(provincecode#294, cellkey#304, abnormal_days#323, day#289, 200), coordinator[target post-shuffle partition size: 512435456]
+      :              +- *HashAggregate(keys=[provincecode#294, cellkey#304, abnormal_days#323, day#289], functions=[], output=[provincecode#294, cellkey#304, abnormal_days#323, day#289])
+      :                 +- *Project [provincecode#294, cellkey#304, abnormal_days#323, day#289]
+      :                    +- *BroadcastHashJoin [p_date#328], [max(p_date)#388], LeftSemi, BuildRight
+      :                       :- *Project [day#289, provincecode#294, cellkey#304, abnormal_days#323, p_date#328]
+      :                       :  +- *FileScan parquet zxvmax.dm_5gcm_abnormal_location_cell_info_d[day#289,provincecode#294,cellkey#304,abnormal_days#323,p_provincecode#327,p_date#328] Batched: true, Format: Parquet, Location: PrunedInMemoryFileIndex[viewfs://nsX/vmax_ns5/zxvmax/telecom/nr/dm/dm_5gcm_abnormal_location_cell..., PartitionCount: 417, PartitionFilters: [isnotnull(p_provincecode#327), (p_provincecode#327 = 110000)], PushedFilters: [], ReadSchema: struct<day:string,provincecode:int,cellkey:string,abnormal_days:int>
+      :                       +- BroadcastExchange HashedRelationBroadcastMode(List(input[0, string, true]))
+      :                          +- SortAggregate(key=[], functions=[max(p_date#386)], output=[max(p_date)#388])
+      :                             +- Exchange SinglePartition
+      :                                +- SortAggregate(key=[], functions=[partial_max(p_date#386)], output=[max#536])
+      :                                   +- *Project [p_date#386]
+      :                                      +- *FileScan parquet zxvmax.dm_5gcm_abnormal_location_cell_info_d[p_provincecode#385,p_date#386] Batched: true, Format: Parquet, Location: PrunedInMemoryFileIndex[viewfs://nsX/vmax_ns5/zxvmax/telecom/nr/dm/dm_5gcm_abnormal_location_cell..., PartitionCount: 417, PartitionFilters: [isnotnull(p_provincecode#385), (p_provincecode#385 = 110000)], PushedFilters: [], ReadSchema: struct<>
+      +- BroadcastExchange HashedRelationBroadcastMode(List(cast(input[0, int, true] as bigint)))
+         +- InMemoryTableScan [provincecode#76, province_name#77]
+:

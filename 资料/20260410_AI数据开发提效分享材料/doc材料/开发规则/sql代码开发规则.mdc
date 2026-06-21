@@ -1,0 +1,163 @@
+# 数据开发Cursor规则
+
+## 1. 命名规范
+
+### 1.1 临时表命名
+- **内存表**：`cache_自定义标识`
+
+## 2. SQL编码规范
+
+### 2.1 缩进与对齐
+- **缩进单位**：4个空格
+- **子查询缩进**：每个由"()"包括的子查询依次向内缩进一层，括号与原层次保持一致，括号内的子查询向内缩进一层
+- **关键字缩进**：每个关键字后的语句缩进一层，例如where的条件、from的表名、join的表名的表名、group by的列名、order by的列名，例如：
+```sql
+from 
+    table1
+where 
+    p_date = '${p_date}'
+    and p_hour = '${p_hour}'
+```
+- **partition缩进**：进行Partition的数据插入时，请按照以下方式进行缩进,同时select 语句中不再出现对应分区字段，采用静态分区赋值
+```sql
+INSERT overwrite TABLE dm_wirelesscover_cell_detail_w 
+PARTITION(
+    p_provincecode=${p_provincecode}
+    ,p_year=${p_year}
+    ,p_week=${p_week}
+)
+```
+
+### 2.2 表别名规范
+- **命名规则**：大写字母+数字序号
+- **层级标识**：
+  - 外层：A1, A2, A3...
+  - 内层：B1, B2, B3...
+  - 继续内层：C1, C2, C3...
+  - 相同层级使用同一个大写字母
+
+### 2.3 字段格式规范
+- **对齐方式**：字段左对齐，使用分行模式
+- **逗号位置**：逗号写在字段之前,逗号与字段之间不需要空格
+- **表别名前缀**：多表关联时字段名必须使用表别名前缀（如：A1.COL_NAME）
+- **单表查询**：可不使用表别名前缀
+- **类型转换**：使用cast()函数进行类型转换，如cast(split(A1.cellkey, '_')[0] as bigint)
+
+### 2.4 运算符规范
+- **空格要求**：算术运算符、逻辑运算符前后至少保留一个空格
+- **语法错误检查**：避免在set语句中出现多余的逗号，如`set mapreduce.fileoutputcommitter.marksuccessfuljobs = false, ;`
+
+## 3. 注释规范
+
+### 3.1 文件头注释
+```sql
+--Aim_table: 本文件的insert之后的表名
+--Key:
+--Auth:zhaoxc
+--Create_time：
+--Update：当前系统时间，例如2025-7-21 16:33:14
+```
+
+### 3.2 代码注释
+- **注释符**：使用单行注释 `--,没有JOIN时不需要写成子查询形式，直接单表查询汇聚即可，`
+- **复杂逻辑**：针对复杂的SQL语句增加注释说明
+- **字段注释**：最外层的select语句针对每个字段标明中文名称，注释采用两道杠加在列名之后，不单独占一行，注释中如果有特殊符号，需要替换，例如分号、换行符等
+
+## 4. SELECT语句规范
+
+### 4.1 基本要求
+- **禁止星号**：不能使用 `*`，必须明确指定字段名
+- **表别名前缀**：多表关联时字段名必须使用表别名前缀
+- **分区查询**：分区表必须指定分区查询，避免全表查询,多来源表时根据表名添加分区查询，例如以_d结尾，添加p_date分区查询，以_w即为尾，添加p_year和p_week分区查询
+- **提前过滤**：查询数据尽量提前过滤
+- **空值处理**：加工逻辑为"置空"时，使用null as 列名,不需要使用'' 或者 0
+- **运算处理**：当存在加减乘除等运算时，必须对运算的列进行空值处理，nvl(列名,0),没有加减乘除运算的时候，不对空值处理，例如sum(列名)，该列全部为控制的话，最终结果应为空，而不是sum(nvl(列名,0))导致最终结果为0
+
+## 5. JOIN语句规范
+
+### 5.1 连接类型
+- **明确指定**：必须指出JOIN方式（INNER, LEFT, RIGHT, FULL OUTER）
+- **推荐使用**：INNER JOIN、LEFT JOIN，避免使用RIGHT JOIN
+
+### 5.2 连接格式
+- **连接准备**：所有的连接都写成 JOIN 的形式，不写where 的形式，如果来源表有筛选，需要写为子查询形式，带出外部查询需要的字段,例如
+```sql
+    SELECT 
+        * 
+    FROM 
+        (SELECT 
+            * 
+        FROM 
+            table1 
+        WHERE 
+            p_date = '${p_date}'
+        )A1
+    LEFT JOIN 
+        (SELECT 
+            * 
+        FROM 
+            table2 
+        WHERE 
+            p_date = '${p_date}'
+        )A2 
+    ON A1.id = A2.id
+```
+如果子查询没有条件，则写成单行，子查询中不使用select *,将外层查询需要用到的字段全部列出,没有JOIN时不需要写成子查询形式，直接单表查询汇聚即可，
+
+## 6. CASE语句规范
+
+### 6.1 格式要求
+- **单条WHEN**：只有1条WHEN时写成1行
+- **多条WHEN**：超过1条时写成多行格式
+
+### 6.2 示例格式
+```sql
+case 
+    when t.BIZ_ZONE_LEVER = '10' then '集团级'
+    when t.BIZ_ZONE_LEVER = '30' then '市县级'
+    when t.BIZ_ZONE_LEVER = '40' then '乡镇级'
+    when t.BIZ_ZONE_LEVER = '99' then '待审批'
+    else '未知'
+end  as  BIZ_ZONE_LEVER_NM
+```
+
+## 9. 避免小文件生成
+
+### 9.1 文件大小控制
+- **目标大小**：文件大小控制在1M~128M
+- **shuffle输出**：调整spark.sql.shuffle.partitions参数
+- **无shuffle输出**：使用distribute by rand()控制文件数量
+
+### 9.2 配置参数
+```sql
+-- 避免小文件生成
+    set spark.sql.adaptive.enabled = true;
+    set spark.sql.adaptive.coalescePartitions.enabled = true;
+    set spark.sql.adaptive.coalescePartitions.maxPartitionSize=256m;
+    set spark.sql.adaptive.coalescePartitions.minPartitionSize=128m;
+    set mapreduce.fileoutputcommitter.marksuccessfuljobs = false;  
+    set spark.sql.hive.convertMetastoreOrc = false;
+    set spark.sql.hive.convertInsertingPartitionedTable =false;
+    set spark.sql.hive.convertMetastoreParquet =false;
+```
+
+## 10. 语法检查规范
+
+### 10.1 常见错误
+- **多余逗号**：避免在set语句末尾添加多余的逗号
+- **语法完整性**：确保所有语句都有正确的结束符
+- **括号匹配**：确保所有括号正确匹配
+- **引号使用**：字符串使用单引号，变量使用${}格式
+- **字段名称验证**：确保字段名称正确，避免使用错误的字段名（如RSRP指标使用RSRQ字段）
+- **字段重复检查**：避免在子查询中重复选择相同字段
+
+## 11. 字段映射规范
+
+### 11.1 字段名称规范
+
+
+### 11.2 字段选择规范
+- **子查询字段选择**：只选择外层查询需要的字段
+- **字段顺序**：按照业务逻辑顺序排列字段
+- **字段验证**：在编写SQL前确认源表字段名称和数据类型
+

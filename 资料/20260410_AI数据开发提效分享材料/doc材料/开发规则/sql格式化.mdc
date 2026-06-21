@@ -1,0 +1,99 @@
+
+# 数据开发Cursor规则
+
+## 1. 命名规范
+
+### 1.1 临时表命名
+- **内存表**：`cache_自定义标识`
+
+## 2. SQL编码规范
+
+### 2.1 缩进与对齐
+- **缩进单位**：4个空格
+
+### 2.2 表别名规范
+- **命名规则**：大写字母+数字序号
+- **层级标识**：
+  - 外层：A1, A2, A3...
+  - 内层：B1, B2, B3...
+  - 继续内层：C1, C2, C3...
+  表别名，相同层级使用相同的大写字母+不同的数字，不同层级由外向内从A到Z，不涉及多表连接时不需要表别名
+
+
+### 2.3 字段格式规范
+- **对齐方式**：字段左对齐，使用分行模式
+- **逗号位置**：逗号写在字段之前,逗号与字段名称之间不需要空格
+- **表别名前缀**：多表关联时字段名必须使用表别名前缀（如：A1.COL_NAME）
+- **单表查询**：不使用表别名前缀
+- **子查询缩进**：子查询与外部查询相比缩进一层
+
+### 2.4 运算符规范
+- **空格要求**：算术运算符、逻辑运算符前后至少保留一个空格,逗号与字段名称之间不需要空格
+
+## 3. 注释规范
+
+### 3.1 文件头注释
+```sql
+--Aim_table: 本文件的insert之后的表名
+--Key:
+--Auth:
+--Create_time：
+--Update：当前处理时间，例如2025-7-14 15:07:48
+```
+
+### 3.2 代码注释
+- **注释符**：使用单行注释 `--`
+- **复杂逻辑**：针对复杂的SQL语句增加注释说明
+
+## 4. SELECT语句规范
+
+### 4.1 基本要求
+- **禁止星号**：不能使用 `*`，必须明确指定字段名
+- **表别名前缀**：多表关联时字段名必须使用表别名前缀
+- **分区查询**：分区表必须指定分区查询，避免全表查询
+- **提前过滤**：查询数据尽量提前过滤
+
+
+## 5. JOIN语句规范
+
+### 5.1 连接类型
+- **明确指定**：必须指出JOIN方式（INNER, LEFT, RIGHT, FULL OUTER）
+- **推荐使用**：INNER JOIN、LEFT JOIN，避免使用RIGHT JOIN
+
+
+## 6. CASE语句规范
+
+### 6.1 格式要求
+- **单条WHEN**：只有1条WHEN时写成1行
+- **多条WHEN**：超过1条时写成多行格式
+
+### 6.2 示例格式
+```sql
+case 
+    when t.BIZ_ZONE_LEVER = '10' then '集团级'
+    when t.BIZ_ZONE_LEVER = '30' then '市县级'
+    when t.BIZ_ZONE_LEVER = '40' then '乡镇级'
+    when t.BIZ_ZONE_LEVER = '99' then '待审批'
+    else '未知'
+end  as  BIZ_ZONE_LEVER_NM
+```
+
+## 9. 避免小文件生成
+
+### 9.1 文件大小控制
+- **目标大小**：文件大小控制在1M~128M
+- **shuffle输出**：调整spark.sql.shuffle.partitions参数
+- **无shuffle输出**：使用distribute by rand()控制文件数量
+
+### 9.2 配置参数
+```sql
+-- 避免小文件生成
+    set spark.sql.adaptive.enabled = true;
+    set spark.sql.adaptive.coalescePartitions.enabled = true;
+    set spark.sql.adaptive.coalescePartitions.maxPartitionSize=256m;
+    set spark.sql.adaptive.coalescePartitions.minPartitionSize=128m;
+    set mapreduce.fileoutputcommitter.marksuccessfuljobs = false;  
+    set spark.sql.hive.convertMetastoreOrc = false;
+    set spark.sql.hive.convertInsertingPartitionedTable =false;
+    set spark.sql.hive.convertMetastoreParquet =false;
+```

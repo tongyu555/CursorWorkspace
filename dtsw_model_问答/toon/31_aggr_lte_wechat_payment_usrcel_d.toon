@@ -1,0 +1,38 @@
+theme_domain: 数据感知
+table_name: aggr_lte_wechat_payment_usrcel_d
+table_name_chinese: 4G微信支付用户小区天表
+data_frequency: day
+primary_key: 数据描述
+source_table_name[2]{源表英文名, 源表中文名, 别名, 备注, 是否主表}:
+  aggr_lte_dpi_im_usrcel_d, 4G_DPI_im用户小区维度天表, A, 过滤条件：is_wechat_payment = 1, 是
+  lte_cm_projdata_refactor, 4G电联工参, B1, 按照reportcellkey去重, null
+fields[29]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 上报时间，具体到天, A, p_date, 直取, null, null, 维度, 无, yyyy-mm-dd
+  enodebid, int, 基站标识, A, null, "split(cellkey,\"_\")[0]", null, null, 维度, 无, 无
+  cellid, string, 小区ID, A, null, "split(cellkey,\"_\")[1]", null, null, 维度, 无, 无
+  msisdn, string, 用户号码, A, msisdn, 直取, null, null, 维度, 无, 无
+  cellkey, string, 小区cellkey, A, cellkey, 直取, null, null, 维度, 无, 无
+  cellname, string, 小区名称, B, cellname, 关联工参回填, null, null, 维度, 无, 无
+  provincecode, string, 省ID, A, provincecode, 直取, null, null, 维度, 无, 6位数编码
+  province, string, 省名称, A, province, 直取, null, null, 维度, 无, 无
+  citycode, string, 地市ID, A, citycode, 直取, null, null, 维度, 无, 6位数编码
+  city, string, 地市名称, A, city, 直取, null, null, 维度, 无, 无
+  districtcode, int, 区县ID, A, districtcode, 直取, null, null, 维度, 无, 6位数编码
+  district, string, 区县名称, A, district, 直取, null, null, 维度, 无, 无
+  scan_code_num, bigint, 微信支付扫码次数, A, null, sum(record_cnt) , null, null, 指标, 次, >=0
+  duration_sum, double, 总时延（ms）, A, null, sum(duration_sum), null, null, 指标, ms, >=0
+  duration_avg, double, 平均时延（ms）, A, null, sum(duration_sum)/sum(record_cnt), null, null, 指标, ms, >=0
+  tcpsetupackdelay_sum, double, TCP二三次握手总时延（ms）, A, null, sum(tcpsetupackdelay_avg*tcpsetupackdelay_cnt), null, null, 指标, ms, >=0
+  tcpsetupackdelay_avg, double, TCP二三次握手时延（ms）, A, null, sum(tcpsetupackdelay_avg*tcpsetupackdelay_cnt)/sum(tcpsetupackdelay_cnt), null, null, 指标, ms, >=0
+  ultcp_retranspacket_sum, bigint, 上行TCP重传报文数, A, null, sum(ultcp_retranspacket_sum), null, null, 指标, 无, >=0
+  dltcp_retranspacket_sum, bigint, 下行TCP重传报文数, A, null, sum(dltcp_retranspacket_sum), null, null, 指标, 无, >=0
+  ultcpreorderingpacket_sum, bigint, 上行TCP乱序报文数, A, null, sum(ultcpreorderingpacket_sum), null, null, 指标, 无, >=0
+  dltcpreorderingpacket_sum, bigint, 下行TCP乱序报文数, A, null, sum(dltcpreorderingpacket_sum), null, null, 指标, 无, >=0
+  outputpacket_sum, bigint, 用户发出的业务数据包数量, A, null, sum(outputpacket_sum), null, null, 指标, 无, >=0
+  inputpacket_sum, bigint, 发给用户的业务数据包数量, A, null, sum(inputpacket_sum), null, null, 指标, 无, >=0
+  ultcp_retrans_rate, double, 上行重传率, A, null, sum(ultcp_retranspacket_sum)/sum(outputpacket_sum), null, null, 指标, 无, "[0,1]"
+  dltcp_retrans_rate, double, 下行重传率, A, null, sum(dltcp_retranspacket_sum)/sum(inputpacket_sum), null, null, 指标, 无, "[0,1]"
+  ultcpreordering_rate, double, 上行乱序率, A, null, sum(ultcpreorderingpacket_sum)/sum(outputpacket_sum), null, null, 指标, 无, "[0,1]"
+  dltcpreordering_rate, double, 下行乱序率, A, null, sum(dltcpreorderingpacket_sum)/sum(inputpacket_sum), null, null, 指标, 无, "[0,1]"
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

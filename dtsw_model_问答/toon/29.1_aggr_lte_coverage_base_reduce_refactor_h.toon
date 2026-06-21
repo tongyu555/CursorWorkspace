@@ -1,0 +1,45 @@
+theme_domain: 覆盖分析
+table_name: aggr_lte_coverage_base_reduce_refactor_h
+table_name_chinese: 4G MR小区指标裁剪天表
+data_frequency: hour
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 备注}:
+  aggr_lte_coverage_cel_h, 4G MR小区覆盖小时表, A, 过滤条件：data_source=0
+fields[37]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 日期, A, p_date, 直取, null, null, 维度, 无, 无
+  hour, int, 小时, A, p_hour, 直取, null, null, 维度, 无, 无
+  provincecode, int, 省编码, A, p_provincecode, 直取, null, null, 维度, 无, 无
+  citycode, int, 城市编码, A, citycode, 直取, null, null, 维度, 无, 无
+  cellkey, string, 小区唯一标识, A, cellkey, 直取, null, null, 维度, 无, 无
+  totalrsrp, bigint, RSRP总值, A, null, sum(totalrsrp), null, null, 维度, 无, <0
+  rsrpcount, bigint, RSRP有效数目, A, null, sum(rsrpcount), null, null, 维度, 无, >=0
+  avgrsrp, double, RSRP平均值, A, null, sum(totalrsrp)/sum(rsrpcount), null, null, 维度, 无, "[-140,-43]"
+  totalrsrq, double, RSRQ总值, A, null, sum(totalrsrq), null, null, 维度, 无, <0
+  rsrqcount, bigint, RSRQ有效数目, A, null, sum(rsrqcount), null, null, 维度, 无, >=0
+  avgrsrq, double, RSRQ平均值, A, null, sum(totalrsrq)/sum(rsrqcount), null, null, 维度, 无, "[-20,-3]"
+  totalulsinr, bigint, ULSINR总值, A, null, sum(totalulsinr), null, null, 维度, 无, "(-∞,+∞)"
+  ulsinrcount, bigint, ULSINR有效的MR数目, A, null, sum(ulsinrcount), null, null, 维度, 无, >=0
+  avgulsinr, double, ULSINR平均值, A, null, sum(totalulsinr)/sum(ulsinrcount), null, null, 维度, 无, "[-10,30]"
+  mod3interfer_mrcount, bigint, MOD3干扰MR数目, A, null, sum(mod3interfer_mrcount), null, null, 维度, 无, >=0
+  rsrp_5div_level1mrcount, bigint, "RSRP在[-75,-43]范围内的MR数目", A, null, sum(rsrp_5div_level1mrcount), null, null, 维度, 无, >=0
+  rsrp_5div_level2mrcount, bigint, "RSRP在[-80,-75)范围内的MR数目", A, null, sum(rsrp_5div_level2mrcount), null, null, 指标, 无, >=0
+  rsrp_5div_level3mrcount, bigint, "RSRP在[-85,-80)范围内的MR数目", A, null, sum(rsrp_5div_level3mrcount), null, null, 指标, 无, >=0
+  rsrp_5div_level4mrcount, bigint, "RSRP在[-90,-85)范围内的MR数目", A, null, sum(rsrp_5div_level4mrcount), null, null, 指标, 无, >=0
+  rsrp_5div_level5mrcount, bigint, "RSRP在[-95,-90)范围内的MR数目", A, null, sum(rsrp_5div_level5mrcount), null, null, 指标, 无, >=0
+  rsrp_5div_level6mrcount, bigint, "RSRP在[-100,-95)范围内的MR数目", A, null, sum(rsrp_5div_level6mrcount), null, null, 指标, 无, >=0
+  rsrp_5div_level7mrcount, bigint, "RSRP在[-105,-100)范围内的MR数目", A, null, sum(rsrp_5div_level7mrcount), null, null, 指标, 无, >=0
+  rsrp_5div_level8mrcount, bigint, "RSRP在[-110,-105)范围内的MR数目", A, null, sum(rsrp_5div_level8mrcount), null, null, 指标, 无, >=0
+  rsrp_5div_level9mrcount, bigint, "RSRP在[-115,-110)范围内的MR数目", A, null, sum(rsrp_5div_level11mrcount+rsrp_5div_level12mrcount), null, null, 指标, 无, >=0
+  ta0_cnt, bigint, TA0的采样点数, A, null, sum(ta0_cnt), null, null, 指标, 无, >=0
+  ta1_cnt, bigint, TA1的采样点数, A, null, sum(ta1_cnt), null, null, 指标, 无, >=0
+  ta2_cnt, bigint, TA2的采样点数, A, null, sum(ta2_cnt), null, null, 指标, 无, >=0
+  ta3_cnt, bigint, TA3的采样点数, A, null, sum(ta3_cnt), null, null, 指标, 无, >=0
+  ta4_cnt, bigint, TA4的采样点数, A, null, sum(ta4_cnt), null, null, 指标, 无, >=0
+  ta5_cnt, bigint, TA5的采样点数, A, null, sum(ta5_cnt), null, null, 指标, 无, >=0
+  ta6_cnt, bigint, TA6的采样点数, A, null, sum(ta6_cnt), null, null, 指标, 无, >=0
+  ta7_11_cnt, bigint, TA7~TA11采样点数, A, null, sum(ta7_11_cnt), null, null, 指标, 无, >=0
+  ta12_18_cnt, bigint, TA12~TA18采样点数, A, null, sum(ta_level5mrcount+ta_level6mrcount), null, null, 指标, 无, >=0
+  ta19_cnt, bigint, TA≥19的采样点数, A, null, sum(ta_level7mrcount), null, null, 指标, 无, >=0
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null

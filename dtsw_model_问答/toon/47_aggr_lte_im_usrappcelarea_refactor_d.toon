@@ -1,0 +1,65 @@
+theme_domain: 数据感知
+table_name: aggr_lte_im_usrappcelarea_refactor_d
+table_name_chinese: 4G_im类型用户小区区域app维度天
+data_frequency: 天
+primary_key: 数据描述
+source_table_name[3]{源表英文名, 源表中文名, 别名, 备注, 任务描述, 是否主表}:
+  aggr_lte_usrareatime_cel_refactor_d, 5G_MR用户聚区结果天表, A, 参考现网任务aggr_lte_im_usrappcelarea_d。先将B与B1进行union ALL，再进行A LEFT JOIN B。关联条件：B.cellkey=A.cellkey and B.imsi=A.imsi and B.hour=A.hour and B.quarter=A.quarter, null, null
+  aggr_nr_dpi_im_usrappcel_q, 5G_DPI_im类型用户小区app维度15分钟表, B, null, interface=1, 是
+  aggr_lte_dpi_im_usrappcel_q, 4G_DPI_im类型用户小区app维度15分钟表, B1, null, null, null
+fields[55]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 省编码, A, day, 直取, null, null, 维度, 无, 无
+  hour, int, 小时, A, hour, 直取, null, null, 维度, 无, 无
+  quarter, int, 15分钟, A, quarter, 直取, null, null, 维度, 无, 无
+  imsi, string, 日期, A, imsi, 直取, null, null, 维度, 无, 无
+  area_id, string, 区域ID, A, area_id, 直取, null, null, 维度, 无, 无
+  area_regionid, string, 区域栅格ID, A, area_regionid, 直取, null, null, 维度, 无, 无
+  area_x_offset_20, string, 区域栅格坐标x轴偏移, A, area_x_offset_20, 直取, null, null, 维度, 无, 无
+  area_y_offset_20, string, 区域栅格坐标y轴偏移, A, area_y_offset_20, 直取, null, null, 维度, 无, 无
+  area_lon, double, 区域经度, A, area_lon, 直取, null, null, 维度, 无, 无
+  area_lat, double, 区域纬度, A, area_lat, 直取, null, null, 维度, 无, 无
+  cellkey, string, 小区cellkey, A, cellkey, 直取, null, null, 维度, 无, 无
+  servicetype, int, 业务应用, "B|B1", servicetype, 直取, null, null, 维度, 无, 无
+  duration_sum, bigint, 持续时间，单位毫秒, "B|B1", null, sum(duration_sum) duration_sum, B1表处理：duration as duration_sum, null, 指标, ms, >=0
+  outputoctets_sum, bigint, 上行流量(byte), "B|B1", null, sum(outputoctets_sum) outputoctets_sum, B1表处理：outputoctets as outputoctets_sum, null, 指标, byte, >=0
+  inputoctets_sum, bigint, 下行流量(byte), "B|B1", null, sum(inputoctets_sum) inputoctets_sum, B1表处理：inputoctets as inputoctets_sum, null, 指标, byte, >=0
+  tcpsetupresponsedelay_sum, bigint, TCP建链响应时延_sum, "B|B1", null, sum(tcpsetupresponsedelay_sum) tcpsetupresponsedelay_sum, B1表处理：tcpsetupresponsedelay_avg*tcpsetupresponsedelay_cnt as tcpsetupresponsedelay_sum, null, 指标, ms, >=0
+  tcpsetupackdelay_sum, bigint, TCP建链确认时延_sum, "B|B1", null, sum(tcpsetupackdelay_sum) tcpsetupackdelay_sum, B1表处理：tcpsetupackdelay_avg*tcpsetupackdelay_cnt as tcpsetupackdelay_sum, null, 指标, ms, >=0
+  tcpsetupdelay_sum, bigint, TCP建立时延_sum, "B|B1", null, sum(tcpsetupdelay_sum) tcpsetupdelay_sum, B1表处理：tcpsetupdelay_avg*tcpsetupdelay_cnt as tcpsetupdelay_sum, null, 指标, ms, >=0
+  ul_text_cnt, bigint, 上行次数, "B|B1", null, sum(ul_text_cnt) ul_text_cnt, B1表处理：http_req_cnt as ul_text_cnt, null, 指标, 无, >=0
+  ul_text_succ_cnt, bigint, 上行成功次数, "B|B1", null, sum(ul_text_succ_cnt) ul_text_succ_cnt, B1表处理：http_succ_cnt as ul_text_succ_cnt, null, 指标, 无, >=0
+  dl_text_cnt, bigint, 下行次数, "B|B1", null, sum(dl_text_cnt) dl_text_cnt, B1表处理：http_req_cnt as dl_text_cnt, null, 指标, 无, >=0
+  dl_text_succ_cnt, bigint, 下行成功次数, "B|B1", null, sum(dl_text_succ_cnt) dl_text_succ_cnt, B1表处理：http_succ_cnt as dl_text_succ_cnt, null, 指标, 无, >=0
+  times_excellentsentrate, bigint, 消息发送优秀次数, "B|B1", null, sum(times_excellentsentrate) times_excellentsentrate, B1表处理：http_succ_cnt as times_excellentsentrate, null, 指标, 无, >=0
+  times_inferiorsentrate, bigint, 消息发送质差次数, "B|B1", null, sum(times_inferiorsentrate) times_inferiorsentrate, "B1表处理：nvl(http_req_cnt,0) - nvl(http_succ_cnt,0) as times_inferiorsentrate", null, 指标, 无, >=0
+  times_wellsentrate, bigint, 消息发送良好次数, "B|B1", null, sum(times_wellsentrate) times_wellsentrate, B1表处理：0 as times_wellsentrate, null, 指标, 无, 0
+  httpwebreqcount, bigint, http请求次数, "B|B1", null, sum(httpwebreqcount)  httpwebreqcount, B1表处理：http_req_cnt as httpwebreqcount, null, 指标, 无, >=0
+  dnsqueryreqcount, bigint, DNS请求次数, "B|B1", null, sum(dnsqueryreqcount) dnsqueryreqcount, B1表处理：dnsquery_cnt as dnsqueryreqcount, null, 指标, 无, >=0
+  dnsqueryrspcount, bigint, DNS响应次数, "B|B1", null, sum(dnsqueryrspcount) dnsqueryrspcount, B1表处理：dnsresponse_cnt as dnsqueryrspcount, null, 指标, 无, >=0
+  dnsquerytime_sum, bigint, DNS请求时延_sum, "B|B1", null, sum(dnsquerytime_sum) dnsquerytime_sum, B1表处理：dnsresponse_delay*dnsresponse_cnt as dnsquerytime_sum, null, 指标, ms, >=0
+  dnsquerydelay_avg, bigint, DNS请求时延_avg, "B|B1", null, avg(dnsquerydelay_avg) dnsquerydelay_avg, B1表处理：dnsresponse_delay as dnsquerydelay_avg, null, 指标, 无, 0
+  dnsquerydelay_seg_1, bigint, DNS请求时延_seg_1, "B|B1", null, sum(dnsquerydelay_seg_1) dnsquerydelay_seg_1, B1表处理：置0, null, 指标, 无, 0
+  dnsquerydelay_seg_2, bigint, DNS请求时延_seg_2, "B|B1", null, sum(dnsquerydelay_seg_2) dnsquerydelay_seg_2, B1表处理：置0, null, 指标, 无, 0
+  dnsquerydelay_seg_3, bigint, DNS请求时延_seg_3, "B|B1", null, sum(dnsquerydelay_seg_3) dnsquerydelay_seg_3, B1表处理：置0, null, 指标, 无, 0
+  dnsquerydelay_seg_4, bigint, DNS请求时延_seg_4, "B|B1", null, sum(dnsquerydelay_seg_4) dnsquerydelay_seg_4, B1表处理：置0, null, 指标, 无, 0
+  dnsquerydelay_seg_5, bigint, DNS请求时延_seg_5, "B|B1", null, sum(dnsquerydelay_seg_5) dnsquerydelay_seg_5, B1表处理：置0, null, 指标, 无, 0
+  tcpsetupresponsedelay_avg, bigint, TCP建链响应时延_avg, "B|B1", null, case when sum(httpwebreqcount)  !=0 then sum(tcpsetupresponsedelay_sum)/sum(httpwebreqcount) else 0 end as tcpsetupresponsedelay_avg, null, null, 指标, ms, >=0
+  tcpsetupresponsedelay_seg_1, bigint, TCP建链响应时延_seg_1, "B|B1", null, sum(tcpsetupresponsedelay_seg_1) tcpsetupresponsedelay_seg_1, B1表处理：tcpsetupresponsedelay_cnt_0_50 as tcpsetupresponsedelay_seg_1, null, 指标, 无, >=0
+  tcpsetupresponsedelay_seg_2, bigint, TCP建链响应时延_seg_2, "B|B1", null, sum(tcpsetupresponsedelay_seg_2) tcpsetupresponsedelay_seg_2, B1表处理：tcpsetupresponsedelay_cnt_50_100 as tcpsetupresponsedelay_seg_2, null, 指标, 无, >=0
+  tcpsetupresponsedelay_seg_3, bigint, TCP建链响应时延_seg_3, "B|B1", null, sum(tcpsetupresponsedelay_seg_3) tcpsetupresponsedelay_seg_3, B1表处理：tcpsetupresponsedelay_cnt_100_150 as tcpsetupresponsedelay_seg_3, null, 指标, 无, >=0
+  tcpsetupresponsedelay_seg_4, bigint, TCP建链响应时延_seg_4, "B|B1", null, sum(tcpsetupresponsedelay_seg_4) tcpsetupresponsedelay_seg_4, B1表处理：tcpsetupresponsedelay_cnt_150_200 as tcpsetupresponsedelay_seg_4, null, 指标, 无, >=0
+  tcpsetupresponsedelay_seg_5, bigint, TCP建链响应时延_seg_5, "B|B1", null, sum(tcpsetupresponsedelay_seg_5) tcpsetupresponsedelay_seg_5, B1表处理：tcpsetupresponsedelay_cnt_greater_200 as tcpsetupresponsedelay_seg_5, null, 指标, 无, >=0
+  tcpsetupackdelay_avg, bigint, TCP建链确认时延_avg, "B|B1", null, case when sum(httpwebreqcount) !=0 then sum(tcpsetupackdelay_sum)/sum(httpwebreqcount) else 0 end as tcpsetupackdelay_avg, null, null, 指标, ms, >=0
+  tcpsetupackdelay_seg_1, bigint, TCP建链确认时延_seg_1, "B|B1", null, sum(tcpsetupackdelay_seg_1) tcpsetupackdelay_seg_1, B1表处理：tcpsetupackdelay_cnt_0_50 as tcpsetupackdelay_seg_1, null, 指标, 无, >=0
+  tcpsetupackdelay_seg_2, bigint, TCP建链确认时延_seg_2, "B|B1", null, sum(tcpsetupackdelay_seg_2) tcpsetupackdelay_seg_2, B1表处理：tcpsetupackdelay_cnt_50_100 as tcpsetupackdelay_seg_2, null, 指标, 无, >=0
+  tcpsetupackdelay_seg_3, bigint, TCP建链确认时延_seg_3, "B|B1", null, sum(tcpsetupackdelay_seg_3) tcpsetupackdelay_seg_3, B1表处理：tcpsetupackdelay_cnt_100_150 as tcpsetupackdelay_seg_3, null, 指标, 无, >=0
+  tcpsetupackdelay_seg_4, bigint, TCP建链确认时延_seg_4, "B|B1", null, sum(tcpsetupackdelay_seg_4) tcpsetupackdelay_seg_4, B1表处理：tcpsetupackdelay_cnt_150_200 as tcpsetupackdelay_seg_4, null, 指标, 无, >=0
+  tcpsetupackdelay_seg_5, bigint, TCP建链确认时延_seg_5, "B|B1", null, sum(tcpsetupackdelay_seg_5) tcpsetupackdelay_seg_5, B1表处理：tcpsetupackdelay_cnt_greater_200 as tcpsetupackdelay_seg_5, null, 指标, 无, >=0
+  tcpsetupdelay_avg, bigint, TCP建立时延(ms), "B|B1", null, case when sum(httpwebreqcount)  !=0 then sum(tcpsetupdelay_sum)/sum(httpwebreqcount) else 0 end as tcpsetupdelay_avg, null, null, 指标, ms, >=0
+  tcpsetupdelay_seg_1, bigint, TCP建立时延_seg_1, "B|B1", null, sum(tcpsetupdelay_seg_1) tcpsetupdelay_seg_1, B1表处理：tcpsetupdelay_cnt_0_50 as tcpsetupdelay_seg_1, null, 指标, 无, >=0
+  tcpsetupdelay_seg_2, bigint, TCP建立时延_seg_2, "B|B1", null, sum(tcpsetupdelay_seg_2) tcpsetupdelay_seg_2, B1表处理：tcpsetupdelay_cnt_50_100 as tcpsetupdelay_seg_2, null, 指标, 无, >=0
+  tcpsetupdelay_seg_3, bigint, TCP建立时延_seg_3, "B|B1", null, sum(tcpsetupdelay_seg_3) tcpsetupdelay_seg_3, B1表处理：tcpsetupdelay_cnt_100_150 as tcpsetupdelay_seg_3, null, 指标, 无, >=0
+  tcpsetupdelay_seg_4, bigint, TCP建立时延_seg_4, "B|B1", null, sum(tcpsetupdelay_seg_4) tcpsetupdelay_seg_4, B1表处理：tcpsetupdelay_cnt_150_200 as tcpsetupdelay_seg_4, null, 指标, 无, >=0
+  tcpsetupdelay_seg_5, bigint, TCP建立时延_seg_5, "B|B1", null, sum(tcpsetupdelay_seg_5) tcpsetupdelay_seg_5, B1表处理：tcpsetupdelay_cnt_greater_200 as tcpsetupdelay_seg_5, null, 指标, 无, >=0
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

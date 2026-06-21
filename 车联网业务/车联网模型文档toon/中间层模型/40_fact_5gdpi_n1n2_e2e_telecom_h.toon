@@ -1,0 +1,335 @@
+theme_domain: null
+table_name: fact_5gdpi_n1n2_e2e_telecom_h
+table_name_chinese: SA控制面N1N2接口事实表
+data_frequency: hour
+primary_key: 数据描述
+source_table_name[3]{源表英文名, 源表中文名, 别名}:
+  ods_5gdpi_n1n2_e2e_telecom_5min, 5G N1N2贴源详单表, A
+  cfg_s1mme_cause code_list, n1n2定界定位编码表, C
+  fact_nr_cm_projdata, 5G电联工参, B
+fields[325]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  interface, int, "必填字段。接口类型：\n1：S1-U\n2：S1-MME\n3：S6a\n4：S11\n6：S5-C\n14：L2TP\n16：Gm信令面\n28：Gm接口VoLTE会话xDR（Gm Session xDR）\n29：Gm接口VoLTE切片xDR（Gm Slice xDR）\n31：S1-U接口VoLTE切片xDR（S1-U Slice xDR）\n35：Radius\n50：N1N2\n51：N4\n52：N5\n53：N7\n54：N8\n55：N10\n56：N11\n57：N12\n58：N14\n59：N15\n66：N16\n60：N22\n61：N26\n62：N40\n63：N13\n100：User Plane（5G SA指N3接口）\n", null, null, null, null, null, null, null, null
+  xdr_id, string, 必填字段。采集解析服务器内唯一的xDR编号。一个信令流程或业务传输过程生成一个xDR ID。对于信令面xDR，一个xDR ID可能对应同一信令流程中的多条原始消息记录。, null, null, null, null, null, null, null, null
+  supi, string, 永久用户标识。4G 填写用户IMSI。, null, null, null, null, null, null, null, null
+  pei, string, 永久设备标识。4G填写IMEI/IMEISV。保持信令抽取的原样，无需进行IMEI和IMEISV间的转化。, null, null, null, null, null, null, null, null
+  msisdn, string, 用户号码。, null, null, null, null, null, null, null, null
+  rat, int, RAT类型：取各接口码流中携带的值。如果接入类型为5G NR，将RAT值改写为10。, null, null, null, null, null, null, null, null
+  home_province, string, 用户的归属地省份，枚举定义参见附录G。对国际漫入用户时，该字段填写用户归属运营商PLMN。, null, null, null, null, null, null, null, null
+  procedure_type, int, " 流程类型编码，具体取值如下：\n0： Registration\n1： De-registration\n2： Service Request\n3： UE Configuration Update\n4： SMS\n30： PDU Session Establishment\n31： PDU Session Modification\n32： PDU Session Release\n60： N2 HO Out\n61： N2 HO In\n62： N2 HO Cancel\n63： Xn HO\n64： UE Context Release\n73： UE Capability Info Indication\n74： UE Radio Capability Check\n75： Trace Start\n76： Deactivate Trace\n77： Cell traffic Trace\n78： NG Reset\n79： Error indication\n80： NG Setup\n81： RAN Configuration Update\n82： AMF Configuration Update\n83： Overload Start\n84： Overload Stop", null, null, null, null, null, null, null, null
+  procedure_start_time, bigint, "业务流程开始时间，UTC时间，从1970/1/1 00:00:00开始到当前的毫秒数。", null, null, null, null, null, null, null, null
+  procedure_end_time, bigint, "业务流程结束时间，UTC时间，从1970/1/1 00:00:00开始到当前的毫秒数。", null, null, null, null, null, null, null, null
+  procedure_status, int, "流程状态\n1：成功；\n2：失败；\n3：超时\n", null, null, null, null, null, null, null, null
+  request_cause_type, int, "标识流程请求消息中cause字段所对应的Cause Group。\n失败原因类型，对于5G NAS流程：\n1：5GMM\n2：5GSM\n对于NGAP流程：\n1：Radio Network Layer\n2：Transport Layer\n3：NAS\n4：Protocol\n5：Misc\n对于SMS流程：\n1：CP Cause\n2：RP Cause", null, null, null, null, null, null, null, null
+  request_cause, int, "流程的请求消息中所包含的Cause值：\n针对De-registration流程，填写De-registration Request消息中的Cause值；\n针对PDU Session Modification流程，填写PDU Session Modification Request/PDU Session Modification Command消息中的Cause值；\n针对PDU Session Release流程，填写PDU SessionRelease Request/PDU Session Release Command消息中的Cause值；\n针对N2 Handover Out流程，填写HANDOVER REQUIRED消息中的Cause值；\n针对N2 Handover In流程，填写HANDOVER REQUEST消息中的Cause值；\n针对N2 Handover Cancel流程，填写HANDOVER CANCEL消息中的Cause值；\n针对UE Context Release流程，填写UE Context Release Request或UE Context Release Command消息中的Cause值。\n详见5.3.2.2.15", null, null, null, null, null, null, null, null
+  failure_cause_type, int, "标识流程失败响应消息中cause字段所对应的Cause Group。\n失败原因类型，对于5G NAS流程：\n1：5GMM\n2：5GSM\n对于NGAP流程：\n1：Radio Network Layer\n2：Transport Layer\n3：NAS\n4：Protocol\n5：Misc\n对于SMS流程：\n1：CP Cause\n2：RP Cause", null, null, null, null, null, null, null, null
+  failure_cause, int, "流程失败响应消息中的值。\nCauseValue，规范参见：\n> 5GMM具体CauseValue取值参见3GPP 24.501第9.11.3.2节Table 9.11.3.2.1；\n> 5GSM具体CauseValue取值参见3GPP 24.501第9.11.4.2节Table 9.11.4.2.1；\n> NGAP具体CauseValue取值参见3GPP 38.413第9.3.1.2节；\n详见5.3.2.2.16", null, null, null, null, null, null, null, null
+  keyword, int, 辅助流程类型的关键参数信息，具体取值方式参见算法, null, null, null, null, null, null, null, null
+  amf_ue_ngap_id, bigint, AMF UE NGAP ID, null, null, null, null, null, null, null, null
+  ran_ue_ngap_id, int, RAN UE NGAP ID, null, null, null, null, null, null, null, null
+  suci, string, Subscription Concealed Identifier，参见3GPP 24.501 第9.11.3.4节，填写整个SUCI的ASCII形式, null, null, null, null, null, null, null, null
+  machine_ip_add_type, int, "设备IP地址类型\n0x01：IPv4\n0x02：IPv6", null, null, null, null, null, null, null, null
+  amf_ip_add, string, AMF信令面的IP地址；, null, null, null, null, null, null, null, null
+  gnb_ip_add, string, gNodeB信令面的IP地址；, null, null, null, null, null, null, null, null
+  amf_port, int, AMF IP地址对应的端口号；, null, null, null, null, null, null, null, null
+  gnb_port, int, gNodeBIP地址对应的端口号；, null, null, null, null, null, null, null, null
+  old_amf_region_id, int, 原AMF区域标识，UE的5G-GUTI发生改变时填写, null, null, null, null, null, null, null, null
+  old_amf_set_id, int, 原AMF集号，UE的5G-GUTI发生改变时填写, null, null, null, null, null, null, null, null
+  old_amf_pointer, int, 原AMF号，UE的5G-GUTI发生改变时填写, null, null, null, null, null, null, null, null
+  old_5g_tmsi, int, UE的原5G-TMSI，UE的5G-GUTI发生改变时填写, null, null, null, null, null, null, null, null
+  amf_region_id, int, 当前AMF区域标识, null, null, null, null, null, null, null, null
+  amf_set_id, int, 当前AMF集合标识, null, null, null, null, null, null, null, null
+  amf_pointer, int, 当前连接的AMF标识, null, null, null, null, null, null, null, null
+  5g_tmsi, int, UE当前的5G-TMSI, null, null, null, null, null, null, null, null
+  other_location_type, int, "针对切换过程，填写对端位置类型\n1：NR（nrLocation）\n2：E-UTRAN（eutraLocation）\n3：N3IWF（n3gaLocation）", null, null, null, null, null, null, null, null
+  other_tac, int, 针对切换过程，填写对端TAC, null, null, null, null, null, null, null, null
+  other_cell_id, bigint, 针对切换过程，填写对端Cell ID, null, null, null, null, null, null, null, null
+  paging_tac_number, int, 寻呼TAC个数（5G仅支持TMSI寻呼）, null, null, null, null, null, null, null, null
+  auth_type, int, "Primary Authentication鉴权类型：\n1：5G-AKA，无EAP消息，有5G AV\n2：EAP-AKA'，EAP Method Type = 50；\n3：EAP-TLS，EAP Method Type = 13；", null, null, null, null, null, null, null, null
+  selected_nas_ciphering_algorithm, int, Security mode command消息中Selected NAS security algorithms IE的octet2 bit8-5取值，参考24.501 9.11.3.34节, null, null, null, null, null, null, null, null
+  registration_result, int, 标识REGISTRATION ACCEPT消息中Registration result value的取值参见3GPP 24.501第9.11.3.6节, null, null, null, null, null, null, null, null
+  de_registration_direction, int, "触发方式：\n1：流程由UE发起\n2：流程由网络侧发起", null, null, null, null, null, null, null, null
+  auth_failure_direction, int, "5G AKA鉴权失败时，失败类型：\n1：UE鉴权失败，收到Authentication failure\n2：网络鉴权失败，收到Authentication reject", null, null, null, null, null, null, null, null
+  selected_nas_integrity_protection_algorithm, int, Security mode command消息中Selected NAS security algorithms IE的octet2 bit4-1取值，参考24.501 9.11.3.34节, null, null, null, null, null, null, null, null
+  ues_usage_setting, int, "标识REGISTRATION REQUEST消息中“UE's usage setting”IE中“UE's usage setting”信息，取值：\n0：voice centric\n1：data centric\n取值参见3GPP 24.501 第9.11.3.55节", null, null, null, null, null, null, null, null
+  re_registration_flag, int, 填充De-registration type中Bit3的值，取值参考24.501 9.11.3.20, null, null, null, null, null, null, null, null
+  s1_mode_support, int, S1支持能力，5GMM capability-->S1 mode，取值参考 24.501 9.11.3.1, null, null, null, null, null, null, null, null
+  ims_vops, int, 5GS network feature support -->IMS VoPS，取值参考24.501 9.11.3.5, null, null, null, null, null, null, null, null
+  iwk_n26, int, 5GS network feature support -->IWK N26，取值参考24.501 9.11.3.5, null, null, null, null, null, null, null, null
+  mulit_homed_ipv6_support, int, "PDU session是否支持Mulit-homed Ipv6\n请求消息中5GSM capability的octet3 bit2”，取值参考24.501 9.11.4.1\nPDU Session Establishment和PDU session modification过程填写", null, null, null, null, null, null, null, null
+  ul_session_ambr, bigint, 上行聚合最大比特率，kbps, null, null, null, null, null, null, null, null
+  dl_session_ambr, bigint, 下行聚合最大比特率，kbps, null, null, null, null, null, null, null, null
+  s_nssai_sst, string, "网络切片选择辅助信息（切片/服务类型）。若有多个切片，以“,”分隔。", null, null, null, null, null, null, null, null
+  s_nssai_sd, string, "网络切片选择辅助信息（切片差分器）。若有多个切片，以“,”分隔。", null, null, null, null, null, null, null, null
+  location_type, int, "针对切换过程，填写对端位置类型\n1：NR（nrLocation）\n2：E-UTRAN（eutraLocation）\n3：N3IWF（n3gaLocation）", null, null, null, null, null, null, null, null
+  tac, int, 流程结束时，UE当前所在的TAC, null, null, null, null, null, null, null, null
+  ci, bigint, 流程结束时，UE所在的NR Cell ID/E-UTRAN Cell ID, null, null, null, null, null, null, null, null
+  first_fail_trans_prot, int, "N1/N2接口信令流程中第一个失败的事务的协议层：\n0：NGAP\n1：5GSM\n2：5GMM\n如Registration流程中，发生鉴权失败，则填充鉴权失败的信息。", null, null, null, null, null, null, null, null
+  first_fail_trans, int, 流程类型，具体取值参见附录K，由采集层填充, null, null, null, null, null, null, null, null
+  first_fail_direction, int, "N1/N2接口信令流程中第一个失败的事务方向。\n1：失败事务由AN发起\n2：失败事务由AMF发起", null, null, null, null, null, null, null, null
+  first_fail_cause_type, int, "标识流程失败响应消息中cause字段所对应的Cause Group。\n失败原因类型，对于5G NAS流程：\n1：5GMM\n2：5GSM\n对于NGAP流程：\n1：Radio Network Layer\n2：Transport Layer\n3：NAS\n4：Protocol\n5：Misc", null, null, null, null, null, null, null, null
+  first_fail_cause, int, 信令流程中第一个失败的事务原因码，即信令流程失败的直接原因，从失败消息的Cause信元中获取, null, null, null, null, null, null, null, null
+  e2e_first_fail_trans_prot, int, "全流程第一拆线事务的协议，由合成层实现多接口关联后填写。\n0：NGAP，标识第一拆线事务为N1/N2接口事务；\n1：HTTP2，标识第一拆线事务为服务化接口事务。", null, null, null, null, null, null, null, null
+  e2e_first_fail_trans, int, "全流程第一拆线事务类型，由合成层实现多接口关联后填写。\n如E2E first fail trans prot字段为0：NGAP，则填充First fail trans；\n如E2E first fail trans prot字段为1：HTTP2，则填充服务化接口单据中的Procedure Type字段。", null, null, null, null, null, null, null, null
+  e2e_first_fail_cause_type, int, "全流程第一拆线事务失败原因的类型，由合成层实现多接口关联后填写。\nN1/N2事务，填充first fail cause type字段值\n服务化接口，填充对应单据的status code字段值", null, null, null, null, null, null, null, null
+  e2e_first_fail_cause, int, "全流程第一拆线事务失败原因码，从失败的事务中获取，由合成层实现多接口关联后填写。\nN1/N2事务，填充first fail cause字段值\n服务化接口，填充对应单据的failure cause字段值。\n", null, null, null, null, null, null, null, null
+  pdu_session_number, int, 必填字段。整数值N，指示后续跟随的PDU Session信息的个数，每个PDU Session信息与一个会话相对应，其中包括以下多个字段： PDU Session ID，PDU Session Dnn，PDU Session 1 DNN type，操作结果，该PDU Session对应的用户面UPF侧及gNB侧的IP以及GTP-TEID。如果该信令过程不涉及对任何承载的操作，则该字段取值为0，此时该字段之后PDU Session信息的个数为0, null, null, null, null, null, null, null, null
+  pdu_session_id, int, 第1个PDU Session Identity, null, null, null, null, null, null, null, null
+  pdu_session_req_type, int, "第1个请求消息中的Request Type：\n1：initial request\n2：existing PDU session\n3：initial emergency request\n4：existing emergency PDU session\n5：modification request\n取值参见3GPP TS 24.501第9.11.3.47节", null, null, null, null, null, null, null, null
+  pdu_session_type, int, "第1个应答消息中的PDU Session Type，取值:\n1：IPv4\n2：IPv6\n3：IPv4v6\n4：Unstructured\n5：Ethernet", null, null, null, null, null, null, null, null
+  pdu_session_dnn, string, "第1个Date Network Name,取值参考23.003 9.1节", null, null, null, null, null, null, null, null
+  pdu_session_dnn_type, int, "第1个PDU Session连接类型，根据PDU SESSION ESTABLISHMENT ACCEPT消息中的DNN判断:\n1：普通数据业务（含ctnet等）\n2：VoLTE业务（含ims）\n3：物联网业务（暂不识别，后面补充）\n4：彩信业务（含ctwap）\n254：未知其它业务", null, null, null, null, null, null, null, null
+  pdu_session_direction, int, "第1个触发方式：\n1：流程由UE发起\n2：流程由AMF发起\nPDU Session Modification流程填写", null, null, null, null, null, null, null, null
+  pdu_sessionuser_ipv4, string, pdu_sessionuser_ipv4, null, null, null, null, null, null, null, null
+  pdusession_user_ipv6, string, pdusession_user_ipv6, null, null, null, null, null, null, null, null
+  pdu_session_always_on_pdu_session_indication, int, "第1个永远在线PDU Session标识，Always-on PDU session indication：\n0：Always-on PDU session not allowed\n1：Always-on PDU session required\n0xFF：无此信元\n取值参考24.501 9.11.4.3章节", null, null, null, null, null, null, null, null
+  pdu_session_req_ssc_mode, int, "第1个请求消息中PDU Session的SSC模式\n选择的SSC模式，\nPDU Session Establishment Accept中selected SSC mode，octet1的bit3-1：\n取值参考 24.501 9.11.4.16节", null, null, null, null, null, null, null, null
+  pdu_session_ssc_mode, int, 第1个应答消息中PDU Session的SSC模式, null, null, null, null, null, null, null, null
+  pdu_session_ne_ip_type, int, "第1个设备IP地址类型\n0x01：IPv4\n0x02：IPv6", null, null, null, null, null, null, null, null
+  pdu_session_n3_an_addr, string, 第1个PDU Session在N3接口AN侧的IP地址, null, null, null, null, null, null, null, null
+  pdu_session_1_n3_upf_addr, string, 第1个PDU Session在N3接口UPF侧的IP地址, null, null, null, null, null, null, null, null
+  pdu_session_1_n3_an_teid, int, 第1个PDU Session在N3接口AN侧的TEID, null, null, null, null, null, null, null, null
+  pdu_session_1_n3_upf_teid, int, 第1个PDU Session在N3接口UPF侧的TEID, null, null, null, null, null, null, null, null
+  pdu_session_1_status, int, "第1个PDU Session操作结果\n1：建立成功\n2：建立失败\n3：修改成功\n4：修改失败\n5：释放成功\n6：释放失败", null, null, null, null, null, null, null, null
+  pdu_session_id_2, int, 第2个PDU Session Identity, null, null, null, null, null, null, null, null
+  pdu_session_req_type_2, int, "第2个请求消息中的Request Type：\n1：initial request\n2：existing PDU session\n3：initial emergency request\n4：existing emergency PDU session\n5：modification request\n取值参见3GPP TS 24.501第9.11.3.47节", null, null, null, null, null, null, null, null
+  pdu_session_type_2, int, "第2个应答消息中的PDU Session Type，取值:\n1：IPv4\n2：IPv6\n3：IPv4v6\n4：Unstructured\n5：Ethernet", null, null, null, null, null, null, null, null
+  pdu_session_dnn_2, string, "第2个Date Network Name,取值参考23.003 9.1节", null, null, null, null, null, null, null, null
+  pdu_session_dnn_type_2, int, "第2个PDU Session连接类型，根据PDU SESSION ESTABLISHMENT ACCEPT消息中的DNN判断:\n1：普通数据业务（含ctnet等）\n2：VoLTE业务（含ims）\n3：物联网业务（暂不识别，后面补充）\n4：彩信业务（含ctwap）\n254：未知其它业务", null, null, null, null, null, null, null, null
+  pdu_session_direction_2, int, "第2个触发方式：\n1：流程由UE发起\n2：流程由AMF发起\nPDU Session Modification流程填写", null, null, null, null, null, null, null, null
+  pdu_sessionuser_ipv4_2, string, null, null, null, null, null, null, null, null, null
+  pdusession_user_ipv6_2, string, null, null, null, null, null, null, null, null, null
+  pdu_session_always_on_pdu_session_indication_2, int, "第2个永远在线PDU Session标识，Always-on PDU session indication：\n0：Always-on PDU session not allowed\n1：Always-on PDU session required\n0xFF：无此信元\n取值参考24.501 9.11.4.3章节", null, null, null, null, null, null, null, null
+  pdu_session_req_ssc_mode_2, int, "第2个请求消息中PDU Session的SSC模式\n选择的SSC模式，\nPDU Session Establishment Accept中selected SSC mode，octet1的bit3-1：\n取值参考 24.501 9.11.4.16节", null, null, null, null, null, null, null, null
+  pdu_session_ssc_mode_2, int, 第2个应答消息中PDU Session的SSC模式, null, null, null, null, null, null, null, null
+  pdu_session_ne_ip_type_2, int, "第2个设备IP地址类型\n0x01：IPv4\n0x02：IPv6", null, null, null, null, null, null, null, null
+  pdu_session_n3_an_addr_2, string, 第2个PDU Session在N3接口AN侧的IP地址, null, null, null, null, null, null, null, null
+  pdu_session_1_n3_upf_addr_2, string, 第2个PDU Session在N3接口UPF侧的IP地址, null, null, null, null, null, null, null, null
+  pdu_session_1_n3_an_teid_2, int, 第2个PDU Session在N3接口AN侧的TEID, null, null, null, null, null, null, null, null
+  pdu_session_1_n3_upf_teid_2, int, 第2个PDU Session在N3接口UPF侧的TEID, null, null, null, null, null, null, null, null
+  pdu_session_1_status_2, int, "第2个PDU Session操作结果\n1：建立成功\n2：建立失败\n3：修改成功\n4：修改失败\n5：释放成功\n6：释放失败", null, null, null, null, null, null, null, null
+  visit_province, string, 省，访问地归属省市, null, null, null, null, null, null, null, null
+  city, string, 市, null, null, null, null, null, null, null, null
+  district, string, 区, null, null, null, null, null, null, null, null
+  gnbname, string, 基站名称, null, null, null, null, null, null, null, null
+  gnbid, bigint, 基站ID, null, null, null, null, null, null, null, null
+  tacid, bigint, 跟踪区码, null, null, null, null, null, null, null, null
+  cellname, string, 小区名称, null, null, null, null, null, null, null, null
+  cellid, int, 小区ID, null, null, null, null, null, null, null, null
+  imei, int, 终端设备号，PEI取前8位, null, null, null, null, null, null, null, null
+  regist_request, bigint, 注册请求次数, null, null, null, null, null, null, null, null
+  regist_succ, bigint, 注册成功次数, null, null, null, null, null, null, null, null
+  regist_fail, bigint, 注册失败次数, null, null, null, null, null, null, null, null
+  regist_timeout, bigint, 注册超时次数, null, null, null, null, null, null, null, null
+  regist_delay, bigint, 注册时延, null, null, null, null, null, null, null, null
+  regist_init_request, bigint, 初始注册请求次数, null, null, null, null, null, null, null, null
+  regist_init_succ, bigint, 初始注册成功次数, null, null, null, null, null, null, null, null
+  regist_init_fail, bigint, 初始注册失败次数, null, null, null, null, null, null, null, null
+  regist_init_timeout, bigint, 初始注册超时次数, null, null, null, null, null, null, null, null
+  regist_init_delay, bigint, 初始注册时延, null, null, null, null, null, null, null, null
+  regist_periodic_request, bigint, 周期性注册请求次数, null, null, null, null, null, null, null, null
+  regist_periodic_succ, bigint, 周期性注册成功次数, null, null, null, null, null, null, null, null
+  regist_periodic_fail, bigint, 周期性注册失败次数, null, null, null, null, null, null, null, null
+  regist_periodic_timeout, bigint, 周期性注册超时次数, null, null, null, null, null, null, null, null
+  regist_periodic_delay, bigint, 周期性注册时延, null, null, null, null, null, null, null, null
+  regist_mobility_request, bigint, 移动性注册请求次数, null, null, null, null, null, null, null, null
+  regist_mobility_succ, bigint, 移动性注册成功次数, null, null, null, null, null, null, null, null
+  regist_mobility_fail, bigint, 移动性注册失败次数, null, null, null, null, null, null, null, null
+  regist_mobility_timeout, bigint, 移动性注册超时次数, null, null, null, null, null, null, null, null
+  regist_mobility_delay, bigint, 移动性注册时延, null, null, null, null, null, null, null, null
+  regist_emergency_request, bigint, 紧急注册请求次数, null, null, null, null, null, null, null, null
+  regist_emergency_succ, bigint, 紧急注册成功次数, null, null, null, null, null, null, null, null
+  regist_emergency_fail, bigint, 紧急注册失败次数, null, null, null, null, null, null, null, null
+  regist_emergency_timeout, bigint, 紧急注册超时次数, null, null, null, null, null, null, null, null
+  regist_emergency_delay, bigint, 紧急注册时延, null, null, null, null, null, null, null, null
+  deregist_request, bigint, 注销请求次数, null, null, null, null, null, null, null, null
+  deregist_succ, bigint, 注销成功次数, null, null, null, null, null, null, null, null
+  deregist_fail, bigint, 注销失败次数, null, null, null, null, null, null, null, null
+  deregist_timeout, bigint, 注销超时次数, null, null, null, null, null, null, null, null
+  deregist_delay, bigint, 注销超时时延, null, null, null, null, null, null, null, null
+  deregist_ue_request, bigint, UE侧注销请求次数, null, null, null, null, null, null, null, null
+  deregist_ue_succ, bigint, UE侧注销成功次数, null, null, null, null, null, null, null, null
+  deregist_ue_fail, bigint, UE侧注销失败次数, null, null, null, null, null, null, null, null
+  deregist_ue_timeout, bigint, UE侧注销超时次数, null, null, null, null, null, null, null, null
+  deregist_ue_delay, bigint, UE侧注销时延, null, null, null, null, null, null, null, null
+  deregist_net_request, bigint, 网路侧注销请求次数, null, null, null, null, null, null, null, null
+  deregist_net_succ, bigint, 网路侧注销成功次数, null, null, null, null, null, null, null, null
+  deregist_net_fail, bigint, 网路侧注销失败次数, null, null, null, null, null, null, null, null
+  deregist_net_timeout, bigint, 网路侧注销超时次数, null, null, null, null, null, null, null, null
+  deregist_net_delay, bigint, 网路侧注销时延, null, null, null, null, null, null, null, null
+  normal_deregist_ue_request, bigint, 普通UE侧注销请求次数, null, null, null, null, null, null, null, null
+  normal_deregist_ue_succ, bigint, 普通UE侧注销成功次数, null, null, null, null, null, null, null, null
+  normal_deregist_ue_fail, bigint, 普通UE侧注销失败次数, null, null, null, null, null, null, null, null
+  normal_deregist_ue_timeout, bigint, 普通UE侧注销超时次数, null, null, null, null, null, null, null, null
+  normal_deregist_ue_delay, bigint, 普通UE侧注销时延, null, null, null, null, null, null, null, null
+  normal_deregist_net_request, bigint, 普通网路侧注销请求次数, null, null, null, null, null, null, null, null
+  normal_deregist_net_succ, bigint, 普通网路侧注销成功次数, null, null, null, null, null, null, null, null
+  normal_deregist_net_fail, bigint, 普通网路侧注销失败次数, null, null, null, null, null, null, null, null
+  normal_deregist_net_timeout, bigint, 普通网路侧注销超时次数, null, null, null, null, null, null, null, null
+  normal_deregist_net_delay, bigint, 普通网路侧注销时延, null, null, null, null, null, null, null, null
+  switch_off_ue_request, bigint, UE关机请求次数, null, null, null, null, null, null, null, null
+  switch_off_ue_succ, bigint, UE关机成功次数, null, null, null, null, null, null, null, null
+  switch_off_ue_fail, bigint, UE关机失败次数, null, null, null, null, null, null, null, null
+  switch_off_ue_timeout, bigint, UE关机超时次数, null, null, null, null, null, null, null, null
+  switch_off_ue_delay, bigint, UE关机注册时延, null, null, null, null, null, null, null, null
+  switch_off_net_request, bigint, 网络侧关机请求次数, null, null, null, null, null, null, null, null
+  switch_off_net_succ, bigint, 网络侧关机成功次数, null, null, null, null, null, null, null, null
+  switch_off_net_fail, bigint, 网络侧关机失败次数, null, null, null, null, null, null, null, null
+  switch_off_net_timeout, bigint, 网络侧关机超时次数, null, null, null, null, null, null, null, null
+  switch_off_net_delay, bigint, 网络侧关机时延, null, null, null, null, null, null, null, null
+  servicerequest_request, bigint, 业务请求次数, null, null, null, null, null, null, null, null
+  servicerequest_succ, bigint, 业务请求成功次数, null, null, null, null, null, null, null, null
+  servicerequest_fail, bigint, 业务请求失败次数, null, null, null, null, null, null, null, null
+  servicerequest_timeout, bigint, 业务请求超时次数, null, null, null, null, null, null, null, null
+  servicerequest_delay, bigint, 业务请求时延, null, null, null, null, null, null, null, null
+  sms_service_request, bigint, 短信业务请求次数, null, null, null, null, null, null, null, null
+  sms_service_succ, bigint, 短信业务成功次数, null, null, null, null, null, null, null, null
+  sms_service_fail, bigint, 短信业务失败次数, null, null, null, null, null, null, null, null
+  sms_service_timeout, bigint, 短信业务超时次数, null, null, null, null, null, null, null, null
+  sms_service_delay, bigint, 短信业务时延, null, null, null, null, null, null, null, null
+  sms_mo_request, bigint, 短信MO请求次数, null, null, null, null, null, null, null, null
+  sms_mo_succ, bigint, 短信MO成功次数, null, null, null, null, null, null, null, null
+  sms_mo_fail, bigint, 短信MO失败次数, null, null, null, null, null, null, null, null
+  sms_mo_timeout, bigint, 短信MO超时次数, null, null, null, null, null, null, null, null
+  sms_mo_delay, bigint, 短信MO时延, null, null, null, null, null, null, null, null
+  sms_mt_request, bigint, 短信MT请求次数, null, null, null, null, null, null, null, null
+  sms_mt_succ, bigint, 短信MT成功次数, null, null, null, null, null, null, null, null
+  sms_mt_fail, bigint, 短信MT失败次数, null, null, null, null, null, null, null, null
+  sms_mt_timeout, bigint, 短信MT超时次数, null, null, null, null, null, null, null, null
+  sms_mt_delay, bigint, 短信MT时延, null, null, null, null, null, null, null, null
+  sms_submit_request, bigint, 短信提交报告次数, null, null, null, null, null, null, null, null
+  sms_submit_succ, bigint, 短信提交报告成功次数, null, null, null, null, null, null, null, null
+  sms_submit_fail, bigint, 短信提交报告失败次数, null, null, null, null, null, null, null, null
+  sms_submit_timeout, bigint, 短信提交报告超时次数, null, null, null, null, null, null, null, null
+  sms_submit_delay, bigint, 短信提交报告总时延, null, null, null, null, null, null, null, null
+  sms_issue_request, bigint, 短信下发报告次数, null, null, null, null, null, null, null, null
+  sms_issue_succ, bigint, 短信下发报告成功次数, null, null, null, null, null, null, null, null
+  sms_issue_fail, bigint, 短信下发报告失败次数, null, null, null, null, null, null, null, null
+  sms_issue_timeout, bigint, 短信下发报告超时次数, null, null, null, null, null, null, null, null
+  sms_issue_delay, bigint, 短信下发报告总时延, null, null, null, null, null, null, null, null
+  sms_status_request, bigint, 短信状态报告发送次数, null, null, null, null, null, null, null, null
+  sms_status_succ, bigint, 短信状态报告发送成功次数, null, null, null, null, null, null, null, null
+  sms_status_fail, bigint, 短信状态报告发送失败次数, null, null, null, null, null, null, null, null
+  sms_status_timeout, bigint, 短信状态报告发送超时次数, null, null, null, null, null, null, null, null
+  sms_status_delay, bigint, 短信状态报告发送总时延, null, null, null, null, null, null, null, null
+  sms_wappush_request, bigint, 短信接收WAPPUSH次数, null, null, null, null, null, null, null, null
+  sms_wappush_succ, bigint, 短信接收WAPPUSH成功次数, null, null, null, null, null, null, null, null
+  sms_wappush_fail, bigint, 短信接收WAPPUSH失败次数, null, null, null, null, null, null, null, null
+  sms_wappush_timeout, bigint, 短信接收WAPPUSH超时次数, null, null, null, null, null, null, null, null
+  sms_wappush_delay, bigint, 短信接收WAPPUSH总时延, null, null, null, null, null, null, null, null
+  sms_rp_smma_request, bigint, 短信终端储存可用提醒次数, null, null, null, null, null, null, null, null
+  sms_rp_smma_succ, bigint, 短信终端储存可用提醒成功次数, null, null, null, null, null, null, null, null
+  sms_rp_smma_fail, bigint, 短信终端储存可用提醒失败次数, null, null, null, null, null, null, null, null
+  sms_rp_smma_timeout, bigint, 短信终端储存可用提醒超时次数, null, null, null, null, null, null, null, null
+  sms_rp_smma_delay, bigint, 短信终端储存可用提醒总时延, null, null, null, null, null, null, null, null
+  pdusession_estab_request, bigint, PDU会话建立请求次数, null, null, null, null, null, null, null, null
+  pdusession_estab_succ, bigint, PDU会话建立成功次数, null, null, null, null, null, null, null, null
+  pdusession_estab_fail, bigint, PDU会话建立失败次数, null, null, null, null, null, null, null, null
+  pdusession_estab_timeout, bigint, PDU会话建立超时次数, null, null, null, null, null, null, null, null
+  pdusession_estab_delay, bigint, PDU会话建立时延, null, null, null, null, null, null, null, null
+  pdusession_modify_request, bigint, PDU会话修改请求次数, null, null, null, null, null, null, null, null
+  pdusession_modify_succ, bigint, PDU会话修改成功次数, null, null, null, null, null, null, null, null
+  pdusession_modify_fail, bigint, PDU会话修改失败次数, null, null, null, null, null, null, null, null
+  pdusession_modify_timeout, bigint, PDU会话修改超时次数, null, null, null, null, null, null, null, null
+  pdusession_modify_delay, bigint, PDU会话修改时延, null, null, null, null, null, null, null, null
+  pdusession_release_request, bigint, PDU会话释放请求次数, null, null, null, null, null, null, null, null
+  pdusession_release_succ, bigint, PDU会话释放成功次数, null, null, null, null, null, null, null, null
+  pdusession_release_fail, bigint, PDU会话释放失败次数, null, null, null, null, null, null, null, null
+  pdusession_release_timeout, bigint, PDU会话释放超时次数, null, null, null, null, null, null, null, null
+  pdusession_release_delay, bigint, PDU会话释放时延, null, null, null, null, null, null, null, null
+  n2ho_out_request, bigint, N2切出请求次数, null, null, null, null, null, null, null, null
+  n2ho_out_succ, bigint, N2切出成功次数, null, null, null, null, null, null, null, null
+  n2ho_out_fail, bigint, N2切出失败次数, null, null, null, null, null, null, null, null
+  n2ho_out_timeout, bigint, N2切出超时次数, null, null, null, null, null, null, null, null
+  n2ho_out_delay, bigint, N2切出时延, null, null, null, null, null, null, null, null
+  n2ho_out_intra5gs_request, bigint, N2_Intra5GS切出请求次数, null, null, null, null, null, null, null, null
+  n2ho_out_intra5gs_succ, bigint, N2_Intra5GS切出成功次数, null, null, null, null, null, null, null, null
+  n2ho_out_intra5gs_fail, bigint, N2_Intra5GS切出失败次数, null, null, null, null, null, null, null, null
+  n2ho_out_intra5gs_timeout, bigint, N2_Intra5GS切出超时次数, null, null, null, null, null, null, null, null
+  n2ho_out_intra5gs_delay, bigint, N2_Intra5GS切出时延, null, null, null, null, null, null, null, null
+  n2ho_out_5gstoeps_request, bigint, N2_5GStoEPS切出请求次数, null, null, null, null, null, null, null, null
+  n2ho_out_5gstoeps_succ, bigint, N2_5GStoEPS切出成功次数, null, null, null, null, null, null, null, null
+  n2ho_out_5gstoeps_fail, bigint, N2_5GStoEPS切出失败次数, null, null, null, null, null, null, null, null
+  n2ho_out_5gstoeps_timeout, bigint, N2_5GStoEPS切出超时次数, null, null, null, null, null, null, null, null
+  n2ho_out_5gstoeps_delay, bigint, N2_5GStoEPS切出时延, null, null, null, null, null, null, null, null
+  n2ho_out_epsto5gs_request, bigint, N2_EPSto5GS切出请求次数, null, null, null, null, null, null, null, null
+  n2ho_out_epsto5gs_succ, bigint, N2_EPSto5GS切出成功次数, null, null, null, null, null, null, null, null
+  n2ho_out_epsto5gs_fail, bigint, N2_EPSto5GS切出失败次数, null, null, null, null, null, null, null, null
+  n2ho_out_epsto5gs_timeout, bigint, N2_EPSto5GS切出超时次数, null, null, null, null, null, null, null, null
+  n2ho_out_epsto5gs_delay, bigint, N2_EPSto5GS切出时延, null, null, null, null, null, null, null, null
+  n2ho_in_request, bigint, N2切入请求次数, null, null, null, null, null, null, null, null
+  n2ho_in_succ, bigint, N2切入成功次数, null, null, null, null, null, null, null, null
+  n2ho_in_fail, bigint, N2切入失败次数, null, null, null, null, null, null, null, null
+  n2ho_in_timeout, bigint, N2切入超时次数, null, null, null, null, null, null, null, null
+  n2ho_in_delay, bigint, N2切入时延, null, null, null, null, null, null, null, null
+  n2ho_in_intra5gs_request, bigint, N2_Intra5GS切入请求次数, null, null, null, null, null, null, null, null
+  n2ho_in_intra5gs_succ, bigint, N2_Intra5GS切入成功次数, null, null, null, null, null, null, null, null
+  n2ho_in_intra5gs_fail, bigint, N2_Intra5GS切入失败次数, null, null, null, null, null, null, null, null
+  n2ho_in_intra5gs_timeinout, bigint, N2_Intra5GS切入超时次数, null, null, null, null, null, null, null, null
+  n2ho_in_intra5gs_delay, bigint, N2_Intra5GS切入时延, null, null, null, null, null, null, null, null
+  n2ho_in_5gstoeps_request, bigint, N2_5GStoEPS切入请求次数, null, null, null, null, null, null, null, null
+  n2ho_in_5gstoeps_succ, bigint, N2_5GStoEPS切入成功次数, null, null, null, null, null, null, null, null
+  n2ho_in_5gstoeps_fail, bigint, N2_5GStoEPS切入失败次数, null, null, null, null, null, null, null, null
+  n2ho_in_5gstoeps_timeinout, bigint, N2_5GStoEPS切入超时次数, null, null, null, null, null, null, null, null
+  n2ho_in_5gstoeps_delay, bigint, N2_5GStoEPS切入时延, null, null, null, null, null, null, null, null
+  n2ho_in_epsto5gs_request, bigint, N2_EPSto5GS切入请求次数, null, null, null, null, null, null, null, null
+  n2ho_in_epsto5gs_succ, bigint, N2_EPSto5GS切入成功次数, null, null, null, null, null, null, null, null
+  n2ho_in_epsto5gs_fail, bigint, N2_EPSto5GS切入失败次数, null, null, null, null, null, null, null, null
+  n2ho_in_epsto5gs_timeinout, bigint, N2_EPSto5GS切入超时次数, null, null, null, null, null, null, null, null
+  n2ho_in_epsto5gs_delay, bigint, N2_EPSto5GS切入时延, null, null, null, null, null, null, null, null
+  xnho_request, bigint, Xn切换请求次数, null, null, null, null, null, null, null, null
+  xnho_succ, bigint, Xn切换成功次数, null, null, null, null, null, null, null, null
+  xnho_fail, bigint, Xn切换失败次数, null, null, null, null, null, null, null, null
+  xnho_timeout, bigint, Xn切换超时次数, null, null, null, null, null, null, null, null
+  xnho_delay, bigint, Xn切换时延, null, null, null, null, null, null, null, null
+  auth_5g_aka_request, bigint, 5G_AKA_鉴权请求次数, null, null, null, null, null, null, null, null
+  auth_eap_aka_request, bigint, EAP_AKA_鉴权请求次数, null, null, null, null, null, null, null, null
+  auth_eap_tls_request, bigint, EAP_TLS_鉴权请求次数, null, null, null, null, null, null, null, null
+  amr_ue_context_release_request, bigint, AMF发起的UE上下文释放请求次数, null, null, null, null, null, null, null, null
+  amr_ue_context_release_succ, bigint, AMF发起的UE上下文释放成功次数, null, null, null, null, null, null, null, null
+  amr_ue_context_release_fail, bigint, AMF发起的UE上下文释放失败次数, null, null, null, null, null, null, null, null
+  amr_ue_context_release_timeinout, bigint, AMF发起的UE上下文释放超时次数, null, null, null, null, null, null, null, null
+  amr_ue_context_release_delay, bigint, AMF发起的UE上下文释放总时延, null, null, null, null, null, null, null, null
+  an_ue_context_release_request, bigint, AN发起的UE上下文释放请求次数, null, null, null, null, null, null, null, null
+  an_ue_context_release_succ, bigint, AN发起的UE上下文释放成功次数, null, null, null, null, null, null, null, null
+  an_ue_context_release_fail, bigint, AN发起的UE上下文释放失败次数, null, null, null, null, null, null, null, null
+  an_ue_context_release_timeinout, bigint, AN发起的UE上下文释放超时次数, null, null, null, null, null, null, null, null
+  an_ue_context_release_delay, bigint, AN发起的UE上下文释放总时延, null, null, null, null, null, null, null, null
+  ran_configuration_update_request, bigint, RAN配置更新请求次数, null, null, null, null, null, null, null, null
+  ran_configuration_update_succ, bigint, RAN配置更新成功次数, null, null, null, null, null, null, null, null
+  ran_configuration_update_fail, bigint, RAN配置更新失败次数, null, null, null, null, null, null, null, null
+  ran_configuration_update_timeinout, bigint, RAN配置更新超时次数, null, null, null, null, null, null, null, null
+  ran_configuration_update_delay, bigint, RAN配置更新总时延, null, null, null, null, null, null, null, null
+  amf_configuration_update_request, bigint, AMF配置更新请求次数, null, null, null, null, null, null, null, null
+  amf_configuration_update_succ, bigint, AMF配置更新成功次数, null, null, null, null, null, null, null, null
+  amf_configuration_update_fail, bigint, AMF配置更新失败次数, null, null, null, null, null, null, null, null
+  amf_configuration_update_timeinout, bigint, AMF配置更新超时次数, null, null, null, null, null, null, null, null
+  amf_configuration_update_delay, bigint, AMF配置更新总时延, null, null, null, null, null, null, null, null
+  ng_reset_request, bigint, NG_RESET请求次数, null, null, null, null, null, null, null, null
+  ng_reset_succ, bigint, NG_RESET成功次数, null, null, null, null, null, null, null, null
+  ng_reset_fail, bigint, NG_RESET失败次数, null, null, null, null, null, null, null, null
+  ng_reset_timeinout, bigint, NG_RESET超时次数, null, null, null, null, null, null, null, null
+  ng_reset_delay, bigint, NG_RESET总时延, null, null, null, null, null, null, null, null
+  ng_setup_request, bigint, NG_SETUP请求次数, null, null, null, null, null, null, null, null
+  ng_setup_succ, bigint, NG_SETUP成功次数, null, null, null, null, null, null, null, null
+  ng_setup_fail, bigint, NG_SETUP失败次数, null, null, null, null, null, null, null, null
+  ng_setup_timeinout, bigint, NG_SETUP超时次数, null, null, null, null, null, null, null, null
+  ng_setup_delay, bigint, NG_SETUP总时延, null, null, null, null, null, null, null, null
+  ue_configuration_update_request, bigint, ue配置更新请求次数, null, null, null, null, null, null, null, null
+  ue_configuration_update_succ, bigint, ue配置更新成功次数, null, null, null, null, null, null, null, null
+  ue_configuration_update_fail, bigint, ue配置更新失败次数, null, null, null, null, null, null, null, null
+  ue_configuration_update_timeinout, bigint, ue配置更新超时次数, null, null, null, null, null, null, null, null
+  ue_configuration_update_delay, bigint, ue配置更新总时延, null, null, null, null, null, null, null, null
+  citycode, string, 城市编码, null, null, null, null, null, null, null, null
+  districtcode, string, 区县编码, null, null, null, null, null, null, null, null
+  n2ho_out_epsfb_request, int, EPS FB切出请求次数, null, null, null, null, null, null, null, null
+  n2ho_out_epsfb_succ, int, EPS FB切出成功次数, null, null, null, null, null, null, null, null
+  n2ho_out_epsfb_fail, int, EPS FB切出失败次数, null, null, null, null, null, null, null, null
+  n2ho_out_epsfb_timeinout, int, EPS FB切出超时次数, null, null, null, null, null, null, null, null
+  n2ho_out_epsfb_delay, int, EPS FB切出总时延, null, null, null, null, null, null, null, null
+  n2ho_cancel_request, int, N2切换取消请求次数, null, null, null, null, null, null, null, null
+  n2ho_cance_succ, int, N2切换取消成功次数, null, null, null, null, null, null, null, null
+  n2ho_cancel_fail, int, N2切换取消失败次数, null, null, null, null, null, null, null, null
+  n2ho_cancel_timeinout, int, N2切换取消超时次数, null, null, null, null, null, null, null, null
+  n2ho_cancel_delay, int, N2切换取消总时延, null, null, null, null, null, null, null, null
+  normal_release, int, 正常释放次数, A, null, "case when procedure_type= 64 and procedure_status=1 and  nvl(failure_cause,request_cause) in ('20','0') then 1 else 0 end", null, 新增字段, 指标, 无, >=0
+  abnor_release, int, 异常释放次数, "A|C", null, "通过nvl(failure_cause,request_cause)与码表字段control_plane_code关联，取码表中对应的drop_flag=1对应的编码，能关联上则置为1，关联不上则置为0", null, 新增字段, 指标, 无, >=0

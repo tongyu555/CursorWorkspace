@@ -1,0 +1,118 @@
+theme_domain: 数据感知
+table_name: aggr_lte_dpi_http_index_reduce_base_h
+table_name_chinese: 4G_DPI_http基础维度指标裁剪小时表
+data_frequency: hour
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 是否主表}:
+  aggr_lte_dpi_http_base_h, 4G_DPI_http基础维度小时表, A, 是
+fields[110]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 上报时间，具体到天, A, p_date, 直取, null, null, 维度, 无, yyyy-mm-dd
+  hour, int, 记录所在的小时, A, p_hour, 直取, null, null, 维度, 无, 0~23
+  provincecode, int, 拜访地省份, A, p_provincecode, 直取, null, null, 维度, 无, 6位数编码
+  citycode, int, 拜访地地市, A, citycode, 直取, null, null, 维度, 无, 6位数编码
+  home_province, int, 漫入用户的归属地省份, A, home_province, 直取, null, null, 维度, 无, 6位数编码
+  interface, int, 接口类型1：s1-u；6、S5/S8；7：s2a, A, interface, 直取, null, null, 维度, 无, <=101
+  rattype, int, 无线接入类型, A, rattype, 直取, null, null, 维度, 无, "6,10"
+  enodebid, bigint, 4G eNodeBID/5G gNBID, A, null, "split(cellkey,\"_\")[0]", null, null, 维度, 无, 无
+  cellid, bigint, 小区ID, A, null, "split(cellkey,\"_\")[1]", null, null, 维度, 无, 无
+  cellkey, string, 小区cellkey, A, cellkey, 直取, null, null, 维度, 无, 无
+  imsi, string, 永久用户标识，永久用户标识。4G 填写用户IMSI。, A, imsi, 直取, null, null, 维度, 无, 无
+  msisdn, string, MS International PSTN/ISDN Number (ISDN), A, msisdn, 直取, null, null, 维度, 无, 无
+  sourceip_type, string, 用户访问外部网络时使用的IP类型（IPv4/IPv6）, A, sourceip_type, 直取, null, null, 维度, 无, 无
+  imei, string, 终端imei, A, imei, 直取, null, null, 维度, 无, 无
+  sgwip, string, SGWIP, A, sgwip, 直取, null, null, 维度, 无, 无
+  enbip, string, ENB的IPv4或IPv6地址, A, enbip, 直取, null, null, 维度, 无, 无
+  apn, string, 网络接入标识, A, apn, 直取, null, null, 维度, 无, 无
+  servicetype, int, 业务应用, A, servicetype, 直取, null, null, 维度, 无, 无
+  outputoctets_sum, bigint, 上行流量(byte), A, null, sum(outputoctets), null, null, 指标, byte, >=0
+  inputoctets_sum, bigint, 下行流量(byte), A, null, sum(inputoctets), null, null, 指标, byte, >=0
+  outputoctets_above500_sum, bigint, 上行流量(byte)-大于500KB, A, null, sum(outputoctets_above500), null, null, 指标, byte, >=0
+  outputoctets_above500_cnt_sum, bigint, 上行大包条数(>=500KB), A, null, sum(outputoctets_above500_cnt), null, null, 指标, 无, >=0
+  outputoctets_above500_highdelay_sum, bigint, 上行大包高时延条数（>100ms）, A, null, sum(outputoctets_above500_highdelay_cnt), null, null, 指标, 无, >=0
+  inputoctets_above500_sum, bigint, 下行流量(byte)-大于500KB, A, null, sum(inputoctets_above500), null, null, 指标, byte, >=0
+  inputoctets_above500_cnt_sum, bigint, 下行大包条数(>=500KB), A, null, sum(inputoctets_above500_cnt), null, null, 指标, 无, >=0
+  inputoctets_above500_highdelay_sum, bigint, 下行大包高时延条数（>100ms）, A, null, sum(inputoctets_above500_highdelay_cnt), null, null, 指标, 无, >=0
+  inputpacket_sum, bigint, 发给用户的业务数据包数量, A, null, sum(inputpacket), null, null, 指标, 无, >=0
+  outputpacket_sum, bigint, 用户发出的业务数据包数量, A, null, sum(outputpacket), null, null, 指标, 无, >=0
+  ultcpreorderingpacket_sum, bigint, 上行TCP乱序报文数，L4协议，非TCP传输时，此字段填0, A, null, sum(ultcpreorderingpacket), null, null, 指标, 无, >=0
+  dltcpreorderingpacket_sum, bigint, 下行TCP乱序报文数，非TCP传输时，此字段填0, A, null, sum(dltcpreorderingpacket), null, null, 指标, 无, >=0
+  ultcpretranspacket_sum, bigint, 上行TCP重传报文数，非TCP传输时，此字段填0, A, null, sum(ultcpretranspacket), null, null, 指标, 无, >=0
+  dltcpretranspacket_sum, bigint, 下行TCP重传报文数，非TCP传输时，此字段填0, A, null, sum(dltcpretranspacket), null, null, 指标, 无, >=0
+  tcpconnfail_sum, bigint, TCP连接失败次数, A, null, sum(tcpconnfail_cnt), null, null, 指标, 无, >=0
+  tcpconnreq_sum, bigint, 上行TCP建立请求次数, A, null, sum(tcpconnreq_cnt), null, null, 指标, 无, >=0
+  tcpconnulsuc_sum, bigint, 上行TCP建立成功次数, A, null, sum(tcpconnulsuc_cnt), null, null, 指标, 无, >=0
+  tcpconndlsuc_sum, bigint, 下行TCP建立成功次数, A, null, sum(tcpconndlsuc_cnt), null, null, 指标, 无, >=0
+  ulipfragpacks_sum, bigint, UL_IP_FRAG_PACKETS, A, null, sum(ulipfragpacks), null, null, 指标, 无, >=0
+  dlipfragpacks_sum, bigint, DL_IP_FRAG_PACKETS, A, null, sum(dlipfragpacks), null, null, 指标, 无, >=0
+  httpwebreqcount_sum, bigint, Http请求次数, A, null, sum(http_req_cnt), null, null, 指标, 无, >=0
+  httpwebrspcount_sum, bigint, Http请求成功次数, A, null, sum(http_succ_cnt), null, null, 指标, 无, >=0
+  http_no_response_cnt_sum, bigint, http无响应次数, A, null, sum(case when httpstatus=-1 or  httpstatus=-2 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  httpstatus_1xx_sum, bigint, Http状态1xx次数, A, null, sum(case when httpstatus>=100 and httpstatus<200 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  httpstatus_2xx_sum, bigint, Http状态2xx次数, A, null, sum(case when httpstatus>=200 and httpstatus<300 then http_req_cnt  else 0 end), null, null, 指标, 无, >=0
+  httpstatus_3xx_sum, bigint, Http状态3xx次数, A, null, sum(case when httpstatus>=300 and httpstatus<400 then http_req_cnt  else 0 end), null, null, 指标, 无, >=0
+  httpstatus_4xx_sum, bigint, Http状态4xx次数, A, null, sum(case when httpstatus>=400 and httpstatus<500 then http_req_cnt  else 0 end), null, null, 指标, 无, >=0
+  httpstatus_5xx_sum, bigint, Http状态5xx次数, A, null, sum(case when httpstatus>=500  then http_req_cnt  else 0 end), null, null, 指标, 无, >=0
+  tcpsetupresponsedelay_sum, bigint, TCP建链响应时延_sum, A, null, sum(tcpsetupresponsedelay_avg*tcpsetupresponsedelay_cnt), null, null, 指标, ms, >=0
+  tcpsetupresponsedelay_seg_1, bigint, TCP建链响应时延_seg_1, A, null, sum(tcpsetupresponsedelay_cnt_0_50), null, null, 指标, 无, >=0
+  tcpsetupresponsedelay_seg_2, bigint, TCP建链响应时延_seg_2, A, null, sum(tcpsetupresponsedelay_cnt_50_100), null, null, 指标, 无, >=0
+  tcpsetupresponsedelay_seg_3, bigint, TCP建链响应时延_seg_3, A, null, sum(tcpsetupresponsedelay_cnt_100_150), null, null, 指标, 无, >=0
+  tcpsetupresponsedelay_seg_4, bigint, TCP建链响应时延_seg_4, A, null, sum(tcpsetupresponsedelay_cnt_150_200), null, null, 指标, 无, >=0
+  tcpsetupresponsedelay_seg_5, bigint, TCP建链响应时延_seg_5, A, null, sum(tcpsetupresponsedelay_cnt_greater_200), null, null, 指标, 无, >=0
+  tcpsetupackdelay_sum, bigint, TCP建链确认时延_sum, A, null, sum(tcpsetupackdelay_avg*tcpsetupackdelay_cnt), null, null, 指标, ms, >=0
+  tcpsetupackdelay_seg_1, bigint, TCP建链确认时延_seg_1, A, null, sum(tcpsetupackdelay_cnt_0_50), null, null, 指标, 无, >=0
+  tcpsetupackdelay_seg_2, bigint, TCP建链确认时延_seg_2, A, null, sum(tcpsetupackdelay_cnt_50_100), null, null, 指标, 无, >=0
+  tcpsetupackdelay_seg_3, bigint, TCP建链确认时延_seg_3, A, null, sum(tcpsetupackdelay_cnt_100_150), null, null, 指标, 无, >=0
+  tcpsetupackdelay_seg_4, bigint, TCP建链确认时延_seg_4, A, null, sum(tcpsetupackdelay_cnt_150_200), null, null, 指标, 无, >=0
+  tcpsetupackdelay_seg_5, bigint, TCP建链确认时延_seg_5, A, null, sum(tcpsetupackdelay_cnt_greater_200), null, null, 指标, 无, >=0
+  tcpsetupdelay_sum, bigint, TCP建立时延(ms)_sum, A, null, sum(tcpsetupdelay_avg*tcpsetupdelay_cnt), null, null, 指标, ms, >=0
+  tcpsetupresponsedelay_cnt_sum, bigint, TCP建链响应次数, A, null, sum(tcpsetupresponsedelay_cnt), null, null, 指标, 无, >=0
+  tcpsetupackdelay_cnt_sum, bigint, TCP建链确认次数, A, null, sum(tcpsetupackdelay_cnt), null, null, 指标, 无, >=0
+  delay_setup_firsttransaction_sum, bigint, TCP建链成功到第一条事务请求的时延_sum（ms）, A, null, sum(delay_setup_firsttransaction*delay_setup_firsttransaction_cnt), null, null, 指标, ms, >=0
+  delay_setup_firsttransaction_cnt_sum, bigint, TCP事务首次请求次数, A, null, sum(delay_setup_firsttransaction_cnt), null, null, 指标, 无, >=0
+  delay_firsttransaction_firstrespackt_sum, bigint, 第一条事务请求到其第一个响应包时延_sum（ms）, A, null, sum(delay_firsttransaction_firstrespackt*delay_firsttransaction_firstrespackt_cnt), null, null, 指标, ms, >=0
+  delay_firsttransaction_firstrespackt_cnt_sum, bigint, TCP事务首次响应次数, A, null, sum(delay_firsttransaction_firstrespackt_cnt), null, null, 指标, 无, >=0
+  httpwebscreencnt_sum, bigint, 网页首屏完成次数_sum, A, null, sum(httpwebscreen_cnt), null, null, 指标, 无, >=0
+  httpwebscreendelay_sum, bigint, 网页首屏时延_sum(ms), A, null, sum(httpwebscreendelay*httpwebscreen_cnt), null, null, 指标, ms, >=0
+  respdelay_sum, bigint, 响应时延_sum, A, null, sum(respdelay*http_succ_cnt), null, null, 指标, ms, >=0
+  http_throughput_under500_duartion_sum, double, 小页面显示总时长（内容<500KB）, A, null, sum(http_throughput_under500_duartion), null, null, 指标, ms, >=0
+  http_throughput_under500_suc_cnt_sum, double, 小页面显示成功次数（内容<500KB）, A, null, sum(http_throughput_under500_suc_cnt), null, null, 指标, 无, >=0
+  http_throughput_above500_duartion_sum, double, HTTP下载时长（s）（内容>=500KB）, A, null, sum(http_throughput_above500_duartion), null, null, 指标, s, >=0
+  xdr_suc_cnt_sum, bigint, xdr成功条数, A, null, sum(xdr_suc_cnt_sum), null, null, 指标, 无, >=0
+  http_400_cnt, bigint, HTTP结果为400次数, A, null, sum(case when httpstatus = 400 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_401_cnt, bigint, HTTP结果为401次数, A, null, sum(case when httpstatus = 401 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_402_cnt, bigint, HTTP结果为402次数, A, null, sum(case when httpstatus = 402 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_403_cnt, bigint, HTTP结果为403次数, A, null, sum(case when httpstatus = 403 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_404_cnt, bigint, HTTP结果为404次数, A, null, sum(case when httpstatus = 404 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_405_cnt, bigint, HTTP结果为405次数, A, null, sum(case when httpstatus = 405 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_406_cnt, bigint, HTTP结果为406次数, A, null, sum(case when httpstatus = 406 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_407_cnt, bigint, HTTP结果为407次数, A, null, sum(case when httpstatus = 407 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_408_cnt, bigint, HTTP结果为408次数, A, null, sum(case when httpstatus = 408 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_409_cnt, bigint, HTTP结果为409次数, A, null, sum(case when httpstatus = 409 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_410_cnt, bigint, HTTP结果为410次数, A, null, sum(case when httpstatus = 410 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_411_cnt, bigint, HTTP结果为411次数, A, null, sum(case when httpstatus = 411 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_412_cnt, bigint, HTTP结果为412次数, A, null, sum(case when httpstatus = 412 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_413_cnt, bigint, HTTP结果为413次数, A, null, sum(case when httpstatus = 413 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_414_cnt, bigint, HTTP结果为414次数, A, null, sum(case when httpstatus = 414 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_415_cnt, bigint, HTTP结果为415次数, A, null, sum(case when httpstatus = 415 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_416_cnt, bigint, HTTP结果为416次数, A, null, sum(case when httpstatus = 416 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_417_cnt, bigint, HTTP结果为417次数, A, null, sum(case when httpstatus = 417 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_421_cnt, bigint, HTTP结果为421次数, A, null, sum(case when httpstatus = 421 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_422_cnt, bigint, HTTP结果为422次数, A, null, sum(case when httpstatus = 422 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_423_cnt, bigint, HTTP结果为423次数, A, null, sum(case when httpstatus = 423 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_424_cnt, bigint, HTTP结果为424次数, A, null, sum(case when httpstatus = 424 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_425_cnt, bigint, HTTP结果为425次数, A, null, sum(case when httpstatus = 425 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_426_cnt, bigint, HTTP结果为426次数, A, null, sum(case when httpstatus = 426 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_449_cnt, bigint, HTTP结果为449次数, A, null, sum(case when httpstatus = 449 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_500_cnt, bigint, HTTP结果为500次数, A, null, sum(case when httpstatus = 500 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_501_cnt, bigint, HTTP结果为501次数, A, null, sum(case when httpstatus = 501 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_502_cnt, bigint, HTTP结果为502次数, A, null, sum(case when httpstatus = 502 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_503_cnt, bigint, HTTP结果为503次数, A, null, sum(case when httpstatus = 503 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_504_cnt, bigint, HTTP结果为504次数, A, null, sum(case when httpstatus = 504 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_505_cnt, bigint, HTTP结果为505次数, A, null, sum(case when httpstatus = 505 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_506_cnt, bigint, HTTP结果为506次数, A, null, sum(case when httpstatus = 506 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_507_cnt, bigint, HTTP结果为507次数, A, null, sum(case when httpstatus = 507 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_509_cnt, bigint, HTTP结果为509次数, A, null, sum(case when httpstatus = 509 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  http_510_cnt, bigint, HTTP结果为510次数, A, null, sum(case when httpstatus = 510 then http_req_cnt else 0 end), null, null, 指标, 无, >=0
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null

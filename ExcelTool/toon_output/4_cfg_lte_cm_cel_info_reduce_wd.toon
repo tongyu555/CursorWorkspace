@@ -1,0 +1,72 @@
+theme_domain: 工参主数据
+table_name: cfg_lte_cm_cel_info_reduce_wd
+table_name_chinese: 4G电联工参小区汇聚结果字段裁剪滚动周表
+data_frequency: day
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 备注, 是否主表}:
+  cfg_lte_cm_cel_info_wd, 4G电联工参小区汇聚结果滚动周表, A, "row_number() over(partition by master_operators,reportcellkey order by day_no desc)，取一条", 是
+fields[64]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  provincecode, int, 省编码, null, p_provincecode, null, null, null, null, null, null
+  day, string, 日期, null, p_date, null, null, null, null, null, null
+  cellid, int, 小区ID, null, cid, null, null, null, null, null, null
+  cellkey, string, 小区cellkey, null, reportcellkey, null, null, null, null, null, null
+  lc_name, string, 小区名称, null, cellname, null, null, null, null, null, null
+  enodebid, bigint, 基站ID, null, enodebid, null, null, null, null, null, null
+  enodebname, string, 基站名称, null, enodebname, null, null, null, null, null, null
+  pci, string, 物理小区标识, null, pci, null, null, null, null, null, null
+  longitude, double, 小区经度, null, celllon, null, null, null, null, null, null
+  latitude, double, 小区纬度, null, celllat, null, null, null, null, null, null
+  is_indoor, string, 是否室内覆盖, null, null, case when covertype in ('1''3') then '0' when covertype='2' then '1' else covertype end, null, null, null, null, null
+  tac, bigint, TAC值, null, tac, null, null, null, null, null, null
+  sys_type, string, 系统类型, null, null, case when a.networkstandard='LTEFDD' then 'FDD' when a.networkstandard='LTETDD' then 'TDD' else null end, null, null, null, null, null
+  freq, string, 频段, null, bandclass, null, null, null, null, null, null
+  enodeb_lon, double, 基站经度, null, enodeblon, null, null, null, null, null, null
+  enodeb_lat, double, 基站纬度, null, enodeblat, null, null, null, null, null, null
+  freqbrand, int, 频段指示，例如：39, null, eutraband, null, null, null, null, null, null
+  earfcndl, double, 下行频点号, null, dl_earfcn, null, null, null, null, null, null
+  local_cellid, int, 本地小区ID, null, local_cellid, null, null, null, null, null, null
+  is_nbiot, int, 是否NBIoT小区，0：否，1：是, null, is_nbiot, null, null, null, null, null, null
+  bandwidthul, double, 频点上行带宽, null, ulband, null, null, null, null, null, null
+  bandwidthdl, double, 频点下行带宽, null, dlband, null, null, null, null, null, null
+  vendor, string, 厂家名称, null, null, "case \n        when vendor='ZTE' then '中兴'\n        when vendor='Huawei' then '华为'\n        when vendor='Nokia' then '诺基亚'\n        when vendor='Ericsson' then '爱立信'\n        when vendor='Datang' then '大唐'\n        when vendor='Beier' then '贝尔'\n        when vendor='Fenghuo' then '烽火'\n        else  '其它'  end", null, null, null, null, null
+  azimuth, double, 方向角, null, azimuth, null, null, null, null, null, null
+  citycode, int, 城市编码, null, citycode, null, null, null, null, null, null
+  districtcode, int, 区县编码, null, districtcode, null, null, null, null, null, null
+  city, string, 城市名称, null, city, null, null, null, null, null, null
+  district, string, 区县名称, null, district, null, null, null, null, null, null
+  area_type, string, "小区区域类型\n1:密集市区\n2:市区\n3:县城\n4:郊区\n5:平原农村\n6:水域农村\n7:丘陵农村\n8:山区农村\n9:城中村", "小区区域类型\n1:密集市区\n2:市区\n3:县城\n4:郊区\n5:平原农村\n6:水域农村\n7:丘陵农村\n8:山区农村\n9:城中村", areatype, null, null, 山东需求：cover_area_type, null, null, null
+  cell_cover_type, string, 小区覆盖类型, null, null, "case\n        when is_nbiot = 1 then 'nbiot'\n        when upper(a.lc_name) like '%LAMPSITE%' then 'lampsite'\n        when upper(a.lc_name) like '%QCELL%' then 'qcell'\n        when a.is_indoor=1 then '室分'\n        when upper(a.lc_name) like '%地铁%' then '室分'\n        else '宏站'\n    end", null, null, null, null, null
+  rspower, double, 参考信号功率, null, rspower, null, null, null, null, null, null
+  province, string, 省名称, null, province, null, null, null, null, null, null
+  height, double, 天线挂高, null, height, null, null, null, null, null, null
+  mechanicaldowntilt, double, 机械下倾角, null, mechanicaldowntilt, null, null, null, null, null, null
+  electricaldowntilt, double, 电子下倾角, 电子下倾角, electricaldowntilt, null, null, 山东需求：inner_downtilt, null, null, null
+  dlfrequency, double, 下行频率, null, dlfrequency, null, null, null, null, null, null
+  ulfrequency, double, 上行频率, null, ulfrequency, null, null, null, null, null, null
+  stand_province_id, bigint, 统计局省编码, null, stand_province_id, null, null, null, null, null, null
+  stand_province, string, 统计局省名称, null, stand_province, null, null, null, null, null, null
+  stand_city_id, bigint, 统计局城市编码, null, stand_city_id, null, null, null, null, null, null
+  stand_city, string, 统计局城市名称, null, stand_city, null, null, null, null, null, null
+  stand_county_id, bigint, 统计局区县编码, null, stand_county_id, null, null, null, null, null, null
+  stand_county, string, 统计局区县名称, null, stand_county, null, null, null, null, null, null
+  tjj_town_id, bigint, 统计局乡镇编码, null, tjj_town_id, null, null, null, null, null, null
+  tjj_town, string, 统计局乡镇名称, null, tjj_town, null, null, null, null, null, null
+  rru_serialid, string, RRU的电子序列号, null, rru_serialid, null, null, null, null, null, null
+  master_operators, string, 承建方, null, master_operators, null, null, null, null, null, null
+  mod3, int, 模3值, null, mod3, null, null, null, null, null, null
+  covertype, string, "小区覆盖类型\n1:室外覆盖\n2:室分覆盖\n3:室外和室分同时覆盖", null, covertype, null, null, null, null, null, null
+  geoattribute, string, "小区热点类型\n0:无\n1:校园\n2:风景区\n3:交通枢纽\n4:集贸市场\n5:会展中心\n6:体育场\n7:商业中心\n8:大型企业\n9:医院\n10:港口\n11:住宅小区:\n12:营业厅\n13:星级宾馆\n14:办公楼宇\n15:公墓\n99:其它", null, null, null, null, 山东需求：cover_hotspot_type, null, null, null
+  coverroadtype, string, "小区道路类型\n0:无\n1:市区\n2:县城\n3:高铁\n4:高速\n5:铁路\n6:地铁\n7:航道\n8:国道\n9:省道\n10:县道\n11:乡道", null, null, null, null, 山东需求：cover_road_type, null, null, null
+  opposite_prv_name, string, 对端省份名称, null, null, null, null, 山东需求：opposite_prv_name, null, null, null
+  opposite_reg_name, string, 对端地市名称, null, null, null, null, 山东需求：opposite_reg_name, null, null, null
+  enb_ip_address, string, 基站IPV4地址, null, null, null, null, 山东需求：ip_address, null, null, null
+  room_property, int, 室分性质, null, null, null, null, 山东需求：room_property, null, null, null
+  boundary_type, int, 边界类型, null, null, null, null, 山东需求：boundary_type, null, null, null
+  sit_address, string, 站址地址, null, null, null, null, 山东需求：sit_address, null, null, null
+  sit_code, string, 站址编码, null, null, null, null, 山东需求：sit_code, null, null, null
+  sit_name, string, 站址名称, null, null, null, null, 山东需求：sit_name, null, null, null
+  travelpro_code, string, 铁塔站址编码, null, null, null, null, 山东需求：travelpro_code, null, null, null
+  travelpro_name, string, 铁塔站址名称, null, null, null, null, 山东需求：travelpro_name, null, null, null
+  tower_property, int, 站址塔桅产权方, null, null, null, null, 山东需求：tower_property, null, null, null
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

@@ -1,0 +1,24 @@
+theme_domain: null
+table_name: cfg_s1mme_cause_code_list
+table_name_chinese: s1mme定界定位编码表
+data_frequency: 维表
+primary_key: 数据描述
+source_table_name[1]{别名, 是否主表}:
+  A, 是
+fields[16]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围, nan}:
+  reason_code, bigint, 控制面原因码, null, null, null, null, null, null, null, null, null
+  type, string, 分类, null, null, null, null, null, null, null, null, null
+  content, string, 原因描述, null, null, null, null, null, null, null, null, null
+  explain, string, 解释 , null, null, null, null, null, null, null, null, null
+  fail_reason, string, 原因说明, null, null, null, null, null, null, null, null, null
+  problem_reason, string, 问题原因, null, null, null, null, null, null, null, null, null
+  request_reason, string, 请求原因, null, null, null, null, null, null, null, null, null
+  problem_demarcation, string, 问题定界, null, null, null, null, null, null, null, null, null
+  sub_problem_demarcation, string, 问题定界2, null, null, null, null, null, null, null, null, null
+  problem_position, string, 问题定位, null, null, null, null, null, null, null, null, null
+  problem_scence, string, 问题场景, null, null, null, null, null, null, null, null, null
+  problem_analysis, string, 问题分析, null, null, null, null, null, null, null, null, null
+  demarcation_rules, string, 定界规则, null, null, null, null, null, null, null, null, null
+  normal_flag, int, 正常标志, null, null, null, null, "1:正常，0：异常", null, null, null, null
+  drop_flag, int, 掉线标志, null, null, null, null, 1：掉线，0：未掉线, null, null, null, null
+  remarks, string, 备注, null, null, null, null, null, null, null, null, null

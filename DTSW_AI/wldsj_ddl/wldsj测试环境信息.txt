@@ -1,0 +1,2 @@
+-- wldsj 建表的根路径
+hdfs://pocdeploytest-3:8020/hive_external/wldsj_jt_zxvmax

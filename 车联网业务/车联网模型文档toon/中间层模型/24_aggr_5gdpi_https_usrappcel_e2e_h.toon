@@ -1,0 +1,141 @@
+theme_domain: 数据业务感知
+table_name: aggr_5gdpi_https_usrappcel_e2e_h
+table_name_chinese: 5G DPI https业务基础小时表
+data_frequency: hour
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名}:
+  fact_5gdpi_https_e2e_transform_q, 5G DPI https业务事实表, A
+fields[133]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  clttime, string, 上报时间，具体到天, null, null, null, null, null, null, null, null
+  hour, int, 小时, null, null, null, null, null, null, null, null
+  province, int, 拜访地省份, null, null, null, null, null, null, null, null
+  interface, int, 接口类型：1、S1-U，4、S11，6、S5/S8，100、N3, null, null, null, null, null, null, null, null
+  visitedplmnid, string, 拜访网络标识, null, null, null, null, null, null, null, null
+  tai, string, 跟踪区标识, null, null, null, null, null, null, null, null
+  rattype, int, 无线接入类型, null, null, null, null, null, null, null, null
+  nssai_sst, string, "网络切片选择辅助信息（切片/服务类型）。若有多个切片，以“,”分隔。", null, null, null, null, null, null, null, null
+  nssai_sd, string, "网络切片选择辅助信息（切片差分器）。若有多个切片，以“,”分隔。", null, null, null, null, null, null, null, null
+  nodebid, bigint, 4G eNodeBID/5G gNBID, null, null, null, null, null, null, null, null
+  cellid, bigint, 小区ID, null, null, null, null, null, null, null, null
+  cellkey, string, cellkey, null, null, null, null, null, null, null, null
+  imsi_supi, string, 永久用户标识，永久用户标识。4G 填写用户IMSI。, null, null, null, null, null, null, null, null
+  msisdn, string, MS International PSTN/ISDN Number (ISDN), null, null, null, null, null, null, null, null
+  tacid, int, 终端类型标识, null, null, null, null, null, null, null, null
+  destinationip, string, 用户访问的目标IPv4或IPv6地址, null, null, null, null, null, null, null, null
+  home_province, string, 归属省份, null, null, null, null, null, null, null, null
+  mainservicetype, int, 业务大类, null, null, null, null, null, null, null, null
+  servicetype, string, 业务应用, null, null, null, null, null, null, null, null
+  duration_sum, bigint, 持续时间，单位毫秒，根据业务流开始和结束统计得出的时间, null, null, null, null, null, null, null, null
+  process_num, bigint, 业务发生次数, null, null, null, null, null, null, null, null
+  tcpsetupresponsedelay_sum, bigint, TCP建链响应时延_sum, null, null, null, null, null, null, null, null
+  tcpsetupackdelay_sum, bigint, TCP建链确认时延_sum, null, null, null, null, null, null, null, null
+  outputoctets_sum, bigint, 上行流量(byte), null, null, null, null, null, null, null, null
+  inputoctets_sum, bigint, 下行流量(byte), null, null, null, null, null, null, null, null
+  inputpacket_sum, bigint, 发给用户的业务数据包数量, null, null, null, null, null, null, null, null
+  outputpacket_sum, bigint, 用户发出的业务数据包数量, null, null, null, null, null, null, null, null
+  timeusage_sum, bigint, 实际产生流量的时长，单位为毫秒。, null, null, null, null, null, null, null, null
+  ultcpreorderingpacket_sum, bigint, 上行TCP乱序报文数，L4协议，非TCP传输时，此字段填0, null, null, null, null, null, null, null, null
+  dltcpreorderingpacket_sum, bigint, 下行TCP乱序报文数，非TCP传输时，此字段填0, null, null, null, null, null, null, null, null
+  ultcpretranspacket_sum, bigint, 上行TCP重传报文数，非TCP传输时，此字段填0, null, null, null, null, null, null, null, null
+  dltcpretranspacket_sum, bigint, 下行TCP重传报文数，非TCP传输时，此字段填0, null, null, null, null, null, null, null, null
+  tcpsynnumber_sum, bigint, TCP建链尝试次数, null, null, null, null, null, null, null, null
+  tcpconnectsuccnumber_sum, bigint, TCP连接成功次数, null, null, null, null, null, null, null, null
+  ulipfragpacks_sum, bigint, UL_IP_FRAG_PACKETS, null, null, null, null, null, null, null, null
+  dlipfragpacks_sum, bigint, DL_IP_FRAG_PACKETS, null, null, null, null, null, null, null, null
+  ul_data_transduration_sum, bigint, TCP上行数传时长，单位为毫秒, null, null, null, null, null, null, null, null
+  dl_data_transduration_sum, bigint, TCP下行数传时长，单位为毫秒, null, null, null, null, null, null, null, null
+  ul_packet_number_stg1_sum, bigint, UDP上行包大小个数：包大小 < 15 Byte, null, null, null, null, null, null, null, null
+  ul_packet_number_stg2_sum, bigint, UDP上行包大小个数：15Byte< 包大小 < 36 Byte, null, null, null, null, null, null, null, null
+  ul_packet_number_stg3_sum, bigint, UDP上行包大小个数：36Byte<= 包大小<= 56Byte, null, null, null, null, null, null, null, null
+  ul_packet_number_stg4_sum, bigint, UDP上行包大小个数：包大小 > 56 Byte, null, null, null, null, null, null, null, null
+  dl_packet_number_stg1_sum, bigint, UDP下行包大小个数：包大小 < 15 Byte, null, null, null, null, null, null, null, null
+  dl_packet_number_stg2_sum, bigint, UDP下行包大小个数：15Byte< 包大小 < 36 Byte, null, null, null, null, null, null, null, null
+  dl_packet_number_stg3_sum, bigint, UDP下行包大小个数：36Byte<=包大小<= 56Byte, null, null, null, null, null, null, null, null
+  dl_packet_number_stg4_sum, bigint, UDP下行包大小个数：包大小 > 56 Byte, null, null, null, null, null, null, null, null
+  ul_average_packet_size_avg, bigint, UDP上行平均包大小, null, null, null, null, null, null, null, null
+  dl_average_packet_size_avg, bigint, UDP下行平均包大小, null, null, null, null, null, null, null, null
+  vuflux, bigint, 用于计算流速的上行流量(byte), null, null, null, null, null, null, null, null
+  vdflux, bigint, 用于计算流速的下行流量(byte), null, null, null, null, null, null, null, null
+  vtimeusage, bigint, 用于计算流速的实际产生流量的时长，单位为毫秒。, null, null, null, null, null, null, null, null
+  vdtimeusage, bigint, 用于计算流速的实际产生下行流量的时长，单位为毫秒。, null, null, null, null, null, null, null, null
+  vutimeusage, bigint, 用于计算流速的实际产生上行流量的时长，单位为毫秒。, null, null, null, null, null, null, null, null
+  dnsqueryreqcount, bigint, DNS查询请求次数, null, null, null, null, null, null, null, null
+  dnsqueryrspcount, bigint, DNS查询响应次数, null, null, null, null, null, null, null, null
+  tcpsetupresponsedelay_avg, bigint, TCP建链响应时延_avg, null, null, null, null, null, null, null, null
+  tcpsetupackdelay_avg, bigint, TCP建链确认时延_avg, null, null, null, null, null, null, null, null
+  tcpsetupdelay_avg, bigint, TCP建立时延(ms)_avg, null, null, null, null, null, null, null, null
+  delay_setup_firsttransaction_avg, bigint, TCP建链成功到第一条事务请求的时延_avg（ms）, null, null, null, null, null, null, null, null
+  delay_firsttransaction_firstrespackt_avg, bigint, 第一条事务请求到其第一个响应包时延_avg（ms）, null, null, null, null, null, null, null, null
+  tcpsynnumber_avg, bigint, TCP建链尝试次数_avg, null, null, null, null, null, null, null, null
+  ul_average_interval_avg, bigint, UDP上行平均包间隔_avg, null, null, null, null, null, null, null, null
+  dl_average_interval_avg, bigint, UDP下行平均包间隔_avg, null, null, null, null, null, null, null, null
+  ul_average_jitter_avg, bigint, UDP上行平均包间隔抖动_avg, null, null, null, null, null, null, null, null
+  dl_average_jitter_avg, bigint, UDP下行平均包间隔抖动_avg, null, null, null, null, null, null, null, null
+  dnsquerydelay_avg, bigint, DNS查询时延_avg, null, null, null, null, null, null, null, null
+  delay_syntime_dnsresponsetime_avg, bigint, DNS到TCP建链的时延_avg, null, null, null, null, null, null, null, null
+  httpwebrspdelay_avg, bigint, 网页响应(首包)时延_avg(ms), null, null, null, null, null, null, null, null
+  httpwebdspdelay_avg, bigint, 网页显示(打开)时长_avg(ms), null, null, null, null, null, null, null, null
+  httpwebscreendelay_avg, bigint, 网页首屏时延_avg(ms), null, null, null, null, null, null, null, null
+  delay_acktime_actiontime_avg, bigint, TCP建链成功到首个HTTP请求的时延_avg（ms）, null, null, null, null, null, null, null, null
+  delay_actiontime_firstresptime_avg, bigint, 首个HTTP请求到第一个HTTP响应包的时延_avg（ms）, null, null, null, null, null, null, null, null
+  delay_lastpacktime_dnsortcp_avg, bigint, 首个HTTP请求到最后一个数据包的时延_avg, null, null, null, null, null, null, null, null
+  delay_firstresptime_lastpacktime_avg, bigint, 第一个HTTP响应包到最后一个数据包时延_avg, null, null, null, null, null, null, null, null
+  delay_lastpacktime_lastacktime_avg, bigint, 最后一个数据包到最后一个ACK的时延_avg, null, null, null, null, null, null, null, null
+  delay_firstfinacktime_lastacktime_avg, bigint, 最后一个ACK到首次挥手的时延_avg, null, null, null, null, null, null, null, null
+  respdelay_avg, bigint, 响应时延_avg, null, null, null, null, null, null, null, null
+  tcpreorderingpacketratio, bigint, TCP乱序占比, null, null, null, null, null, null, null, null
+  ultcpreorderingpacketratio, bigint, 上行TCP乱序占比, null, null, null, null, null, null, null, null
+  dltcpreorderingpacketratio, bigint, 下行TCP乱序占比, null, null, null, null, null, null, null, null
+  tcp_retranspacketratio, bigint, TCP重传占比, null, null, null, null, null, null, null, null
+  ultcp_retranspacketratio, bigint, 上行TCP重传占比, null, null, null, null, null, null, null, null
+  dltcp_retranspacketratio, bigint, 下行TCP重传占比, null, null, null, null, null, null, null, null
+  tcpconnfail_sum, bigint, TCP连接失败次数, null, null, null, null, null, null, null, null
+  tcpconnreq_sum, bigint, 上行TCP建立请求次数, null, null, null, null, null, null, null, null
+  tcpconnulsuc_sum, bigint, 上行TCP建立成功次数, null, null, null, null, null, null, null, null
+  tcpconndlsuc_sum, bigint, 下行TCP建立成功次数, null, null, null, null, null, null, null, null
+  tcpsetupdelay_sum, bigint, TCP建立时延(ms)_sum, null, null, null, null, null, null, null, null
+  tcpsetupresponsedelay_cnt, bigint, TCP建链响应次数, null, null, null, null, null, null, null, null
+  tcpsetupackdelay_cnt, bigint, TCP建链确认次数, null, null, null, null, null, null, null, null
+  tcpsetupresponsedelay_seg_1, bigint, TCP建链响应时延_seg_1, null, null, null, null, null, null, null, null
+  tcpsetupresponsedelay_seg_2, bigint, TCP建链响应时延_seg_2, null, null, null, null, null, null, null, null
+  tcpsetupresponsedelay_seg_3, bigint, TCP建链响应时延_seg_3, null, null, null, null, null, null, null, null
+  tcpsetupresponsedelay_seg_4, bigint, TCP建链响应时延_seg_4, null, null, null, null, null, null, null, null
+  tcpsetupresponsedelay_seg_5, bigint, TCP建链响应时延_seg_5, null, null, null, null, null, null, null, null
+  tcpsetupackdelay_seg_1, bigint, TCP建链确认时延_seg_1, null, null, null, null, null, null, null, null
+  tcpsetupackdelay_seg_2, bigint, TCP建链确认时延_seg_2, null, null, null, null, null, null, null, null
+  tcpsetupackdelay_seg_3, bigint, TCP建链确认时延_seg_3, null, null, null, null, null, null, null, null
+  tcpsetupackdelay_seg_4, bigint, TCP建链确认时延_seg_4, null, null, null, null, null, null, null, null
+  tcpsetupackdelay_seg_5, bigint, TCP建链确认时延_seg_5, null, null, null, null, null, null, null, null
+  ul_data_transduration_cnt, bigint, TCP上行数传时长条数, null, null, null, null, null, null, null, null
+  dl_data_transduration_cnt, bigint, TCP下行数传时长条数, null, null, null, null, null, null, null, null
+  delay_setup_firsttransaction_sum, bigint, TCP建链成功到第一条事务请求的时延_sum（ms）, null, null, null, null, null, null, null, null
+  delay_setup_firsttransaction_cnt, bigint, TCP建链成功到第一条事务请求的次数, null, null, null, null, null, null, null, null
+  delay_firsttransaction_firstrespackt_sum, bigint, 第一条事务请求到其第一个响应包时延_sum（ms）, null, null, null, null, null, null, null, null
+  delay_firsttransaction_firstrespackt_cnt, bigint, 第一条事务请求到其第一个响应包次数, null, null, null, null, null, null, null, null
+  outputoctets_above500_sum, bigint, 大包业务上行流量(>=500KB), null, null, null, null, null, null, null, null
+  outputoctets_above500_duration_sum, bigint, 大包上行时间持续总时长(>=500KB), null, null, null, null, null, null, null, null
+  inputoctets_above500_sum, bigint, 大包业务下行流量(>=500KB), null, null, null, null, null, null, null, null
+  inputoctets_above500_duration_sum, bigint, 大包下行时间持续总时长(>=500KB), null, null, null, null, null, null, null, null
+  outputoctets_above500_cnt, bigint, 上行大包条数(>=500KB), null, null, null, null, null, null, null, null
+  ul_above500_throughput_low_cnt, bigint, 上行大包低速率条数(<1M), null, null, null, null, null, null, null, null
+  ul_above500_highdelay_cnt, bigint, 上行大包高时延条数（>100ms）, null, null, null, null, null, null, null, null
+  inputoctets_above500_cnt, bigint, 下行大包条数(>=500KB), null, null, null, null, null, null, null, null
+  dl_above500_throughput_low_cnt, bigint, 下行大包低速率条数(<1M), null, null, null, null, null, null, null, null
+  dl_above500_highdelay_cnt, bigint, 下行大包高时延条数（>100ms）, null, null, null, null, null, null, null, null
+  dl_above500_throughput_inferior_cnt, bigint, 下行大包低速率条数(<3M), null, null, null, null, null, null, null, null
+  firstscreenfin_cnt, bigint, 网页首屏完成次数, null, null, null, null, null, null, null, null
+  firstscreenfindelay_sum, bigint, 网页首屏总时延(ms), null, null, null, null, null, null, null, null
+  xdr_suc_cnt_sum, bigint, xdr成功条数, null, null, null, null, null, null, null, null
+  city, int, 城市, null, null, null, null, null, null, null, null
+  districtcode, int, 区县, null, null, null, null, null, null, null, null
+  upfip, string, UPF的IPv4或IPv6地址, null, null, null, null, null, null, null, null
+  gnbip, string, gNB的IPv4或IPv6地址, null, null, null, null, null, null, null, null
+  dnn_apn, string, 网络接入标识, null, null, null, null, null, null, null, null
+  pei, string, 永久设备标识, null, null, null, null, null, null, null, null
+  sourceip_type, string, 用户IP类型, null, null, null, null, null, null, null, null
+  abnormal_cnt, bigint, 质差话单数量, null, null, sum(is_abnormal), null, 新增字段, 指标, 无, >=0
+  min_starttime, string, 最小开始时间, null, null, min(starttime), null, 新增字段, 指标, 无, 无
+  max_endtime, string, 最大结束时间, null, null, max(endtime), null, 新增字段, 指标, 无, 无
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null

@@ -1,0 +1,151 @@
+theme_domain: 数据感知
+table_name: aggr_lte_dpi_http_base_q
+table_name_chinese: 4G_DPI_http基础维度15分钟表
+data_frequency: quarter
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 是否主表}:
+  fact_lte_dpi_http_q, 4G_DPI_http整合层15分钟表, A, 是
+fields[143]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 日期, A, p_date, 直取, null, null, 维度, 无, yyyy-mm-dd
+  hour, int, 小时, A, p_hour, 直取, null, null, 维度, 无, 0~23
+  quarter, int, 15分钟, A, p_quarter, 直取, null, null, 维度, 无, 0~3
+  interface, int, 接口类型, A, interface, 直取, null, null, 维度, 无, <=101
+  rattype, int, 网络类型（4G：6；5G：10）, A, rattype, 直取, null, null, 维度, 无, "6,10"
+  provincecode, int, 省编码, A, p_provincecode, 直取, null, null, 维度, 无, 6位数编码
+  citycode, int, 市编码, A, citycode, 直取, null, null, 维度, 无, 6位数编码
+  districtcode, int, 区编码, A, districtcode, 直取, null, null, 维度, 无, 6位数编码
+  province, string, 省名称, A, province, 直取, null, null, 维度, 无, 无
+  city, string, 地市名称, A, city, 直取, null, null, 维度, 无, 无
+  district, string, 区县名称, A, district, 直取, null, null, 维度, 无, 无
+  cellkey, string, 小区cellkey, A, cellkey, 直取, null, null, 维度, 无, 无
+  imsi, string, 用户imsi, A, imsi, 直取, null, null, 维度, 无, 无
+  msisdn, string, 用户号码, A, msisdn, 直取, null, null, 维度, 无, 无
+  imei, string, 用户终端, A, imei, 直取, null, null, 维度, 无, 无
+  apn, string, 网络接入技术, A, apn, 直取, null, null, 维度, 无, 无
+  sgwip, string, SGW在GTP-U上的IP地址, A, sgwip, 直取, null, null, 维度, 无, 无
+  mmeip, string, MME在GTP-C上的IP地址, A, mmeip, 直取, null, null, 维度, 无, 无
+  pgwip, string, 用户在GTP-U和PMIPv6会话时使用的PGW IP地址。如[RFC 2002]定义, A, pgwip, 直取, null, null, 维度, 无, 无
+  servicetype, string, 业务应用, A, servicetype, 直取, null, null, 维度, 无, 无
+  business_type, string, 业务类型（im、web、game、video、other）, A, business_type, 直取, null, null, 维度, 无, "im,web,game,video,other"
+  enbip, string, ENB的IPv4或IPv6地址, A, enbip, 直取, null, null, 维度, 无, 无
+  home_province, string, 归属省份, A, home_province, 直取, null, null, 维度, 无, 6位数编码
+  l4protocol, int, L4协议类型： 0：TCP；1：UDP, A, l4protocol, 直取, null, null, 维度, 无, "0,1"
+  bearer_qci, int, 当前业务流所属承载的QCI。, A, bearer_qci, 直取, null, null, 维度, 无, 无
+  sourceip_type, string, 用户访问外部网络时使用的IP类型（IPv4/IPv6）, A, sourceip_type, 直取, null, null, 维度, 无, 无
+  httpstatus, int, http状态码, A, httpstatus, 直取, null, null, 维度, 无, 无
+  is_core_delimit, int, 是否核心网问题, A, is_core_delimit, 直取, null, null, 维度, 无, "0,1"
+  is_wireless_delimit, int, 是否无线网络问题, A, is_wireless_delimit, 直取, null, null, 维度, 无, "0,1"
+  is_usr_delimit, int, 是否用户问题, A, is_usr_delimit, 直取, null, null, 维度, 无, "0,1"
+  is_sp_delimit, int, 是否sp服务器问题, A, is_sp_delimit, 直取, null, null, 维度, 无, "0,1"
+  httpstatus_position, string, http状态码原因定位, A, httpstatus_position, 直取, null, null, 维度, 无, "0,1"
+  abnormal_cnt, bigint, 质差话单数量, A, null, sum(is_abnormal) , null, null, 指标, 无, >=0
+  record_cnt, bigint, 记录数, A, null, count(1) , null, null, 指标, 无, >=0
+  speedlimit_cnt, bigint, 限速记录数, A, null, sum(case when (ue_ambr_ul>0 and ue_ambr_ul<5000) or (ue_ambr_dl>0 and ue_ambr_dl<5000) then 1 else 0 end), null, null, 指标, 无, >=0
+  duration, bigint, 持续时间，单位毫秒, A, null, sum(duration), null, null, 指标, ms, >=0
+  outputoctets, bigint, 上行流量(byte), A, null, sum(outputoctets), null, null, 指标, byte, >=0
+  inputoctets, bigint, 下行流量(byte), A, null, sum(inputoctets), null, null, 指标, byte, >=0
+  outputoctets_above500, bigint, 上行大包业务流量(>=500KB), A, null, sum(case when outputoctets>=500*1024 then outputoctets else 0 end), null, null, 指标, byte, >=0
+  outputoctets_above500_cnt, bigint, 上行大包条数(>=500KB), A, null, sum(case when outputoctets>=500*1024 then 1  else 0 end), null, null, 指标, 无, >=0
+  outputoctets_above500_highdelay_cnt, bigint, 上行大包高时延条数（>100ms）, A, null, sum(case when outputoctets>=500*1024 and  tcpsetupresponsedelay>100  then 1  else 0 end), null, null, 指标, 无, >=0
+  inputoctets_above500, bigint, 下行大包业务流量(>=500KB), A, null, sum(case when inputoctets>=500*1024 then inputoctets else 0 end), null, null, 指标, byte, >=0
+  inputoctets_above500_cnt, bigint, 下行大包条数(>=500KB), A, null, sum(case when inputoctets>=500*1024 then 1  else 0 end), null, null, 指标, 无, >=0
+  inputoctets_above500_highdelay_cnt, bigint, 下行大包高时延条数（>100ms）, A, null, sum(case when inputoctets>=500*1024  and tcpsetupackdelay>100   then 1  else 0 end), null, null, 指标, 无, >=0
+  ul_flux_throughput, double, 上传速率流量(kbps), A, null, sum(case when dnsquerytime >0 and lastpacktime-dnsquerytime>0 and outputoctets>0 then outputoctets*8/1024 when syntime >0 and lastpacktime-syntime>0 and outputoctets>0 then outputoctets*8/1024 else 0 end), null, null, 指标, kbps, >0
+  ul_duration_throughput, double, 上传速率时长(s), A, null, sum(case when dnsquerytime >0 and lastpacktime-dnsquerytime>0 and outputoctets>0 then (lastpacktime-dnsquerytime)/1000 when syntime >0 and lastpacktime-syntime>0 and outputoctets>0 then (lastpacktime-syntime)/1000 else 0 end), null, null, 指标, s, >0
+  dl_flux_throughput, double, 下载速率流量(kbps), A, null, sum(case when dnsquerytime >0 and lastpacktime-dnsquerytime>0 and inputoctets>0 then inputoctets*8/1024 when syntime >0 and lastpacktime-syntime>0 and inputoctets>0 then inputoctets*8/1024 else 0 end), null, null, 指标, kbps, >0
+  dl_duration_throughput, double, 下载速率时长(s), A, null, sum(case when dnsquerytime >0 and lastpacktime-dnsquerytime>0 and inputoctets>0 then (lastpacktime-dnsquerytime)/1000 when syntime >0 and lastpacktime-syntime>0 and inputoctets>0 then (lastpacktime-syntime)/1000 else 0 end), null, null, 指标, s, >0
+  ul_flux_throughput_big500, double, 上传大包速率流量-500KB(kbps), A, null, sum(case when dnsquerytime >0 and lastpacktime-dnsquerytime>0 and outputoctets>500*1024 then outputoctets*8/1024 when syntime >0 and lastpacktime-syntime>0 and outputoctets>500*1024 then outputoctets*8/1024 else 0 end), null, null, 指标, kbps, >0
+  ul_duration_throughput_big500, double, 上传大包速率时长-500KB(s), A, null, sum(case when dnsquerytime >0 and lastpacktime-dnsquerytime>0 and outputoctets>500*1024 then (lastpacktime-dnsquerytime)/1000 when syntime >0 and lastpacktime-syntime>0 and outputoctets>500*1024 then (lastpacktime-syntime)/1000 else 0 end), null, null, 指标, s, >0
+  dl_flux_throughput_big500, double, 下载大包速率流量-500KB(kbps), A, null, sum(case when dnsquerytime >0 and lastpacktime-dnsquerytime>0 and inputoctets>500*1024 then inputoctets*8/1024 when syntime >0 and lastpacktime-syntime>0 and inputoctets>500*1024 then inputoctets*8/1024 else 0 end), null, null, 指标, kbps, >0
+  dl_duration_throughput_big500, double, 下载大包速率时长-500KB(s), A, null, sum(case when dnsquerytime >0 and lastpacktime-dnsquerytime>0 and inputoctets>500*1024 then (lastpacktime-dnsquerytime)/1000 when syntime >0 and lastpacktime-syntime>0 and inputoctets>500*1024 then (lastpacktime-syntime)/1000 else 0 end), null, null, 指标, s, >0
+  outputpacket, bigint, 上行包数, A, null, sum(outputpacket), null, null, 指标, 无, >=0
+  inputpacket, bigint, 下行包数, A, null, sum(inputpacket), null, null, 指标, 无, >=0
+  ultcpreorderingpacket, bigint, 上行TCP乱序报文数，L4协议，非TCP传输时，此字段填0, A, null, sum(ultcpreorderingpacket), null, null, 指标, 无, >=0
+  dltcpreorderingpacket, bigint, 下行TCP乱序报文数，非TCP传输时，此字段填0, A, null, sum(dltcpreorderingpacket), null, null, 指标, 无, >=0
+  ultcpretranspacket, bigint, 上行TCP重传报文数，非TCP传输时，此字段填0, A, null, sum(ultcp_retranspacket), null, null, 指标, 无, >=0
+  dltcpretranspacket, bigint, 下行TCP重传报文数，非TCP传输时，此字段填0, A, null, sum(dltcp_retranspacket), null, null, 指标, 无, >=0
+  tcpconnfail_cnt, bigint, TCP连接失败次数, A, null, sum(case when tcpconnectstate=1 then  1  else 0 end), null, null, 指标, 无, >=0
+  tcpconnreq_cnt, bigint, 上行TCP建立请求次数, A, null, sum(case when tcpsynnumber>0 then 1 else 0 end), null, null, 指标, 无, >=0
+  tcpconnulsuc_cnt, bigint, 上行TCP建立成功次数, A, null, sum(case when tcpsetupresponsedelay>0 then 1 else 0 end), null, null, 指标, 无, >=0
+  tcpconndlsuc_cnt, bigint, 下行TCP建立成功次数, A, null, sum(case when tcpsetupresponsedelay>0 and tcpsetupackdelay>0 then  1 else 0 end), null, null, 指标, 无, >=0
+  ulipfragpacks, bigint, 上行IP分片包大小, A, null, sum(ulipfragpacks), null, null, 指标, 无, >=0
+  dlipfragpacks, bigint, 下行IP分片包大小, A, null, sum(dlipfragpacks), null, null, 指标, 无, >=0
+  http_req_cnt, bigint, Http请求次数, A, null, sum(http_req_cnt), null, null, 指标, 无, >=0
+  http_succ_cnt, bigint, Http请求成功次数, A, null, sum(http_succ_cnt), null, null, 指标, 无, >=0
+  http_complete_cnt, bigint, http请求完成次数, A, null, sum(http_complete_cnt), null, null, 指标, 无, >=0
+  tcpsetupresponsedelay_cnt, bigint, TCP建链响应次数, A, null, sum(case when tcpsetupresponsedelay>0 then 1 else 0 end), null, null, 指标, 无, >=0
+  tcpsetupresponsedelay_avg, double, TCP建链响应时延_avg, A, null, avg(tcpsetupresponsedelay), null, null, 指标, ms, >=0
+  tcpsetupresponsedelay_cnt_0_50, bigint, "TCP建链响应时延在(0,50]的次数", A, null, count(case when tcpsetupresponsedelay>0 and tcpsetupresponsedelay<=50 then 1 else null end), null, null, 指标, 无, >=0
+  tcpsetupresponsedelay_cnt_50_100, bigint, "TCP建链响应时延在(50,100]的次数", A, null, count(case when tcpsetupresponsedelay>50 and tcpsetupresponsedelay<=100 then 1 else null end), null, null, 指标, 无, >=0
+  tcpsetupresponsedelay_cnt_100_150, bigint, "TCP建链响应时延在(100,150]的次数", A, null, count(case when tcpsetupresponsedelay>100 and tcpsetupresponsedelay<=150 then 1 else null end), null, null, 指标, 无, >=0
+  tcpsetupresponsedelay_cnt_150_200, bigint, "TCP建链响应时延在(150,200]的次数", A, null, count(case when tcpsetupresponsedelay>150 and tcpsetupresponsedelay<=200 then 1 else null end), null, null, 指标, 无, >=0
+  tcpsetupresponsedelay_cnt_greater_200, bigint, "TCP建链响应时延在(200,50000]的次数", A, null, count(case when tcpsetupresponsedelay>200 and tcpsetupresponsedelay<=50000 then 1 else null end), null, null, 指标, 无, >=0
+  tcpsetupackdelay_cnt, bigint, TCP建链确认次数, A, null, sum(case when tcpsetupackdelay>0 then 1 else 0 end), null, null, 指标, 无, >=0
+  tcpsetupackdelay_avg, double, TCP建链确认时延_avg, A, null, avg(tcpsetupackdelay), null, null, 指标, ms, >=0
+  tcpsetupackdelay_cnt_0_50, bigint, "TCP建链确认时延在(0,50]的次数", A, null, count(case when tcpsetupackdelay>0 and tcpsetupackdelay<=50 then 1 else null end), null, null, 指标, 无, >=0
+  tcpsetupackdelay_cnt_50_100, bigint, "TCP建链确认时延在(50,100]的次数", A, null, count(case when tcpsetupackdelay>50 and tcpsetupackdelay<=100 then 1 else null end), null, null, 指标, 无, >=0
+  tcpsetupackdelay_cnt_100_150, bigint, "TCP建链确认时延在(100,150]的次数", A, null, count(case when tcpsetupackdelay>100 and tcpsetupackdelay<=150 then 1 else null end), null, null, 指标, 无, >=0
+  tcpsetupackdelay_cnt_150_200, bigint, "TCP建链确认时延在(150,200]的次数", A, null, count(case when tcpsetupackdelay>150 and tcpsetupackdelay<=200 then 1 else null end), null, null, 指标, 无, >=0
+  tcpsetupackdelay_cnt_greater_200, bigint, "TCP建链确认时延在(200,50000]的次数", A, null, count(case when tcpsetupackdelay>200 and tcpsetupackdelay<=50000 then 1 else null end), null, null, 指标, 无, >=0
+  tcpsetupdelay_cnt, double, TCP建立次数, A, null, sum(case when tcpsetupdelay>0 then 1 else 0 end), null, null, 指标, ms, >=0
+  tcpsetupdelay_avg, double, TCP建立时延(ms), A, null, avg(tcpsetupdelay), null, null, 指标, ms, >=0
+  tcpsetupdelay_cnt_0_50, bigint, "TCP建立时延在(0,50]的次数", A, null, count(case when tcpsetupdelay>0 and tcpsetupdelay<=50 then 1 else null end), null, null, 指标, 无, >=0
+  tcpsetupdelay_cnt_50_100, bigint, "TCP建立时延在(50,100]的次数", A, null, count(case when tcpsetupdelay>50 and tcpsetupdelay<=100 then 1 else null end), null, null, 指标, 无, >=0
+  tcpsetupdelay_cnt_100_150, bigint, "TCP建立时延在(100,150]的次数", A, null, count(case when tcpsetupdelay>100 and tcpsetupdelay<=150 then 1 else null end), null, null, 指标, 无, >=0
+  tcpsetupdelay_cnt_150_200, bigint, "TCP建立时延在(150,200]的次数", A, null, count(case when tcpsetupdelay>150 and tcpsetupdelay<=200 then 1 else null end), null, null, 指标, 无, >=0
+  tcpsetupdelay_cnt_greater_200, bigint, "TCP建立时延在(200,50000]的次数", A, null, count(case when tcpsetupdelay>200 and tcpsetupdelay<=50000 then 1 else null end), null, null, 指标, 无, >=0
+  delay_setup_firsttransaction, double, TCP建链成功到第一条事务请求的时延（ms）, A, null, avg(delay_setup_firsttransaction), null, null, 指标, ms, >=0
+  delay_setup_firsttransaction_cnt, bigint, TCP事务首次请求次数, A, null, count(delay_setup_firsttransaction), null, null, 指标, 无, >=0
+  delay_firsttransaction_firstrespackt, double, 第一条事务请求到其第一个响应包时延（ms）, A, null, avg(delay_firsttransaction_firstrespackt), null, null, 指标, ms, >=0
+  delay_firsttransaction_firstrespackt_cnt, bigint, TCP事务首次响应次数, A, null, count(delay_firsttransaction_firstrespackt), null, null, 指标, 无, >=0
+  httpwebrspdelay_cnt, bigint, 网页响应时延次数, A, null, count(httpwebrspdelay), null, null, 指标, 次, >=0
+  httpwebrspdelay, double, 网页首包时延，也叫网页响应时延, A, null, avg(httpwebrspdelay), null, null, 指标, ms, >=0
+  httpwebrspdelay_seg_1, bigint, 网页响应(首包)时延_seg_1, A, null, sum(case when httpwebrspdelay > 500 and  httpwebrspdelay <= 600 then 1 else 0 end), null, null, 指标, 次, >=0
+  httpwebrspdelay_seg_2, bigint, 网页响应(首包)时延_seg_2, A, null, sum(case when httpwebrspdelay > 600 and  httpwebrspdelay <= 700 then 1 else 0 end), null, null, 指标, 次, >=0
+  httpwebrspdelay_seg_3, bigint, 网页响应(首包)时延_seg_3, A, null, sum(case when httpwebrspdelay > 700 and  httpwebrspdelay <= 800 then 1 else 0 end), null, null, 指标, 次, >=0
+  httpwebrspdelay_seg_4, bigint, 网页响应(首包)时延_seg_4, A, null, sum(case when httpwebrspdelay > 800 and  httpwebrspdelay <= 900 then 1 else 0 end), null, null, 指标, 次, >=0
+  httpwebrspdelay_seg_5, bigint, 网页响应(首包)时延_seg_5, A, null, sum(case when httpwebrspdelay > 900 and  httpwebrspdelay <= 10000 then 1 else 0 end), null, null, 指标, 次, >=0
+  httpwebdspdelay_cnt, bigint, 网页完整打开时延次数, A, null, count(httpwebdspdelay), null, null, 指标, 次, >=0
+  httpwebdspdelay, double, 网页显示时延，也叫网页完整打开时延, A, null, avg(httpwebdspdelay), null, null, 指标, ms, >=0
+  httpwebdspdelay_seg_1, bigint, 网页显示(打开)时长_seg_1, A, null, sum(case when httpwebdspdelay > 1800 and  httpwebdspdelay <= 1900 then 1 else 0 end), null, null, 指标, 次, >=0
+  httpwebdspdelay_seg_2, bigint, 网页显示(打开)时长_seg_2, A, null, sum(case when httpwebdspdelay > 1900 and  httpwebdspdelay <= 2000 then 1 else 0 end), null, null, 指标, 次, >=0
+  httpwebdspdelay_seg_3, bigint, 网页显示(打开)时长_seg_3, A, null, sum(case when httpwebdspdelay > 2000 and  httpwebdspdelay <= 2100 then 1 else 0 end), null, null, 指标, 次, >=0
+  httpwebdspdelay_seg_4, bigint, 网页显示(打开)时长_seg_4, A, null, sum(case when httpwebdspdelay > 2100 and  httpwebdspdelay <= 2200 then 1 else 0 end), null, null, 指标, 次, >=0
+  httpwebdspdelay_seg_5, bigint, 网页显示(打开)时长_seg_5, A, null, sum(case when httpwebdspdelay > 2200 and  httpwebdspdelay <= 10000 then 1 else 0 end), null, null, 指标, 次, >=0
+  httpwebscreen_cnt, bigint, 网页首屏完成次数, A, null, count(httpwebscreendelay), null, null, 指标, 无, >=0
+  httpwebscreendelay, double, 网页首屏时延(ms), A, null, avg(httpwebscreendelay), null, null, 指标, ms, >=0
+  httpwebscreendelay_seg_1, bigint, 网页首屏时延_seg_1, A, null, sum(case when httpwebscreendelay > 1500 and  httpwebscreendelay <= 1600 then 1 else 0 end), null, null, 指标, 次, >=0
+  httpwebscreendelay_seg_2, bigint, 网页首屏时延_seg_2, A, null, sum(case when httpwebscreendelay > 1600 and  httpwebscreendelay <= 1700 then 1 else 0 end), null, null, 指标, 次, >=0
+  httpwebscreendelay_seg_3, bigint, 网页首屏时延_seg_3, A, null, sum(case when httpwebscreendelay > 1700 and  httpwebscreendelay <= 1800 then 1 else 0 end), null, null, 指标, 次, >=0
+  httpwebscreendelay_seg_4, bigint, 网页首屏时延_seg_4, A, null, sum(case when httpwebscreendelay > 1800 and  httpwebscreendelay <= 2200 then 1 else 0 end), null, null, 指标, 次, >=0
+  httpwebscreendelay_seg_5, bigint, 网页首屏时延_seg_5, A, null, sum(case when httpwebscreendelay > 2200 and  httpwebscreendelay <= 10000 then 1 else 0 end), null, null, 指标, 次, >=0
+  top_httpwebscreen_cnt, bigint, TOP网址网页首屏完成次数, A, null, sum(case when is_topweb_first_screen_host=1 and httpwebscreendelay>0 then 1 else 0 end), null, null, 指标, 次, >=0
+  top_httpwebscreendelay, double, TOP网址网页首屏时延, A, null, avg(case when is_topweb_first_screen_host=1 and httpwebscreendelay>0 then httpwebscreendelay else null end), null, null, 指标, ms, >=0
+  respdelay, double, 响应时延, A, null, avg(case when httpstatus<400 and httpstatus>0 then  respdelay else null end), null, null, 指标, ms, >=0
+  dnsresponse_delay, double, DNS响应时延, A, null, avg(dnsresponse_delay), null, null, 指标, ms, >=0
+  dnsresponse_cnt, bigint, DNS响应次数, A, null, count(dnsresponse_delay), null, null, 指标, 次, >=0
+  dnsquery_cnt, bigint, DNS请求次数, A, null, sum(case when dnsquerytime>0 then 1 else 0 end), null, null, 指标, 次, >=0
+  syntime_dnsresponse_delay, double, DNS建立完成到TCP握手时延, A, null, avg(syntime_dnsresponse_delay), null, null, 指标, ms, >=0
+  syntime_dnsresponse_cnt, bigint, DNS建立完成到TCP握手次数, A, null, count(syntime_dnsresponse_delay), null, null, 指标, 次, >=0
+  http_throughput_under500_duartion, double, 小页面显示总时长（内容<500KB）, A, null, sum(case when  inputoctets<500*1024 and httpwebdspdelay<3600000  then httpwebdspdelay else 0 end), null, null, 指标, ms, >=0
+  http_throughput_under500_suc_cnt, double, 小页面显示成功次数（内容<500KB）, A, null, sum(case when InputOctets<500*1024 and httpwebdspdelay<3600000 then 1 else 0 end), null, null, 指标, 无, >=0
+  http_throughput_above500_duartion, double, HTTP下载时长（ms）（内容>=500KB）, A, null, sum(case when inputoctets>=500*1024 then  httpwebdspdelay else 0 end), null, null, 指标, ms, >=0
+  xdr_suc_cnt_sum, bigint, xdr成功条数, A, null, sum(case when tcpconnectstate=0 or sessionstopflag=1 then 1 else 0 end), null, null, 指标, 无, >=0
+  excellentrspdelay_cnt, bigint, 首屏时延优秀次数, A, null, sum(case when httpwebscreendelay>0 and httpwebscreendelay<=1000 then 1 else 0 end), null, null, 指标, 无, >=0
+  inferiorrspdelay_cnt, bigint, 首屏时延质差次数, A, null, sum(case when httpwebscreendelay>3000 then 1 else 0 end), null, null, 指标, 无, >=0
+  wellrspdelay_cnt, bigint, 首屏时延良好次数, A, null, sum(case when httpwebscreendelay>1000 and httpwebscreendelay<=3000 then 1 else 0 end), null, null, 指标, 无, >=0
+  topweb_excellentrspdelay_cnt, bigint, TOP网址首屏时延优秀次数, A, null, sum(case when is_topweb_first_screen_host=1 and httpwebscreendelay>0 and httpwebscreendelay<=1000 then 1 else 0 end), null, null, 指标, 无, >=0
+  topweb_inferiorrspdelay_cnt, bigint, TOP网址首屏时延质差次数, A, null, sum(case when is_topweb_first_screen_host=1 and httpwebscreendelay>3000 then 1 else 0 end), null, null, 指标, 无, >=0
+  topweb_wellrspdelay_cnt, bigint, TOP网址首屏时延良好次数, A, null, sum(case when is_topweb_first_screen_host=1 and httpwebscreendelay>1000 and httpwebscreendelay<=3000 then 1 else 0 end), null, null, 指标, 无, >=0
+  excellentcmpltdelay_cnt, bigint, 打开时延优秀次数, A, null, sum(case when httpwebdspdelay>0 and httpwebdspdelay<=500 then 1 else 0 end), null, null, 指标, 无, >=0
+  inferiorcmpltdelay_cnt, bigint, 打开时延质差次数, A, null, sum(case when httpwebdspdelay>1200 then 1 else 0 end), null, null, 指标, 无, >=0
+  wellcmpltdelay_cnt, bigint, 打开时延良好次数, A, null, sum(case when httpwebdspdelay>500 and httpwebdspdelay<=1200 then 1 else 0 end), null, null, 指标, 无, >=0
+  excellentgamedelay_cnt, bigint, 游戏交互时延优秀次数, A, null, sum(case when tcpsetupdelay>0 and tcpsetupdelay<=100 then 1 else 0 end), null, null, 指标, 无, >=0
+  inferiorgamedelay_cnt, bigint, 游戏交互时延劣质次数, A, null, sum(case when tcpsetupdelay>120 then 1 else 0 end), null, null, 指标, 无, >=0
+  wellgamedelay_cnt, bigint, 游戏交互时延良好次数, A, null, sum(case when tcpsetupdelay>100 and tcpsetupdelay<=120 then 1 else 0 end), null, null, 指标, 无, >=0
+  min_starttime, string, 最小开始时间, A, null, min(starttime), null, 20250415101139, 指标, 无, >0
+  max_endtime, string, 最大结束时间, A, null, max(endtime), null, 20250415101024, 指标, 无, >0
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null
+  p_quarter, int, 15分钟分区, null, null, null, null, null, null, null, null

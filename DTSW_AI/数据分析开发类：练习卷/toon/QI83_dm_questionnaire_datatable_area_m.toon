@@ -1,0 +1,24 @@
+theme_domain: 问卷调查-整体data table
+table_name: dm_questionnaire_datatable_area_m
+table_name_chinese: 4类问卷反馈优良区域维度指标月表（除engage help)
+data_frequency: month
+primary_key: 数据描述
+source_table_name[2]{来源系统, 源表英文名, 源表中文名, 别名, 任务描述, 备注, 是否主表}:
+  问卷调查, dm_questionnaire_stat_m_d, 问卷调查整月统计详情天表, A, 取帐期月最后一天数据, a、b分别先汇聚到area（没有area值的，汇聚为other，再关联a.area_name=b.area_name, 是
+  问卷调查, dm_questionnaire_group_stat_m_d, 问卷调查各级整月统计详情天表, B, 取帐期月最后一天数据, null, 是
+fields[15]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  p_year, int, 年分区, null, null, null, null, null, null, null, null
+  p_month, int, 月分区, null, null, null, null, null, null, null, null
+  year, int, 年, null, null, null, null, null, 维度, null, null
+  month, int, 月, null, null, null, null, null, 维度, null, null
+  area_name, string, 地区名称, A, area_name, 直取，空的为other, null, null, 维度, null, null
+  rm_help_questionnaire_feedback_cnt, bigint, 所有问卷调查的反馈量（不包括engage help), A, rm_help_questionnaire_feedback_nums, sum, null, base, 指标, 次, （0，∞）
+  rm_help_good_ovsat_cnt, bigint, 4类问卷OvSat满意度是良好的次数（不包括engage help), B, null, "sum(nvl(join_good_ovsat_nums,0)+nvl(pay_good_ovsat_nums,0)+nvl(usenet_good_ovsat_nums,0)+nvl(useapp_good_ovsat_nums,0)+nvl(engagehot_good_ovsat_nums,0)+nvl(engagelive_good_ovsat_nums,0)+nvl(engageemail_good_ovsat_nums,0))", null, ovsat, 指标, 次, （0，∞）
+  rm_help_ovsat_cnt, bigint, 4类问卷OvSat满意度次数（不包括engage help), B, null, "sum(nvl(join_ovsat_nums,0)+nvl(pay_ovsat_nums,0)+nvl(usenet_ovsat_nums,0)+nvl(useapp_ovsat_nums,0)+nvl(engagehot_ovsat_nums,0)+nvl(engagelive_ovsat_nums,0)+nvl(engageemail_ovsat_nums,0))", null, ovsat, 指标, 次, （0，∞）
+  rm_help_good_ovsat_ratio, bigint, 4类问卷OvSat满意度指标（不包括engage help), B, null, "sum(nvl(join_good_ovsat_nums,0)+nvl(pay_good_ovsat_nums,0)+nvl(usenet_good_ovsat_nums,0)+nvl(useapp_good_ovsat_nums,0)+nvl(engagehot_good_ovsat_nums,0)+nvl(engagelive_good_ovsat_nums,0)+nvl(engageemail_good_ovsat_nums,0))/sum(nvl(join_ovsat_nums,0)+nvl(pay_ovsat_nums,0)+nvl(usenet_ovsat_nums,0)+nvl(useapp_ovsat_nums,0)+nvl(engagehot_ovsat_nums,0)+nvl(engagelive_ovsat_nums,0)+nvl(engageemail_ovsat_nums,0))", null, ovsat, 指标, 比例, [0，1]
+  rm_help_good_ces_cnt, bigint, 4类问卷ces满意度是良好的次数（不包括engage help), B, null, "sum(nvl(join_good_ces_nums,0)+nvl(pay_good_ces_nums,0)+nvl(useapp_good_ces_nums,0)+nvl(usenet_good_ces_nums,0)+nvl(engagehelp_good_ces_nums,0)+nvl(engageominus_good_ces_nums,0))", null, ces, 指标, 次, （0，∞）
+  rm_help_ces_cnt, bigint, 4类问卷ces满意度次数（不包括engage help), B, null, "sum(nvl(join_ces_nums,0)+nvl(pay_ces_nums,0)+nvl(useapp_ces_nums,0)+nvl(usenet_ces_nums,0)+nvl(engagehelp_ces_nums,0))", null, ces, 指标, 次, （0，∞）
+  rm_help_good_ces_ratio, bigint, 4类问卷ces满意度指标（不包括engage help), B, null, "sum(nvl(join_good_ces_nums,0)+nvl(pay_good_ces_nums,0)+nvl(useapp_good_ces_nums,0)+nvl(usenet_good_ces_nums,0)+nvl(engagehelp_good_ces_nums,0)+nvl(engageominus_good_ces_nums,0))/sum(nvl(join_ces_nums,0)+nvl(pay_ces_nums,0)+nvl(useapp_ces_nums,0)+nvl(usenet_ces_nums,0)+nvl(engagehelp_ces_nums,0))", null, ces, 指标, 比例, [0，1]
+  rm_help_good_nps_cnt, bigint, 4类问卷nps满意度是良好的次数（不包括engage help), B, null, "sum(nvl(join_good_nps_nums,0)+nvl(pay_good_nps_nums,0)+nvl(useapp_good_nps_nums,0)+nvl(usenet_good_nps_nums,0)+nvl(engagehelp_good_nps_nums,0)+nvl(engageominus_good_nps_nums,0))", null, nps, 指标, 次, （0，∞）
+  rm_help_nps_cnt, bigint, 4类问卷nps满意度次数（不包括engage help), B, null, "sum(nvl(join_nps_nums,0)+nvl(pay_nps_nums,0)+nvl(useapp_nps_nums,0)+nvl(usenet_nps_nums,0)+nvl(engagehelp_nps_nums,0)+nvl(engageominus_nps_nums,0))", null, nps, 指标, 次, （0，∞）
+  rm_help_good_nps_ratio, bigint, 4类问卷nps满意度指标（不包括engage help), B, null, "sum(nvl(join_good_nps_nums,0)+nvl(pay_good_nps_nums,0)+nvl(useapp_good_nps_nums,0)+nvl(usenet_good_nps_nums,0)+nvl(engagehelp_good_nps_nums,0)+nvl(engageominus_good_nps_nums,0))/sum(nvl(join_nps_nums,0)+nvl(pay_nps_nums,0)+nvl(useapp_nps_nums,0)+nvl(usenet_nps_nums,0)+nvl(engagehelp_nps_nums,0)+nvl(engageominus_nps_nums,0))", null, nps, 指标, 比例, [0，1]

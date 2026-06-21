@@ -1,0 +1,208 @@
+"""
+建表规则 : 
+1. 核心数据库为 zxvmax 库
+2. 存储格式都为 textfile 格式
+4. 需要给字段加上字段描述
+5. 需要给表加上表描述信息 , 这个信息一般是表的中文名称
+6. 表的存储路径划分 : 
+    4g aggr 表存储 : viewfs://nsX/vmax_ns4/zxvmax/telecom/lte/aggr/ + table_name
+    5g aggr 表存储 : viewfs://nsX/vmax_ns4/zxvmax/telecom/nr/aggr/ + table_name
+    4g fact 表存储 : viewfs://nsX/vmax_ns4/zxvmax/telecom/lte/fact/ + table_name
+    5g fact 表存储 : viewfs://nsX/vmax_ns4/zxvmax/telecom/nr/fact/ + table_name
+    4g dm 表存储 : viewfs://nsX/vmax_ns4/zxvmax/telecom/lte/dm/ + table_name
+    5g dm 表存储 : viewfs://nsX/vmax_ns4/zxvmax/telecom/nr/dm/ + table_name
+7. 将多个表的建表语句输出到一个文件中即可
+"""
+
+-- textfile 格式存储
+CREATE EXTERNAL TABLE `zxvmax`.`lte_cm_projdata_refactor_d`
+(
+    `province` string,
+    `city` string,
+    `district` string,
+    `isrrusector` int,
+    `isrrupullaway` int,
+    `geoattribute` string,
+    `covertype` string,
+    `networkstandard` string,
+    `subnetworkid` int,
+    `meid` int,
+    `enodebname` string,
+    `enodebid` int,
+    `enodebtype` string,
+    `enodeblon` double,
+    `enodeblat` double,
+    `mcc` string,
+    `mnc` string,
+    `mme` int,
+    `cellname` string,
+    `cid` int,
+    `celltype` string,
+    `rattypeid` int,
+    `powerdivisiontype` int,
+    `powerdivisionid` int,
+    `celllon` double,
+    `celllat` double,
+    `active` int,
+    `tac` int,
+    `plmnnum` int,
+    `height` double,
+    `azimuth` double,
+    `antenna` string,
+    `antennagain` double,
+    `hbwd` double,
+    `vbwd` double,
+    `mechanicaldowntilt` double,
+    `electricaldowntilt` double,
+    `rspower` double,
+    `pci` int,
+    `coverageradius` int,
+    `calculationradius` int,
+    `propagationmodel` string,
+    `covercharacter` string,
+    `pcigroupid` int,
+    `eutraband` int,
+    `dlband` double,
+    `dlfrequency` double,
+    `ulband` double,
+    `ulfrequency` double,
+    `numberofreceptionantennaports` int,
+    `numberoftransmissionantennaports` int,
+    `ueantennarxport` int,
+    `ueantennatxport` int,
+    `transmissionloss` double,
+    `receptionloss` double,
+    `diversitysupportul` int,
+    `diversitysupportdl` int,
+    `trafficloadthresholdul` double,
+    `trafficloadthresholddl` double,
+    `maxpower` double,
+    `celltransmitpower` double,
+    `subframeswitch` int,
+    `noisefigure` double,
+    `icocpowerratio` int,
+    `minreusedistance` int,
+    `is_nbiot` int,
+    `devicetype` int,
+    `vendor` string,
+    `provincecode` int,
+    `citycode` int,
+    `districtcode` int,
+    `cellshape` string,
+    `cellcolor` string,
+    `bsid` string,
+    `bbtcode` string,
+    `gcname` string,
+    `slotno` int,
+    `freqcapability` int,
+    `supercell` string,
+    `cpid` int,
+    `omm` string,
+    `icontype` string,
+    `iconcolor` string,
+    `boardtype` int,
+    `fsboard` tinyint,
+    `productcode` string,
+    `pa` int,
+    `pb` int,
+    `softversion` string,
+    `citycharacter` int,
+    `reportcellkey` string,
+    `dl_earfcn` int,
+    `rru_model` string,
+    `is_div_power_sec` string,
+    `div_ant_pitchangle_1` double,
+    `div_ant_pitchangle_2` double,
+    `div_ant_pitchangle_3` double,
+    `div_ant_pitchangle_4` double,
+    `div_power_sec_1` double,
+    `div_power_sec_2` double,
+    `div_power_sec_3` double,
+    `div_power_sec_4` double,
+    `ant_direct_type` string,
+    `ant_pitchangle` int,
+    `sys_type` string,
+    `work_state` string,
+    `ant_preset_electangle` double,
+    `bandclass` string,
+    `is_border_sector` string,
+    `border_on_city` int,
+    `day_no` string,
+    `local_cellid` int,
+    `areatype` string,
+    `coverroadtype` string,
+    `ant_code` string,
+    `opposite_nat_name` string,
+    `opposite_prv_name` string,
+    `opposite_reg_name` string,
+    `col_status` int,
+    `stand_province_id` bigint,
+    `stand_province` string,
+    `stand_city_id` bigint,
+    `stand_city` string,
+    `stand_county_id` bigint,
+    `stand_county` string,
+    `tjj_town_id` bigint,
+    `tjj_town` string,
+    `rru_serialid` string,
+    `master_operators` string,
+    `mod3` int
+)
+PARTITIONED BY (`p_provincecode` INT,`p_date` STRING)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe'
+WITH SERDEPROPERTIES (
+  'serialization.format' = '1'
+)
+STORED AS
+  INPUTFORMAT 'org.apache.hadoop.mapred.TextInputFormat'
+  OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION 'viewfs://nsX/vmax_ns4/zxvmax/telecom/lte/cfg/lte_cm_projdata_refactor_d'
+TBLPROPERTIES (
+  'field.delim' = ',',
+  'serialization.format' = ','
+)
+;
+
+-- parquet 格式存储
+CREATE EXTERNAL TABLE `zxvmax`.`dm_4gcm_datacheck_lt_index_d`
+(
+    `day` string,
+    `provincecode` int,
+    `province_name` string,
+    `cucc_cellnum_avg` int,
+    `cucc_cellnum_current` int,
+    `cucc_cellnum_change_rate` double,
+    `cucc_cell_lon_nonnull_rate` double,
+    `cucc_cell_lat_nonnull_rate` double,
+    `cucc_cell_height_nonnull_rate` double,
+    `cucc_azimuth_nonnull_rate` double,
+    `cucc_provincecode_nonnull_rate` double,
+    `cucc_citycode_nonnull_rate` double,
+    `cucc_districtcode_nonnull_rate` double,
+    `is_abnormal_cucc_cellnum` int,
+    `is_abnormal_cucc_cell_lon` int,
+    `is_abnormal_cucc_cell_lat` int,
+    `is_abnormal_cucc_cell_height` int,
+    `is_abnormal_cucc_azimuth` int,
+    `is_abnormal_cucc_provincecode` int,
+    `is_abnormal_cucc_citycode` int,
+    `is_abnormal_cucc_districtcode` int,
+    `completion_rate` double,
+    `check_result` int
+)
+PARTITIONED BY (`p_provincecode` INT, `p_date` STRING)
+ROW FORMAT SERDE 'org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe'
+WITH SERDEPROPERTIES (
+  'serialization.format' = '1'
+)
+STORED AS
+  INPUTFORMAT 'org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat'
+  OUTPUTFORMAT 'org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat'
+LOCATION 'viewfs://nsX/vmax_ns4/zxvmax/telecom/lte/dm/dm_4gcm_datacheck_lt_index_d'
+TBLPROPERTIES (
+  'colelction.delim' = '|',
+  'field.delim' = ',',
+  'serialization.format' = ',',
+  'parquet.compression' = 'SNAPPY'
+)
+;

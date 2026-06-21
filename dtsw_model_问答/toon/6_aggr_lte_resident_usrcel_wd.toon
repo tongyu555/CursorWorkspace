@@ -1,0 +1,32 @@
+theme_domain: 用户常驻
+table_name: aggr_lte_resident_usrcel_wd
+table_name_chinese: 4G_DPI_S1MME用户常驻小区滚动周表
+data_frequency: day
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 备注, 是否主表}:
+  aggr_lte_resident_usrcel_d, 4G_DPI_S1MME用户驻留小区天表, A, 使用前7天数据进行清洗, 是
+fields[24]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 日期, A, p_date, 直取, null, null, 维度, 无, 无
+  provincecode, int, 省编码, A, p_provincecode, 直取, null, null, 维度, 无, 无
+  province, string, 省名称, A, province, 直取, null, null, 维度, 无, 无
+  citycode, int, 地市编码, A, citycode, 直取, null, null, 维度, 无, 无
+  city, string, 地市名称, A, city, 直取, null, null, 维度, 无, 无
+  districtcode, int, 区县编码, A, districtcode, 直取, null, null, 维度, 无, 无
+  district, string, 区县名称, A, district, 直取, null, null, 维度, 无, 无
+  enbid, int, 基站ID, A, null, "split(cellkey,\"_\")[0]", null, null, 维度, 无, 无
+  cellid, int, 小区ID, A, null, "split(cellkey,\"_\")[1]", null, null, 维度, 无, 无
+  imsi, string, 永久用户标识, A, imsi, 直取, null, null, 维度, 无, 无
+  imei, string, 永久设备标识, A, imei, 直取, null, null, 维度, 无, 无
+  msisdn, string, 用户号码（字符串格式）, A, msisdn, 直取, null, null, 维度, 无, 无
+  cellkey, string, 小区cellkey, A, cellkey, 直取, null, null, 维度, 无, 无
+  all_total_quarter_cnt, int, 周粒度驻留时刻数, A, null, sum(all_total_quarter_cnt), null, null, 指标, 无, "[1,672]"
+  day_quarter_cnt, int, 周粒度白天驻留时刻数, A, null, sum(day_quarter_cnt), null, null, 指标, 无, "[1,168]"
+  night_quarter_cnt, int, 周粒度夜晚驻留时刻数, A, null, sum(night_quarter_cnt), null, null, 指标, 无, "[1,280]"
+  all_day_s1mme_cnt, int, 周粒度s1mme信令数, A, null, sum(all_day_record_cnt), null, null, 指标, 无, >0
+  day_s1mme_cnt, int, 周粒度白天s1mme信令数, A, null, sum(day_record_cnt), null, null, 指标, 无, >0
+  night_s1mme_cnt, int, 周粒度夜晚s1mme信令数, A, null, sum(night_record_cnt), null, null, 指标, 无, >0
+  is_all_resident_w, int, 是否周粒度常驻（1为常驻，0为非常驻）, A, null, case when sum(is_all_resident_d) >= 4 then 1 else 0 end, null, null, 指标, 无, "0,1"
+  is_day_resident_w, int, 是否周粒度白天常驻（1为常驻，0为非常驻）, A, null, case when sum(is_day_resident_d) >= 4 then 1 else 0 end, null, null, 指标, 无, "0,1"
+  is_night_resident_w, int, 是否周粒度夜晚常驻（1为常驻，0为非常驻）, A, null, case when sum(is_night_resident_d) >= 4 then 1 else 0 end, null, null, 指标, 无, "0,1"
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

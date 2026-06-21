@@ -1,0 +1,28 @@
+theme_domain: 数据业务感知
+table_name: aggr_45gmr_user_trips_main_d
+table_name_chinese: 45G 车载用户轨迹路段概览天表
+data_frequency: 天
+primary_key: 数据描述
+source_table_name[2]{源表英文名, 源表中文名, 别名, 任务描述}:
+  fact_45gmr_location_h, 45G 车载用户位置事实表, A, FLINK每日批处理任务
+  osm_road_split_vertices_pgr, 全国路网拓扑表, B, null
+fields[19]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  segment_id, string, 用户路段id，例如13512123456#20240904#1, null, null, 反转(mdn)#(p_date)#segment_rn, null, null, 维度, 无, 无
+  mdn, string, 用户号码, A, null, null, null, null, 维度, 无, 无
+  imsi, string, 国际移动用户识别码, A, null, null, null, null, 维度, 无, 无
+  segment_rn, int, "用户行程次序，如：1,2,3", null, null, null, null, null, 维度, 无, 无
+  start_time, long, 路段开始时间(13位), null, null, null, null, null, 维度, 无, 无
+  start_lon, double, 开始经度, null, null, null, null, null, 指标, 无, 无
+  start_lat, double, 开始纬度, null, null, null, null, null, 指标, 无, 无
+  start_cell_key, string, 开始小区，示例12432_1, null, null, null, null, null, 维度, 无, 无
+  start_name, string, 路段开始地点名称, B, null, null, null, null, 维度, 无, 无
+  end_time, long, 路段结束时间(13位), null, null, null, null, null, 维度, 无, 无
+  end_lon, double, 结束经度, null, null, null, null, null, 指标, 无, 无
+  end_lat, double, 结束纬度, null, null, null, null, null, 指标, 无, 无
+  end_cell_key, string, 结束小区，示例12432_1, null, null, null, null, null, 维度, 无, 无
+  end_name, string, 路段结束地点名称, B, null, null, null, null, 维度, 无, 无
+  is_infer, int, 是否为推测路段，1是，0否, null, null, 当两个相邻mr在时间上断开15分钟，且距离超过2km，则标注为1，否则为0, null, null, 指标, 无, "0,1"
+  action_type, int, "1:移动，0：停驻", null, null, 0：该行程内用户停驻在同一个点附近, null, null, 指标, 无, "0,1"
+  etl_time, string, 加工时间, null, null, 系统的加工时间, null, null, 纬度, 无, 无
+  p_provincecode, int, null, null, null, null, null, null, null, null, null
+  p_date, string, null, null, null, null, null, null, null, null, null

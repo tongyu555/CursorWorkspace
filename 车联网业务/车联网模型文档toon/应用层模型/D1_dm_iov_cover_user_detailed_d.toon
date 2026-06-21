@@ -1,0 +1,36 @@
+theme_domain: 车联网
+table_name: dm_iov_cover_user_detailed_d
+table_name_chinese: 用户覆盖详单天表
+data_frequency: "D: Daily"
+primary_key: 数据描述
+source_table_name[2]{来源系统, 源表英文名, 源表中文名, 别名, 任务描述, 备注, 是否主表}:
+  dtsw, dm_user_line_d, 45G融合感知轨迹详单表, a, mr 回填经纬度后的详单, 筛选车联网号码, 是
+  dtsw, 需要接入, 45g融合工参, b, null, cellkey关联, null
+fields[27]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  provincecode, int, 省, b, null, 直取, null, null, 维度, null, null
+  day, string, 天, a, p_date, 直取, null, null, 维度, null, null
+  citycode, int, 地市, b, null, 直取, null, null, 维度, null, null
+  districtcode, int, 区县, b, null, 直取, null, null, 维度, null, null
+  province, string, 省名称, b, null, 直取, null, null, 维度, null, null
+  city, string, 地市名称, b, null, 直取, null, null, 维度, null, null
+  district, string, 区县名称, b, null, 直取, null, null, 维度, null, null
+  msisdn, string, 用户号码, a, mdn, 直取, null, null, 维度, null, null
+  imsi, string, 国际移动用户识别码, a, imsi, 直取, null, null, 维度, null, null
+  segment_id, string, 用户路段id, a, segment_id, 直取, null, null, 维度, null, null
+  segment_rn, int, "用户行程次序，如：1,2,3", a, segment_rn, 直取, null, null, 维度, null, null
+  datetime, string, 测量时间, a, datetime, "least(split(datetime,'$'))", null, null, 维度, null, null
+  route_point_id, string, 匹配的道路端点id（可以应用于路径规划）, a, route_point_id, 直取, null, null, 维度, null, null
+  route_point_lon, double, 道路端点经度, a, route_point_lon, 直取, null, null, 维度, null, null
+  route_point_lat, double, 道路端点维度, a, route_point_lat, 直取, null, null, 维度, null, null
+  rattype, string, 网络类型, a, 网络类型（4G、5G）, 直取, null, null, 维度, null, 4G、5G
+  cellkey, string, cellkey, a, null, 基站小区id用_连接, null, null, 维度, null, null
+  cellname, string, 小区名称, b, null, 直取, null, null, 维度, null, null
+  vendor, string, 所属厂家, b, null, 直取, null, null, 维度, null, null
+  cell_lon, double, 小区经度, b, null, 直取, null, null, 维度, null, null
+  cell_lat, double, 小区纬度, b, null, 直取, null, null, 维度, null, null
+  rsrp, double, rsrp, a, rsrp, 直取, null, null, 指标, dbm, "[-140,-44]"
+  rsrq, double, rsrq, a, rsrq, 直取, null, null, 指标, db, "[-43,20]"
+  mr_cnt, bigint, mr点数, a, mr_cnt, 直取, null, null, 指标, 个, "[0,∞)"
+  weak_cover_flag, int, 是否弱覆盖, a, null, case when rsrp<-110 then 1 else 0 end, "0：非弱覆盖\n1：弱覆盖", null, 指标, 枚举, {0，1}
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天, null, null, null, null, null, null, null, null

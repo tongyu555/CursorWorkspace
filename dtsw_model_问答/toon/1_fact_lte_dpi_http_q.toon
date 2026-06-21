@@ -1,0 +1,141 @@
+theme_domain: /
+table_name: fact_lte_dpi_http_q
+table_name_chinese: 4G_DPI_http整合层15分钟表
+data_frequency: quarter
+primary_key: 数据描述
+source_table_name[4]{源表英文名, 源表中文名, 别名, 是否主表, 备注}:
+  ods_4gdpi_http_e2e_telecom_q, 4G_DPI_http贴源层详单表, A, 是, null
+  lte_cm_projdata_refactor, 4G电联工参, B, null, A.cellkey=B.reportcellkey
+  cfg_topweb_first_screen_host_list, TOP网址首屏时延分析URL配置表, C, null, A.host=C.host
+  cfg_http_status_type, http-status状态码表, D, null, A.httpstatus=D.status_code
+fields[130]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  interface, string, 接口类型：1、S1-U，4、S11，6、S5/S8，100、N3, A, interface, 直取, null, null, 详单, 无, 无
+  imsi, string, 国际移动用户识别码, A, imsi, 直取, null, null, 详单, 无, 无
+  msisdn, string, 用户号码, A, null, "regexp_replace(trim(msisdn),'^86','')", null, null, 详单, 无, 无
+  imei, string, 国际移动设备识别码, A, imei, 直取, null, null, 详单, 无, 无
+  apn, string, 网络接入技术, A, apn, 直取, null, null, 详单, 无, 无
+  destinationip, string, 用户访问的目标 IPv4或IPv6 地址, A, destinationip, 直取, null, null, 详单, 无, 无
+  destinationport, int, 用户访问的目标端口号, A, destinationport, 直取, null, null, 详单, 无, 无
+  sourceip, string, 用户访问外部网络时使用的 IPv4 或 IPv6 地址, A, sourceip, 直取, null, null, 详单, 无, 无
+  sourceport, int, 用户访问外部网络时使用的端口号, A, sourceport, 直取, null, null, 详单, 无, 无
+  sgwip, string, SGW的IPv4或IPv6 地址, A, sgwip, 直取, null, null, 详单, 无, 无
+  mmeip, string, MME的IPv4或IPv6地址, A, mmeip, 直取, null, null, 详单, 无, 无
+  pgwip, string, PGW的IPv4或IPv6地址, A, pgwip, 直取, null, null, 详单, 无, 无
+  ecgi, string, 小区唯一标识, A, ecgi, 直取, null, "ecgi：\n460-11-4992624", 详单, 无, 无
+  tai, string, 跟踪区标识, A, tai, 直取, null, tai：460-11-48502, 详单, 无, 无
+  visitedplmnid, string, 拜访网络标识, A, visitedplmnid, 直取, null, null, 详单, 无, 无
+  rattype, int, 无线接入类型, A, rattype, 直取, null, null, 详单, 无, 无
+  protocolid, int, 协议类型, A, protocolid, 直取, null, null, 详单, 无, 无
+  servicetype, string, 业务应用分类ID, A, null, case when destination_url  like '%short.pay.weixin.qq.com%' then 88888888 else servicetype end, null, null, 详单, 无, 无
+  starttime, string, "格式为\"yyyy-MM-dd HH:mm:sss\"的日期时间", A, starttime, 直取, null, null, 详单, 无, 无
+  endtime, string, "格式为\"yyyy-MM-dd HH:mm:sss\"的日期时间", A, endtime, 直取, null, null, 详单, 无, 无
+  duration, bigint, 业务时长, A, duration, 直取, null, null, 详单, 无, 无
+  inputoctets, bigint, 发给用户的业务字节数, A, inputoctets, 直取, null, null, 详单, 无, 无
+  outputoctets, bigint, 用户发出的业务字节数, A, outputoctets, 直取, null, null, 详单, 无, 无
+  inputpacket, bigint, 发给用户的业务数据包数量, A, inputpacket, 直取, null, null, 详单, 无, 无
+  outputpacket, bigint, 用户发出的业务数据包数量, A, outputpacket, 直取, null, null, 详单, 无, 无
+  pdnconnectionid, bigint, PDN 连接的ID标识号, A, pdnconnectionid, 直取, null, null, 详单, 无, 无
+  bearerid, bigint, 承载标识号, A, bearerid, 直取, null, null, 详单, 无, 无
+  bearerqos, bigint, 承载QoS, A, bearerqos, 直取, null, null, 详单, 无, 无
+  recordclosecause, bigint, 记录关闭原因。采集设备自动生成，数字编号（0： session 释放； 1：业务应用结束； 2：业务应用等待超时； 3：用户位置变化； 4：用户接入方式变化）, A, recordclosecause, 直取, null, null, 详单, 无, 无
+  enbip, bigint, ENB的IPv4或IPv6地址, A, enbip, 直取, null, null, 详单, 无, 无
+  sgwport, bigint, 对于S1-U口，填写SGW端口, A, sgwport, 直取, null, null, 详单, 无, 无
+  enbport, bigint, ENODEB端口, A, enbport, 直取, null, null, 详单, 无, 无
+  enbgtp_teid, bigint, 对于S1-U口，填写该业务对应承载的eNB侧GTP-TEID, A, enbgtp_teid, 直取, null, null, 详单, 无, 无
+  sgwgtp_teid, bigint, 对于S1-U口，填写该业务对应承载的SGW侧GTP-TEID, A, sgwgtp_teid, 直取, null, null, 详单, 无, 无
+  pgwport, bigint, PGW端口, A, pgwport, 直取, null, null, 详单, 无, 无
+  mme_ue_s1ap_id, bigint, MME 分配的 S1AP ID, A, mme_ue_s1ap_id, 直取, null, null, 详单, 无, 无
+  enb_ue_s1ap_id, bigint, ENodeB 分配的 S1AP ID, A, enb_ue_s1ap_id, 直取, null, null, 详单, 无, 无
+  mme_group_id, bigint, MME组ID编号, A, mme_group_id, 直取, null, null, 详单, 无, 无
+  mme_code, bigint, MME ID编号, A, mme_code, 直取, null, null, 详单, 无, 无
+  enbid, bigint, 基站ID, A, enbid, 直取, null, null, 详单, 无, 无
+  home_province, bigint, 漫入用户的归属地省份, A, home_province, 直取, null, null, 详单, 无, 无
+  userip, bigint, 终端用户的 IPv4 或 IPv6 地址，如无则填全 F, A, userip, 直取, null, null, 详单, 无, 无
+  userport, bigint, 用户的四层端口号, A, userport, 直取, null, null, 详单, 无, 无
+  l4protocol, tinyint, L4 协议类型：0： TCP；1： UDP, A, l4protocal, 直取, null, null, 详单, 无, 无
+  appserverip, bigint, 访问服务器的 IPv4 或 IPv6地址，如无则填全 F, A, appserverip, 直取, null, null, 详单, 无, 无
+  appserver_port, bigint, 访问的服务器的端口, A, appserver_port, 直取, null, null, 详单, 无, 无
+  ultcpreorderingpacket, bigint, 上行 TCP 乱序报文数。L4 协议非 TCP 传输时，此字段填 0, A, ultcpreorderingpacket, 直取, null, null, 详单, 无, 无
+  dltcpreorderingpacket, bigint, 下行 TCP 乱序报文数。L4 协议非 TCP 传输时，此字段填 0, A, dltcpreorderingpacket, 直取, null, null, 详单, 无, 无
+  ultcp_retranspacket, bigint, 上行 TCP 重传报文数。非 TCP 传输时，此字段填 0, A, ultcp_retranspacket, 直取, null, null, 详单, 无, 无
+  dltcp_retranspacket, bigint, 下行 TCP 重传报文数。非 TCP 传输时，此字段填 0, A, dltcp_retranspacket, 直取, null, null, 详单, 无, 无
+  tcpsetupresponsedelay, bigint, TCP 建链响应时延（ms）。非 TCP 传输时，此字段填 0, A, serverfirsttcpwindow, case when tcpsetupresponsedelay>0 and tcpsetupresponsedelay<50000  then tcpsetupresponsedelay else null  end, null, null, 详单, ms, "(0,50000)"
+  tcpsetupackdelay, bigint, TCP 建链确认时延（ms）。非 TCP 传输时，此字段填 0, A, userlasttcpwindow, case when tcpsetupackdelay>0 and tcpsetupackdelay<50000  then tcpsetupackdelay else null  end, null, null, 详单, ms, "(0,50000)"
+  ulipfragpacks, bigint, 以内层 IP 包的分片为准, A, ulipfragpacks, 直取, null, null, 详单, 无, 无
+  dlipfragpacks, bigint, 以内层 IP 包的分片为准, A, dlipfragpacks, 直取, null, null, 详单, 无, 无
+  delay_setup_firsttransaction, bigint, TCP 建链成功到第一条事务请求的时延（ms）。没有事务的时候可以不填写，此时填 0, A, servermintcpwindow, case when delay_setup_firsttransaction>0 and delay_setup_firsttransaction<100000 then delay_setup_firsttransaction else null end, null, null, 详单, ms, "(0,100000)"
+  delay_firsttransaction_firstrespackt, bigint, 第一条事务请求到其第一个响应包时延（ms）。没有事务的时候可以不填写，此时填 0, A, usermaxtcpwindow, case when delay_firsttransaction_firstrespackt>0 and delay_firsttransaction_firstrespackt<100000 then delay_firsttransaction_firstrespackt else null end, null, null, 详单, ms, "(0,100000)"
+  windowsize, int, "窗口大小,TCP 建链协商后的窗口。非 TCP 传输时，此字段填 0", A, windowsize, 直取, null, null, 详单, 无, 无
+  msssize, int, MSS 尺寸TCP 层的最大分段大小。非 TCP 传输时，此字段填 0, A, msssize, 直取, null, null, 详单, 无, 无
+  tcpsynnumber, int, TCP 建链尝试次数。TCP SYN 的次数，一次 TCP流多次 SYN 的数值。非 TCP 传输时，此字段填 0, A, tcpsynnumber, 直取, null, null, 详单, 无, 无
+  tcpconnectstate, tinyint, TCP 连接状态指示。0：成功；1：失败, A, tcpconnectstate, 直取, null, null, 详单, 无, 无
+  sessionstopflag, tinyint, 会话是否结束标志。1：结束；2：未结束, A, sessionstopflag, 直取, null, null, 详单, 无, 无
+  ue_ambr_ul, int, 上行UE AMBR, A, ue_ambr_ul, 直取, null, null, 详单, 无, 无
+  ue_ambr_dl, int, 下行UE AMBR, A, ue_ambr_dl, 直取, null, null, 详单, 无, 无
+  apn_ambr_ul, int, 上行APN AMBR，单位：Kbps, A, apn_ambr_ul, 直取, null, null, 详单, 无, 无
+  apn_ambr_dl, int, 下行APN AMBR，单位：Kbps, A, apn_ambr_dl, 直取, null, null, 详单, 无, 无
+  bearer_qci, int, 承载的QCI，取值范围从 1到 9, A, bearer_qci, 直取, null, null, 详单, 无, 无
+  useragent, string, User-Agent，标注浏览器信息，通常指各个手机开发包的名称及版本信息, A, useragent, 直取, null, null, 详单, 无, 无
+  destinationurl, string, 用户访问的目标网站的 URL。根据请求包 GET 字段提取, A, destinationurl, 直取, null, null, 详单, 无, 无
+  domainname, string, 外部网站的域名。根据请求包 HOST 字段提取, A, domainname, 直取, null, null, 详单, 无, 无
+  host, string, 访问域名, A, host, 直取, null, null, 详单, 无, 无
+  contentlen, bigint, 内容大小Content-Length，协议标准字段, A, contentlen, 直取, null, null, 详单, 无, 无
+  contenttype, string, 内容类型, A, contenttype, 直取, null, null, 详单, 无, 无
+  iflink, bigint, 是否是链接访问， 0=否， 1=是, A, iflink, 直取, null, null, 详单, 无, 无
+  referer, string, 链接源信息, A, referer, 直取, null, null, 详单, 无, 无
+  httpaction, int, "HTTP 操作类型（5:Post, 6:Get）", A, httpaction, 直取, null, null, 详单, 无, 无
+  httpstatus, int, HTTP状态码, A, httpstatus, 直取, null, null, 详单, 无, 无
+  respdelay, bigint, 响应时延，单位毫秒, A, respdelay, 直取, null, null, 详单, 无, 无
+  behaviortarget, int, 目标行为， 0：会话是用户主动点击的页面；1：站点目标而产生的页面。, A, behaviortarget, 直取, null, null, 详单, 无, 无
+  syntime, bigint, "SYN 时间戳，UTC 时间，从 1970/1/1 00:00:00 开始到当前的毫秒数。", A, syntime, 直取, null, null, 详单, 无, 无
+  synacktime, bigint, "SYNACK 时间戳，UTC 时间，从 1970/1/1 00:00:00 开始到当前的毫秒数。", A, synacktime, 直取, null, null, 详单, 无, 无
+  acktime, bigint, "ACK 时间戳，UTC 时间，从 1970/1/1 00:00:00 开始到当前的毫秒数。", A, acktime, 直取, null, null, 详单, 无, 无
+  actiontime, bigint, "首个 HTTP 请求的时间戳，UTC 时间，从 1970/1/1 00:00:00 开始到当前的毫秒数。", A, actiontime, 直取, null, null, 详单, 无, 无
+  firstpackettime, bigint, "第一个数据响应包的时间戳，UTC 时间，从 1970/1/1 00:00:00 开始到当前的毫秒数。", A, firstpackettime, 直取, null, null, 详单, 无, 无
+  pageopentime, bigint, "首页打开的时间戳，UTC 时间，从 1970/1/1 00:00:00 开始到当前的毫秒数。", A, pageopentime, 直取, null, null, 详单, 无, 无
+  lastpacktime, bigint, "最后一个数据包时间戳，UTC 时间，从 1970/1/1 00:00:00 开始到当前的毫秒数。", A, lastpacktime, 直取, null, null, 详单, 无, 无
+  pagevolume, bigint, 首页数据大小，单位为 byte, A, pagevolume, 直取, null, null, 详单, 无, 无
+  httpversion, tinyint, HTTP 版本。0x01----HTTP0.9；0x02----HTTP1.0；0x03----HTTP1.1；0x04----HTTP2.0；0x05----WAP1.0；0x06----WAP1.1；0x07----WAP1.2, A, httpversion, 直取, null, null, 详单, 无, 无
+  firstresptime, bigint, "第一个 HTTP 响应包时间戳，相对于于第一个 HTTP请求包（如 get 命令）的相应包的时间UTC 时间，从 1970/1/1 00:00:00 开始到当前的毫秒数", A, firstresptime, 直取, null, null, 详单, 无, 无
+  lastacktime, bigint, "最后一个 ACK 确认包的时间戳，收到最后一个 HTTP 包的ACK 如果无 ACK，则按照最后一个数据包计算UTC 时间，从 1970/1/1 00:00:00 开始到当前的毫秒数。", A, lastacktime, 直取, null, null, 详单, 无, 无
+  cookie, string, 协议中 Cookie 字段, A, cookie, 直取, null, null, 详单, 无, 无
+  wtpfailtype, tinyint, Wtp 中断类型, A, wtpfailtype, 直取, null, null, 详单, 无, 无
+  wtpfailcause, tinyint, wtp 中断原因, A, wtpfailcause, 直取, null, null, 详单, 无, 无
+  title, string, 网站名称，在上网内容里解析, A, title, 直取, null, null, 详单, 无, 无
+  key_word, string, 网站关键字，在上网内容里解析, A, key_word, 直取, null, null, 详单, 无, 无
+  webbrowser, tinyint, 浏览工具, A, webbrowser, 直取, null, null, 详单, 无, 无
+  firstfinacktime, bigint, "第一个TCP FinAck包时间戳，UTC 时 间 ， 从 1970/1/1 00:00:00 开始到当前的毫秒数。", A, firstfinacktime, 直取, null, null, 详单, 无, 无
+  dnsquerytime, bigint, "DNS关联流的请求时间，UTC 时 间 ， 从 1970/1/1 00:00:00 开始到当前的毫秒数。", A, dnsquerytime, 直取, null, null, 详单, 无, 无
+  dnsresponsetime, bigint, "DNS关联流的应答时间戳。无关联流，此字段填写0。UTC 时 间 ， 从 1970/1/1 00:00:00 开始到当前的毫秒数", A, dnsresponsetime, 直取, null, null, 详单, 无, 无
+  dnsflowid, bigint, "HTTP流与DNS流的关联ID。无关联流，此字段填写0。UTC 时 间 ， 从 1970/1/1 00:00:00 开始到当前的毫秒数", A, dnsflowid, 直取, null, null, 详单, 无, 无
+  firstscreenfintime, bigint, "首屏完成时间戳，默认值0。算法见《中国电信2017年移动互联网业务感知质量评价细则》。UTC 时 间 ， 从 1970/1/1 00:00:00 开始到当前的毫秒数。", A, firstscreenfintime, 直取, null, null, 详单, 无, 无
+  httpresponse, bigint, http响应, A, httpresponse, 直取, null, null, 详单, 无, 无
+  transactions, bigint, 同一个流中的事务计数, A, transactions, 直取, null, null, 详单, 无, 无
+  cellkey, bigint, 小区cellkey, A, null, "concat(floor(cast(split(ecgi, '-')[2] as int)/256),\"_\",cast(split(ecgi, '-')[2] as int)%256)", null, null, 详单, 无, 无
+  citycode, int, 地市编码, B, citycode, 关联工参回填, null, null, 详单, 无, 无
+  districtcode, int, 区县编码, B, districtcode, 关联工参回填, null, null, 详单, 无, 无
+  province, string, 省名称, B, province, 关联工参回填, null, null, 详单, 无, 无
+  city, string, 地市名称, B, city, 关联工参回填, null, null, 详单, 无, 无
+  district, string, 区县名称, B, district, 关联工参回填, null, null, 详单, 无, 无
+  http_req_cnt, bigint, http请求次数, A, null, case when httpstatus is not null then 1 else 0 end, null, null, 详单, 无, "1,0"
+  http_succ_cnt, bigint, http请求成功次数, A, null, case when httpstatus>0 and httpstatus<400  then 1 else 0 end, null, null, 详单, 无, "1,0"
+  http_complete_cnt, bigint, http请求完成次数, A, null, case when httpstatus>0 and httpstatus<400 and  lastpacktime>0 then 1 else 0 end, null, null, 详单, 无, "1,0"
+  dnsresponse_delay, bigint, DNS响应时延, A, null, case when  dnsquerytime>0 and dnsresponsetime>dnsquerytime and dnsresponsetime - dnsquerytime < 30000 then  dnsresponsetime - dnsquerytime else null end, null, 现网算法（无明显变更）：case when dnsquerytime>0 and dnsresponsetime>0 and (dnsresponsetime-dnsquerytime)>=0 and (dnsresponsetime-dnsquerytime) <30000 then dnsresponsetime-dnsquerytime else 0 end, 详单, ms, "(0,30000)"
+  syntime_dnsresponse_delay, bigint, DNS建立完成到TCP握手时延, A, null, case when  dnsresponsetime>0 and syntime>dnsresponsetime and syntime-dnsresponse<50000 then  syntime-dnsresponsetime else null end, null, 现网算法（算法存在变更）：null, 详单, ms, "(0,50000)"
+  tcpsetupdelay, bigint, TCP建立时延, A, null, case when tcpsetupresponsedelay >0  and tcpsetupackdelay >0 and (tcpsetupresponsedelay+tcpsetupackdelay) <50000 then  tcpsetupresponsedelay+tcpsetupackdelay else null end, null, 现网算法（无明显变更）：tcp_resp_delay+tcp_ack_delay, 详单, ms, "(0,50000)"
+  httpwebrspdelay, bigint, 网页首包时延，也叫网页响应时延, A, null, case when dnsquerytime>0 and firstpackettime>dnsquerytime and firstpackettime - dnsquerytime<100000 then firstpackettime - dnsquerytime when syntime>0 and firstpackettime>syntime and (firstpackettime - syntime) <100000 then (firstpackettime - syntime)   else null end, null, 现网算法（算法存在变更）：case when  DNSQueryTime >0 and FirstPacketTime>DNSQueryTime then FirstPacketTime-DNSQueryTime when SYNtime >0 and FirstPacketTime>SYNtime then FirstPacketTime-SYNtime   else null end as httpwebrspdelay, 详单, ms, "(0,10000)"
+  httpwebdspdelay, bigint, 网页显示时延，也叫网页完整打开时延, A, null, case when dnsquerytime>0 and lastpacktime>dnsquerytime and lastpacktime - dnsquerytime<30000 then lastpacktime - dnsquerytime when syntime > 0 and lastpacktime > syntime and lastpacktime - syntime < 30000 then  lastpacktime-syntime   else null end, null, 现网算法（无明显变更）：case when DNSQueryTime>0 and Lastpacktime>DNSQueryTime then Lastpacktime-DNSQueryTime when syntime>0  and Lastpacktime>SYNtime then Lastpacktime-SYNtime   else null end as httpwebdspdelay, 详单, ms, "(0,10000)"
+  httpwebscreendelay, bigint, 网页首屏时延, A, null, case when dnsquerytime>0 and firstscreenfintime>dnsquerytime and firstscreenfintime - dnsquerytime<100000 then firstscreenfintime - dnsquerytime when syntime >0  and firstscreenfintime>syntime and firstscreenfintime-syntime<100000 then firstscreenfintime-syntime   else null end, null, 现网算法（无明显变更）：case when  DNSQueryTime >0  and FirstScreenFinTime>DNSQueryTime then FirstScreenFinTime-DNSQueryTime when SYNtime>0 and FirstScreenFinTime>SYNtime then FirstScreenFinTime-SYNtime   else null end as httpwebscreendelay, 详单, ms, "(0,10000)"
+  is_topweb_first_screen_host, int, 是否用于计算首屏时延的主流网址（1：是；0：否）, C, null, 通过host关联C表，能关联上则取1，否则取0, null, null, 详单, 无, "1,0"
+  sourceip_type, string, 用户访问外部网络时使用的IP类型（IPv4/IPv6）, A, null, 根据sourceip回填属于IPV6/IPV4, null, "case when sourceip regexp '^((25[0-5]|2[0-4]\\\\d|[01]?\\\\d\\\\d?)\\\\.){3}(25[0-5]|2[0-4]\\\\d|[01]?\\\\d\\\\d?)$' then 'ipv4' when sourceip regexp '^([\\\\da-fA-F]{1,4}:){7}[\\\\da-fA-F]{1,4}$' then 'ipv6' else '' end as sourceip_type", 详单, 无, "ipv4,ipv6"
+  business_type, string, 业务类型（im、web、game、video、other）, A, null, "1、先将微信扫码业务置为88888888，再分类\ncase when ((servicetype>=01000101 and servicetype<01999901) \n        or (servicetype>=04000100 and servicetype<04999901)\n        or (servicetype = 88888888)) \n       and (servicetype not in (01000212,01004600,01001300)) then 'im' \n     when ((servicetype>=13000100 and servicetype<13999901) \n        or (servicetype>=16000100 and servicetype<16999901) \n        or (servicetype>=10000101 and servicetype<10999901) \n        or (servicetype>=07000100 and servicetype<07999901) \n        or (servicetype>=19000100 and servicetype<19999901) \n        or (servicetype>=09000101 and servicetype<09999901) \n        or (servicetype>=06000101 and servicetype<06999901) \n        or (servicetype>=08000101 and servicetype<08999901) \n        or (servicetype>=11000101 and servicetype<11999901) \n        or (servicetype>=14000101 and servicetype<14999901) \n        or (servicetype>=17000101 and servicetype<17999901) \n        or (servicetype>=18000101 and servicetype<18999901)) \n        and (servicetyp not in (09000101,09000601,09000701,09000801,09001800,09001900,09002000,09001202,01000212,01001300,01004600,09000603)) then 'web' \n     when servicetype>=05000100 and servicetype<05999901 then 'game' \n     when (servicetype>=02000101 and servicetype<02999901) then 'video'\n     else 'other' end", null, null, 详单, 无, "im,web,game,video,other"
+  is_abnormal, int, 是否质差话单, A, null, case when (tcpsetupresponsedelay>= 110  and tcpsetupresponsedelay<50000) or (tcpsetupackdelay>=110  and tcpsetupackdelay<50000)  or  ultcp_retranspacket/outputpacket>=0.15 or dltcp_retranspacket/inputpacket>=0.15 then 1 else 0 end, null, null, 详单, 无, "1,0"
+  is_core_delimit, int, 是否核心网问题, A, null, case when (tcpsetupresponsedelay>=110 and tcpsetupresponsedelay<50000)  or ultcp_retranspacket/outputpacket>0.15 then 1 else 0 end, null, null, 详单, 无, "1,0"
+  is_wireless_delimit, int, 是否无线网络问题, A, null, case when (tcpsetupackdelay>=110 and tcpsetupackdelay<50000)  or dltcp_retranspacket/inputpacket>0.15 then 1 else 0 end, null, null, 详单, 无, "1,0"
+  is_usr_delimit, int, 是否用户问题, D, null, "A表与D表关联，取D表problem_demarcation。\ncase when problem_demarcation='用户' then 1 else 0 end", null, null, 详单, 无, "1,0"
+  is_sp_delimit, int, 是否sp服务器问题, D, null, "A表与D表关联，取D表problem_demarcation。\ncase when problem_demarcation='SP服务商' then 1 else 0 end", null, null, 详单, 无, "1,0"
+  httpstatus_position, string, http状态码原因定位, D, problem_position, 直取, null, null, 详单, 无, 无
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null
+  p_quarter, int, 15分钟分区, null, null, null, null, null, null, null, null

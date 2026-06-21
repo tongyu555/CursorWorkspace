@@ -1,0 +1,328 @@
+theme_domain: null
+table_name: aggr_5gdpi_video_base_q
+table_name_chinese: 5G VIDEO基础时刻表
+data_frequency: quarter
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 是否主表}:
+  定制网接入表, 5G VIDEO整合层表, A, 是
+fields[320]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 上报时间，具体到天, A, p_date, 直接赋值, null, null, 维度, 无, 无
+  hour, int, 小时, A, p_hour, 直接赋值, null, null, 维度, 无, 0-23
+  quarter, int, 时刻, A, p_quarter, 直接赋值, null, null, 维度, 无, 0-3
+  Interface, int, 接口类型：1、S1-U，4、S11，6、S5/S8，100、N3, A, interface, 直接赋值, null, null, 维度, 无, 1-100
+  VisitedPLMNId, string, 拜访网络标识, A, visitedplmnid, 直接赋值, null, null, 维度, 无, 46001-46011
+  TAI, string, 跟踪区标识, A, tai, 直接赋值, null, null, 维度, 无, 0-0
+  RATType, int, 无线接入类型, A, rattype, 直接赋值, null, null, 维度, 无, 0-10
+  NSSAI_SST, int, "网络切片选择辅助信息（切片/服务类型）。若有多个切片，以“,”分隔。", A, nssai_sst, 直接赋值, null, null, 维度, 无, 0-255
+  NSSAI_SD, bigint, "网络切片选择辅助信息（切片差分器）。若有多个切片，以“,”分隔。", A, nssai_sd, 直接赋值, null, null, 维度, 无, 0-16777215
+  nodebid, bigint, 4GeNodeBID/5GgNBID, A, ncgi_ecgi, 解析出gnbid, null, null, 维度, 无, 4097-14560394
+  cellid, string, 小区ID, A, ncgi_ecgi, 解析出cellid, null, null, 维度, 无, 0-217872534
+  cellkey, string, cellkey, A, ncgi_ecgi, "解析出gnbid、cellid,再用\"_\"连接", null, null, 维度, 无, 无
+  cellname, string, 小区名称, A, cellname, 直接赋值, null, null, 维度, 无, 无
+  imsi_supi, string, 永久用户标识，永久用户标识。4G填写用户IMSI。, A, supi, 直接赋值, null, null, 维度, 无, 无
+  msisdn, bigint, 手机号码, A, msisdn, 直接赋值, null, null, 维度, 无, 8613001224774-861410493568079
+  PEI, string, 永久设备标识, A, PEI, 直接赋值, null, null, 维度, 无, 无
+  tacid, bigint, 终端类型标识, A, tacid, 直接赋值, null, null, 维度, 无, 0-99999999
+  UPFIP, string, UPF的IPv4或IPv6地址, A, UPFIP, 直接赋值, null, null, 维度, 无, 无
+  gNBIP, string, gNB的IPv4或IPv6地址, A, gNBIP, 直接赋值, null, null, 维度, 无, 无
+  Video_Resolution, string, 视频分辨率, A, Video_Resolution, 直接赋值, null, null, 维度, 无, 无
+  VideoType, int, 视频文件格式, A, VideoType, 直接赋值, null, null, 维度, 无, 0-8
+  DNN_APN, string, 网络接入标识, A, DNN_APN, 直接赋值, null, null, 维度, 无, 无
+  sourceip_type, string, 用户IP类型, A, SourceIP, 根据SourceIP回填属于IPV6/IPV4, null, null, 维度, 无, 无
+  ServiceType, string, 业务应用, A, servicetype, 直接赋值, null, null, 维度, 无, 1000100-88888888
+  Home_Province, string, 归属省份, A, home_province, 直接赋值, null, null, 维度, 无, 110000-650000
+  provincecode, int, 拜访地省份, A, provincecode, 直接赋值, null, null, 维度, 无, 360000-360000
+  citycode, int, 拜访地地市, A, citycode, 直接赋值, null, null, 维度, 无, -99-361181
+  districtcode, int, 拜访地区县, A, districtcode, 直接赋值, null, null, 维度, 无, -659-842333
+  province, string, 拜访地省份名称, A, province, 直接赋值, null, null, 维度, 无, 360000-360000
+  city, string, 拜访地地市名称, A, city, 直接赋值, null, null, 维度, 无, 无
+  district, string, 拜访地区县名称, A, district, 直接赋值, null, null, 维度, 无, 无
+  business_type, string, 业务类型, A, business_type, 直接赋值, null, null, 维度, 无, 无
+  duration_sum, bigint, 持续时间，单位毫秒，根据业务流开始和结束统计得出的时间, A, duration, sum(duration), null, null, 指标, 毫秒, 0-40685867792
+  OutputOctets_sum, bigint, 上行流量(byte), A, outputoctets, sum(outputoctets), null, null, 指标, byte, -1626927039-46995408955
+  InputOctets_sum, bigint, 下行流量(byte), A, inputoctets, sum(inputoctets), null, null, 指标, byte, -4263811793-126795723462
+  OutputPacket_sum, bigint, 上行包数, A, outputpacket, sum(outputpacket), null, null, 指标, 个, 0-101114039
+  InputPacket_sum, bigint, 下行包数, A, inputpacket, sum(inputpacket), null, null, 指标, 个, 0-100848595
+  ULTCPReorderingPacket_sum, bigint, 上行TCP乱序报文数，L4协议，非TCP传输时，此字段填0, A, ultcpreorderingpacket, sum(ultcpreorderingpacket), null, null, 指标, 个, 0-3123316
+  DLTCPReorderingPacket_sum, bigint, 下行TCP乱序报文数，非TCP传输时，此字段填0, A, dltcpreorderingpacket, sum(dltcpreorderingpacket), null, null, 指标, 个, 0-16708843
+  ULTCPRetransPacket_sum, bigint, 上行TCP重传报文数，非TCP传输时，此字段填0, A, ultcp_retranspacket, sum(ultcp_retranspacket), null, null, 指标, 个, 0-749656
+  DLTCPRetransPacket_sum, bigint, 下行TCP重传报文数，非TCP传输时，此字段填0, A, dltcp_retranspacket, sum(dltcp_retranspacket), null, null, 指标, 个, 0-22340863
+  TCPSynNumber_sum, bigint, TCP建链尝试次数, A, tcpsynnumber, sum(tcpsynnumber), null, null, 指标, 次, -88-1031021
+  TCPConnectSuccNumber_sum, bigint, TCP连接成功次数, A, tcpsynnumber, sum(case when tcpconnectstate =0 then tcpsynnumber else 0 end), null, null, 指标, 次, -88-46278
+  TCPSetupResponseDelay_sum, bigint, TCP建链响应时延_sum, A, tcpsetupresponsedelay, sum(TCPSetupResponseDelay), null, null, 指标, MS, 0-49658730
+  TCPSetupACKDelay_sum, bigint, TCP建链确认时延_sum, A, tcpsetupackdelay, sum(TCPSetupACKDelay), null, null, 指标, MS, 0-34873883
+  tcpsetupdelay_sum, bigint, TCP建立时延(ms)_sum, A, tcpsetupdelay, sum(tcpsetupdelay), null, null, 指标, MS, 0-57058750
+  ULIPFragPacks_sum, bigint, UL_IP_FRAG_PACKETS, A, ulipfragpacks, sum(ulipfragpacks), null, null, 指标, 个, 0-95384
+  DLIPFragPacks_sum, bigint, DL_IP_FRAG_PACKETS, A, dlipfragpacks, sum(dlipfragpacks), null, null, 指标, 个, 0-342840
+  UL_Data_TransDuration_sum, bigint, TCP上行数传时长，单位为毫秒, A, ul_data_transduration, sum(ul_data_transduration), null, null, 指标, 毫秒, 0-4015786923
+  DL_DataTransDuration_sum, bigint, TCP下行数传时长，单位为毫秒, A, dl_datatransduration, sum(dl_datatransduration), null, null, 指标, 毫秒, 0-3774068320
+  UL_Packet_Number_STG1_sum, bigint, UDP上行包大小个数：包大小<15Byte, A, ul_packet_number_stg1, sum(ul_packet_number_stg1), null, null, 指标, 个, 0-167984
+  UL_Packet_Number_STG2_sum, bigint, UDP上行包大小个数：15Byte<包大小<36Byte, A, ul_packet_number_stg2, sum(ul_packet_number_stg2), null, null, 指标, 个, 0-1212949
+  UL_Packet_Number_STG3_sum, bigint, UDP上行包大小个数：36Byte<=包大小<=56Byte, A, ul_packet_number_stg3, sum(ul_packet_number_stg3), null, null, 指标, 个, 0-545797
+  UL_Packet_Number_STG4_sum, bigint, UDP上行包大小个数：包大小>56Byte, A, ul_packet_number_stg4, sum(ul_packet_number_stg4), null, null, 指标, 个, 0-2067446
+  DL_Packet_Number_STG1_sum, bigint, UDP下行包大小个数：包大小<15Byte, A, dl_packet_number_stg1, sum(dl_packet_number_stg1), null, null, 指标, 个, 0-74018
+  DL_Packet_Number_STG2_sum, bigint, UDP下行包大小个数：15Byte<包大小<36Byte, A, dl_packet_number_stg2, sum(dl_packet_number_stg2), null, null, 指标, 个, 0-358987
+  DL_Packet_Number_STG3_sum, bigint, UDP下行包大小个数：36Byte<=包大小<=56Byte, A, dl_packet_number_stg3, sum(dl_packet_number_stg3), null, null, 指标, 个, 0-209110
+  DL_Packet_Number_STG4_sum, bigint, UDP下行包大小个数：包大小>56Byte, A, dl_packet_number_stg4, sum(dl_packet_number_stg4), null, null, 指标, 个, 0-2790831
+  UL_Average_Packet_Size_avg, bigint, UDP上行平均包大小, A, ul_average_packet_size, avg(ul_average_packet_size), null, null, 指标, byte, 0-7944
+  DL_Average_Packet_Size_avg, bigint, UDP下行平均包大小, A, dl_average_packet_size, avg(dl_average_packet_size), null, null, 指标, byte, 0-17006
+  VideoPlayRequestCount, bigint, 视频播放请求次数, A, null, count(1), null, null, 指标, 次, 1-38319
+  VideoPlaySuccessCount, bigint, 视频播放成功次数, A, videoplaysuccess, sum(case  when videoplaysuccess=1 then 1 else 0 end), null, null, 指标, 次, 0-32510
+  VideoPlayFailureCount, bigint, 视频播放失败次数, A, videoplaysuccess, count(1)-sum(case  when videoplaysuccess=1 then 1 else 0 end), null, null, 指标, 次, 0-8047
+  VideoPlayHaltCount, bigint, 视频播放卡顿次数, A, videoplayhaltcount, sum(videoplayhaltcount), null, null, 指标, 次, 0-22652
+  VideoPlayNoHaltCount, bigint, 视频播放0卡顿的次数, A, videoplayhaltcount, sum(case when videoplayhaltcount=0 then 1 else 0 end), null, null, 指标, 次, 0-35900
+  ConnectionCount, bigint, 每次业务流数, A, connectioncount, sum(connectioncount), null, null, 指标, 个, 1-131955
+  videoplaytime_sum, bigint, 视频播放总时长, A, null, sum(lastdatapkgtimee-firstdatapkgtime), null, null, 指标, 毫秒, 0-3173523638
+  videoplaytime_without_halt_sum, bigint, 视频播放时长，不含卡顿时长，单位毫秒, A, null, sum(CASE WHEN InputOctets > 0 AND VideoBitRate > 0 THEN (InputOctets*8000)/(VideoBitRate*1024)  ELSE null END), null, null, 指标, 毫秒, 0-3173523638
+  VideoPlayWaitTime_sum, bigint, 视频播放等待时长，单位毫秒, A, videoplaywaittime, sum(videoplaywaittime), null, null, 指标, 毫秒, 0-83055519
+  VideoRecoverTime_sum, bigint, 视频卡顿时长，单位毫秒, A, videorecovertime, sum(videorecovertime), null, null, 指标, 毫秒, 0-1059204189
+  videothroughput_total, double, 视频下载速率算数求和, A, null, sum(case when videoplaysuccess=1 and videothroughput<1024000 and videothroughput>0 then videothroughput else null end), null, null, null, kbps, 1-335158112
+  videothroughput_cnt, bigint, 视频下载次数, A, null, sum(case when videoplaysuccess=1 and videothroughput<1024000 and videothroughput>0   then 1 else null end), null, null, null, 次, 1-17295
+  videocachethroughput_total, double, 视频缓存下载速率算数求和, A, null, sum(case when videoplaysuccess=1 and videocachethroughput<1024000 and videocachethroughput>0 then videocachethroughput else null end), null, null, null, kbps, 0-395218971
+  videocachethroughput_cnt, bigint, 视频缓存下载次数, A, null, sum(case when videoplaysuccess=1 and videocachethroughput<1024000 and videocachethroughput>0 then 1 else null end), null, null, null, 次, 0-32510
+  VideoSize, bigint, 视频文件大小, A, videosize, sum(videosize), null, null, null, 字节, 1-69350983525
+  videobitrate_total, bigint, 视频码率总和, A, null, sum(case when videobitrate is not null and videobitrate<>''  then videobitrate else null end), null, null, null, kbps, 0-0
+  videobitrate_cnt, bigint, 视频码率次数, A, null, sum(case when videobitrate is not null and videobitrate<>''  then 1 else null end), null, null, null, 个, 0-0
+  CachedVideoSize, bigint, 缓冲段视频大小, A, CachedVideoSize、CachedVideoDuration, sum(case when CachedVideoSize is not null and CachedVideoDuration is not null then CachedVideoSize else null end), null, null, null, 字节, 0-34414981
+  CachedVideoDuration_sum, bigint, 缓冲段视频下载时长, A, CachedVideoSize、CachedVideoDuration, sum(case when CachedVideoSize is not null and CachedVideoDuration is not null then CachedVideoDuration else null end), null, null, null, 毫秒, 1-231021918
+  Video_Resolution_Level_total, bigint, 视频清晰度总和, A, null, sum(case when Video_Resolution_Level>=100 and Video_Resolution_Level<=500 then Video_Resolution_Level else null end), null, null, null, 无, 200-8647500
+  Video_Resolution_Level_cnt, bigint, 视频清晰度次数, A, null, sum(case when Video_Resolution_Level>=100 and Video_Resolution_Level<=500 then 1 else null end), null, null, null, 个, 1-17295
+  Video_Resolution_Level, bigint, 视频清晰度，取值范围100~500，分值越高越清晰, A, null, sum(case when Video_Resolution_Level>=100 and Video_Resolution_Level<=500 then Video_Resolution_Level else null end)/sum(case when Video_Resolution_Level>=100 and Video_Resolution_Level<=500 then 1 else null end), null, null, null, 无, 200-500
+  Video_Fluency_Level_total, bigint, 视频流畅度总和, A, null, sum(case when Video_Fluency_Level>=100 and Video_Fluency_Level<=500 then Video_Fluency_Level else null end), null, null, null, 无, 100-3853885
+  Video_Fluency_Level_cnt, bigint, 视频流畅度次数, A, null, sum(case when Video_Fluency_Level>=100 and Video_Fluency_Level<=500 then 1 else null end), null, null, null, 个, 1-17295
+  Video_Fluency_Level, bigint, 视频流畅度，取值100~500，分值越高越流畅, A, null, sum(case when Video_Fluency_Level>=100 and Video_Fluency_Level<=500 then Video_Fluency_Level else null end)/sum(case when Video_Fluency_Level>=100 and Video_Fluency_Level<=500 then 1 else null end), null, null, null, 无, 100-500
+  VideoPlaySuccessRatio, bigint, 视频播放成功率, A, videoplaysuccess, sum(case  when videoplaysuccess=1 then 1 else 0 end)/count(1), null, null, null, 率, 0-1
+  videoplayhaltratio_total, double, 视频卡顿率_分子, A, null, sum(case when videoplaysuccess=1  and videocachethroughput<1024000 and videocachethroughput>0   and inputoctets>0 and videobitrate>0 and videoplayhaltcount/(cast(inputoctets as bigint)*8/(videobitrate*1000)/60)<=10 then videoplayhaltcount/(cast(inputoctets as bigint)*8/(videobitrate*1000)/60)  else null end), null, null, null, 率, 0-4133.21525569111
+  videoplayhaltratio_cnt, double, 视频卡顿率_分母, A, null, sum(case when videoplaysuccess=1  and videocachethroughput<1024000 and videocachethroughput>0   and inputoctets>0 and videobitrate>0 and videoplayhaltcount/(cast(inputoctets as bigint)*8/(videobitrate*1000)/60)<=10 then 1 else null end), null, null, null, 率, 0-32510
+  VideoPlayHaltCountPerMin, bigint, 视频播放卡顿频次，单位次/分钟, A, null, sum(case when videoplaysuccess=1  and videocachethroughput<1024000 and videocachethroughput>0   and inputoctets>0 and videobitrate>0 and videoplayhaltcount/(cast(inputoctets as bigint)*8/(videobitrate*1000)/60)<=10 then videoplayhaltcount/(cast(inputoctets as bigint)*8/(videobitrate*1000)/60)  else null end)/sum(case when videoplaysuccess=1  and videocachethroughput<1024000 and videocachethroughput>0   and inputoctets>0 and videobitrate>0 and videoplayhaltcount/(cast(inputoctets as bigint)*8/(videobitrate*1000)/60)<=10 then 1 else null end), null, null, null, 次/分钟, 0-3008
+  VideoRecoverTimeRatio, bigint, 视频卡顿时长占比，单位百分比, A, videoplaytime_without_halt、videorecovertime, "nvl(sum(videorecovertime)/(sum(videorecovertime)+sum(videoplaytime_without_halt)),0)", null, null, null, 率, 0-12218
+  VideoPlayWaitTimeRatio, bigint, 视频播放等待时长占比, A, videoplaytime_without_halt、videoplaywaittime, "nvl(sum(videoplaywaittime)/(sum(videoplaywaittime)+sum(videoplaytime_without_halt)),0)", null, null, null, 率, 0-11151
+  CachedVideoDurationRatio, bigint, 缓冲段视频下载时长占比, A, videoplaytime_without_halt、cachedvideoduration, "nvl(sum(cachedvideoduration)/(sum(cachedvideoduration)+sum(videoplaytime_without_halt)),0)", null, null, null, ms, 0-272374
+  CachedVideo_req_cnt, bigint, 初始缓冲请求次数, A, CachedVideoDuration, sum(cae when CachedVideoDuration>0 then  1  else 0 end), null, null, null, 个, 0-770
+  CachedVideo_suc_cnt, bigint, 初始缓冲成功次数, A, CachedVideoDuration、VideoPlaySuccess, sum(cae when CachedVideoDuration>0 and VideoPlaySuccess=1 then  1 end), null, null, null, 个, 1-769
+  videoplayhaltservcount, bigint, 发生卡顿业务次数, A, videoplayhaltcount、videobitrate、CachedVideoDuration, sum(case when  videobitrate>0 AND (CachedVideoDuration>0 or CachedVideoDuration is null)  and videoplayhaltcount>0 then  1 else 0 end), null, null, null, 个, 0-34
+  videoservcount, bigint, 具备卡顿业务次数, A, videobitrate、CachedVideoDuration, sum(case when  videobitrate>0 AND (CachedVideoDuration>0 or CachedVideoDuration is null) then 1 else 0  end), null, null, null, 个, 0-770
+  videosize_above500, bigint, 视频流文件大小（内容>=500KB）, A, videosize、videoplayhaltcount、videoplaysuccess、VideoCacheThroughput、videobitrate, sum(case when cast(videosize as bigint)>=500*1024  and (videoplayhaltcount is not null or videoplayhaltcount<>'') and videoplaysuccess=1 and cast(VideoCacheThroughput as double)>=0 and cast(VideoCacheThroughput as double)<1000*1024 and cast(videobitrate as double)>0 then cast(videosize as double)  else 0 end), null, null, null, KB, 0-3605939752
+  VideoDuration_above500, bigint, 视频流下载时长(ms)（内容>=500KB）, A, videosize、videoplayhaltcount、videoplaysuccess、VideoCacheThroughput、videobitrate、FirstDataPkgTime、lastdatapkgtime, sum(case when cast(videosize as bigint)>=500*1024  and (videoplayhaltcount is not null or videoplayhaltcount<>'') and videoplaysuccess=1 and cast(VideoCacheThroughput as double)>=0 and cast(VideoCacheThroughput as double)<1000*1024 and cast(videobitrate as double)>0 and FirstDataPkgTime>0 and  lastdatapkgtime-FirstDataPkgTime>0  then lastdatapkgtime - firstdatapkgtime  else 0 end), null, null, null, ms, 0-34637420
+  tcpconnfail_sum, bigint, TCP连接失败次数, A, TCPConnectState, sum(case when TCPConnectState=1 then  1 else 0 end), null, null, null, 个, 0-56415
+  tcpconnreq_sum, bigint, 上行TCP建立请求次数, A, tcpsynnumber, sum(case when tcpsynnumber>0 then 1  else 0 end), null, null, null, 个, 0-1025853
+  tcpconnulsuc_sum, bigint, 上行TCP建立成功次数, A, TCPSetupResponseDelay, sum(case when tcpsynnumber>0  and TCPSetupResponseDelay>0 then  1 else 0 end), null, null, null, 个, 0-1025656
+  tcpconndlsuc_sum, bigint, 下行TCP建立成功次数, A, TCPSetupResponseDelay、TCPSetupACKDelay, sum(case when TCPSetupResponseDelay>0 and TCPSetupACKDelay>0 then  1 else 0 end), null, null, null, 个, 0-1025571
+  tcpsetupresponsedelay_cnt, bigint, TCP建链响应次数, A, TCPSetupResponseDelay, sum(case when TCPSetupResponseDelay>0   then 1 else 0  end), null, null, null, 个, 0-1025656
+  tcpsetupackdelay_cnt, bigint, TCP建链确认次数, A, tcpsetupackdelay, sum(case when tcpsetupackdelay>0   then 1 else 0  end), null, null, null, 个, 0-1025727
+  UL_Data_TransDuration_cnt, bigint, TCP上行数传时长条数, A, UL_Data_TransDuration, sum(case when UL_Data_TransDuration>0 then 1 else 0 end), null, null, null, 个, 0-1025552
+  DL_DataTransDuration_cnt, bigint, TCP下行数传时长条数, A, DL_DataTransDuration, sum(case when DL_DataTransDuration>0 then 1 else 0 end), null, null, null, 无, 无
+  Delay_Setup_FirstTransaction_sum, bigint, TCP建链成功到第一条事务请求的时延_sum（ms）, A, delay_setup_firsttransaction, sum(Delay_Setup_FirstTransaction), null, null, null, MS, 0-238232115
+  Delay_Setup_FirstTransaction_cnt, bigint, TCP建链成功到第一条事务请求的次数, A, Delay_Setup_FirstTransaction, sum(case when Delay_Setup_FirstTransaction>0 then 1 else 0 end), null, null, null, 个, 0-4082
+  Delay_FirstTransaction_FirstResPackt_sum, bigint, 第一条事务请求到其第一个响应包时延_sum（ms）, A, delay_firsttransaction_firstrespackt, sum(Delay_FirstTransaction_FirstResPackt), null, null, null, MS, 0-16900389
+  Delay_FirstTransaction_FirstResPackt_cnt, bigint, 第一条事务请求到其第一个响应包次数, A, Delay_FirstTransaction_FirstResPackt, sum(case when Delay_FirstTransaction_FirstResPackt>0 then 1 else 0 end), null, null, null, 个, 0-4628
+  outputoctets_above500_sum, bigint, 大包业务上行流量(>=500KB), A, outputoctets, sum(case when outputoctets>=500*1024 then outputoctets else 0 end), null, null, null, KB, 0-18487483785
+  outputoctets_above500_duration_sum, bigint, 大包上行时间持续总时长(>=500KB), A, outputoctets、UL_Data_TransDuration, sum(case when UL_Data_TransDuration>0 and  OutputOctets>=500*1024 then UL_Data_TransDuration else 0 end), null, null, null, ms, 0-106429756
+  inputoctets_above500_sum, bigint, 大包业务下行流量(>=500KB), A, inputoctets, sum(case when inputoctets>=500*1024 then inputoctets else 0 end), null, null, null, KB, 0-45023524772
+  inputoctets_above500_duration_sum, bigint, 大包下行时间持续总时长(>=500KB), A, inputoctets、DL_DataTransDuration, sum(case when DL_DataTransDuration>0 and  inputoctets>=500*1024 then DL_DataTransDuration else 0 end), null, null, null, ms, 0-529992869
+  videocachethroughput_above500_cnt, bigint, 视频下载速率条数(videosize>=500KB), A, videosize、videoplayhaltcount、videoplaysuccess、videocachethroughput、videobitrate, sum(case when cast(videosize as bigint)>=500*1024  and (videoplayhaltcount is not null or videoplayhaltcount<>'') and videoplaysuccess=1 and cast(videocachethroughput as double)>=0 and cast(videocachethroughput as double)<1000*1024 and cast(videobitrate as double)>0 then 1 else 0 end), null, null, null, 个, 0-698
+  videocachethroughput_above500_sum, bigint, 视频下载总速率(Kbps)(videosize>=500KB), A, videosize、videoplayhaltcount、videoplaysuccess、videocachethroughput、videobitrate, sum(case when cast(videosize as bigint)>=500*1024  and (videoplayhaltcount is not null or videoplayhaltcount<>'') and videoplaysuccess=1 and cast(videocachethroughput as double)>=0 and cast(videocachethroughput as double)<1000*1024 and cast(videobitrate as double)>0 then videocachethroughput else 0 end), null, null, null, KB, 0-9949975
+  videoplaytime_to_videobitrate, double, 视频播放时长, A, inputoctets、videobitrate, sum(((inputoctets*8/1000)/videobitrate)/60), null, null, null, 无, 无
+  xdr_suc_cnt, bigint, xdr成功条数, A, tcpconnectstate、sessionstopflag, sum(case when tcpconnectstate=0 or sessionstopflag=1 then 1 else 0 end), null, null, null, 个, 1-770
+  cachethroughput_bitrate_goodratio, double, 速率码率优良率, A, cachethroughput_bitrate_ratio_numerator_custom、cachethroughput_bitrate_ratio_denominator_custom, sum(cachethroughput_bitrate_ratio_numerator_custom)/sum(cachethroughput_bitrate_ratio_denominator_custom), null, null, null, 次, 0-1
+  times_excellentdownlink, bigint, 视频下载速率优秀次数, A, videocachethroughput, count(case when videocachethroughput>=#times_excellentcachethroughput_seg_1_1st# and videocachethroughput<#times_excellentcachethroughput_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-36940
+  times_inferiordownlink, bigint, 视频下载速率劣质次数, A, videocachethroughput, count(case when videocachethroughput>=#times_inferiorcachethroughput_seg_1_1st# and videocachethroughput<#times_inferiorcachethroughput_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-2818
+  times_welldownlink, bigint, 视频下载速率良好次数, A, videocachethroughput, count(case when videocachethroughput>=#times_wellcachethroughput_seg_1_1st# and videocachethroughput<#times_wellcachethroughput_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-5051
+  times_excellentstallfrequ, bigint, 卡顿频次优秀次数, A, VideoPlayHaltCountPerMin, count(case when VideoPlayHaltCountPerMin>=#times_excellentHaltCountPerMin_seg_1_1st# and VideoPlayHaltCountPerMin<#times_excellentHaltCountPerMin_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-35929
+  times_inferiorstallfrequ, bigint, 卡顿频次质差次数, A, VideoPlayHaltCountPerMin, count(case when VideoPlayHaltCountPerMin>=#times_inferiorHaltCountPerMin_seg_1_1st# and VideoPlayHaltCountPerMin<#times_inferiorHaltCountPerMin_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-2162
+  times_wellstallfrequ, bigint, 卡顿频次良好次数, A, VideoPlayHaltCountPerMin, count(case when VideoPlayHaltCountPerMin>=#times_wellHaltCountPerMin_seg_1_1st# and VideoPlayHaltCountPerMin<#times_wellHaltCountPerMin_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-236
+  throughput_total, bigint, http下载速率_总速率, A, http_throughput, sum(http_throughput), null, null, null, kbit/s, 0-111555
+  throughput, bigint, http下载速率_根据IP报文统计_avg, A, http_throughput, avg(http_throughput), null, null, null, kbit/s, -111798158-187138148
+  throughput_seg_1, bigint, http下载速率_根据IP报文统计_seg_1, A, http_throughput, count(case when http_throughput>=#http_throughput_seg_1_1st# and http_throughput<#http_throughput_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-1129968
+  throughput_seg_2, bigint, http下载速率_根据IP报文统计_seg_2, A, http_throughput, count(case when http_throughput>=#http_throughput_seg_2_1st# and http_throughput<#http_throughput_seg_2_2nd# then 1 else null end), null, null, null, 次, 0-42638
+  throughput_seg_3, bigint, http下载速率_根据IP报文统计_seg_3, A, http_throughput, count(case when http_throughput>=#http_throughput_seg_3_1st# and http_throughput<#http_throughput_seg_3_2nd# then 1 else null end), null, null, null, 次, 0-10474
+  throughput_seg_4, bigint, http下载速率_根据IP报文统计_seg_4, A, http_throughput, count(case when http_throughput>=#http_throughput_seg_4_1st# and http_throughput<#http_throughput_seg_4_2nd# then 1 else null end), null, null, null, 次, 0-21270
+  throughput_seg_5, bigint, http下载速率_根据IP报文统计_seg_5, A, http_throughput, count(case when http_throughput>=#http_throughput_seg_5_1st# and http_throughput<#http_throughput_seg_5_2nd# then 1 else null end), null, null, null, 次, 0-109266
+  TCPSetupResponseDelay_avg, bigint, TCP建链响应时延_avg, A, tcpsetupresponsedelay, avg(TCPSetupResponseDelay), null, null, null, 毫秒, 0-8552224
+  TCPSetupResponseDelay_seg_1, bigint, TCP建链响应时延_seg_1, A, tcpsetupresponsedelay, count(case when tcpsetupresponsedelay>=#tcpsetupresponsedelay_seg_1_1st# and tcpsetupresponsedelay<#tcpsetupresponsedelay_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-1130906
+  TCPSetupResponseDelay_seg_2, bigint, TCP建链响应时延_seg_2, A, tcpsetupresponsedelay, count(case when tcpsetupresponsedelay>=#tcpsetupresponsedelay_seg_2_1st# and tcpsetupresponsedelay<#tcpsetupresponsedelay_seg_2_2nd# then 1 else null end), null, null, null, 次, 0-114728
+  TCPSetupResponseDelay_seg_3, bigint, TCP建链响应时延_seg_3, A, tcpsetupresponsedelay, count(case when tcpsetupresponsedelay>=#tcpsetupresponsedelay_seg_3_1st# and tcpsetupresponsedelay<#tcpsetupresponsedelay_seg_3_2nd# then 1 else null end), null, null, null, 次, 0-17747
+  TCPSetupResponseDelay_seg_4, bigint, TCP建链响应时延_seg_4, A, tcpsetupresponsedelay, count(case when tcpsetupresponsedelay>=#tcpsetupresponsedelay_seg_4_1st# and tcpsetupresponsedelay<#tcpsetupresponsedelay_seg_4_2nd# then 1 else null end), null, null, null, 次, 0-31478
+  TCPSetupResponseDelay_seg_5, bigint, TCP建链响应时延_seg_5, A, tcpsetupresponsedelay, count(case when tcpsetupresponsedelay>=#tcpsetupresponsedelay_seg_5_1st# and tcpsetupresponsedelay<#tcpsetupresponsedelay_seg_5_2nd# then 1 else null end), null, null, null, 次, 0-46164
+  TCPSetupACKDelay_avg, bigint, TCP建链确认时延_avg, A, tcpsetupackdelay, avg(TCPSetupACKDelay), null, null, null, 毫秒, 0-11864496
+  TCPSetupACKDelay_seg_1, bigint, TCP建链确认时延_seg_1, A, tcpsetupackdelay, count(case when tcpsetupackdelay>=#tcpsetupackdelay_seg_1_1st# and tcpsetupackdelay<#tcpsetupackdelay_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-1113938
+  TCPSetupACKDelay_seg_2, bigint, TCP建链确认时延_seg_2, A, tcpsetupackdelay, count(case when tcpsetupackdelay>=#tcpsetupackdelay_seg_2_1st# and tcpsetupackdelay<#tcpsetupackdelay_seg_2_2nd# then 1 else null end), null, null, null, 次, 0-160409
+  TCPSetupACKDelay_seg_3, bigint, TCP建链确认时延_seg_3, A, tcpsetupackdelay, count(case when tcpsetupackdelay>=#tcpsetupackdelay_seg_3_1st# and tcpsetupackdelay<#tcpsetupackdelay_seg_3_2nd# then 1 else null end), null, null, null, 次, 0-10726
+  TCPSetupACKDelay_seg_4, bigint, TCP建链确认时延_seg_4, A, tcpsetupackdelay, count(case when tcpsetupackdelay>=#tcpsetupackdelay_seg_4_1st# and tcpsetupackdelay<#tcpsetupackdelay_seg_4_2nd# then 1 else null end), null, null, null, 次, 0-3855
+  TCPSetupACKDelay_seg_5, bigint, TCP建链确认时延_seg_5, A, tcpsetupackdelay, count(case when tcpsetupackdelay>=#tcpsetupackdelay_seg_5_1st# and tcpsetupackdelay<#tcpsetupackdelay_seg_5_2nd# then 1 else null end), null, null, null, 次, 0-8725
+  tcpsetupdelay_avg, bigint, TCP建立时延(ms)_avg, A, tcpsetupdelay, avg(tcpsetupdelay), null, null, null, 毫秒, 0-14629757
+  tcpsetupdelay_seg_1, bigint, TCP建立时延(ms)_seg_1, A, tcpsetupdelay, count(case when tcpsetupdelay>=#tcpsetupdelay_seg_1_1st# and tcpsetupdelay<#tcpsetupdelay_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-924246
+  tcpsetupdelay_seg_2, bigint, TCP建立时延(ms)_seg_2, A, tcpsetupdelay, count(case when tcpsetupdelay>=#tcpsetupdelay_seg_2_1st# and tcpsetupdelay<#tcpsetupdelay_seg_2_2nd# then 1 else null end), null, null, null, 次, 0-591253
+  tcpsetupdelay_seg_3, bigint, TCP建立时延(ms)_seg_3, A, tcpsetupdelay, count(case when tcpsetupdelay>=#tcpsetupdelay_seg_3_1st# and tcpsetupdelay<#tcpsetupdelay_seg_3_2nd# then 1 else null end), null, null, null, 次, 0-67844
+  tcpsetupdelay_seg_4, bigint, TCP建立时延(ms)_seg_4, A, tcpsetupdelay, count(case when tcpsetupdelay>=#tcpsetupdelay_seg_4_1st# and tcpsetupdelay<#tcpsetupdelay_seg_4_2nd# then 1 else null end), null, null, null, 次, 0-29925
+  tcpsetupdelay_seg_5, bigint, TCP建立时延(ms)_seg_5, A, tcpsetupdelay, count(case when tcpsetupdelay>=#tcpsetupdelay_seg_5_1st# and tcpsetupdelay<#tcpsetupdelay_seg_5_2nd# then 1 else null end), null, null, null, 次, 0-48769
+  Delay_Setup_FirstTransaction_avg, bigint, TCP建链成功到第一条事务请求的时延_avg（ms）, A, delay_setup_firsttransaction, avg(Delay_Setup_FirstTransaction), null, null, null, 毫秒, 0-3475307
+  Delay_Setup_FirstTransaction_seg_1, bigint, TCP建链成功到第一条事务请求的时延_seg_1, A, delay_setup_firsttransaction, count(case when delay_setup_firsttransaction>=#delay_setup_firsttransaction_seg_1_1st# and delay_setup_firsttransaction<#delay_setup_firsttransaction_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-995479
+  Delay_Setup_FirstTransaction_seg_2, bigint, TCP建链成功到第一条事务请求的时延_seg_2, A, delay_setup_firsttransaction, count(case when delay_setup_firsttransaction>=#delay_setup_firsttransaction_seg_2_1st# and delay_setup_firsttransaction<#delay_setup_firsttransaction_seg_2_2nd# then 1 else null end), null, null, null, 次, 0-12001
+  Delay_Setup_FirstTransaction_seg_3, bigint, TCP建链成功到第一条事务请求的时延_seg_3, A, delay_setup_firsttransaction, count(case when delay_setup_firsttransaction>=#delay_setup_firsttransaction_seg_3_1st# and delay_setup_firsttransaction<#delay_setup_firsttransaction_seg_3_2nd# then 1 else null end), null, null, null, 次, 0-7969
+  Delay_Setup_FirstTransaction_seg_4, bigint, TCP建链成功到第一条事务请求的时延_seg_4, A, delay_setup_firsttransaction, count(case when delay_setup_firsttransaction>=#delay_setup_firsttransaction_seg_4_1st# and delay_setup_firsttransaction<#delay_setup_firsttransaction_seg_4_2nd# then 1 else null end), null, null, null, 次, 0-10456
+  Delay_Setup_FirstTransaction_seg_5, bigint, TCP建链成功到第一条事务请求的时延_seg_5, A, delay_setup_firsttransaction, count(case when delay_setup_firsttransaction>=#delay_setup_firsttransaction_seg_5_1st# and delay_setup_firsttransaction<#delay_setup_firsttransaction_seg_5_2nd# then 1 else null end), null, null, null, 次, 0-37191
+  Delay_FirstTransaction_FirstResPackt_avg, bigint, 第一条事务请求到其第一个响应包时延_avg（ms）, A, delay_firsttransaction_firstrespackt, avg(Delay_FirstTransaction_FirstResPackt), null, null, null, 毫秒, 0-600017
+  Delay_FirstTransaction_FirstResPackt_seg_1, bigint, 第一条事务请求到其第一个响应包时延_seg_1, A, delay_firsttransaction_firstrespackt, count(case when delay_firsttransaction_firstrespackt>=#delay_firsttransaction_firstrespackt_seg_1_1st# and delay_firsttransaction_firstrespackt<#delay_firsttransaction_firstrespackt_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-1025380
+  Delay_FirstTransaction_FirstResPackt_seg_2, bigint, 第一条事务请求到其第一个响应包时延_seg_2, A, delay_firsttransaction_firstrespackt, count(case when delay_firsttransaction_firstrespackt>=#delay_firsttransaction_firstrespackt_seg_2_1st# and delay_firsttransaction_firstrespackt<#delay_firsttransaction_firstrespackt_seg_2_2nd# then 1 else null end), null, null, null, 次, 0-36576
+  Delay_FirstTransaction_FirstResPackt_seg_3, bigint, 第一条事务请求到其第一个响应包时延_seg_3, A, delay_firsttransaction_firstrespackt, count(case when delay_firsttransaction_firstrespackt>=#delay_firsttransaction_firstrespackt_seg_3_1st# and delay_firsttransaction_firstrespackt<#delay_firsttransaction_firstrespackt_seg_3_2nd# then 1 else null end), null, null, null, 次, 0-22475
+  Delay_FirstTransaction_FirstResPackt_seg_4, bigint, 第一条事务请求到其第一个响应包时延_seg_4, A, delay_firsttransaction_firstrespackt, count(case when delay_firsttransaction_firstrespackt>=#delay_firsttransaction_firstrespackt_seg_4_1st# and delay_firsttransaction_firstrespackt<#delay_firsttransaction_firstrespackt_seg_4_2nd# then 1 else null end), null, null, null, 次, 0-7944
+  Delay_FirstTransaction_FirstResPackt_seg_5, bigint, 第一条事务请求到其第一个响应包时延_seg_5, A, delay_firsttransaction_firstrespackt, count(case when delay_firsttransaction_firstrespackt>=#delay_firsttransaction_firstrespackt_seg_5_1st# and delay_firsttransaction_firstrespackt<#delay_firsttransaction_firstrespackt_seg_5_2nd# then 1 else null end), null, null, null, 次, 0-16003
+  VideoPlayHaltCount_avg, bigint, 视频播放卡顿次数_avg, A, VideoPlayHaltCount, avg(VideoPlayHaltCount), null, null, null, 次, 0-1985
+  VideoPlayHaltCount_seg_1, bigint, 视频播放卡顿次数_seg_1, A, VideoPlayHaltCount, count(case when VideoPlayHaltCount>=#VideoPlayHaltCount_seg_1_1st# and VideoPlayHaltCount<#VideoPlayHaltCount_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-35900
+  VideoPlayHaltCount_seg_2, bigint, 视频播放卡顿次数_seg_2, A, VideoPlayHaltCount, count(case when VideoPlayHaltCount>=#VideoPlayHaltCount_seg_2_1st# and VideoPlayHaltCount<#VideoPlayHaltCount_seg_2_2nd# then 1 else null end), null, null, null, 次, 0-2359
+  VideoPlayHaltCount_seg_3, bigint, 视频播放卡顿次数_seg_3, A, VideoPlayHaltCount, count(case when VideoPlayHaltCount>=#VideoPlayHaltCount_seg_3_1st# and VideoPlayHaltCount<#VideoPlayHaltCount_seg_3_2nd# then 1 else null end), null, null, null, 次, 0-102
+  VideoPlayHaltCount_seg_4, bigint, 视频播放卡顿次数_seg_4, A, VideoPlayHaltCount, count(case when VideoPlayHaltCount>=#VideoPlayHaltCount_seg_4_1st# and VideoPlayHaltCount<#VideoPlayHaltCount_seg_4_2nd# then 1 else null end), null, null, null, 次, 0-47
+  VideoPlayHaltCount_seg_5, bigint, 视频播放卡顿次数_seg_5, A, VideoPlayHaltCount, count(case when VideoPlayHaltCount>=#VideoPlayHaltCount_seg_5_1st# and VideoPlayHaltCount<#VideoPlayHaltCount_seg_5_2nd# then 1 else null end), null, null, null, 次, 0-126
+  VideoPlayHaltCountPerMin_avg, bigint, 视频播放卡顿频次_avg, A, videoplayhaltratio_total、videoplayhaltratio_cnt, sum(videoplayhaltratio_total)/sum(videoplayhaltratio_cnt), null, null, null, 次/分钟, 0-156.828027854907
+  VideoPlayHaltCountPerMin_seg_1, bigint, 视频播放卡顿频次_seg_1, A, videoplayhaltcountpermin, count(case when videoplayhaltcountpermin>=#videoplayhaltcountpermin_seg_1_1st# and videoplayhaltcountpermin<#videoplayhaltcountpermin_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-36767
+  VideoPlayHaltCountPerMin_seg_2, bigint, 视频播放卡顿频次_seg_2, A, videoplayhaltcountpermin, count(case when videoplayhaltcountpermin>=#videoplayhaltcountpermin_seg_2_1st# and videoplayhaltcountpermin<#videoplayhaltcountpermin_seg_2_2nd# then 1 else null end), null, null, null, 次, 0-843
+  VideoPlayHaltCountPerMin_seg_3, bigint, 视频播放卡顿频次_seg_3, A, videoplayhaltcountpermin, count(case when videoplayhaltcountpermin>=#videoplayhaltcountpermin_seg_3_1st# and videoplayhaltcountpermin<#videoplayhaltcountpermin_seg_3_2nd# then 1 else null end), null, null, null, 次, 0-389
+  VideoPlayHaltCountPerMin_seg_4, bigint, 视频播放卡顿频次_seg_4, A, videoplayhaltcountpermin, count(case when videoplayhaltcountpermin>=#videoplayhaltcountpermin_seg_4_1st# and videoplayhaltcountpermin<#videoplayhaltcountpermin_seg_4_2nd# then 1 else null end), null, null, null, 次, 0-223
+  VideoPlayHaltCountPerMin_seg_5, bigint, 视频播放卡顿频次_seg_5, A, videoplayhaltcountpermin, count(case when videoplayhaltcountpermin>=#videoplayhaltcountpermin_seg_5_1st# and videoplayhaltcountpermin<#videoplayhaltcountpermin_seg_5_2nd# then 1 else null end), null, null, null, 次, 0-172
+  VideoPlayWaitTime_avg, bigint, 视频播放等待时长_avg，单位毫秒, A, videoplaywaittime, avg(videoplaywaittime), null, null, null, 毫秒, 0-6517298
+  VideoPlayWaitTime_seg_1, bigint, 视频播放等待时长_seg_1, A, videoplaywaittime, count(case when videoplaywaittime>=#videoplaywaittime_seg_1_1st# and videoplaywaittime<#videoplaywaittime_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-29005
+  VideoPlayWaitTime_seg_2, bigint, 视频播放等待时长_seg_2, A, videoplaywaittime, count(case when videoplaywaittime>=#videoplaywaittime_seg_2_1st# and videoplaywaittime<#videoplaywaittime_seg_2_2nd# then 1 else null end), null, null, null, 次, 0-2398
+  VideoPlayWaitTime_seg_3, bigint, 视频播放等待时长_seg_3, A, videoplaywaittime, count(case when videoplaywaittime>=#videoplaywaittime_seg_3_1st# and videoplaywaittime<#videoplaywaittime_seg_3_2nd# then 1 else null end), null, null, null, 次, 0-978
+  VideoPlayWaitTime_seg_4, bigint, 视频播放等待时长_seg_4, A, videoplaywaittime, count(case when videoplaywaittime>=#videoplaywaittime_seg_4_1st# and videoplaywaittime<#videoplaywaittime_seg_4_2nd# then 1 else null end), null, null, null, 次, 0-810
+  VideoPlayWaitTime_seg_5, bigint, 视频播放等待时长_seg_5, A, videoplaywaittime, count(case when videoplaywaittime>=#videoplaywaittime_seg_5_1st# and videoplaywaittime<#videoplaywaittime_seg_5_2nd# then 1 else null end), null, null, null, 次, 0-1878
+  VideoRecoverTime_avg, bigint, 视频卡顿时长_avg，单位毫秒, A, videorecovertime, avg(videorecovertime), null, null, null, 毫秒, 0-59895833
+  VideoRecoverTime_seg_1, bigint, 视频卡顿时长_seg_1, A, videorecovertime, count(case when videorecovertime>=#videorecovertime_seg_1_1st# and videorecovertime<#videorecovertime_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-37282
+  VideoRecoverTime_seg_2, bigint, 视频卡顿时长_seg_2, A, videorecovertime, count(case when videorecovertime>=#videorecovertime_seg_2_1st# and videorecovertime<#videorecovertime_seg_2_2nd# then 1 else null end), null, null, null, 次, 0-197
+  VideoRecoverTime_seg_3, bigint, 视频卡顿时长_seg_3, A, videorecovertime, count(case when videorecovertime>=#videorecovertime_seg_3_1st# and videorecovertime<#videorecovertime_seg_3_2nd# then 1 else null end), null, null, null, 次, 0-110
+  VideoRecoverTime_seg_4, bigint, 视频卡顿时长_seg_4, A, videorecovertime, count(case when videorecovertime>=#videorecovertime_seg_4_1st# and videorecovertime<#videorecovertime_seg_4_2nd# then 1 else null end), null, null, null, 次, 0-100
+  VideoRecoverTime_seg_5, bigint, 视频卡顿时长_seg_5, A, videorecovertime, count(case when videorecovertime>=#videorecovertime_seg_5_1st# and videorecovertime<#videorecovertime_seg_5_2nd# then 1 else null end), null, null, null, 次, 0-679
+  VideoThroughput_avg, bigint, 视频下载速率_avg, A, videothroughput_total、videothroughput_cnt, sum(videothroughput_total)/sum(videothroughput_cnt), null, null, null, Kbps, 1-1000384
+  VideoThroughput_seg_1, bigint, 视频下载速率_根据IP报文统计_seg_1, A, videothroughput, count(case when videothroughput>=#videothroughput_seg_1_1st# and videothroughput<#videothroughput_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-863
+  VideoThroughput_seg_2, bigint, 视频下载速率_根据IP报文统计_seg_2, A, videothroughput, count(case when videothroughput>=#videothroughput_seg_2_1st# and videothroughput<#videothroughput_seg_2_2nd# then 1 else null end), null, null, null, 次, 0-1991
+  VideoThroughput_seg_3, bigint, 视频下载速率_根据IP报文统计_seg_3, A, videothroughput, count(case when videothroughput>=#videothroughput_seg_3_1st# and videothroughput<#videothroughput_seg_3_2nd# then 1 else null end), null, null, null, 次, 0-2309
+  VideoThroughput_seg_4, bigint, 视频下载速率_根据IP报文统计_seg_4, A, videothroughput, count(case when videothroughput>=#videothroughput_seg_4_1st# and videothroughput<#videothroughput_seg_4_2nd# then 1 else null end), null, null, null, 次, 0-2691
+  VideoThroughput_seg_5, bigint, 视频下载速率_根据IP报文统计_seg_5, A, videothroughput, count(case when videothroughput>=#videothroughput_seg_5_1st# and videothroughput<#videothroughput_seg_5_2nd# then 1 else null end), null, null, null, 次, 0-14348
+  VideoCacheThroughput_avg, bigint, 视频缓冲段下载速率_avg。算法见《中国电信移动互联网业务感知质量评价细则》, A, videocachethroughput_total、videocachethroughput_cnt, sum(videocachethroughput_total)/sum(videocachethroughput_cnt), null, null, null, Kbps, 1-989130
+  VideoCacheThroughput_seg_1, bigint, 视频缓冲段下载速率_根据IP报文统计_seg_1, A, videocachethroughput, count(case when videocachethroughput>=#videocachethroughput_seg_1_1st# and videocachethroughput<#videocachethroughput_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-861
+  VideoCacheThroughput_seg_2, bigint, 视频缓冲段下载速率_根据IP报文统计_seg_2, A, videocachethroughput, count(case when videocachethroughput>=#videocachethroughput_seg_2_1st# and videocachethroughput<#videocachethroughput_seg_2_2nd# then 1 else null end), null, null, null, 次, 0-1957
+  VideoCacheThroughput_seg_3, bigint, 视频缓冲段下载速率_根据IP报文统计_seg_3, A, videocachethroughput, count(case when videocachethroughput>=#videocachethroughput_seg_3_1st# and videocachethroughput<#videocachethroughput_seg_3_2nd# then 1 else null end), null, null, null, 次, 0-2312
+  VideoCacheThroughput_seg_4, bigint, 视频缓冲段下载速率_根据IP报文统计_seg_4, A, videocachethroughput, count(case when videocachethroughput>=#videocachethroughput_seg_4_1st# and videocachethroughput<#videocachethroughput_seg_4_2nd# then 1 else null end), null, null, null, 次, 0-3626
+  VideoCacheThroughput_seg_5, bigint, 视频缓冲段下载速率_根据IP报文统计_seg_5, A, videocachethroughput, count(case when videocachethroughput>=#videocachethroughput_seg_5_1st# and videocachethroughput<#videocachethroughput_seg_5_2nd# then 1 else null end), null, null, null, 次, 0-36940
+  VideoBitRate_avg, bigint, 视频质量_avg，即视频平均码率，单位Kbps, A, videobitrate_total、videobitrate_cnt, sum(videobitrate_total)/sum(videobitrate_cnt), null, null, null, Kbps, 0-0
+  VideoBitRate_seg_1, bigint, 视频质量_seg_1, A, videobitrate, count(case when videobitrate>=#videobitrate_seg_1_1st# and videobitrate<#videobitrate_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-17294
+  VideoBitRate_seg_2, bigint, 视频质量_seg_2, A, videobitrate, count(case when videobitrate>=#videobitrate_seg_2_1st# and videobitrate<#videobitrate_seg_2_2nd# then 1 else null end), null, null, null, 次, 0-3517
+  VideoBitRate_seg_3, bigint, 视频质量_seg_3, A, videobitrate, count(case when videobitrate>=#videobitrate_seg_3_1st# and videobitrate<#videobitrate_seg_3_2nd# then 1 else null end), null, null, null, 次, 0-2600
+  VideoBitRate_seg_4, bigint, 视频质量_seg_4, A, videobitrate, count(case when videobitrate>=#videobitrate_seg_4_1st# and videobitrate<#videobitrate_seg_4_2nd# then 1 else null end), null, null, null, 次, 0-1747
+  VideoBitRate_seg_5, bigint, 视频质量_seg_5, A, videobitrate, count(case when videobitrate>=#videobitrate_seg_5_1st# and videobitrate<#videobitrate_seg_5_2nd# then 1 else null end), null, null, null, 次, 0-335
+  CachedVideoDuration_avg, bigint, 缓冲段视频下载时长_avg, A, cachedvideoduration, avg(cachedvideoduration), null, null, null, 毫秒, 0.00819672131147541-49211351
+  CachedVideoDuration_seg_1, bigint, 缓冲段视频下载时长_seg_1, A, cachedvideoduration, count(case when cachedvideoduration>=#cachedvideoduration_seg_1_1st# and cachedvideoduration<#cachedvideoduration_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-31297
+  CachedVideoDuration_seg_2, bigint, 缓冲段视频下载时长_seg_2, A, cachedvideoduration, count(case when cachedvideoduration>=#cachedvideoduration_seg_2_1st# and cachedvideoduration<#cachedvideoduration_seg_2_2nd# then 1 else null end), null, null, null, 次, 0-1922
+  CachedVideoDuration_seg_3, bigint, 缓冲段视频下载时长_seg_3, A, cachedvideoduration, count(case when cachedvideoduration>=#cachedvideoduration_seg_3_1st# and cachedvideoduration<#cachedvideoduration_seg_3_2nd# then 1 else null end), null, null, null, 次, 0-1400
+  CachedVideoDuration_seg_4, bigint, 缓冲段视频下载时长_seg_4, A, cachedvideoduration, count(case when cachedvideoduration>=#cachedvideoduration_seg_4_1st# and cachedvideoduration<#cachedvideoduration_seg_4_2nd# then 1 else null end), null, null, null, 次, 0-845
+  CachedVideoDuration_seg_5, bigint, 缓冲段视频下载时长_seg_5, A, cachedvideoduration, count(case when cachedvideoduration>=#cachedvideoduration_seg_5_1st# and cachedvideoduration<#cachedvideoduration_seg_5_2nd# then 1 else null end), null, null, null, 次, 0-4839
+  Video_Resolution_Level_avg, bigint, 视频清晰度_avg，取值范围100~500，分值越高越清晰, A, Video_Resolution_Level_total、Video_Resolution_Level_cnt, sum(Video_Resolution_Level_total)/sum(Video_Resolution_Level_cnt), null, null, null, 无, 200-500
+  Video_Resolution_Level_seg_1, bigint, 视频清晰度_seg_1, A, video_resolution_level, count(case when video_resolution_level>=#video_resolution_level_seg_1_1st# and video_resolution_level<#video_resolution_level_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-0
+  Video_Resolution_Level_seg_2, bigint, 视频清晰度_seg_2, A, video_resolution_level, count(case when video_resolution_level>=#video_resolution_level_seg_2_1st# and video_resolution_level<#video_resolution_level_seg_2_2nd# then 1 else null end), null, null, null, 次, 0-0
+  Video_Resolution_Level_seg_3, bigint, 视频清晰度_seg_3, A, video_resolution_level, count(case when video_resolution_level>=#video_resolution_level_seg_3_1st# and video_resolution_level<#video_resolution_level_seg_3_2nd# then 1 else null end), null, null, null, 次, 0-1249
+  Video_Resolution_Level_seg_4, bigint, 视频清晰度_seg_4, A, video_resolution_level, count(case when video_resolution_level>=#video_resolution_level_seg_4_1st# and video_resolution_level<#video_resolution_level_seg_4_2nd# then 1 else null end), null, null, null, 次, 0-1459
+  Video_Resolution_Level_seg_5, bigint, 视频清晰度_seg_5, A, video_resolution_level, count(case when video_resolution_level>=#video_resolution_level_seg_5_1st# and video_resolution_level<#video_resolution_level_seg_5_2nd# then 1 else null end), null, null, null, 次, 0-5360
+  Video_Fluency_Level_avg, bigint, 视频流畅度_avg，取值100~500，分值越高越流畅, A, Video_Fluency_Level_total、Video_Fluency_Level_cnt, sum(Video_Fluency_Level_total)/sum(Video_Fluency_Level_cnt), null, null, null, 无, 100-500
+  Video_Fluency_Level_seg_1, bigint, 视频流畅度_seg_1, A, Video_Fluency_Level, count(case when Video_Fluency_Level>=#Video_Fluency_Level_seg_1_1st# and Video_Fluency_Level<#Video_Fluency_Level_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-0
+  Video_Fluency_Level_seg_2, bigint, 视频流畅度_seg_2, A, Video_Fluency_Level, count(case when Video_Fluency_Level>=#Video_Fluency_Level_seg_2_1st# and Video_Fluency_Level<#Video_Fluency_Level_seg_2_2nd# then 1 else null end), null, null, null, 次, 0-17291
+  Video_Fluency_Level_seg_3, bigint, 视频流畅度_seg_3, A, Video_Fluency_Level, count(case when Video_Fluency_Level>=#Video_Fluency_Level_seg_3_1st# and Video_Fluency_Level<#Video_Fluency_Level_seg_3_2nd# then 1 else null end), null, null, null, 次, 0-1020
+  Video_Fluency_Level_seg_4, bigint, 视频流畅度_seg_4, A, Video_Fluency_Level, count(case when Video_Fluency_Level>=#Video_Fluency_Level_seg_4_1st# and Video_Fluency_Level<#Video_Fluency_Level_seg_4_2nd# then 1 else null end), null, null, null, 次, 0-881
+  Video_Fluency_Level_seg_5, bigint, 视频流畅度_seg_5, A, Video_Fluency_Level, count(case when Video_Fluency_Level>=#Video_Fluency_Level_seg_5_1st# and Video_Fluency_Level<#Video_Fluency_Level_seg_5_2nd# then 1 else null end), null, null, null, 次, 0-1020
+  TCPReorderingPacketRatio, bigint, TCP乱序占比, A, ultcpreorderingpacket、dltcpreorderingpacket、inputpacket、outputpacket, sum(ultcpreorderingpacket+dltcpreorderingpacket)/sum(inputpacket+outputpacket)), null, null, null, 率, 0-1
+  TCPReorderingPacketRatio_seg_1, bigint, TCP乱序占比_seg_1, A, ultcpreorderingpacket、dltcpreorderingpacket、inputpacket、outputpacket, count(case when (ultcpreorderingpacket+dltcpreorderingpacket)/(inputpacket+outputpacket)>=#TCPReorderingPacketRatio_seg_1_1st# and (ultcpreorderingpacket+dltcpreorderingpacket)/(inputpacket+outputpacket)<#TCPReorderingPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-1026263
+  TCPReorderingPacketRatio_seg_2, bigint, TCP乱序占比_seg_2, A, ultcpreorderingpacket、dltcpreorderingpacket、inputpacket、outputpacket, count(case when (ultcpreorderingpacket+dltcpreorderingpacket)/(inputpacket+outputpacket)>=#TCPReorderingPacketRatio_seg_1_1st# and (ultcpreorderingpacket+dltcpreorderingpacket)/(inputpacket+outputpacket)<#TCPReorderingPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-29226
+  TCPReorderingPacketRatio_seg_3, bigint, TCP乱序占比_seg_3, A, ultcpreorderingpacket、dltcpreorderingpacket、inputpacket、outputpacket, count(case when (ultcpreorderingpacket+dltcpreorderingpacket)/(inputpacket+outputpacket)>=#TCPReorderingPacketRatio_seg_1_1st# and (ultcpreorderingpacket+dltcpreorderingpacket)/(inputpacket+outputpacket)<#TCPReorderingPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-23366
+  TCPReorderingPacketRatio_seg_4, bigint, TCP乱序占比_seg_4, A, ultcpreorderingpacket、dltcpreorderingpacket、inputpacket、outputpacket, count(case when (ultcpreorderingpacket+dltcpreorderingpacket)/(inputpacket+outputpacket)>=#TCPReorderingPacketRatio_seg_1_1st# and (ultcpreorderingpacket+dltcpreorderingpacket)/(inputpacket+outputpacket)<#TCPReorderingPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-4971
+  TCPReorderingPacketRatio_seg_5, bigint, TCP乱序占比_seg_5, A, ultcpreorderingpacket、dltcpreorderingpacket、inputpacket、outputpacket, count(case when (ultcpreorderingpacket+dltcpreorderingpacket)/(inputpacket+outputpacket)>=#TCPReorderingPacketRatio_seg_1_1st# and (ultcpreorderingpacket+dltcpreorderingpacket)/(inputpacket+outputpacket)<#TCPReorderingPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-972
+  ULTCPReorderingPacketRatio, bigint, 上行TCP乱序占比, A, ultcpreorderingpacket、outputpacket, sum(ultcpreorderingpacket)/sum(outputpacket), null, null, null, 率, 0-10
+  ULTCPReorderingPacketRatio_seg_1, bigint, 上行TCP乱序占比_seg_1, A, ultcpreorderingpacket、outputpacket, count(case when ultcpreorderingpacket/outputpacket>=#ULTCPReorderingPacketRatio_seg_1_1st# and ultcpreorderingpacket/outputpacket<#ULTCPReorderingPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-1130942
+  ULTCPReorderingPacketRatio_seg_2, bigint, 上行TCP乱序占比_seg_2, A, ultcpreorderingpacket、outputpacket, count(case when ultcpreorderingpacket/outputpacket>=#ULTCPReorderingPacketRatio_seg_1_1st# and ultcpreorderingpacket/outputpacket<#ULTCPReorderingPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-16833
+  ULTCPReorderingPacketRatio_seg_3, bigint, 上行TCP乱序占比_seg_3, A, ultcpreorderingpacket、outputpacket, count(case when ultcpreorderingpacket/outputpacket>=#ULTCPReorderingPacketRatio_seg_1_1st# and ultcpreorderingpacket/outputpacket<#ULTCPReorderingPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-38526
+  ULTCPReorderingPacketRatio_seg_4, bigint, 上行TCP乱序占比_seg_4, A, ultcpreorderingpacket、outputpacket, count(case when ultcpreorderingpacket/outputpacket>=#ULTCPReorderingPacketRatio_seg_1_1st# and ultcpreorderingpacket/outputpacket<#ULTCPReorderingPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-17991
+  ULTCPReorderingPacketRatio_seg_5, bigint, 上行TCP乱序占比_seg_5, A, ultcpreorderingpacket、outputpacket, count(case when ultcpreorderingpacket/outputpacket>=#ULTCPReorderingPacketRatio_seg_1_1st# and ultcpreorderingpacket/outputpacket<#ULTCPReorderingPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-4900
+  DLTCPReorderingPacketRatio, bigint, 下行TCP乱序占比, A, dltcpreorderingpacket、inputpacket, sum(dltcpreorderingpacket)/sum(inputpacket), null, null, null, 率, 0-1
+  DLTCPReorderingPacketRatio_seg_1, bigint, 下行TCP乱序占比_seg_1, A, dltcpreorderingpacket、inputpacket, count(case when dltcpreorderingpacket/inputpacket>=#DLTCPReorderingPacketRatio_seg_1_1st# and dltcpreorderingpacket/inputpacket<#DLTCPReorderingPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-1130939
+  DLTCPReorderingPacketRatio_seg_2, bigint, 下行TCP乱序占比_seg_2, A, dltcpreorderingpacket、inputpacket, count(case when dltcpreorderingpacket/inputpacket>=#DLTCPReorderingPacketRatio_seg_1_1st# and dltcpreorderingpacket/inputpacket<#DLTCPReorderingPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-26034
+  DLTCPReorderingPacketRatio_seg_3, bigint, 下行TCP乱序占比_seg_3, A, dltcpreorderingpacket、inputpacket, count(case when dltcpreorderingpacket/inputpacket>=#DLTCPReorderingPacketRatio_seg_1_1st# and dltcpreorderingpacket/inputpacket<#DLTCPReorderingPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-28683
+  DLTCPReorderingPacketRatio_seg_4, bigint, 下行TCP乱序占比_seg_4, A, dltcpreorderingpacket、inputpacket, count(case when dltcpreorderingpacket/inputpacket>=#DLTCPReorderingPacketRatio_seg_1_1st# and dltcpreorderingpacket/inputpacket<#DLTCPReorderingPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-24618
+  DLTCPReorderingPacketRatio_seg_5, bigint, 下行TCP乱序占比_seg_5, A, dltcpreorderingpacket、inputpacket, count(case when dltcpreorderingpacket/inputpacket>=#DLTCPReorderingPacketRatio_seg_1_1st# and dltcpreorderingpacket/inputpacket<#DLTCPReorderingPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-38245
+  TCP_RetransPacketRatio, bigint, TCP重传占比, A, ultcp_retranspacket、dltcp_retranspacket、inputpacket、outputpacket, sum(ultcp_retranspacket+dltcp_retranspacket)/sum(inputpacket+outputpacket)), null, null, null, 率, 0-2.625
+  TCP_RetransPacketRatio_seg_1, bigint, TCP重传占比_seg_1, A, ultcp_retranspacket、dltcp_retranspacket、inputpacket、outputpacket, count(case when (ultcp_retranspacket+dltcp_retranspacket)/(inputpacket+outputpacket)>=#TCP_RetransPacketRatio_seg_1_1st# and (ultcp_retranspacket+dltcp_retranspacket)/(inputpacket+outputpacket)<#TCP_RetransPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-1013057
+  TCP_RetransPacketRatio_seg_2, bigint, TCP重传占比_seg_2, A, ultcp_retranspacket、dltcp_retranspacket、inputpacket、outputpacket, count(case when (ultcp_retranspacket+dltcp_retranspacket)/(inputpacket+outputpacket)>=#TCP_RetransPacketRatio_seg_1_1st# and (ultcp_retranspacket+dltcp_retranspacket)/(inputpacket+outputpacket)<#TCP_RetransPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-26648
+  TCP_RetransPacketRatio_seg_3, bigint, TCP重传占比_seg_3, A, ultcp_retranspacket、dltcp_retranspacket、inputpacket、outputpacket, count(case when (ultcp_retranspacket+dltcp_retranspacket)/(inputpacket+outputpacket)>=#TCP_RetransPacketRatio_seg_1_1st# and (ultcp_retranspacket+dltcp_retranspacket)/(inputpacket+outputpacket)<#TCP_RetransPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-35153
+  TCP_RetransPacketRatio_seg_4, bigint, TCP重传占比_seg_4, A, ultcp_retranspacket、dltcp_retranspacket、inputpacket、outputpacket, count(case when (ultcp_retranspacket+dltcp_retranspacket)/(inputpacket+outputpacket)>=#TCP_RetransPacketRatio_seg_1_1st# and (ultcp_retranspacket+dltcp_retranspacket)/(inputpacket+outputpacket)<#TCP_RetransPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-8444
+  TCP_RetransPacketRatio_seg_5, bigint, TCP重传占比_seg_5, A, ultcp_retranspacket、dltcp_retranspacket、inputpacket、outputpacket, count(case when (ultcp_retranspacket+dltcp_retranspacket)/(inputpacket+outputpacket)>=#TCP_RetransPacketRatio_seg_1_1st# and (ultcp_retranspacket+dltcp_retranspacket)/(inputpacket+outputpacket)<#TCP_RetransPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-2826
+  ULTCP_RetransPacketRatio, bigint, 上行TCP重传占比, A, ultcp_retranspacket、outputpacket, sum(ultcp_retranspacket)/sum(outputpacket), null, null, null, 率, 0-92
+  ULTCP_RetransPacketRatio_seg_1, bigint, 上行TCP重传占比_seg_1, A, ultcp_retranspacket、outputpacket, count(case when ultcp_retranspacket/outputpacket>=#ULTCP_RetransPacketRatio_seg_1_1st# and ultcp_retranspacket/outputpacket<#ULTCP_RetransPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-1012835
+  ULTCP_RetransPacketRatio_seg_2, bigint, 上行TCP重传占比_seg_2, A, ultcp_retranspacket、outputpacket, count(case when ultcp_retranspacket/outputpacket>=#ULTCP_RetransPacketRatio_seg_1_1st# and ultcp_retranspacket/outputpacket<#ULTCP_RetransPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-11020
+  ULTCP_RetransPacketRatio_seg_3, bigint, 上行TCP重传占比_seg_3, A, ultcp_retranspacket、outputpacket, count(case when ultcp_retranspacket/outputpacket>=#ULTCP_RetransPacketRatio_seg_1_1st# and ultcp_retranspacket/outputpacket<#ULTCP_RetransPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-35134
+  ULTCP_RetransPacketRatio_seg_4, bigint, 上行TCP重传占比_seg_4, A, ultcp_retranspacket、outputpacket, count(case when ultcp_retranspacket/outputpacket>=#ULTCP_RetransPacketRatio_seg_1_1st# and ultcp_retranspacket/outputpacket<#ULTCP_RetransPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-21236
+  ULTCP_RetransPacketRatio_seg_5, bigint, 上行TCP重传占比_seg_5, A, ultcp_retranspacket、outputpacket, count(case when ultcp_retranspacket/outputpacket>=#ULTCP_RetransPacketRatio_seg_1_1st# and ultcp_retranspacket/outputpacket<#ULTCP_RetransPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-2963
+  DLTCP_RetransPacketRatio, bigint, 下行TCP重传占比, A, dltcp_retranspacket、inputpacket, sum(dltcp_retranspacket)/sum(inputpacket), null, null, null, 率, 0-40
+  DLTCP_RetransPacketRatio_seg_1, bigint, 下行TCP重传占比_seg_1, A, dltcp_retranspacket、inputpacket, count(case when dltcp_retranspacket/inputpacket>=#DLTCP_RetransPacketRatio_seg_1_1st# and dltcp_retranspacket/inputpacket<#DLTCP_RetransPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-1020438
+  DLTCP_RetransPacketRatio_seg_2, bigint, 下行TCP重传占比_seg_2, A, dltcp_retranspacket、inputpacket, count(case when dltcp_retranspacket/inputpacket>=#DLTCP_RetransPacketRatio_seg_1_1st# and dltcp_retranspacket/inputpacket<#DLTCP_RetransPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-18611
+  DLTCP_RetransPacketRatio_seg_3, bigint, 下行TCP重传占比_seg_3, A, dltcp_retranspacket、inputpacket, count(case when dltcp_retranspacket/inputpacket>=#DLTCP_RetransPacketRatio_seg_1_1st# and dltcp_retranspacket/inputpacket<#DLTCP_RetransPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-43047
+  DLTCP_RetransPacketRatio_seg_4, bigint, 下行TCP重传占比_seg_4, A, dltcp_retranspacket、inputpacket, count(case when dltcp_retranspacket/inputpacket>=#DLTCP_RetransPacketRatio_seg_1_1st# and dltcp_retranspacket/inputpacket<#DLTCP_RetransPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-8664
+  DLTCP_RetransPacketRatio_seg_5, bigint, 下行TCP重传占比_seg_5, A, dltcp_retranspacket、inputpacket, count(case when dltcp_retranspacket/inputpacket>=#DLTCP_RetransPacketRatio_seg_1_1st# and dltcp_retranspacket/inputpacket<#DLTCP_RetransPacketRatio_seg_1_2nd# then 1 else null end), null, null, null, 次, 0-8859
+  5qi, int, 5qi, A, 5qi, 直取, null, null, 维度, null, null
+  DestinationIP, string, 用户访问的目标IPv4或IPv6地址, A, destinationip, 直取, null, null, 维度, null, null
+  regionid, int, regionid, null, null, 置null, null, null, 维度, 无, null
+  x_offset_20, int, x_offset_20, null, null, 置null, null, null, 维度, 无, null
+  y_offset_20, int, y_offset_20, null, null, 置null, null, null, 维度, 无, null
+  MainServiceType, int, 业务大类, A, null, "cast(substr(servicetype,0,2) AS int)   ", null, null, 维度, 无, null
+  VideoRecoverTimeRatio_seg_1, bigint, 视频卡顿时长占比_seg_1，单位百分比, A, null, COUNT(case WHEN videorecovertimeratio >= ${VideoRecoverTimeRatio_seg_1_1} AND videorecovertimeratio < ${VideoRecoverTimeRatio_seg_1_2} THEN 1 else null end), null, null, Video, 次, null
+  VideoRecoverTimeRatio_seg_2, bigint, 视频卡顿时长占比_seg_2，单位百分比, A, null, COUNT(case WHEN videorecovertimeratio >= ${VideoRecoverTimeRatio_seg_2_1} AND videorecovertimeratio < ${VideoRecoverTimeRatio_seg_2_2} THEN 1 else null end), null, null, Video, 次, null
+  VideoRecoverTimeRatio_seg_3, bigint, 视频卡顿时长占比_seg_3，单位百分比, A, null, COUNT(case WHEN videorecovertimeratio >= ${VideoRecoverTimeRatio_seg_3_1} AND videorecovertimeratio < ${VideoRecoverTimeRatio_seg_3_2} THEN 1 else null end), null, null, Video, 次, null
+  VideoRecoverTimeRatio_seg_4, bigint, 视频卡顿时长占比_seg_4，单位百分比, A, null, COUNT(case WHEN videorecovertimeratio >= ${VideoRecoverTimeRatio_seg_4_1} AND videorecovertimeratio < ${VideoRecoverTimeRatio_seg_4_2} THEN 1 else null end), null, null, Video, 次, null
+  VideoRecoverTimeRatio_seg_5, bigint, 视频卡顿时长占比_seg_5，单位百分比, A, null, COUNT(case WHEN videorecovertimeratio >= ${VideoRecoverTimeRatio_seg_5_1} AND videorecovertimeratio < ${VideoRecoverTimeRatio_seg_5_2} THEN 1 else null end), null, null, Video, 次, null
+  VideoPlayWaitTimeRatio_seg_1, bigint, 视频播放等待时长占比_seg_1, A, null, COUNT(case WHEN videoplaywaittimeratio >= ${VideoPlayWaitTimeRatio_seg_1_1} AND videoplaywaittimeratio < ${VideoPlayWaitTimeRatio_seg_1_2} THEN 1 else null end), null, null, Video, 次, null
+  VideoPlayWaitTimeRatio_seg_2, bigint, 视频播放等待时长占比_seg_2, A, null, COUNT(case WHEN videoplaywaittimeratio >= ${VideoPlayWaitTimeRatio_seg_2_1} AND videoplaywaittimeratio < ${VideoPlayWaitTimeRatio_seg_2_2} THEN 1 else null end), null, null, Video, 次, null
+  VideoPlayWaitTimeRatio_seg_3, bigint, 视频播放等待时长占比_seg_3, A, null, COUNT(case WHEN videoplaywaittimeratio >= ${VideoPlayWaitTimeRatio_seg_3_1} AND videoplaywaittimeratio < ${VideoPlayWaitTimeRatio_seg_3_2} THEN 1 else null end), null, null, Video, 次, null
+  VideoPlayWaitTimeRatio_seg_4, bigint, 视频播放等待时长占比_seg_4, A, null, COUNT(case WHEN videoplaywaittimeratio >= ${VideoPlayWaitTimeRatio_seg_4_1} AND videoplaywaittimeratio < ${VideoPlayWaitTimeRatio_seg_4_2} THEN 1 else null end), null, null, Video, 次, null
+  VideoPlayWaitTimeRatio_seg_5, bigint, 视频播放等待时长占比_seg_5, A, null, COUNT(case WHEN videoplaywaittimeratio >= ${VideoPlayWaitTimeRatio_seg_5_1} AND videoplaywaittimeratio < ${VideoPlayWaitTimeRatio_seg_5_2} THEN 1 else null end), null, null, Video, 次, null
+  CachedVideoDurationRatio_seg_1, bigint, 缓冲段视频下载时长占比_seg_1, A, null, COUNT(case WHEN cachedvideodurationratio >= ${CachedVideoDurationRatio_seg_1_1} AND cachedvideodurationratio < ${CachedVideoDurationRatio_seg_1_2} THEN 1 else null end), null, null, Video, 次, null
+  CachedVideoDurationRatio_seg_2, bigint, 缓冲段视频下载时长占比_seg_2, A, null, COUNT(case WHEN cachedvideodurationratio >= ${CachedVideoDurationRatio_seg_2_1} AND cachedvideodurationratio < ${CachedVideoDurationRatio_seg_2_2} THEN 1 else null end), null, null, Video, 次, null
+  CachedVideoDurationRatio_seg_3, bigint, 缓冲段视频下载时长占比_seg_3, A, null, COUNT(case WHEN cachedvideodurationratio >= ${CachedVideoDurationRatio_seg_3_1} AND cachedvideodurationratio < ${CachedVideoDurationRatio_seg_3_2} THEN 1 else null end), null, null, Video, 次, null
+  CachedVideoDurationRatio_seg_4, bigint, 缓冲段视频下载时长占比_seg_4, A, null, COUNT(case WHEN cachedvideodurationratio >= ${CachedVideoDurationRatio_seg_4_1} AND cachedvideodurationratio < ${CachedVideoDurationRatio_seg_4_2} THEN 1 else null end), null, null, Video, 次, null
+  CachedVideoDurationRatio_seg_5, bigint, 缓冲段视频下载时长占比_seg_5, A, null, COUNT(case WHEN cachedvideodurationratio >= ${CachedVideoDurationRatio_seg_5_1} AND cachedvideodurationratio < ${CachedVideoDurationRatio_seg_5_2} THEN 1 else null end), null, null, Video, 次, null
+  videothroughput_bitrate_ratio_avg, double, 速率码率比, A, null, avg(VideoThroughput)/avg(VideoBitRate), null, null, Video, %, null
+  videothroughput_bitrate_ratio_seg_1, bigint, 速率码率比_seg_1, A, null, COUNT(case WHEN videothroughput_bitrate_ratio >= ${videothroughput_bitrate_ratio_seg_1_1} AND videothroughput_bitrate_ratio < ${videothroughput_bitrate_ratio_seg_1_2} THEN 1 else null end), null, null, Video, 次, null
+  videothroughput_bitrate_ratio_seg_2, bigint, 速率码率比_seg_2, A, null, COUNT(case WHEN videothroughput_bitrate_ratio >= ${videothroughput_bitrate_ratio_seg_2_1} AND videothroughput_bitrate_ratio < ${videothroughput_bitrate_ratio_seg_2_2} THEN 1 else null end), null, null, Video, 次, null
+  videothroughput_bitrate_ratio_seg_3, bigint, 速率码率比_seg_3, A, null, COUNT(case WHEN videothroughput_bitrate_ratio >= ${videothroughput_bitrate_ratio_seg_3_1} AND videothroughput_bitrate_ratio < ${videothroughput_bitrate_ratio_seg_3_2} THEN 1 else null end), null, null, Video, 次, null
+  videothroughput_bitrate_ratio_seg_4, bigint, 速率码率比_seg_4, A, null, COUNT(case WHEN videothroughput_bitrate_ratio >= ${videothroughput_bitrate_ratio_seg_4_1} AND videothroughput_bitrate_ratio < ${videothroughput_bitrate_ratio_seg_4_2} THEN 1 else null end), null, null, Video, 次, null
+  videothroughput_bitrate_ratio_seg_5, bigint, 速率码率比_seg_5, A, null, COUNT(case WHEN videothroughput_bitrate_ratio >= ${videothroughput_bitrate_ratio_seg_5_1} THEN 1 else null end), null, null, Video, 次, null
+  mr_cnt, bigint, 与无线关联的MR个数, null, null, 置0, null, null, null, 个, null
+  avg_srsrp, double, RSRP均值, null, null, 置0, null, null, null, dbm, null
+  avg_ssinr, double, SINR均值, null, null, 置0, null, null, null, db, null
+  avg_ulsinr, double, ulsinr均值, null, null, 置0, null, null, null, db, null
+  srsrp_seg_1, bigint, RSRP_seg_1, null, null, 置0, null, null, null, 个, null
+  srsrp_seg_2, bigint, RSRP_seg_2, null, null, 置0, null, null, null, 个, null
+  srsrp_seg_3, bigint, RSRP_seg_3, null, null, 置0, null, null, null, 个, null
+  srsrp_seg_4, bigint, RSRP_seg_4, null, null, 置0, null, null, null, 个, null
+  srsrp_seg_5, bigint, RSRP_seg_5, null, null, 置0, null, null, null, 个, null
+  srsrp_seg_6, bigint, RSRP_seg_6, null, null, 置0, null, null, null, 个, null
+  srsrp_seg_7, bigint, RSRP_seg_7, null, null, 置0, null, null, null, 个, null
+  srsrp_seg_8, bigint, RSRP_seg_8, null, null, 置0, null, null, null, 个, null
+  srsrp_seg_9, bigint, RSRP_seg_9, null, null, 置0, null, null, null, 个, null
+  srsrp_seg_10, bigint, RSRP_seg_10, null, null, 置0, null, null, null, 个, null
+  ssinr_seg_1, bigint, ssinr_seg_1, null, null, 置0, null, null, null, 个, null
+  ssinr_seg_2, bigint, ssinr_seg_2, null, null, 置0, null, null, null, 个, null
+  ssinr_seg_3, bigint, ssinr_seg_3, null, null, 置0, null, null, null, 个, null
+  ssinr_seg_4, bigint, ssinr_seg_4, null, null, 置0, null, null, null, 个, null
+  ssinr_seg_5, bigint, ssinr_seg_5, null, null, 置0, null, null, null, 个, null
+  ssinr_seg_6, bigint, ssinr_seg_6, null, null, 置0, null, null, null, 个, null
+  ssinr_seg_7, bigint, ssinr_seg_7, null, null, 置0, null, null, null, 个, null
+  ssinr_seg_8, bigint, ssinr_seg_8, null, null, 置0, null, null, null, 个, null
+  ssinr_seg_9, bigint, ssinr_seg_9, null, null, 置0, null, null, null, 个, null
+  ssinr_seg_10, bigint, ssinr_seg_10, null, null, 置0, null, null, null, 个, null
+  is_poor_tcpsetupresponsedelay_num, int, tcp建链响应时延>=100ms次数, A, null, "sum(if(tcpsetupresponsedelay >= 100,1,0))", null, null, null, null, null
+  is_poor_tcpsetupackdelay_num, int, tcp建链确认时延>=100ms次数, A, null, "sum(if(tcpsetupackdelay >= 100,1,0)  )", null, null, null, null, null
+  is_poor_ultcp_retranspacket_num, int, tcp上行重传率>=10%次数, A, null, sum(CASE WHEN (ultcp_retranspacket)/(outputpacket) >= 0.1 THEN 1  ELSE 0 END ), null, null, null, null, null
+  is_poor_dltcp_retranspacket_num, int, tcp下行重传率>=10%次数, A, null, sum(CASE WHEN (dltcp_retranspacket)/(inputpacket) >= 0.1 THEN 1  ELSE 0 END), null, null, null, null, null
+  is_poor_ultcpreorderingpacket_num, int, tcp上行乱序率>=5%次数, A, null, sum(CASE WHEN (ultcpreorderingpacket)/(outputpacket) >= 0.05 THEN 1  ELSE 0 END ), null, null, null, null, null
+  is_poor_dltcpreorderingpacket_num, int, tcp下行乱序率>=5%次数, A, null, sum(CASE WHEN (dltcpreorderingpacket)/(inputpacket) >= 0.05 THEN 1  ELSE 0 END ), null, null, null, null, null
+  is_poorquality_num, bigint, 质差话单数, A, null, 前6个只要一个质差则置1否则0, null, null, null, null, null
+  total_num, bigint, 总话单数, A, null, COUNT(1), null, null, null, null, null
+  p_provincecode, int, 省分区, null, null, null, null, null, null, 无, 360000-360000
+  p_date, string, 天分区, null, null, null, null, null, null, 无, 无
+  p_hour, int, 小时分区, null, null, null, null, null, null, 无, 0-24

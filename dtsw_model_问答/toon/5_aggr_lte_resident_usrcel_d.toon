@@ -1,0 +1,30 @@
+theme_domain: 用户常驻
+table_name: aggr_lte_resident_usrcel_d
+table_name_chinese: 5G_DPI_S1MME用户驻留小区天表
+data_frequency: day
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 是否主表}:
+  aggr_lte_resident_usrcel_h, 4G_DPI_S1MME用户驻留小区小时表, A, 是
+fields[22]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 日期, A, p_date, 直取, null, null, 维度, 无, 无
+  provincecode, int, 省编码, A, p_provincecode, 直取, null, null, 维度, 无, 无
+  province, string, 省名称, C, province_name, 直取, null, null, 维度, 无, 无
+  citycode, int, 地市编码, A, citycode, 直取, null, null, 维度, 无, 无
+  city, string, 地市名称, A, city, 直取, null, null, 维度, 无, 无
+  districtcode, int, 区县编码, A, districtcode, 直取, null, null, 维度, 无, 无
+  district, string, 区县名称, A, district, 直取, null, null, 维度, 无, 无
+  cellkey, string, 小区cellkey, A, cellkey, 直取, null, null, 维度, 无, 无
+  imsi, string, 永久用户标识。4G 填写用户IMSI。, A, imsi, 直取, null, null, 指标, 无, 无
+  imei, string, 永久设备标识。4G填写IMEI/IMEISV。保持信令抽取的原样，无需进行IMEI和IMEISV间的转化。, A, imei, 直取, null, null, 维度, 无, 无
+  msisdn, string, 用户号码（字符串格式）, A, msisdn, 直取, null, null, 维度, 无, 无
+  all_total_quarter_cnt, int, 全天驻留时刻数, A, sum(quarter_cnt), sum(quarter_cnt), null, null, 指标, 无, 1~96
+  day_quarter_cnt, int, 白天驻留时刻数, A, null, sum(case when (hour >= 9 and hour <= 11) or (hour >= 14 and hour <= 17)  then quarter_cnt else 0 end), null, null, 指标, 无, "[1,24]"
+  night_quarter_cnt, int, 夜晚驻留时刻数, A, null, sum(case when (hour >= 0 and hour <= 6) or (hour >= 21 and hour <= 23)  then quarter_cnt else 0 end), null, null, 指标, 无, "[1,40]"
+  all_day_record_cnt, int, 全天n1n2信令数, A, null, sum(record_cnt), null, null, 指标, 无, >0
+  day_record_cnt, int, 白天n1n2信令数, A, null, sum(case when (hour >= 9 and hour <= 11) or (hour >= 14 and hour <= 17)  then record_cnt else 0 end), null, null, 指标, 无, >0
+  night_record_cnt, int, 夜晚n1n2信令数, A, null, sum(case when (hour >= 0 and hour <= 6) or (hour >= 21 and hour <= 23)  then record_cnt else 0 end), null, null, 指标, 无, >0
+  is_all_resident_d, int, 是否全天常驻（1为常驻，0为非常驻）, A, null, case when sum(quarter_cnt)>=16 then 1 else 0 end, null, null, 指标, 无, "0,1"
+  is_day_resident_d, int, 是否白天常驻（1为常驻，0为非常驻）, A, null, case when sum(case when (hour >= 9 and hour <= 11) or (hour >= 14 and hour <= 17)  then quarter_cnt else 0 end) >= 6 then 1 else 0 end, null, null, 指标, 无, "0,1"
+  is_night_resident_d, int, 是否夜晚常驻（1为常驻，0为非常驻）, A, null, case when sum(case when (hour >= 0 and hour <= 6) or (hour >= 21 and hour <= 23)  then quarter_cnt else 0 end) >= 7 then 1 else 0 end, null, null, 指标, 无, "0,1"
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

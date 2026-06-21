@@ -1,0 +1,41 @@
+theme_domain: null
+table_name: 模型名
+table_name_chinese: null
+data_frequency: null
+primary_key: null
+source_table_name[0]:
+fields[34]{序号, 链接, 英文名, 模型名, 同步数据库, 对应页面, 备注, 车联网}:
+  D1, 链接, dm_iov_cover_user_detailed_d, 用户覆盖详单天表, 同步doris, "用户感知概览查询_中间地图mr轨迹\n用户感知详情回溯_右上地图mr轨迹", 应用表, 是
+  D2, 链接, dm_iov_perception_user_app_d, 用户应用感知天表, 同步doris, "用户感知概览查询_右中应用感知-整体\n用户感知详情回溯_左中应用感知-整体", 应用表, 是
+  D3, 链接, dm_iov_perception_user_d, 用户感知天表, 同步doris, "用户感知概览查询_左上用户基础信息\n用户感知概览查询_左下出行轨迹-整体感知\n用户感知概览查询_右上占用小区数-整体\n用户感知概览查询_右上网络分析-整体\n用户感知概览查询_右下感知诊断-整体", 应用表, 是
+  D4, 链接, dm_iov_perception_user_road_app_d, 用户路段应用感知天表, 同步doris, "用户感知概览查询_右中应用感知-路段 \n用户感知详情回溯_左中应用感知-路段", 应用表, 是
+  D5, 链接, dm_iov_perception_user_road_d, 用户路段感知天表, 同步doris, "用户感知概览查询_左下出行轨迹-路段感知\n用户感知概览查询_右上占用小区数-路段\n用户感知概览查询_右上网络分析-路段\n用户感知概览查询_右下感知诊断-路段\n用户感知详情回溯_左上性能指标-路段", 应用表, 是
+  D6, 链接, dm_iov_data_perception_user_5min_d, 用户数据业务感知5分钟汇聚天表, 同步doris, 用户感知概览查询_左中用户感知趋势图, 应用表, 是
+  D7, 链接, dm_iov_perception_user_detailed_d, 用户感知详单天表, 同步doris, 用户感知详情回溯_下方感知回溯表格, 应用表, 是
+  D8, 链接, dm_iov_perception_region_shared_d, 车联网全网体验覆盖指标天表, 同步doris, "全国/省级运营大屏_中上整体感知指标\n全国/省级运营大屏_中间地图感知指标\n全国/省级运营大屏_右上用户体验评分\n全国/省级运营大屏_右中左边3个指标\n全国/省级运营大屏_右下路网覆盖", 应用表, 是
+  D9, 链接, dm_iov_perception_region_topapp_shared_d, 车联网区域topapp感知天表, 同步doris, 全国/省级运营大屏_左下应用感知, 应用表, 是
+  D10, 链接, dm_iov_site_sector_d_2gis, 车联网基站扇区天表, 同步gis, 用户感知概览查询_中间地图基站扇区图, 应用表, 是
+  L1, 链接, aggr_4gdpi_http_base_q, 4G http指标时刻表, null, null, null, 是
+  L2, 链接, aggr_4gdpi_https_base_q, 4G https指标时刻表, null, null, null, 是
+  L3, 链接, aggr_5gdpi_s1uhttp_base_q, 5G终端在4G http中指标时刻表, null, null, null, 是
+  L4, 链接, aggr_5gdpi_s1uhttps_base_q, 5G终端在4G https中指标时刻表, null, null, null, 是
+  L5, 链接, aggr_4gdpi_video_base_q, 4G video指标时刻表, null, null, null, 是
+  L6, 链接, aggr_lte_cover_usercell_q, 4G用户小区维度MR时刻指标, null, null, null, 是
+  L7, 链接, aggr_lte_s1mme_usercell_q, 4G s1mme指标时刻表, null, null, null, 是
+  L8, 链接, aggr_5gdpi_http_base_q, 5G http指标时刻表, null, null, null, 是
+  L9, 链接, aggr_5gdpi_https_base_q, 5G https指标时刻表, null, null, null, 是
+  L10, 链接, aggr_5gdpi_video_base_q, 5G video指标时刻表, null, null, null, 是
+  L11, 链接, aggr_nr_cover_usercell_q, 5G用户小区维度MR时刻指标, null, null, null, 是
+  L12, 链接, aggr_nr_n1n2_usercell_q, 5G n1n2指标时刻表, null, null, null, 是
+  L13, 链接, aggr_4gdpi_celluserappip_q, 4g全业务应用4大维度时刻表, null, null, null, 是
+  L14, 链接, aggr_5gdpi_celluserappip_q, 5g全业务应用4大维度时刻表, null, null, null, 是
+  L15, 链接, dm_lte_perception_comprehensive_usercell_q, 用户4g小区维度综合指标时刻表, null, null, null, 是
+  L16, 链接, dm_nr_perception_comprehensive_usercell_q, 用户5g小区维度综合指标时刻表, null, null, null, 是
+  L17, 链接, aggr_4gdpi_celluserappip_d, 4g全业务应用4大维度天表, null, null, null, 是
+  L18, 链接, aggr_5gdpi_celluserappip_d, 5g全业务应用4大维度天表, null, null, null, 是
+  L19, 链接, dm_lte_perception_comprehensive_usercell_d, 用户4g小区维度综合指标天表, null, null, null, 是
+  L20, 链接, dm_nr_perception_comprehensive_usercell_d, 用户5g小区维度综合指标天表, null, null, null, 是
+  wz1, 链接, ods_45gmr_location_h, 45G用户经纬度回填表, null, null, flink程序处理, 是
+  wz2, 链接, fact_45gmr_user_trips_main_d, 45G用户出行轨迹概览表, null, null, flink程序处理, 是
+  wz3, 链接, fact_45gmr_user_trips_detail_d, 45G用户轨迹明细表, null, null, flink程序处理, 是
+  wz4, 链接, dm_user_line_d, 用户出行轨迹感知表, null, null, flink程序处理, 是

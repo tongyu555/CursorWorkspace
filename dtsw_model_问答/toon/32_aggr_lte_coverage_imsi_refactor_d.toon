@@ -1,0 +1,43 @@
+theme_domain: 覆盖分析
+table_name: aggr_lte_coverage_imsi_refactor_d
+table_name_chinese: 4G MR用户覆盖共享天表
+data_frequency: day
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 任务描述}:
+  aggr_lte_coverage_usr_refactor_d, 4G MR用户覆盖天表, A, 过滤条件：length(msisdn)>=11 and length(imsi)>=13 and plmn='46011' and data_source=0
+fields[35]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 日期, A, p_date, 直取, null, null, 维度, 无, 无
+  imsi, string, 用户imsi, A, imsi, 直取, null, null, 维度, 无, 无
+  totalrsrp, bigint, RSRP总值, A, null, sum(totalrsrp), null, null, 指标, 无, <0
+  avgrsrp, double, RSRP平均值, A, null, sum(totalrsrp)/sum(rsrpcount), null, null, 指标, 无, "[-140,-43]"
+  rsrpcount, bigint, RSRP有效数目, A, null, sum(rsrpcount), null, null, 指标, 无, >=0
+  rsrp_level1mrcount, bigint, "RSRP在[-75,+∞）范围内的MR数目", A, null, sum(rsrp_level1mrcount), null, null, 指标, 无, >=0
+  rsrp_level2mrcount, bigint, "RSRP在[-85,-75）范围内的MR数目", A, null, sum(rsrp_level2mrcount), null, null, 指标, 无, >=0
+  rsrp_level3mrcount, bigint, "RSRP在[-95,-85）范围内的MR数目", A, null, sum(rsrp_level3mrcount), null, null, 指标, 无, >=0
+  rsrp_level4mrcount, bigint, "RSRP在[-100,-95）范围内的MR数目", A, null, sum(rsrp_level4mrcount), null, null, 指标, 无, >=0
+  rsrp_level5mrcount, bigint, "RSRP在[-105,-100）范围内的MR数目", A, null, sum(rsrp_level5mrcount), null, null, 指标, 无, >=0
+  rsrp_level6mrcount, bigint, "RSRP在[-115,-105）范围内的MR数目", A, null, sum(rsrp_level6mrcount), null, null, 指标, 无, >=0
+  rsrp_level7mrcount, bigint, "RSRP在（-∞,-115）范围内的MR数目", A, null, sum(rsrp_level7mrcount), null, null, 指标, 无, >=0
+  rsrpgoodcount, bigint, RSRP优良数目(>=-105), A, null, sum(rsrpgoodcount), null, null, 指标, 无, >=0
+  rsrpgoodratio, double, RSRP优良比(>=-105), A, null, sum(rsrpgoodcount)/sum(rsrpcount), null, null, 指标, 无, "[0,1]"
+  totalrsrq, double, RSRQ总值, A, null, sum(totalrsrq), null, null, 指标, 无, <0
+  avgrsrq, double, RSRQ平均值, A, null, sum(totalrsrq)/sum(rsrqcount), null, null, 指标, 无, "[-20,-3]"
+  rsrqcount, bigint, RSRQ有效数目, A, null, sum(rsrqcount), null, null, 指标, 无, >=0
+  rsrq_level1mrcount, bigint, "RSRQ在[-4,-3]范围内的MR数目", A, null, sum(rsrq_level1mrcount), null, null, 指标, 无, >=0
+  rsrq_level2mrcount, bigint, "RSRQ在[-7,-4)范围内的MR数目", A, null, sum(rsrq_level2mrcount), null, null, 指标, 无, >=0
+  rsrq_level3mrcount, bigint, "RSRQ在[-10,-7)范围内的MR数目", A, null, sum(rsrq_level3mrcount), null, null, 指标, 无, >=0
+  rsrq_level4mrcount, bigint, "RSRQ在[-13,-10)范围内的MR数目", A, null, sum(rsrq_level4mrcount), null, null, 指标, 无, >=0
+  rsrq_level5mrcount, bigint, "RSRQ在[-16,-13)范围内的MR数目", A, null, sum(rsrq_level5mrcount), null, null, 指标, 无, >=0
+  rsrq_level6mrcount, bigint, "RSRQ在[-19,-16)范围内的MR数目", A, null, sum(rsrq_level6mrcount), null, null, 指标, 无, >=0
+  rsrq_level7mrcount, bigint, "RSRQ在[-20,-19)范围内的MR数目", A, null, sum(rsrq_level7mrcount), null, null, 指标, 无, >=0
+  rsrqgoodcount, bigint, RSRQ优良数目, A, null, sum(rsrqgoodcount), null, null, 指标, 无, >=0
+  rsrqgoodratio, double, RSRQ优良比, A, null, sum(rsrqgoodcount)/sum(rsrqcount), null, null, 指标, 无, "[0,1]"
+  period_totalmrcount, bigint, 周期性MR数目, A, null, sum(period_totalmrcount), null, null, 指标, 无, >=0
+  maxrsrp, smallint, RSRP最大值, A, null, max(maxrsrp), null, null, 指标, 无, "[-140,-43]"
+  minrsrp, smallint, RSRP最小值, A, null, min(minrsrp), null, null, 指标, 无, "[-140,-43]"
+  maxrsrq, double, RSRQ最大值, A, null, max(maxrsrq), null, null, 指标, 无, "[-20,-3]"
+  minrsrq, double, RSRQ最小值, A, null, min(minrsrq), null, null, 指标, 无, "[-20,-3]"
+  maxmeastime, bigint, 最晚上报时间, A, null, max(maxmeastime), null, null, 指标, 无, >0
+  mdn, string, 电话号码, A, msisdn, 直取, null, null, 维度, 无, 无
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

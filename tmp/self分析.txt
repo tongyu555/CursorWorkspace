@@ -1,0 +1,71 @@
+
+-- sql算法
+cache table 5g_deviation_value  as
+select
+     A.p_provincecode
+    ,A.p_date
+    ,A.cellkey
+    ,if(A.master_operators='联通承建','联通','电信') as master_operators
+    ,A.latitude
+    ,A.longitude
+    ,D.celllon
+    ,D.celllat
+    ,round(6378.138*2*asin(sqrt(pow(sin((A.latitude*PI()/180-D.celllat/180*pi())/2),2)+cos(A.latitude*PI()/180)*cos(D.celllat/180*pi())*POW(sin((A.longitude*PI()/180 - D.celllon*PI()/180)/2),2))),4)*1000 as deviation_value
+    ,'5G' AS type
+from
+    (
+        select
+            distinct
+             p_provincecode
+            ,p_date
+            ,cell_latitude AS latitude
+            ,cell_longitude AS longitude
+            ,master_operators
+            ,cellkey
+        from dw_nr_cm_projdata_d a
+        where p_date='{p_date}'
+    ) A
+left join
+(
+    select
+       distinct
+         p_provincecode
+        ,p_date
+        ,concat(nodebid,'_',cellid) as cellkey
+        ,celllon
+        ,celllat
+        ,row_number() over(partition by p_provincecode,nodebid,cellid order by p_date desc) as dens_rank
+    from
+        dm_5gcm_evaluate_cell_info_d
+    where
+        p_date>=date_sub('{p_date}',7) and p_date<='{p_date}'
+    and
+        nvl(celllat,'') != '' and nvl(celllon,'') != ''
+    having dens_rank = 1
+) D
+on A.cellkey = D.cellkey and A.p_provincecode = D.p_provincecode
+;
+
+
+-- 数据分析
+select
+    provincecode,
+    type,
+    master_operators,
+    count(1),
+    count(distinct cellkey)
+from
+    5g_deviation_value
+where
+    p_date='2026-03-22'
+group by 
+    1,2,3
+order by 1,2,3
+;
+
+
+查询结果 : 
+420000	5G	电信	203723	202624
+
+问题 : sql算法中主表附表都进行了去重 , 为啥统计出来还有重复数据 ? 
+

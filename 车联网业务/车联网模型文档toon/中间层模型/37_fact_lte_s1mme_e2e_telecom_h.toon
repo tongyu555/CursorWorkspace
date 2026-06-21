@@ -1,0 +1,263 @@
+theme_domain: null
+table_name: fact_lte_s1mme_e2e_telecom_h
+table_name_chinese: S1MME接口事实表
+data_frequency: hour
+primary_key: 数据描述
+source_table_name[4]{源表英文名, 源表中文名, 别名}:
+  fact_pscp_s1mme_front, 4G S1MME贴源详单表, A
+  cfg_s1mme_cause code_list, s1mme定界定位编码表, C
+  lte_cm_projdata, 4G电信工参, B
+  lte_cucc_cm_projdata, 4G联通工参, B1
+fields[252]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  quarter, int, 15分钟，刻度；取值0/1/2/3, null, null, null, null, null, null, null, null
+  interface, tinyint, 接口类型, null, null, null, null, null, null, null, null
+  xdr_id, string, 解析服务器内唯一的XDR编号, null, null, null, null, null, null, null, null
+  imsi, string, 用户imsi, null, null, null, null, null, null, null, null
+  imei, string, 用户imei, null, null, null, null, null, null, null, null
+  msisdn, string, 用户msisdn, null, null, null, null, null, null, null, null
+  rat, tinyint, 接入类型, null, null, null, null, null, null, null, null
+  home_province, int, 漫入用户的归属地省份, null, null, null, null, null, null, null, null
+  procedure_type, smallint, 消息流程, null, null, null, null, null, null, null, null
+  procedure_starttime, bigint, "业务流程开始时间，UTC时间，从1970/1/1 00:00:00开始到当前的毫秒数。", null, null, null, null, null, null, null, null
+  procedure_endtime, bigint, "业务流程结束时间，UTC时间，从1970/1/1 00:00:00开始到当前的毫秒数。", null, null, null, null, null, null, null, null
+  procedure_status, smallint, "流程状态:0：成功； 1：失败； 255：超时", null, null, null, null, null, null, null, null
+  request_cause, bigint, 请求消息中所包含的Cause值类型, null, null, null, null, null, null, null, null
+  failure_cause, bigint, 流程失败响应消息中的Cause值, null, null, null, null, null, null, null, null
+  keyword, bigint, 辅助流程类型的关键参数信息, null, null, null, null, null, null, null, null
+  mme_ue_s1apid, bigint, MME UE S1AP ID, null, null, null, null, null, null, null, null
+  guti, string, 用户全球唯一临时标识 ，全部字段转为10进制, null, null, null, null, null, null, null, null
+  target_id, bigint, "解析Target Target Target Target ID ，\n如果是Target eNB-ID 则上报 S1 切出 话单中有效", null, null, null, null, null, null, null, null
+  user_ipv4, string, 终端用户的 IP v4地址 ，如无则填全F, null, null, null, null, null, null, null, null
+  user_ipv6, string, 终端用户的IP v6 地址，如无则填全 F, null, null, null, null, null, null, null, null
+  machine_ip_add_type, bigint, "设备IP地址类型：0x01：IPV4 0x02:IPV6", null, null, null, null, null, null, null, null
+  mmeipadd, string, MME信令面IP地址, null, null, null, null, null, null, null, null
+  enbipadd, string, eNB信令面或用户面IP地址, null, null, null, null, null, null, null, null
+  mmeport, bigint, MME或SGW端口, null, null, null, null, null, null, null, null
+  enbport, bigint, ENODEB端口, null, null, null, null, null, null, null, null
+  tai, bigint, TAI, null, null, null, null, null, null, null, null
+  ecgi, string, UE所在小区的ECGI, null, null, null, null, null, null, null, null
+  apn, string, APN, null, null, null, null, null, null, null, null
+  other_tac, bigint, 对端小区的TAC，只在切换过程填写, null, null, null, null, null, null, null, null
+  other_eci, bigint, 对端小区的ECI，只在切换过程填写, null, null, null, null, null, null, null, null
+  old_mme_group_id, bigint, 原MME组标识，UE的GUTI发生变化时填写否则全F, null, null, null, null, null, null, null, null
+  old_mme_code, bigint, 原MME号，UE的GUTI发生变化时填写否则全F, null, null, null, null, null, null, null, null
+  old_m_tmsi, string, UE的原M-TMSI，UE的GUTI发生变化时填写否则全F, null, null, null, null, null, null, null, null
+  mmegroupid, bigint, 当前MME组标识, null, null, null, null, null, null, null, null
+  mmecode, bigint, 当前MME号, null, null, null, null, null, null, null, null
+  m_tmsi, string, 当前M-TMSI, null, null, null, null, null, null, null, null
+  tmsi, string, 2G/3G系统为UE分配的TMSI，针对联合Attach及TAU过程填写，如无则填全F, null, null, null, null, null, null, null, null
+  enb_ues1apid, bigint, eNODEB UE S1AP ID, null, null, null, null, null, null, null, null
+  enbid, bigint, eNodeB ID, null, null, null, null, null, null, null, null
+  cellid, string, Cell ID, null, null, null, null, null, null, null, null
+  ciot_support, bigint, "bit0:S1-U Support bit1:CP-Support bit2:UP-Support", null, null, null, null, null, null, null, null
+  psm_status, bigint, 省电模式状态, null, null, null, null, null, null, null, null
+  t3324, bigint, 进入PSM模式定时器, null, null, null, null, null, null, null, null
+  t3412_ext, bigint, TAU周期请求定时器(PSM), null, null, null, null, null, null, null, null
+  nbdatamode, bigint, 0, null, null, null, null, null, null, null, null
+  nbippdntype, bigint, 0, null, null, null, null, null, null, null, null
+  nbcelevel, bigint, 0, null, null, null, null, null, null, null, null
+  msgflag, bigint, 信息标识, null, null, null, null, null, null, null, null
+  request_cause_group, bigint, 流程的请求消息中所包含的Cause分组, null, null, null, null, null, null, null, null
+  failure_cause_group, bigint, 流程失败响应消息中的Cause分组, null, null, null, null, null, null, null, null
+  keyword_1, bigint, 关键值1, null, null, null, null, null, null, null, null
+  keyword_2, bigint, 关键值2, null, null, null, null, null, null, null, null
+  keyword_3, bigint, 关键值3, null, null, null, null, null, null, null, null
+  keyword_4, bigint, 关键值4, null, null, null, null, null, null, null, null
+  bearer_1_request_cause_group, bigint, 承载1操作请求消息中的cause分组, null, null, null, null, null, null, null, null
+  bearer_1_request_cause_specific, bigint, 承载1操作请求消息中的cause分值, null, null, null, null, null, null, null, null
+  bearer_1_failure_cause_group, bigint, 承载操作失败消息中的cause分组, null, null, null, null, null, null, null, null
+  bearer_1_failure_cause_specific, bigint, 承载操作失败消息中的cause分值, null, null, null, null, null, null, null, null
+  csfb_indication, bigint, CSFB指示, null, null, null, null, null, null, null, null
+  ue_centric, bigint, UE中心, null, null, null, null, null, null, null, null
+  ue_srvcc_support, bigint, UE SRVCC支持能力, null, null, null, null, null, null, null, null
+  vops_option, bigint, 0, null, null, null, null, null, null, null, null
+  csfb_response, bigint, 0, null, null, null, null, null, null, null, null
+  ue_dcnr, bigint, 0, null, null, null, null, null, null, null, null
+  gnb_ip_addr, string, 基站IP地址, null, null, null, null, null, null, null, null
+  nr_restriction, bigint, 0, null, null, null, null, null, null, null, null
+  lte_band_list, string, 0, null, null, null, null, null, null, null, null
+  nr_band_list, string, 0, null, null, null, null, null, null, null, null
+  nr_band_combination, string, 0, null, null, null, null, null, null, null, null
+  eps_bearer_number, bigint, 整数值N, null, null, null, null, null, null, null, null
+  n1_mode, int, 当终端 SA 开关已打开，则 N1 MODE=1；当终端未打开 SA 开关，则 N1 MODE=0, null, null, null, null, null, null, null, null
+  bearer_id, string, 承载的EPS bearer ID取值范围从 0到 15, null, null, null, null, null, null, null, null
+  bearer_type, bigint, 承载的类型： 1.default bearer 2.dedicated bearer, null, null, null, null, null, null, null, null
+  bearer_qci, bigint, 承载的QCI，取值范围从 1到 9, null, null, null, null, null, null, null, null
+  bearerstatus, bigint, "承载的操作结果：1.建立成功2.建立失败3.修改成功\n4.修改失败5.释放成功6.释放失败", null, null, null, null, null, null, null, null
+  enb_gtp_teid, bigint, 承载对应的eNB侧GTP-TEID, null, null, null, null, null, null, null, null
+  sgw_gtp_teid, bigint, 承载对应SGW侧GTP-TEID, null, null, null, null, null, null, null, null
+  bearer_request_cause, bigint, 承载操作请求消息中的cause值, null, null, null, null, null, null, null, null
+  bearerfailure_cause, bigint, 承载操作失败消息中的cause值, null, null, null, null, null, null, null, null
+  imei_tac, bigint, 终端TAC信息, null, null, null, null, null, null, null, null
+  provincecode, int, 省编码, null, p_provincecode, 直取, null, 算法升级, null, null, null
+  province, string, 省名称, null, "B：province\nB1：province_name", 直取, null, 算法升级, null, null, null
+  citycode, int, 地市编码, null, "B：citycode\nB1：citycode", 直取, null, 算法升级, null, null, null
+  city, string, 地市名称, null, "B：city\nB1：city_name", 直取, null, 算法升级, null, null, null
+  districtcode, int, 区县编码, null, "B：districtcode\nB1：", 直取, null, 算法升级, null, null, null
+  district, string, 区县名称, null, "B：district\nB1：district_name", 直取, null, 算法升级, null, null, null
+  enodebname, string, eNodeB名称, null, "B：enodebname\nB1：enodeb_name", 直取, null, 算法升级, null, null, null
+  cellname, string, cell名称, null, "B：cellname\nB1：cell_name", 直取, null, 算法升级, null, null, null
+  attach_request, int, 网络附着请求次数, null, null, null, null, null, null, null, null
+  attach_success, int, 网络附着成功次数, null, null, null, null, null, null, null, null
+  attach_fail, int, 网络附着失败次数, null, null, null, null, null, null, null, null
+  attach_timeout, int, 网络附着超时次数, null, null, null, null, null, null, null, null
+  attach_delay, bigint, 网络附着时延, null, null, null, null, null, null, null, null
+  eps_attach_request, int, EPS附着请求次数, null, null, null, null, null, null, null, null
+  eps_attach_success, int, EPS附着成功次数, null, null, null, null, null, null, null, null
+  eps_attach_fail, int, EPS附着失败次数, null, null, null, null, null, null, null, null
+  eps_attach_timeout, int, EPS附着超时次数, null, null, null, null, null, null, null, null
+  eps_attach_delay, bigint, EPS附着时延, null, null, null, null, null, null, null, null
+  eps_attach_usrfail, int, EPS附着用户原因失败次数, null, null, null, null, null, null, null, null
+  eps_emergency_attach_request, int, EPS紧急附着请求次数, null, null, null, null, null, null, null, null
+  eps_emergency_attach_success, int, EPS紧急附着成功次数, null, null, null, null, null, null, null, null
+  eps_emergency_attach_fail, int, EPS紧急附着失败次数, null, null, null, null, null, null, null, null
+  eps_emergency_attach_timeout, int, EPS紧急附着超时次数, null, null, null, null, null, null, null, null
+  eps_emergency_attach_delay, bigint, EPS紧急附着时延, null, null, null, null, null, null, null, null
+  eps_emergency_attach_usrfail, int, EPS紧急附着用户原因失败次数, null, null, null, null, null, null, null, null
+  service_request, int, 业务请求尝试次数, null, null, null, null, null, null, null, null
+  service_success, int, 业务请求成功次数, null, null, null, null, null, null, null, null
+  service_fail, int, 业务请求失败次数, null, null, null, null, null, null, null, null
+  service_timeout, int, 业务请求超时次数, null, null, null, null, null, null, null, null
+  service_delay, bigint, 业务请求时延, null, null, null, null, null, null, null, null
+  service_usrfail, int, 业务请求用户原因失败次数, null, null, null, null, null, null, null, null
+  paging_request, int, 寻呼尝试次数, null, null, null, null, null, null, null, null
+  paging_success, int, 寻呼成功次数, null, null, null, null, null, null, null, null
+  paging_fail, int, 寻呼失败次数, null, null, null, null, null, null, null, null
+  paging_timeout, int, 寻呼超时次数, null, null, null, null, null, null, null, null
+  paging_delay, bigint, 寻呼时延, null, null, null, null, null, null, null, null
+  tau_request, int, 位置区更新请求次数, null, null, null, null, null, null, null, null
+  tau_success, int, 位置区更新成功次数, null, null, null, null, null, null, null, null
+  tau_fail, int, 位置区更新失败次数, null, null, null, null, null, null, null, null
+  tau_timeout, int, 位置区更新超时次数, null, null, null, null, null, null, null, null
+  tau_delay, bigint, 位置区更新时延, null, null, null, null, null, null, null, null
+  tau_usrfail, int, 位置区更新用户原因失败次数, null, null, null, null, null, null, null, null
+  eps_tau_request, int, EPS更新尝试次数, null, null, null, null, null, null, null, null
+  eps_tau_success, int, EPS更新成功次数, null, null, null, null, null, null, null, null
+  eps_tau_fail, int, EPS更新失败次数, null, null, null, null, null, null, null, null
+  eps_tau_timeout, int, EPS更新超时次数, null, null, null, null, null, null, null, null
+  eps_tau_delay, bigint, EPS更新时延, null, null, null, null, null, null, null, null
+  eps_tau_usrfail, int, EPS更新用户原因失败次数, null, null, null, null, null, null, null, null
+  periodic_tau_request, int, 周期更新尝试次数, null, null, null, null, null, null, null, null
+  periodic_tau_success, int, 周期更新成功次数, null, null, null, null, null, null, null, null
+  periodic_tau_fail, int, 周期更新失败次数, null, null, null, null, null, null, null, null
+  periodic_tau_timeout, int, 周期更新超时次数, null, null, null, null, null, null, null, null
+  periodic_tau_delay, bigint, 周期更新时延, null, null, null, null, null, null, null, null
+  periodic_tau_usrfail, int, 周期更新用户原因失败次数, null, null, null, null, null, null, null, null
+  detach_request, int, 去附着请求次数, null, null, null, null, null, null, null, null
+  detach_success, int, 去附着成功次数, null, null, null, null, null, null, null, null
+  detach_fail, int, 去附着失败次数, null, null, null, null, null, null, null, null
+  detach_timeout, int, 去附着超时次数, null, null, null, null, null, null, null, null
+  detach_delay, bigint, 去附着时延, null, null, null, null, null, null, null, null
+  ue_detach_request, int, ue去附着请求次数, null, null, null, null, null, null, null, null
+  ue_detach_success, int, ue去附着成功次数, null, null, null, null, null, null, null, null
+  ue_detach_fail, int, ue去附着失败次数, null, null, null, null, null, null, null, null
+  ue_detach_timeout, int, ue去附着超时次数, null, null, null, null, null, null, null, null
+  ue_detach_delay, bigint, ue去附着时延, null, null, null, null, null, null, null, null
+  net_detach_request, int, 网络去附着请求次数, null, null, null, null, null, null, null, null
+  net_detach_success, int, 网络去附着成功次数, null, null, null, null, null, null, null, null
+  net_detach_fail, int, 网络去附着失败次数, null, null, null, null, null, null, null, null
+  net_detach_timeout, int, 网络去附着超时次数, null, null, null, null, null, null, null, null
+  net_detach_delay, bigint, 网络去附着时延, null, null, null, null, null, null, null, null
+  pdn_connectivity_request, int, PDN连接建立请求次数, null, null, null, null, null, null, null, null
+  pdn_connectivity_success, int, PDN连接建立成功次数, null, null, null, null, null, null, null, null
+  pdn_connectivity_fail, int, PDN连接建立失败次数, null, null, null, null, null, null, null, null
+  pdn_connectivity_timeout, int, PDN连接建立超时次数, null, null, null, null, null, null, null, null
+  pdn_connectivity_delay, bigint, PDN连接建立时延, null, null, null, null, null, null, null, null
+  pdn_connectivity_usrfail, int, PDN连接建立用户原因失败次数, null, null, null, null, null, null, null, null
+  eps_bearer_resource_allocation_request, int, 承载资源申请请求次数, null, null, null, null, null, null, null, null
+  eps_bearer_resource_allocation_success, int, 承载资源申请成功次数, null, null, null, null, null, null, null, null
+  eps_bearer_resource_allocation_fail, int, 承载资源申请失败次数, null, null, null, null, null, null, null, null
+  eps_bearer_resource_allocation_timeout, int, 承载资源申请超时次数, null, null, null, null, null, null, null, null
+  eps_bearer_resource_allocation_delay, bigint, 承载资源申请时延, null, null, null, null, null, null, null, null
+  dedicated_bearer_context_activation_request, int, 专有承载激活尝试次数, null, null, null, null, null, null, null, null
+  dedicated_bearer_context_activation_success, int, 专有承载激活成功次数, null, null, null, null, null, null, null, null
+  dedicated_bearer_context_activation_fail, int, 专有承载激活失败次数, null, null, null, null, null, null, null, null
+  dedicated_bearer_context_activation_timeout, int, 专有承载激活超时次数, null, null, null, null, null, null, null, null
+  dedicated_bearer_context_activation_delay, bigint, 专有承载激活时延, null, null, null, null, null, null, null, null
+  x2_ho_request, int, x2切换请求次数, null, null, null, null, null, null, null, null
+  x2_ho_success, int, x2切换成功数, null, null, null, null, null, null, null, null
+  x2_ho_fail, int, x2切换失败数, null, null, null, null, null, null, null, null
+  x2_ho_timeout, int, x2切换超时数, null, null, null, null, null, null, null, null
+  x2_ho_delay, bigint, x2切换时延, null, null, null, null, null, null, null, null
+  s1_ho_out_request, int, s1切换出请求次数, null, null, null, null, null, null, null, null
+  s1_ho_out_success, int, s1切换出成功数, null, null, null, null, null, null, null, null
+  s1_ho_out_fail, int, s1切换出失败数, null, null, null, null, null, null, null, null
+  s1_ho_out_timeout, int, s1切换出超时数, null, null, null, null, null, null, null, null
+  s1_ho_out_delay, bigint, s1切换出时延, null, null, null, null, null, null, null, null
+  s1_ho_in_request, int, s1切换入请求次数, null, null, null, null, null, null, null, null
+  s1_ho_in_success, int, s1切换入成功次数, null, null, null, null, null, null, null, null
+  s1_ho_in_fail, int, s1切换入失败次数, null, null, null, null, null, null, null, null
+  s1_ho_in_timeout, int, s1切换入超时次数, null, null, null, null, null, null, null, null
+  s1_ho_in_delay, bigint, s1切换入时延, null, null, null, null, null, null, null, null
+  s1_ho_cancel_request, int, s1切换取消请求次数, null, null, null, null, null, null, null, null
+  s1_ho_cancel_success, int, s1切换取消成功次数, null, null, null, null, null, null, null, null
+  s1_ho_cancel_fail, int, s1切换取消失败次数, null, null, null, null, null, null, null, null
+  s1_ho_cancel_timeout, int, s1切换取消超时次数, null, null, null, null, null, null, null, null
+  s1_ho_cancel_delay, bigint, s1切换取消时延, null, null, null, null, null, null, null, null
+  initial_context_setup_request, int, Initial_context_setup请求次数, null, null, null, null, null, null, null, null
+  initial_context_setup_success, int, Initial_context_setup成功次数, null, null, null, null, null, null, null, null
+  initial_context_setup_fail, int, Initial_context_setup失败次数, null, null, null, null, null, null, null, null
+  initial_context_setup_timeout, int, Initial_context_setup超时次数, null, null, null, null, null, null, null, null
+  initial_context_setup_delay, bigint, Initial_context_setup时延, null, null, null, null, null, null, null, null
+  ue_context_release_request, int, UE上下文释放请求次数, null, null, null, null, null, null, null, null
+  ue_context_release_success, int, UE上下文释放成功次数, null, null, null, null, null, null, null, null
+  ue_context_release_fail, int, UE上下文释放失败次数, null, null, null, null, null, null, null, null
+  ue_context_release_timeout, int, UE上下文释放超时次数, null, null, null, null, null, null, null, null
+  ue_context_release_delay, bigint, UE上下文释放时延, null, null, null, null, null, null, null, null
+  inter_redirect_request, int, 系统间重定向请求次数, null, null, null, null, null, null, null, null
+  inter_redirect_success, int, 系统间重定向成功次数, null, null, null, null, null, null, null, null
+  inter_redirect_fail, int, 系统间重定向失败次数, null, null, null, null, null, null, null, null
+  inter_redirect_timeout, int, 系统间重定向超时次数, null, null, null, null, null, null, null, null
+  inter_redirect_delay, int, 系统间重定向时延, null, null, null, null, null, null, null, null
+  identity_acquisition_request, int, 身份获取请求次数, null, null, null, null, null, null, null, null
+  identity_acquisition_success, int, 身份获取成功次数, null, null, null, null, null, null, null, null
+  identity_acquisition_fail, int, 身份获取失败次数, null, null, null, null, null, null, null, null
+  identity_acquisition_timeout, int, 身份获取超时次数, null, null, null, null, null, null, null, null
+  identity_acquisition_delay, bigint, 身份获取时延, null, null, null, null, null, null, null, null
+  authentication_request, int, 鉴权请求次数, null, null, null, null, null, null, null, null
+  authentication_success, int, 鉴权成功次数, null, null, null, null, null, null, null, null
+  authentication_fail, int, 鉴权失败次数, null, null, null, null, null, null, null, null
+  authentication_timeout, int, 鉴权超时次数, null, null, null, null, null, null, null, null
+  authentication_delay, bigint, 鉴权时延, null, null, null, null, null, null, null, null
+  security_activation_request, int, 安全激活请求次数, null, null, null, null, null, null, null, null
+  security_activation_success, int, 安全激活成功次数, null, null, null, null, null, null, null, null
+  security_activation_fail, int, 安全激活失败次数, null, null, null, null, null, null, null, null
+  security_activation_timeout, int, 安全激活超时次数, null, null, null, null, null, null, null, null
+  security_activation_delay, bigint, 安全激活时延, null, null, null, null, null, null, null, null
+  sms_request, int, SMS业务请求次数, null, null, null, null, null, null, null, null
+  sms_success, int, SMS业务成功次数, null, null, null, null, null, null, null, null
+  sms_fail, int, SMS业务失败次数, null, null, null, null, null, null, null, null
+  sms_timeout, int, SMS业务超时次数, null, null, null, null, null, null, null, null
+  sms_delay, bigint, SMS业务时延, null, null, null, null, null, null, null, null
+  erab_setup_request, int, e-rab建立请求次数, null, null, null, null, null, null, null, null
+  erab_setup_success, int, e-rab建立成功次数, null, null, null, null, null, null, null, null
+  erab_setup_fail, int, e-rab建立失败次数, null, null, null, null, null, null, null, null
+  erab_setup_timeout, int, e-rab建立超时次数, null, null, null, null, null, null, null, null
+  erab_setup_delay, bigint, e-rab建立时延, null, null, null, null, null, null, null, null
+  erab_modify_request, int, e-rab修改请求次数, null, null, null, null, null, null, null, null
+  erab_modify_success, int, e-rab修改成功次数, null, null, null, null, null, null, null, null
+  erab_modify_fail, int, e-rab修改失败次数, null, null, null, null, null, null, null, null
+  erab_modify_timeout, int, e-rab修改超时次数, null, null, null, null, null, null, null, null
+  erab_modify_delay, bigint, e-rab修改时延, null, null, null, null, null, null, null, null
+  default_bearer_context_activation_request, int, 默认承载激活尝试次数, null, null, null, null, null, null, null, null
+  default_bearer_context_activation_success, int, 默认承载激活成功次数, null, null, null, null, null, null, null, null
+  default_bearer_context_activation_fail, int, 默认承载激活失败次数, null, null, null, null, null, null, null, null
+  default_bearer_context_activation_timeout, int, 默认承载激活超时次数, null, null, null, null, null, null, null, null
+  default_bearer_context_activation_delay, bigint, 默认承载激活时延, null, null, null, null, null, null, null, null
+  cpservice_request, int, 控制面业务请求次数, null, null, null, null, null, null, null, null
+  cpservice_success, int, 控制面业务成功次数, null, null, null, null, null, null, null, null
+  cpservice_fail, int, 控制面业务失败次数, null, null, null, null, null, null, null, null
+  cpservice_timeout, int, 控制面业务超时次数, null, null, null, null, null, null, null, null
+  cpservice_delay, bigint, 控制面业务时延, null, null, null, null, null, null, null, null
+  nsa_request, int, NSA请求次数, null, null, null, null, null, null, null, null
+  nsa_success, int, NSA成功次数, null, null, null, null, null, null, null, null
+  nsa_fail, int, NSA失败次数, null, null, null, null, null, null, null, null
+  nsa_timeout, int, NSA超时次数, null, null, null, null, null, null, null, null
+  nsa_delay, bigint, NSA时延, null, null, null, null, null, null, null, null
+  s1_ho_intra_out_request, int, 系统内s1切换出请求次数, null, null, null, null, null, null, null, null
+  s1_ho_intra_out_success, int, 系统内s1切换出成功数, null, null, null, null, null, null, null, null
+  s1_ho_intra_out_fail, int, 系统内s1切换出失败数, null, null, null, null, null, null, null, null
+  s1_ho_intra_out_timeout, int, 系统内s1切换出超时数, null, null, null, null, null, null, null, null
+  s1_ho_intra_out_delay, bigint, 系统内s1切换出时延, null, null, null, null, null, null, null, null
+  normal_release, int, 正常释放次数, A, null, "case when procedure_type= 20 and procedure_status=1 and  nvl(failure_cause,request_cause) in ('16777236','16777728') then 1 else 0 end", null, 新增字段, 指标, 无, >=0
+  abnor_release, int, 异常释放次数, "A|C", null, "通过nvl(failure_cause,request_cause)与码表字段reason_code关联，取码表中对应的drop_flag=1对应的编码，能关联上则置为1，关联不上则置为0", null, 新增字段, 指标, 无, >=0

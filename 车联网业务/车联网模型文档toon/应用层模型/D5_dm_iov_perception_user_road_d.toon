@@ -1,0 +1,55 @@
+theme_domain: 车联网
+table_name: dm_iov_perception_user_road_d
+table_name_chinese: 用户路段感知天表
+data_frequency: "D: Daily"
+primary_key: 数据描述
+source_table_name[3]{源表英文名, 源表中文名, 别名, 任务描述, 是否主表}:
+  dm_lte_perception_comprehensive_usercell_q, 用户4g小区维度综合指标时刻表, a, "第一步：ab表取对应字段union all,再汇聚到用户号码+日期_quarter+app，将日期+quarter转为日期（年月日 时分秒，0quarter转为0分0秒，1quarter转为15分0秒，依次类推）  --R1\n第二步：C表inner join R1 on c.号码=r1.号码 and r1.转换后日期 between c.start_time and c.end_time --R2\n第三步：R2再按用户+路段汇聚（第2步可能关联到多条数据，需要再汇聚）", null
+  dm_nr_perception_comprehensive_usercell_q, 用户5g小区维度综合指标时刻表, b, null, null
+  fact_45gmr_user_trips_d, 45G用户出行轨迹概览表, c, null, 是
+fields[45]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围, nan}:
+  provincecode, int, 省, null, null, null, null, null, null, null, null, null
+  day, string, 天, null, null, null, null, null, null, null, null, null
+  segment_id, string, 用户路段id, c, segment_id, 直取, null, null, null, null, null, null
+  msisdn, string, 用户号码, c, mdn, 直取, null, null, null, null, null, null
+  imsi, string, 国际移动用户识别码, c, imsi, 直取, null, null, null, null, null, null
+  segment_rn, string, "用户行程次序，如：1,2,3", c, segment_rn, 直取, null, null, null, null, 停留点、轨迹, null
+  location_type, string, 位置类型, c, location_type, 直取, null, null, null, null, null, null
+  start_name, string, 起始点名称, c, start_name, 直取, null, null, null, null, null, null
+  start_time, string, 路段开始时间(13位), c, start_time, 直取, null, null, null, null, null, null
+  start_lon, double, 开始经度, c, start_lon, 直取, null, null, null, null, null, null
+  start_lat, double, 开始纬度, c, start_lat, 直取, null, null, null, null, null, null
+  end_name, string, 结束点名称, c, end_name, 直取, null, null, null, null, null, null
+  end_time, string, 路段结束时间(13位), c, end_time, 直取, null, null, null, null, null, null
+  end_lon, double, 结束经度, c, end_lon, 直取, null, null, null, null, null, null
+  end_lat, double, 结束纬度, c, end_lat, 直取, null, null, null, null, null, null
+  cover_score, double, 覆盖感知评分, ab, null, （1-sum(a.less110_rsrp_cnt+b.less110_rsrp_cnt)/sum(a.total_rsrp_cnt+b.total_rsrp_cnt）)*100, null, null, null, null, null, 无线感知
+  data_score, double, 数据业务评分, ab, null, （1-sum(a.total_badcnt+b.total_badcnt)/sum(a.total_cnt+b.total_cnt)）*100, null, null, null, null, null, 数据感知
+  event_score, double, 性能感知评分, ab, null, null, null, null, null, null, null, null
+  voice_score, double, 语音感知评分, ab, null, null, null, null, null, null, null, null
+  cps, double, 综合感知评分, ab, null, 本表cover_score*data_score/100, null, null, null, null, null, null
+  lte_cover_score, double, 4g覆盖感知评分, a, null, (1-sum(less110_rsrp_cn)/sum(total_rsrp_cnt))*100, null, null, null, null, null, null
+  lte_data_score, double, 4g数据业务评分, a, null, (1-sum(total_badcnt)/sum(total_cnt))*100, null, null, null, null, null, null
+  lte_event_score, double, 4g性能感知评分, a, null, null, null, null, null, null, null, null
+  lte_voice_score, double, 4g语音感知评分, a, null, null, null, null, null, null, null, null
+  lte_cps, double, 4g综合感知评分, a, null, 本表lte_cover_score*lte_data_score/100, null, null, null, null, null, null
+  nr_cover_score, double, 5g覆盖感知评分, b, null, (1-sum(less110_ssrsrp_cnt)/sum(total_ssrsrp_cnt))*100, null, null, null, null, null, null
+  nr_data_score, double, 5g数据业务评分, b, null, (1-sum(total_badcnt)/sum(total_cnt))*100, null, null, null, null, null, null
+  nr_event_score, double, 5g性能感知评分, b, null, null, null, null, null, null, null, null
+  nr_voice_score, double, 5g语音感知评分, b, null, null, null, null, null, null, null, null
+  nr_cps, double, 5g综合感知评分, b, null, 本表nr_cover_score*nr_data_score/100, null, null, null, null, null, null
+  lte_cell_cnt, int, 4G占用小区数, a, null, count(distinct(cellkey)), null, null, null, null, null, null
+  nr_cell_cnt, int, 5G占用小区数, b, null, count(distinct(cellkey)), null, null, null, null, null, null
+  lte_cover_ratio, double, 4G mr覆盖率, a, null, 1-sum(less110_rsrp_cn)/sum(total_rsrp_cnt), null, null, null, null, null, null
+  nr_cover_ratio, double, 5G mr覆盖率, b, null, 1-sum(less110_ssrsrp_cnt)/sum(total_ssrsrp_cnt), null, null, null, null, null, null
+  lte_avgrsrp, double, 4G 平均RSRP, a, null, sum(avg_rsrp*total_rsrp_cnt)/sum(total_rsrp_cnt), null, null, null, null, null, null
+  nr_avgrsrp, double, 5G 平均RSRP, b, null, sum(avg_rsrp*total_ssrsrp_cnt)/sum(total_ssrsrp_cnt), null, null, null, null, null, null
+  issue_user_cnt, bigint, 用户问题数, ab, null, 暂置null，等算法, null, 如果>0，页面显示标识为异常, null, null, null, null
+  issue_wireless_cnt, bigint, 无线问题数, ab, null, 暂置null，等算法, null, 如果>0，页面显示标识为异常, null, null, null, null
+  issue_core_cnt, bigint, 核心网问题数, ab, null, 暂置null，等算法, null, 如果>0，页面显示标识为异常, null, null, null, null
+  issue_sp_cnt, bigint, SP服务商问题数, ab, null, 暂置null，等算法, null, 如果>0，页面显示标识为异常, null, null, null, null
+  attach_succ_ratio, double, 附着成功率, ab, null, "sum(nvl(attach_suc,0)+nvl(regis_suc,0))/sum(nvl(attach_req,0)+nvl(regis_req,0))", null, null, null, null, null, null
+  data_drop_ratio, double, 掉线率（UE上下文掉线率）, ab, null, "sum(nvl(uecntx_abnormrel,0)+nvl(ue_normalcontextrelease,0))/sum(nvl(uecntx_abnormrel,0)+nvl(uecntx_normrel,0)+nvl(ue_contextrelease,0))", null, null, null, null, null, null
+  handover_succ_ratio, double, 切换成功率（系统内）, ab, null, "sum(nvl(ho_succoutintraenb,0)+nvl(ho_succsamefreq,0)+nvl(ho_succdifffreq,0))/sum(nvl(ho_attsamefreq,0)+nvl(ho_attdifffreq,0)+nvl(ho_attoutintraenb,0))", null, null, null, null, null, null
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null, null
+  p_date, string, 天, null, null, null, null, null, null, null, null, null

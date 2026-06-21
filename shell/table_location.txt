@@ -1,0 +1,5 @@
+fact_lte_mro_iov_refactor_q     viewfs://nsX/vmax_ns5/zxvmax/telecom/lte/fact/fact_lte_mro_iov_refactor_q
+ods_nr_mro_northctcc_q  viewfs://nsX/ns3/vmax_ns3/zxvmax/telecom/ods/5g/north/ods/ods_nr_mro_northctcc_q
+ods_lte_mro_agps_q      viewfs://nsX/vmax_ns6/zxvmax/telecom/cn/ods_lte_mro_agps_q
+fact_5gdpi_5gmro_ott_h  viewfs://nsX/vmax_ns6/zxvmax/telecom/5g/fact/fact_5gdpi_5gmro_ott_h
+ods_lte_mro_q_location  viewfs://nsX/zxvmax/telecom/ods/ran/lte/north/ods_lte_mro_q_location

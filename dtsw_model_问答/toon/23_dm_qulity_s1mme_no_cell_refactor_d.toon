@@ -1,0 +1,20 @@
+theme_domain: 信令感知
+table_name: dm_qulity_s1mme_no_cell_refactor_d
+table_name_chinese: S1MME信令小区未关联上工参小区清单
+data_frequency: day
+primary_key: 数据描述
+source_table_name[4]{源表英文名, 源表中文名, 别名, 备注, 是否主表}:
+  aggr_lte_dpi_s1mme_cel_d, 4G_DPI_S1MME小区维度天表, A, 将输入表由aggr_4gxdr_n1mode_usr_cel_h修改为aggr_lte_dpi_s1mme_cel_d。且字段s1mme_message_count使用procedure_request_cnt替换；字段enodebip使用enbipadd替换，其余逻辑完全不变, 是
+  lte_cm_projdata, 4G电信工参, B, 将输入表由lte_cm_projdata_core修改为lte_cm_projdata，其余逻辑不变, null
+  lte_cm_projdata_corrected, 4G纠偏工参, C, null, null
+  lte_cucc_cm_projdata, 4G联通工参, D, null, null
+fields[9]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  enodebid, int, 基站ID, A, null, "split(cellkey,'_')[0]", 使用A表小区关联BCD表，未关联上的小区清单保留, null, 维度, 无, 无
+  cellid, int, 小区ID, A, null, "split(cellkey,'_')[1]", null, null, 维度, 无, 无
+  ecgi, string, ECGI编码, A, ecgi, 直取, null, null, 维度, 无, 无
+  enodebip, string, 基站IP地址, A, enbipadd, 直取, null, null, 维度, 无, 无
+  records, bigint, S1MME记录数, A, null, sum(procedure_request_cnt), null, null, 指标, 无, >0
+  provincecode, int, 省编码, A, p_provincecode, 直取, null, null, 维度, 无, 无
+  day, string, 日期, A, p_date, 直取, null, null, 维度, 无, 无
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

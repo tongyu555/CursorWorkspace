@@ -1,0 +1,61 @@
+theme_domain: 车联网
+table_name: dm_iov_perception_user_detailed_d
+table_name_chinese: 用户感知详单天表
+data_frequency: "D: Daily"
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 是否主表}:
+  aggr_xdranalysis_45g_xdr_q, 45G指定用户dpi和mr关联结果时刻表, 是, sql
+fields[53]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 天, null, null, null, null, null, null, null, null
+  rat_type, string, 网络类型, A, null, 直取, null, {4G，5G}, null, null, null
+  data_type, string, 数据类型, A, null, 直取, null, 数据用户面(data_user_plane);数据控制面(data_control_plane);MR, null, null, null
+  dpi_type, string, 接口类型, A, null, 直取, null, {S1MME、N1N2、HTTP、HTTPS、VIDEO、GAME、DNS、OTHER、MW}, null, null, null
+  key, bigint, 编号, A, null, 直取, null, null, null, null, null
+  starttime, string, 开始时间, A, null, 直取, null, null, null, null, null
+  endtime, string, 结束时间, A, null, 直取, null, null, null, null, null
+  msisdn, string, 用户号码, A, null, 直取, null, null, null, null, null
+  imsi, string, 用户识别码, A, null, 直取, null, null, null, null, null
+  brand, string, 车辆品牌, A, null, 直取, null, null, null, null, null
+  model, string, 车辆型号, A, null, 直取, null, null, null, null, null
+  provincecode, int, 省份编码, A, null, 直取, null, null, null, null, null
+  province, string, 省名称, A, null, 直取, null, null, null, null, null
+  citycode, int, 地市编码, A, null, 直取, null, null, null, null, null
+  city, string, 地市名称, A, null, 直取, null, null, null, null, null
+  enb_id, int, 基站标识, A, null, 直取, null, null, null, null, null
+  cell_id, int, 小区标识, A, null, 直取, null, null, null, null, null
+  business_type_name, string, 业务类型名称, A, null, 直取, null, null, null, null, null
+  issue_flag, string, 是否存在问题, A, null, 直取, null, null, null, null, 是，否
+  issue_delimit, string, 问题定界, A, null, 直取, null, "无线;用户;核心网;sp\n可以同时有多个", null, null, null
+  issue_cause, string, 问题原因, A, null, 直取, null, "弱覆盖;高负荷;故障等\n可以同时有多个", null, null, null
+  flux_mb, double, 流量(MB), A, null, 直取, null, null, null, null, null
+  duration, double, 持续时间(秒), A, null, duration/1000, null, null, null, null, null
+  rsrp, int, 服务小区RSRP, A, null, 直取, null, null, null, null, null
+  destinationurl, string, 目标URL, A, null, 直取, null, null, null, null, null
+  host, string, 访问域名, A, null, 直取, null, null, null, null, null
+  httpstatus, int, HTTP状态码, A, null, 直取, null, null, null, null, null
+  httpstatus_explain, string, HTTP状态码描述, A, null, 直取, null, null, null, null, null
+  destinationip, string, 用户访问的目标IPv4或IPv6地址, A, null, 直取, null, null, null, null, null
+  tcp_setup_response_delay, double, 平均TCP建链响应时延, A, null, 直取, null, null, null, null, null
+  tcp_setup_ack_delay, double, 平均TCP建链确认时延, A, null, 直取, null, null, null, null, null
+  tcp_retrans_ratio, double, TCP重传率, A, null, 直取, null, null, null, null, null
+  dns_reply_delay, double, 平均DNS响应时延, A, null, 直取, null, null, null, null, null
+  dns_resp_succ_flag, double, DNS查询是否成功, A, null, 直取, null, null, null, null, null
+  page_succ_flag, double, 网页浏览响应是否成功, A, null, 直取, null, null, null, null, null
+  page_open_succ_flag, double, 网页浏览是否完整打开成功, A, null, 直取, null, null, null, null, null
+  page_fpackets_response_delay, double, 网页浏览首包响应时延, A, null, 直取, null, null, null, null, null
+  page_ftcp_pageopen_delay, double, 网页浏览打开时延, A, null, 直取, null, null, null, null, null
+  page_fscreen_delay, double, 网页浏览首屏时延, A, null, 直取, null, null, null, null, null
+  page_dl_throughput_data_kbps, double, 网页浏览下载速率, A, null, 直取, null, null, null, null, null
+  page_ul_throughput_data_kbps, double, 网页浏览上传速率, A, null, 直取, null, null, null, null, null
+  videoplay_wait_duration, double, 视频播放等待时长, A, null, 直取, null, null, null, null, null
+  videoplay_succ_flag, double, 视频播放是否成功, A, null, 直取, null, null, null, null, null
+  video_throughput, double, 视频下载速率, A, null, 直取, null, null, null, null, null
+  video_cache_throughput, double, 视频缓冲段下载速率, A, null, 直取, null, null, null, null, null
+  video_halt_ratio, double, 视频平均卡顿频率, A, null, 直取, null, null, null, null, null
+  video_avghalt_duration, double, 视频平均卡顿时长, A, null, 直取, null, null, null, null, null
+  video_recover_duration_ratio, double, 视频卡顿时长占比, A, null, 直取, null, null, null, null, null
+  im_succ_flag, double, 即时通信消息收发是否成功, A, null, 直取, null, null, null, null, null
+  game_conn_delay, double, 游戏连接时延, A, null, 直取, null, null, null, null, null
+  game_interactive_delay, double, 游戏交互时延, A, null, 直取, null, null, null, null, null
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天, null, null, null, null, null, null, null, null

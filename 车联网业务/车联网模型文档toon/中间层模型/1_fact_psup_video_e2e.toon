@@ -1,0 +1,141 @@
+theme_domain: null
+table_name: fact_psup_video_e2e
+table_name_chinese: 4G DPI视频业务事实表
+data_frequency: hour
+primary_key: 数据描述
+source_table_name[3]{源表英文名, 源表中文名, 别名, 备注}:
+  fact_psup_video_e2e_front, 4G DPI视频业务明细表, A, null
+  lte_cm_projdata, 4G电信工参, B, 先将B表与B1表合并，若存在相同cellkey，则保留B表数据；
+  lte_cucc_cm_projdata, 4G联通工参, B1, null
+fields[131]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围, nan}:
+  local_city, int, 所在市编码, "B|B1", "B：citycode\nB1：citycode", 直取, null, 算法升级, null, null, null, null
+  local_province, int, 所在省编码, A, p_provincecode, 直取, null, 算法升级, null, null, null, null
+  owner_province, int, 归属省编码, null, null, null, null, null, null, null, null, null
+  owner_city, int, 归属市编码, null, null, null, null, null, null, null, null, null
+  roaming_type, tinyint, 漫游类型，对应dim_roamingtype的roamtypeid, null, null, null, null, null, null, null, null, null
+  xdr_id, string, XDR ID，话单标识, null, null, null, null, null, null, null, null, null
+  rat, tinyint, 无线接入类型, null, null, null, null, null, null, null, null, null
+  imsi, string, 业务过程用户IMSI号码, null, null, null, null, null, null, null, null, null
+  imei, string, 业务过程用户终端IMEI号码, null, null, null, null, null, null, null, null, null
+  msisdn, string, 业务过程用户MSISDN号码, null, null, null, null, null, null, null, null, null
+  dest_ip, string, 目标网元地址，对于Gn口，填写GGSN的用户面IP地址；对于S1-U口，填写SGW的用户面IP地址, null, null, null, null, null, null, null, null, null
+  source_ip, string, 源网元地址，对于Gn口，填写SGSN的用户面IP地址；对于S1-U口，填写eNB用户面IP地址, null, null, null, null, null, null, null, null, null
+  dest_port, int, 源网元端口，对于Gn口，填写GGSN的端口；对于S1-U口，填写SGW端口, null, null, null, null, null, null, null, null, null
+  source_port, int, 目标网元端口，对于Gn口，填写SGSN的端口；对于S1-U口，填写eNB端口, null, null, null, null, null, null, null, null, null
+  area, int, 区域, "B|B1", "B：districtcode\nB1：districtcode", 直取, null, 算法升级, null, null, null, null
+  cell, bigint, 小区, null, null, null, null, null, null, null, null, null
+  apn, string, apn, null, null, null, null, null, null, null, null, null
+  start_time, timestamp, 开始时间, null, null, null, null, null, null, null, null, null
+  end_time, timestamp, 结束时间, null, null, null, null, null, null, null, null, null
+  protocol_id, int, 协议编码，集团规定的协议识别分类，参加《中国移动数据流量DPI识别能力规范》中的“DPI设备协议识别能力要求”, null, null, null, null, null, null, null, null, null
+  service_id, int, 业务大类编码, null, null, null, null, null, null, null, null, null
+  subservice_id, string, 业务小类编码, null, null, null, null, null, null, null, null, null
+  app_content, int, 业务内容编码，应用小类的内容细分，如微信文本、微信语音等。, null, null, null, null, null, null, null, null, null
+  app_status, int, 会话状态编码, null, null, null, null, null, null, null, null, null
+  l4protocol_id, int, 四层协议编码, null, null, null, null, null, null, null, null, null
+  ul_traffic, bigint, 上行流量, null, null, null, null, null, null, null, null, null
+  dl_traffic, bigint, 下行流量, null, null, null, null, null, null, null, null, null
+  ul_pkt, bigint, 上行包数, null, null, null, null, null, null, null, null, null
+  dl_pkt, bigint, 下行包数, null, null, null, null, null, null, null, null, null
+  ul_disorder_pkt, bigint, 上行乱序包数, null, null, null, null, null, null, null, null, null
+  dl_disorder_pkt, bigint, 下行乱序包数, null, null, null, null, null, null, null, null, null
+  ul_retrans_pkt, bigint, 上行重传包数, null, null, null, null, null, null, null, null, null
+  dl_retrans_pkt, bigint, 下行重传包数, null, null, null, null, null, null, null, null, null
+  tcp_resp_delay, bigint, TCP建链响应时延, null, null, null, null, null, null, null, null, null
+  tcp_ack_delay, bigint, TCP建链确认时延, null, null, null, null, null, null, null, null, null
+  first_req_delay, bigint, 第一事务请求时延, null, null, null, null, null, null, null, null, null
+  first_resp_delay, bigint, 第一事务响应时延, null, null, null, null, null, null, null, null, null
+  syn_cnt, tinyint, SYN计数, null, null, null, null, null, null, null, null, null
+  tcp_status, tinyint, TCP连接状态, null, null, null, null, null, null, null, null, null
+  session_end, tinyint, 会话结束标示, null, null, null, null, null, null, null, null, null
+  synack_cnt, tinyint, SYNACK计数, null, null, null, null, null, null, null, null, null
+  ack_cnt, tinyint, ACK计数, null, null, null, null, null, null, null, null, null
+  synack_status, tinyint, TCP1/2步握手连接状态, null, null, null, null, null, null, null, null, null
+  ack_status, tinyint, TCP2/3步握手连接状态, null, null, null, null, null, null, null, null, null
+  repetition, tinyint, 重复统计, null, null, null, null, null, null, null, null, null
+  enb_id, int, 基站ID, null, null, null, null, null, null, null, null, null
+  guti_group_id, int, GUTI中的MME组编号, null, null, null, null, null, null, null, null, null
+  guti_mme_code, int, GUTI中的MME编号, null, null, null, null, null, null, null, null, null
+  mme_s1ap_id, bigint, MME分配的S1AP ID, null, null, null, null, null, null, null, null, null
+  enb_s1ap_id, bigint, ENodeB分配的S1AP ID, null, null, null, null, null, null, null, null, null
+  report_time, timestamp, 报告时间, null, null, null, null, null, null, null, null, null
+  hops, int, 跳数, null, null, null, null, null, null, null, null, null
+  req_time, timestamp, 视频请求消息的TCP/UDP流开始时间，UTC时间, null, null, null, null, null, null, null, null, null
+  resource_name, string, URL中携带的视频资源名称, null, null, null, null, null, null, null, null, null
+  streaming_rate, bigint, 视频文件的码率。若播放中间变速，记录第一个码速, null, null, null, null, null, null, null, null, null
+  play_success, tinyint, 定义参见《LTE信令监测及互联网KQI指标规范》, null, null, null, null, null, null, null, null, null
+  first_play_time, timestamp, 视频文件开始播放的时间，使用UTC时间, null, null, null, null, null, null, null, null, null
+  pause_cnt, bigint, 播放过程中的卡顿次数, null, null, null, null, null, null, null, null, null
+  buffer_duration, bigint, 初始缓冲时长（单位ms）, null, null, null, null, null, null, null, null, null
+  download_octet, bigint, 视频下载数据量（单位字节）, null, null, null, null, null, null, null, null, null
+  download_duration, bigint, 视频下载时间（单位ms）, null, null, null, null, null, null, null, null, null
+  file_type, string, 流媒体类型, null, null, null, null, null, null, null, null, null
+  pause_duration, bigint, 视频播放卡顿时长（单位ms）, null, null, null, null, null, null, null, null, null
+  dns_start_time, bigint, DNS查询开始时间, null, null, null, null, null, null, null, null, null
+  dns_end_time, bigint, DNS查询结束时间, null, null, null, null, null, null, null, null, null
+  dns_resp_delay, bigint, DNS查询时延, null, null, null, null, null, null, null, null, null
+  dns2tcp_delay, bigint, DNS到TCP建链的时延, null, null, null, null, null, null, null, null, null
+  duration, bigint, 持续时长, null, null, null, null, null, null, null, null, null
+  user_ip, string, 用户侧IP, null, null, null, null, null, null, null, null, null
+  server_ip, string, 服务器IP, null, null, null, null, null, null, null, null, null
+  tacid, bigint, 取串号前8位, null, null, null, null, null, null, null, null, null
+  vendor, string, 制造商(终端品牌)标识, null, null, null, null, null, null, null, null, null
+  model, string, 终端型号标识, null, null, null, null, null, null, null, null, null
+  server_carrier, string, SP服务器归属运营商, null, null, null, null, null, null, null, null, null
+  server_country, string, SP服务器归属国家名称, null, null, null, null, null, null, null, null, null
+  server_province, string, SP服务器归属省份名称, null, null, null, null, null, null, null, null, null
+  server_city, string, SP服务器归属地市名称, null, null, null, null, null, null, null, null, null
+  longitude, double, 经度, null, null, null, null, null, null, null, null, null
+  latitude, double, 纬度, null, null, null, null, null, null, null, null, null
+  regionid, int, 栅格区域坐标（适合于所有尺寸）, null, null, null, null, null, null, null, null, null
+  x_offset, int, 栅格坐标x轴偏移（全量mr类栅格尺寸，默认100）, null, null, null, null, null, null, null, null, null
+  y_offset, int, 栅格坐标y轴偏移（全量mr类栅格尺寸，默认100）, null, null, null, null, null, null, null, null, null
+  setuprsrp, float, 接入rsrp, null, null, null, null, null, null, null, null, null
+  setupenb, bigint, 接入基站, null, null, null, null, null, null, null, null, null
+  honumber, bigint, 切换次数总和, null, null, null, null, null, null, null, null, null
+  ulrb, bigint, 上行平均RB个数, null, null, null, null, null, null, null, null, null
+  dlrb, bigint, 下行平均RB个数, null, null, null, null, null, null, null, null, null
+  setupulbler, double, 接入上行BLER, null, null, null, null, null, null, null, null, ta
+  setupdlbler, double, 接入下行BLER, null, null, null, null, null, null, null, null, ta
+  setupulsinr, double, 接入上行SINR, null, null, null, null, null, null, null, null, ta
+  setupdlmcs, double, 接入下行SINR, null, null, null, null, null, null, null, null, null
+  relaseulbler, double, 释放上行BLER, null, null, null, null, null, null, null, null, null
+  relasedlber, double, 释放下行BLER, null, null, null, null, null, null, null, null, null
+  releaseservrsrp, double, 释放RSRP, null, null, null, null, null, null, null, null, null
+  relasesinr, double, 释放SINR, null, null, null, null, null, null, null, null, null
+  relasedlmcs, double, 释放下行MCS, null, null, null, null, null, null, null, null, null
+  firsthoulbler, double, 第一次切换上行BLER, null, null, null, null, null, null, null, null, null
+  firsthodlber, double, 第一次切换下行BLER, null, null, null, null, null, null, null, null, ta
+  firsthoservingcellrsrp, double, 第一次切换源RSRP, null, null, null, null, null, null, null, null, ta
+  firsthodstrsrp, double, 第一次切换目标RSRP, null, null, null, null, null, null, null, null, ta
+  firsthoulsinr, double, 第一次切换上行SINR, null, null, null, null, null, null, null, null, null
+  firsthoulmcs, double, 第一次切换上行MCS, null, null, null, null, null, null, null, null, ta
+  lasthoulbler, double, 最后一次切换上行BLER, null, null, null, null, null, null, null, null, null
+  lasthodlber, double, 最后一次切换下行BLER, null, null, null, null, null, null, null, null, null
+  lastservingcellrsrp, double, 最后一次切换源RSRP, null, null, null, null, null, null, null, null, null
+  lasthodstrsrp, double, 最后一次切换目标RSRP, null, null, null, null, null, null, null, null, null
+  lasthoulsinr, double, 最后一次切换上行SINR, null, null, null, null, null, null, null, null, null
+  lasthoulmcs, double, 最后一次切换上行MCS, null, null, null, null, null, null, null, null, null
+  ul_rtt, int, 上行RTT, null, null, null, null, null, null, null, null, null
+  dl_rtt, int, 下行RTT, null, null, null, null, null, null, null, null, null
+  agpsmr_hour, int, 一个小时内AGPS MR的样本数量, null, null, null, null, null, null, null, null, null
+  regionid_20, int, RegionID20, null, null, null, null, null, null, null, null, null
+  x_offset_20, int, 栅格坐标x轴偏移（apgs类栅格尺寸，默认20*20）, null, null, null, null, null, null, null, null, null
+  y_offset_20, int, 栅格坐标y轴偏移（apgs类栅格尺寸，默认20*20）, null, null, null, null, null, null, null, null, null
+  cachedvideosize, bigint, 缓冲段视频大小, null, null, null, null, null, null, null, null, null
+  cachedvideoduration, bigint, 缓冲段视频下载时长, null, null, null, null, null, null, null, null, null
+  videocachethroughput, bigint, 视频缓冲段下载速率。算法见《中国电信2017年移动互联网业务感知质量评价细则》, null, null, null, null, null, null, null, null, null
+  tcpsetupresponsedelay, bigint, TCP建链响应时延（ms）, null, null, null, null, null, null, null, null, null
+  tcpsetupackdelay, bigint, TCP建链确认时延（ms）, null, null, null, null, null, null, null, null, null
+  videobitrate, bigint, 视频码率, null, null, null, null, null, null, null, null, null
+  videosize, bigint, 视频文件大小, null, null, null, null, null, null, null, null, null
+  videoplayhaltcount, bigint, 视频播放卡顿次数, null, null, null, null, null, null, null, null, null
+  host, string, host, null, null, null, null, null, null, null, null, null
+  sourceip, string, 用户访问外部网络时使用的IPv4或IPv6地址, null, null, null, null, null, null, null, null, null
+  sourceip_type, string, 访问IP地址类型, null, null, null, null, null, null, null, null, null
+  ulipfragpacks, bigint, "UL_IP_FRAG_PACKETS,以内层IP包的分片为准", null, null, null, null, null, null, null, null, null
+  dlipfragpacks, bigint, "DL_IP_FRAG_PACKETS,以内层IP包的分片为准", null, null, null, null, null, null, null, null, null
+  is_abnormal, int, 是否质差话单, A, null, case when tcpsetupresponsedelay>= 100 or tcpsetupackdelay>=100  or ultcpreorderingpacket/outputpacket>=0.05 or dltcpreorderingpacket/inputpacket>=0.05 or ultcp_retranspacket/outputpacket>=0.1 or dltcp_retranspacket/inputpacket>=0.1  then 1 else 0 end, null, 新增字段, 指标, 无, "0,1", null
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null, null
+  reportdate, string, 天分区, null, null, null, null, null, null, null, null, null
+  reporthour, string, 小时分区, null, null, null, null, null, null, null, null, null

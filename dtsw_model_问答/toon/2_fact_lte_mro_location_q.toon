@@ -1,0 +1,50 @@
+theme_domain: /
+table_name: fact_lte_mro_location_q
+table_name_chinese: 4G电联MRO位置定位详单表
+data_frequency: quarter
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名}:
+  ods_lte_mro_analysis_q, 4G电联MRO解析详单表, A
+fields[42]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  datetime, string, 样本数据测量对象UE的样本测量时间，UTC时间格式。对MRO文件，取值为测量采样周期的整数倍，上报时间采用 UTC 时间进行计算。, null, datetime, 直取, null, null, 详单, 无, 无
+  enodebid, int, 基站标识, null, enodebid, 直取, null, null, 详单, 无, 无
+  cellid, int, 小区标识, null, null, "case when data_type=1 and p_region=100002 then split(cellid,\"-\")[1] \nelse cast (cellid%256 as int) end", null, null, 详单, 无, 无
+  dlearfcn, int, UE服务小区的载波号Earfcn。, null, dlearfcn, 直取, null, null, 详单, 无, 无
+  pci, smallint, UE服务小区的物理小区识别码。, null, pci, 直取, null, null, 详单, 无, 无
+  ulsinr, smallint, 服务小区接收的上行信号的信噪比。, null, ulsinr, 直取, null, null, 详单, 无, 无
+  phr, smallint, "服务小区发射功率余量，指UE发射信号功率对发射功率上限的余量的测量值。取值范围[0,63]。", null, phr, 直取, null, null, 详单, 无, 无
+  aoa, smallint, "天线到达角,指UE相对服务小区天线的参考方位角。", null, aoa, 直取, null, null, 详单, 无, 无
+  recvbsr, bigint, "后台显示名RecvBsr,上报周期内BSR平均值，多个承载时，\n选择最大平均值上报，CMAC上报该值", null, recvbsr, 直取, null, null, 详单, 无, 无
+  puschprbnum, int, UE PUSCH信道占用PRB数。, null, puschprbnum, 直取, null, null, 详单, 无, 无
+  pdschprbnum, int, UE PDSCH信道占用PRB数。, null, pdschprbnum, 直取, null, null, 详单, 无, 无
+  rsrp, smallint, UE收到服务小区的参考信号接收功率。小区专属参考信号R0 将用于决定RSRP。如果UE能可靠地检测到小区专属参考信号R1 可用，那么可以使用R0 和R1 决定RSRP。如果 UE 使用接收分集，报告值应该不低于任一独立分集分支的相应RSRP值。取值范围0-97。, null, rsrp, 直取, null, null, 详单, 无, 无
+  rsrq, tinyint, UE收到服务小区的参考信号接收质量。取值范围0-34。, null, rsrq, 直取, null, null, 详单, 无, 无
+  ta, int, 服务小区时间提前量，指UE到服务基站的信号传播时间。, null, ta, 直取, null, null, 详单, 无, 无
+  cqi, tinyint, 信道质量指示。取值为上报时刻的瞬时值，取值范围[0，15]。, null, cqi, 直取, null, null, 详单, 无, 无
+  mmecode, tinyint, MME UE S1应用程序标识，用于UE的标识，32位比特。, null, mmecode, 直取, null, null, 详单, 无, 无
+  mmes1apid, bigint, MME组的标识，16位比特。, null, mmes1apid, 直取, null, null, 详单, 无, 无
+  mmegroupid, int, 字符串，内容为8位比特，用于MME组内的MME标识。, null, mmegroupid, 直取, null, null, 详单, 无, 无
+  enbues1apid, bigint, MME范围内基站的唯一ID, null, enbues1apid, 直取, null, null, 详单, 无, 无
+  plmn, string, UE接入E-utran网络使用的PLMN号。, null, plmn, case when plmn='64F010' then 46001 when plmn='64F011' then 46011 else plmn end, null, null, 详单, 无, 无
+  mrlon, double, UE周期性触发测量上报时的地理经度(东经)信息。单位为度，取值精确到小数点后6位。, null, mrlon, 定位回填, null, null, 详单, 无, 无
+  mrlat, double, UE周期性触发测量上报时的地理纬度（北纬）信息。单位为度，取值精确到小数点后6位。, null, mrlat, 定位回填, null, null, 详单, 无, 无
+  ncellcount, tinyint, 邻区个数, null, null, 根据neighpci数组包含数量回填邻区个数, null, null, 详单, 无, 无
+  nearfcn, array<int>, UE测量到的邻小区的载波号Earfcn。, null, nearfcn, 直取, null, null, 详单, 无, 无
+  npci, array<int>, UE测量到的邻小区的物理小区识别码。取值范围[0，503]。, null, npci, 直取, null, null, 详单, 无, 无
+  nrsrp, array<int>, UE处在某一个服务小区下接收到的邻区参考信号接收功率。取值范围0-97。, null, nrsrp, 直取, null, null, 详单, 无, 无
+  nrsrq, array<int>, UE处在某一个服务小区下接收到的已定义邻区关系和未定义邻区关系的邻区参考信号的接收质量。取值范围0-34。, null, nrsrq, 直取, null, null, 详单, 无, 无
+  nenbid, array<int>, 邻区enodebid列表, null, null, 定位回填, null, null, 详单, 无, 无
+  ncellid, array<int>, 邻区cellid列表, null, null, 定位回填, null, null, 详单, 无, 无
+  regionid, int, 栅格ID, null, null, 定位回填, null, null, 详单, 无, 无
+  x_offset_original, int, X偏移(1米栅格), null, null, 定位回填, null, null, 详单, 无, 无
+  y_offset_original, int, Y偏移(1米栅格), null, null, 定位回填, null, null, 详单, 无, 无
+  x_offset_20, int, X偏移(20米栅格), null, null, 定位回填, null, null, 详单, 无, 无
+  y_offset_20, int, Y偏移(20米栅格), null, null, 定位回填, null, null, 详单, 无, 无
+  positionmark, tinyint, 根据定位精度确定室内外类型：0-室内；1-室外；2-未知, null, null, 定位回填, null, null, 详单, 无, 无
+  locationtype, int, 定位类型, null, null, 定位回填, null, null, 详单, 无, 无
+  data_type, int, 数据来源(电信独享：2；电信共享：3；联通共享：1), null, null, 直取, null, null, 详单, 无, 无
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null
+  p_region, int, "厂家分区：100001:中兴|100002:华为|100003:诺基亚|100004:爱立信|100005:大唐", null, null, null, null, null, null, null, null
+  p_quarter, int, 15分钟分区, null, null, null, null, null, null, null, null

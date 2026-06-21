@@ -1,0 +1,157 @@
+theme_domain: 覆盖分析
+table_name: aggr_nr_coverage_base_h
+table_name_chinese: 5G用户小区栅格覆盖小时表
+data_frequency: hour
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名}:
+  fact_nr_mr, 5G MR事实表, A
+fields[149]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, "格式为\"yyyy-MM-dd\"的日期", null, null, null, null, null, null, null, null
+  hour, int, 小时，0~23, null, null, null, null, null, null, null, null
+  cellkey, string, 小区唯一标识, null, null, null, null, null, null, null, null
+  ssbeamid, smallint, NR 服务小区的 SSB 波束号, null, null, null, null, null, null, null, null
+  arfcn, bigint, 频点, null, null, null, null, null, null, null, null
+  plmn, string, PLMN, null, null, null, null, null, null, null, null
+  citycode, int, 城市编码, null, null, null, null, null, null, null, null
+  districtcode, int, 区县编码, null, null, null, null, null, null, null, null
+  province, string, 省名称, null, null, null, null, null, null, null, null
+  city, string, 城市名称, null, null, null, null, null, null, null, null
+  district, string, 区县名称, null, null, null, null, null, null, null, null
+  vendor, string, 厂家, null, null, null, null, null, null, null, null
+  imsi, string, 业务过程用户IMSI号码, null, null, null, null, null, null, null, null
+  imei, string, 设备标识, null, null, null, null, null, null, null, null
+  msisdn, string, 用户号码, null, null, null, null, null, null, null, null
+  s_nssai_sst, string, 网络切片选择辅助信息（切片/服务类型）, null, null, null, null, null, null, null, null
+  s_nssai_sd, string, 网络切片选择辅助信息（切片差分器）, null, null, null, null, null, null, null, null
+  rattypeid, int, 频点所属制式, null, null, null, null, null, null, null, null
+  regionid, int, RegionID, null, null, null, null, null, null, null, null
+  x_offset_20, int, 栅格坐标x轴偏移, null, null, null, null, null, null, null, null
+  y_offset_20, int, 栅格坐标y轴偏移, null, null, null, null, null, null, null, null
+  positionmark, int, "室内外位置区分结果，0：室内，1：室外，2:未知", null, null, null, null, null, null, null, null
+  totalmrlon, double, MR经度总值, null, null, null, null, null, null, null, null
+  totalmrlat, double, MR纬度总值, null, null, null, null, null, null, null, null
+  center_lon, double, 栅格中心经度, null, null, null, null, null, null, null, null
+  center_lat, double, 栅格中心纬度, null, null, null, null, null, null, null, null
+  validlonlat_totalmrcount, bigint, 经纬度有效的MR数目, null, null, null, null, null, null, null, null
+  celmr_totaldis, bigint, 小区MR总距离, null, null, null, null, null, null, null, null
+  celmr_discount, bigint, 小区MR有效距离计数, null, null, null, null, null, null, null, null
+  celmr_avgdis, double, 小区MR平均距离, null, null, null, null, null, null, null, null
+  period_totalmrcount, bigint, MRO_MR计数, null, null, null, null, null, null, null, null
+  mdt_totalmrcount, bigint, MDT_MR计数, null, null, null, null, null, null, null, null
+  event_totalmrcount, bigint, MRE_MR计数, null, null, null, null, null, null, null, null
+  ssrsrpcount, bigint, SS-RSRP计数, null, null, null, null, null, null, null, null
+  totalssrsrp, bigint, 总SS-RSRP值, null, null, null, null, null, null, null, null
+  avgssrsrp, double, 平均SS-RSRP值, null, null, null, null, null, null, null, null
+  ssrsrp_level1mrcount, bigint, SS-RSRP在(-∞;-115)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrp_level2mrcount, bigint, SS-RSRP在[-115;-110)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrp_level3mrcount, bigint, SS-RSRP在[-110;-105)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrp_level4mrcount, bigint, SS-RSRP在[-105;-100)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrp_level5mrcount, bigint, SS-RSRP在[-100;-95)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrp_level6mrcount, bigint, SS-RSRP在[-95;-90)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrp_level7mrcount, bigint, SS-RSRP在[-90;-85)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrp_level8mrcount, bigint, SS-RSRP在[-85;-80)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrp_level9mrcount, bigint, SS-RSRP在[-80;-75)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrp_level10mrcount, bigint, SS-RSRP在[-75;-70)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrp_level11mrcount, bigint, SS-RSRP在[-70;-65)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrp_level12mrcount, bigint, SS-RSRP在[-65;+∞)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrpgoodcount, bigint, SS-RSRP优良数, null, null, null, null, null, null, null, null
+  ssrsrpgoodratio, double, SS-RSRP优良比例, null, null, null, null, null, null, null, null
+  ssrsrqcount, bigint, SS-RSRQ计数, null, null, null, null, null, null, null, null
+  totalssrsrq, double, 总SS-RSRQ值, null, null, null, null, null, null, null, null
+  avgssrsrq, double, 平均SS-RSRQ值, null, null, null, null, null, null, null, null
+  ssrsrq_level1mrcount, bigint, SS-RSRQ在(-∞;-20)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrq_level2mrcount, bigint, SS-RSRQ在[-20;-17)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrq_level3mrcount, bigint, SS-RSRQ在[-17;-13.5)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrq_level4mrcount, bigint, SS-RSRQ在[-13.5;-10)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrq_level5mrcount, bigint, SS-RSRQ在[-10;-7)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrq_level6mrcount, bigint, SS-RSRQ在[-7;-4)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrq_level7mrcount, bigint, SS-RSRQ在[-4;-1)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrq_level8mrcount, bigint, SS-RSRQ在[-1;2)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrq_level9mrcount, bigint, SS-RSRQ在[2;5)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrq_level10mrcount, bigint, SS-RSRQ在[5;8)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrq_level11mrcount, bigint, SS-RSRQ在[8;11)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrq_level12mrcount, bigint, SS-RSRQ在[11;+∞)范围内的MR数目, null, null, null, null, null, null, null, null
+  ssrsrqgoodcount, bigint, SS-RSRQ优良数, null, null, null, null, null, null, null, null
+  ssrsrqgoodratio, double, SS-RSRQ优良比例, null, null, null, null, null, null, null, null
+  sssinrcount, bigint, SS-SINR计数, null, null, null, null, null, null, null, null
+  totalsssinr, double, 总SS-SINR值, null, null, null, null, null, null, null, null
+  avgsssinr, double, 平均SS-SINR值, null, null, null, null, null, null, null, null
+  sssinr_level1mrcount, bigint, SS-SINR在(-∞;-15)范围内的MR数目, null, null, null, null, null, null, null, null
+  sssinr_level2mrcount, bigint, SS-SINR在[-15;-10)范围内的MR数目, null, null, null, null, null, null, null, null
+  sssinr_level3mrcount, bigint, SS-SINR在[-10;-7)范围内的MR数目, null, null, null, null, null, null, null, null
+  sssinr_level4mrcount, bigint, SS-SINR在[-7;-2)范围内的MR数目, null, null, null, null, null, null, null, null
+  sssinr_level5mrcount, bigint, SS-SINR在[-2;3)范围内的MR数目, null, null, null, null, null, null, null, null
+  sssinr_level6mrcount, bigint, SS-SINR在[3;8)范围内的MR数目, null, null, null, null, null, null, null, null
+  sssinr_level7mrcount, bigint, SS-SINR在[8;13)范围内的MR数目, null, null, null, null, null, null, null, null
+  sssinr_level8mrcount, bigint, SS-SINR在[13;18)范围内的MR数目, null, null, null, null, null, null, null, null
+  sssinr_level9mrcount, bigint, SS-SINR在[18;23)范围内的MR数目, null, null, null, null, null, null, null, null
+  sssinr_level10mrcount, bigint, SS-SINR在[23;28)范围内的MR数目, null, null, null, null, null, null, null, null
+  sssinr_level11mrcount, bigint, SS-SINR在[28;33)范围内的MR数目, null, null, null, null, null, null, null, null
+  sssinr_level12mrcount, bigint, SS-SINR在[33;+∞)范围内的MR数目, null, null, null, null, null, null, null, null
+  sssinrgoodcount, bigint, SS-SINR优良数, null, null, null, null, null, null, null, null
+  sssinrgoodratio, double, SS-SINR优良比例, null, null, null, null, null, null, null, null
+  weakcover_totalssrsrp, bigint, 弱覆盖MR总SS-RSRP值, null, null, null, null, null, null, null, null
+  weakcover_mrcount, bigint, 弱覆盖MR总数, null, null, null, null, null, null, null, null
+  weakcover_avgssrsrp, double, 弱覆盖MR平均SS-RSRP值, null, null, null, null, null, null, null, null
+  weakcover_mrratio, float, 弱覆盖MR比例, null, null, null, null, null, null, null, null
+  overlap_totalssrsrp, bigint, 重叠覆盖MR总SS-RSRP值, null, null, null, null, null, null, null, null
+  overlap_mrcount, bigint, 重叠覆盖MR总数, null, null, null, null, null, null, null, null
+  overlap_avgssrsrp, double, 重叠覆盖MR平均SS-RSRP值, null, null, null, null, null, null, null, null
+  overlap_mrratio, float, 重叠覆盖MR比例, null, null, null, null, null, null, null, null
+  overshoot_totalssrsrp, bigint, 过覆盖MR总SS-RSRP值, null, null, null, null, null, null, null, null
+  overshoot_mrcount, bigint, 过覆盖MR总数, null, null, null, null, null, null, null, null
+  overshoot_avgssrsrp, double, 过覆盖MR平均SS-RSRP值, null, null, null, null, null, null, null, null
+  overshoot_mrratio, float, 过覆盖MR比例, null, null, null, null, null, null, null, null
+  compgoodcovernum, bigint, 综合良好覆盖MR数, null, null, null, null, null, null, null, null
+  tadv_0_78, bigint, 距离在[0~78]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_78_156, bigint, 距离在  (78~156]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_156_234, bigint, 距离在  (156~234]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_234_312, bigint, 距离在  (234~312]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_312_390, bigint, 距离在  (312~390]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_390_468, bigint, 距离在  (390~468]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_468_546, bigint, 距离在  (468~546]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_546_624, bigint, 距离在  (546~624]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_624_702, bigint, 距离在  (624~702]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_702_780, bigint, 距离在  (702~780]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_780_858, bigint, 距离在  (780~858]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_858_936, bigint, 距离在  (858~936]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_936_1170, bigint, 距离在  (936~1170]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_1170_1404, bigint, 距离在  (1170~1404]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_1404_1638, bigint, 距离在  (1404~1638]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_1638_1872, bigint, 距离在  (1638~1872]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_1872_2106, bigint, 距离在  (1872~2106]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_2106_2886, bigint, 距离在  (2106~2886]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_2886_3666, bigint, 距离在  (2886~3666]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_3666_4446, bigint, 距离在  (3666~4446]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_4446_9984, bigint, 距离在  (4446~9984]米内的采样点个数, null, null, null, null, null, null, null, null
+  tadv_up_9984, bigint, 距离在＞9984米内的采样点个数, null, null, null, null, null, null, null, null
+  rsrp95_sinrf3, bigint, rsrp≥-95且SINR≥-3的采样点个数, null, null, null, null, null, null, null, null
+  rsrp95_sinr0, bigint, rsrp≥-95且SINR≥0的采样点个数, null, null, null, null, null, null, null, null
+  rsrp95_sinr3, bigint, rsrp≥-95且SINR≥3的采样点个数, null, null, null, null, null, null, null, null
+  rsrp95_sinr10, bigint, rsrp≥-95且SINR≥10的采样点个数, null, null, null, null, null, null, null, null
+  rsrp100_sinrf3, bigint, rsrp≥-100且SINR≥-3的采样点个数, null, null, null, null, null, null, null, null
+  rsrp100_sinr0, bigint, rsrp≥-100且SINR≥0的采样点个数, null, null, null, null, null, null, null, null
+  rsrp100_sinr3, bigint, rsrp≥-100且SINR≥3的采样点个数, null, null, null, null, null, null, null, null
+  rsrp105_sinrf3, bigint, rsrp≥-105且SINR≥-3的采样点个数, null, null, null, null, null, null, null, null
+  rsrp105_sinr0, bigint, rsrp≥-105且SINR≥0的采样点个数, null, null, null, null, null, null, null, null
+  rsrp105_sinr3, bigint, rsrp≥-105且SINR≥3的采样点个数, null, null, null, null, null, null, null, null
+  rsrp110_sinrf3, bigint, rsrp≥-110且SINR≥-3的采样点个数, null, null, null, null, null, null, null, null
+  rsrp110_sinr0, bigint, rsrp≥-110且SINR≥0的采样点个数, null, null, null, null, null, null, null, null
+  rsrp110_sinr3, bigint, rsrp≥-110且SINR≥3的采样点个数, null, null, null, null, null, null, null, null
+  validrsrp_sinr_totalmrcount, bigint, rsrq且SINR有效采样点个数, null, null, null, null, null, null, null, null
+  data_source, int, "数据源类型,0:电信独享 1：电信共享 2：联通共享", null, null, null, null, null, null, null, null
+  left_up_lon, double, 栅格左上角经度, null, null, null, null, null, null, null, null
+  left_up_lat, double, 栅格左上角维度, null, null, null, null, null, null, null, null
+  right_down_lon, double, 栅格右下角经度, null, null, null, null, null, null, null, null
+  right_down_lat, double, 栅格右下角维度, null, null, null, null, null, null, null, null
+  mod30interfer_avgrsrp, double, MOD30平均RSRP, null, null, null, null, null, null, null, null
+  mod30interfer_mrcount, bigint, MOD30采样点数量, null, null, null, null, null, null, null, null
+  mod30interfer_mrratio, float, MOD30采样点占比, null, null, null, null, null, null, null, null
+  mod30interfer_totalrsrp, bigint, MOD30总RSRP, null, null, null, null, null, null, null, null
+  totaltadv, bigint, 总TA值, null, null, null, null, null, null, null, null
+  tadvcount, bigint, TA采样点数量, null, null, null, null, null, null, null, null
+  min_starttime, string, 最小开始时间(时间戳), A, null, min(meastime), null, 新增字段, 指标, 无, >0
+  max_endtime, string, 最大结束时间(时间戳), A, null, max(meastime), null, 新增字段, 指标, 无, >0
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null

@@ -1,0 +1,37 @@
+theme_domain: 信令感知
+table_name: dm_qulity_s1mme_cell_refactor_d
+table_name_chinese: S1MME信令工参小区关联率统计
+data_frequency: day
+primary_key: 数据描述
+source_table_name[4]{源表英文名, 源表中文名, 别名, 备注, 是否主表}:
+  aggr_lte_dpi_s1mme_usrcel_d, 4G_DPI_S1MME用户小区维度天表, A, 将输入表由aggr_4gxdr_n1mode_usr_cel_h修改为aggr_lte_dpi_s1mme_usrcel_d，且字段s1mme_message_count使用procedure_request_cnt替换，其余逻辑完全不变, 是
+  lte_cm_projdata, 4G电信工参, B, 将输入表由lte_cm_projdata_core修改为lte_cm_projdata，其余逻辑不变, null
+  lte_cm_projdata_corrected, 4G纠偏工参, C, null, null
+  lte_cucc_cm_projdata, 4G联通工参, D, null, null
+fields[26]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 日期, A, p_date, 直取, null, null, 维度, 无, 无
+  provincecode, int, 省编码, A, p_provincecode, 直取, null, null, 维度, 无, 无
+  province_name, string, 省名称, A, province, 直取, null, null, 维度, 无, 无
+  ct_cell_cnt, int, 电信工参小区数, B, null, "count(distinct concat(enodebid, '_', cid))", null, null, 指标, 个, >0
+  cu_cell_cnt, int, 联通工参小区数, D, null, "count(distinct concat(enodebid, '_', cellid))", null, null, 指标, 个, >0
+  ct_corrected_cell_cnt, int, 电信纠偏表小区数, C, null, "count(distinct concat(enodebid, '_', cellid))", null, null, 指标, 个, >=0
+  cell_cnt, int, 电联工参重复小区数, "B|D", null, 重复小区数统计, null, null, 指标, 个, >=0
+  mme_cell_cnt, int, MME小区数, A, null, count(distinct cellkey), null, null, 指标, 个, >0
+  mme_ct_cell_cnt, int, 关联电信小区数, "A|B", null, 关联上小区数统计, null, null, 指标, 个, >0
+  mme_cu_cell_cnt, int, 关联联通小区数, "A|D", null, 关联上小区数统计, null, null, 指标, 个, >0
+  mme_ct_corrected_cell_cnt, int, 关联电信纠偏表小区数, "A|C", null, 关联上小区数统计, null, null, 指标, 个, >=0
+  mme_ctcu_cell_rel_rate, double, 电联工参关联率, "A|B|C|D", null, 关联上小区数统计除以总小区数, null, null, 指标, 无, "[0,1]"
+  mme_cuct_cell_rate, double, MME小区数/电联工参, A, null, S1MME小区数除以三类工参小区数, null, null, 指标, 无, "[0,3]"
+  total_records, bigint, 总信令记录数, A, null, sum(procedure_request_cnt), null, null, 指标, 无, >0
+  valid_cell_records, bigint, 小区非空信令记录数, A, null, 小区非空信令记录数, null, null, 指标, 无, >0
+  ct_cell_records, bigint, 关联电信小区信令记录数, A, null, 关联电信小区信令记录数, null, null, 指标, 无, >0
+  cu_cell_records, bigint, 关联联通小区信令记录数, A, null, 关联联通小区信令记录数, null, null, 指标, 无, >0
+  ct_corrected_cell_records, bigint, 关联电信纠偏表小区信令记录数, A, null, 关联电信纠偏表小区信令记录数, null, null, 指标, 无, >0
+  mdn_cnt, int, 用户数, A, null, count(distinct msisdn), length(msisdn)=11, null, 指标, 无, >0
+  ctcu_cell_mdn_cnt, int, 关联电联小区用户数, A, null, "count(DISTINCT if(ct_cellkey = 1 OR cu_cellkey = 1 OR ct_corrected_cellkey=1, msisdn_valid, NULL))", null, null, 指标, 无, >0
+  cell_fill_rate, double, 小区非空率, A, null, cellkey_record_cnt/total_record, null, null, 指标, 无, "[0,1]"
+  cell_rel_record_rate, double, 关联工参信令占比, A, null, (rel_ct_record_cnt+rel_cu_record_cnt+dist_rel_cu_corrected_record_cnt)/total_record, null, null, 指标, 无, "[0,1]"
+  norel_mdn_rate, double, 关联工参丢失用户数占比, A, null, (mdn_cnt - rel_mdn_cnt)/mdn_cnt, null, null, 指标, 无, "[0,1]"
+  norel_mdn_cnt, int, 关联工参丢失用户数, A, null, mdn_cnt - rel_mdn_cnt, null, null, 指标, 无, >=0
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

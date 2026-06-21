@@ -1,0 +1,32 @@
+theme_domain: 数据感知
+table_name: aggr_lte_dns_usrappcelarea_d
+table_name_chinese: 4G_DPI_dns用户小区区域app维度天表
+data_frequency: 天
+primary_key: 数据描述
+source_table_name[2]{源表英文名, 源表中文名, 别名, 任务描述, 是否主表}:
+  aggr_lte_usrareatime_cel_refactor_d, 4G MR用户常驻区域聚区结果表, A, A left join B，关联条件：b.cellkey=a.cellkey and b.imsi=a.imsi  and b.hour=a.hour and b.quarter=a.quarter, 是
+  aggr_lte_dpi_dns_usrappcel_q, 4G_DPI_dns用户小区app维度15分钟表, B, null, null
+fields[23]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 日期, A, day, 直取, null, null, 维度, 无, yyyy-mm-dd
+  hour, int, 小时, A, hour, 直取, null, null, 维度, 无, 0~23
+  quarter, int, 15分钟, A, quarter, 直取, null, null, 维度, 无, 0~3
+  imsi, string, imsi标识, A, imsi, 直取, null, null, 维度, 无, 无
+  area_id, string, 区域ID, A, area_id, 直取, null, null, 维度, 无, 无
+  area_regionid, string, 区域栅格ID, A, area_regionid, 直取, null, null, 维度, 无, 无
+  area_x_offset_20, string, 区域栅格X偏移_20, A, area_x_offset_20, 直取, null, null, 维度, 无, 无
+  area_y_offset_20, string, 区域栅格Y偏移_20, A, area_y_offset_20, 直取, null, null, 维度, 无, 无
+  area_lon, double, 区域经度, A, area_lon, 直取, null, null, 维度, 无, 无
+  area_lat, double, 区域纬度, A, area_lat, 直取, null, null, 维度, 无, 无
+  cellkey, string, 小区cellkey, A, cellkey, 直取, null, null, 维度, 无, 无
+  servicetype, int, 业务小类编码, B, servicetype, 直取, null, null, 维度, 无, 无
+  dnsqueryreqcount, bigint, DNS查询请求次数, B, null, sum(dns_query_cnt), null, null, 指标, 无, >=0
+  dnsqueryrspcount, bigint, DNS查询成功次数, B, null, sum(dns_suc_cnt), null, null, 指标, 无, >=0
+  dnsquerytime_sum, bigint, DNS查询时延_sum, B, null, sum(dns_delay*dns_query_cnt), null, null, 指标, ms, >=0
+  dnsquerytime_avg, bigint, DNS查询时延, B, null, sum(dns_delay*dns_query_cnt)/sum(dns_query_cnt), null, null, 指标, ms, >=0
+  dnsquerytime_seg_1, bigint, "DNS查询时延在(0,50]的次数", B, null, sum(dns_delay_cnt_0_50), null, null, 指标, 无, >=0
+  dnsquerytime_seg_2, bigint, "DNS查询时延在(50,100]的次数", B, null, sum(dns_delay_cnt_50_100), null, null, 指标, 无, >=0
+  dnsquerytime_seg_3, bigint, "DNS查询时延在(100,150]的次数", B, null, sum(dns_delay_cnt_100_150), null, null, 指标, 无, >=0
+  dnsquerytime_seg_4, bigint, "DNS查询时延在(150,200]的次数", B, null, sum(dns_delay_cnt_150_200), null, null, 指标, 无, >=0
+  dnsquerytime_seg_5, bigint, "DNS查询时延在(200,200000]的次数", B, null, sum(dns_delay_cnt_greater_200), null, null, 指标, 无, >=0
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

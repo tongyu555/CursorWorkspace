@@ -1,0 +1,107 @@
+theme_domain: 问卷调查
+table_name: dm_questionnaire_datatable_usenetwork_stat_m
+table_name_chinese: 我使用network统计datatable月表
+data_frequency: month
+primary_key: 数据描述
+source_table_name[2]{来源系统, 源表英文名, 源表中文名, 别名, 备注, 是否主表, 任务描述}:
+  dtsw, dm_questionnaire_usenetwork_stat_m_d, 我使用-NetWork汇总整月详情天表, A, A先按主键汇聚出指标，再A left join B on 主键字段关联计算环比。, 是, null
+  dtsw, dm_questionnaire_datatable_usenetwork_stat_m, 我使用network统计datatable月表, B, null, null, 取p_month-1
+fields[98]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  p_year, int, 年分区, null, null, null, null, null, null, null, null
+  p_month, int, 月分区, null, null, null, null, null, null, null, null
+  year, int, 年, null, null, null, null, null, null, null, null
+  month, int, 月, null, null, null, null, null, null, null, null
+  area_id, int, 地区编码, A, areacode, 直取, null, null, 维度, 枚举, "2,3,4,5,6"
+  area_name, string, 地区名称, A, area_name, 直取，其它置other, null, null, 维度, 枚举, "{NLZ,VIS,MIN,NCR,SLZ,other,NationWide}"
+  region_id, int, 大区编码, A, regioncode, 直取, null, null, 维度, null, null
+  region_name, string, 大区名称, A, region_name, 直取，其它置other, null, null, 维度, null, null
+  province_id, int, 省编码, A, provincecode, 直取, null, null, 维度, null, null
+  province_name, string, 省名称, A, province_name, 直取，其它置other, null, null, 维度, null, null
+  city_id, int, 城市编码, A, citycode, 直取, null, null, 维度, null, null
+  city_name, string, 城市名称, A, city_name, 直取，其它置other, null, null, 维度, null, null
+  barangay_id, int, barangayID, A, barangay_id, 直取, null, null, 维度, null, null
+  barangay_name, string, barangay名称, A, barangay_name, 直取，其它置other, null, null, 维度, null, null
+  data_level, int, 数据分级, null, null, "(0~5,分别表示全网~barangy)；data_level=0代表全网，area~barangay都置为null", null, null, 维度, 枚举, {0，1，2，3，4，5}
+  service_type, string, 服务类型, A, service_type, 直取，并汇总TOTAL, null, null, 维度, 枚举, "fwa prepaid\nfwa postpaid\nmobile prepaid\nmobile postpaid\nother brands(fmo)\nTOTAL"
+  questionnaire_feedback_cnt, bigint, 问卷反馈量, A, pay_user_nums, sum(pay_user_nums), null, base, 指标, 次, "[0,∞)"
+  questionnaire_feedback_cnt_qoq, doble, 问卷反馈量环比, AB, null, (a.questionnaire_feedback_cnt-b.questionnaire_feedback_cnt)/b.questionnaire_feedback_cnt, null, null, 指标, 比例, "[-∞,∞]"
+  good_ovsat_cnt, bigint, ovsat满意度是良好的次数, A, good_ovsat_nums, sum(good_ovsat_nums), null, null, 指标, 次, "[0,∞)"
+  ovsat_cnt, bigint, ovsat满意度总数, A, ovsat_nums, sum(ovsat_nums), null, null, 指标, 次, "[0,∞)"
+  ovsat_ratio, double, ovsat满意度, A, null, sum(good_ovsat_nums)/sum(ovsat_nums), null, 0vSat, 指标, 比例, "[0,1]"
+  ovsat_ratio_qoq, double, ovsat满意度环比, AB, null, (a.ovsat_ratio-b.ovsat_ratio)/b.ovsat_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_signal_strength_nums, bigint, 信号强度是良好的次数, A, good_signal_strength_nums, sum(good_signal_strength_nums), null, null, 指标, 次, "[0,∞)"
+  signal_strength_nums, bigint, 信号强度总数, A, signal_strength_nums, sum(signal_strength_nums), null, null, 指标, 次, "[0,∞)"
+  signal_strength_ratio, double, 信号强度是良好比例, A, null, sum(good_signal_strength_nums)/sum(signal_strength_nums), null, null, 指标, 比例, "[0,1]"
+  signal_strength_ratio_qoq, double, 信号强度是良好比例环比, AB, null, (a.signal_strength_ratio-b.signal_strength_ratio)/b.signal_strength_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_browsing_speed_nums, bigint, 浏览速度是良好的次数, A, good_browsing_speed_nums, sum(good_browsing_speed_nums), null, null, 指标, 次, "[0,∞)"
+  browsing_speed_nums, bigint, 浏览速度总数, A, browsing_speed_nums, sum(browsing_speed_nums), null, null, 指标, 次, "[0,∞)"
+  browsing_speed_ratio, double, 浏览速度是良好比例, A, null, sum(good_browsing_speed_nums)/sum(browsing_speed_nums), null, null, 指标, 比例, "[0,1]"
+  browsing_speed_ratio_qoq, double, 浏览速度是良好比例环比, AB, null, (a.browsing_speed_ratio-b.browsing_speed_ratio)/b.browsing_speed_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_speed_download_movies_nums, bigint, 下载电影的速度是良好的次数, A, good_speed_download_movies_nums, sum(good_speed_download_movies_nums), null, null, 指标, 次, "[0,∞)"
+  speed_download_movies_nums, bigint, 下载电影的速度总数, A, speed_download_movies_nums, sum(speed_download_movies_nums), null, null, 指标, 次, "[0,∞)"
+  speed_download_movies_ratio, double, 下载电影的速度是良好比例, A, null, sum(good_speed_download_movies_nums)/sum(speed_download_movies_nums), null, null, 指标, 比例, "[0,1]"
+  speed_download_movies_ratio_qoq, double, 下载电影的速度是良好比例环比, AB, null, (a.speed_download_movies_ratio-b.speed_download_movies_ratio)/b.speed_download_movies_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_speed_browse_social_media_apps_nums, bigint, 浏览社交媒体应用程序的速度是良好的次数, A, good_speed_browse_social_media_apps_nums, sum(good_speed_browse_social_media_apps_nums), null, null, 指标, 次, "[0,∞)"
+  speed_browse_social_media_apps_nums, bigint, 浏览社交媒体应用程序的速度总数, A, speed_browse_social_media_apps_nums, sum(speed_browse_social_media_apps_nums), null, null, 指标, 次, "[0,∞)"
+  speed_browse_social_media_apps_ratio, double, 浏览社交媒体应用程序的速度是良好比例, A, null, sum(good_speed_browse_social_media_apps_nums)/sum(speed_browse_social_media_apps_nums), null, null, 指标, 比例, "[0,1]"
+  speed_browse_social_media_apps_ratio_qoq, double, 浏览社交媒体应用程序的速度是良好比例环比, AB, null, (a.speed_browse_social_media_apps_ratio-b.speed_browse_social_media_apps_ratio)/b.speed_browse_social_media_apps_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_speed_refresh_email_nums, bigint, 刷新邮件速度是良好的次数, A, good_speed_refresh_email_nums, sum(good_speed_refresh_email_nums), null, null, 指标, 次, "[0,∞)"
+  speed_refresh_email_nums, bigint, 刷新邮件速度总数, A, speed_refresh_email_nums, sum(speed_refresh_email_nums), null, null, 指标, 次, "[0,∞)"
+  speed_refresh_email_ratio, double, 刷新邮件速度是良好比例, A, null, sum(good_speed_refresh_email_nums)/sum(speed_refresh_email_nums), null, null, 指标, 比例, "[0,1]"
+  speed_refresh_email_ratio_qoq, double, 刷新邮件速度是良好比例环比, AB, null, (a.speed_refresh_email_ratio-b.speed_refresh_email_ratio)/b.speed_refresh_email_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_signal_stability_nums, bigint, 信号稳定性是良好的次数, A, good_signal_stability_nums, sum(good_signal_stability_nums), null, null, 指标, 次, "[0,∞)"
+  signal_stability_nums, bigint, 信号稳定性总数, A, signal_stability_nums, sum(signal_stability_nums), null, null, 指标, 次, "[0,∞)"
+  signal_stability_ratio, double, 信号稳定性是良好比例, A, null, sum(good_signal_stability_nums)/sum(signal_stability_nums), null, null, 指标, 比例, "[0,1]"
+  signal_stability_ratio_qoq, double, 信号稳定性是良好比例环比, AB, null, (a.signal_stability_ratio-b.signal_stability_ratio)/b.signal_stability_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_stability_connection_stream_videos_nums, bigint, 流媒体视频时连接的稳定性是良好的次数, A, good_stability_connection_stream_videos_nums, sum(good_stability_connection_stream_videos_nums), null, null, 指标, 次, "[0,∞)"
+  stability_connection_stream_videos_nums, bigint, 流媒体视频时连接的稳定性总数, A, stability_connection_stream_videos_nums, sum(stability_connection_stream_videos_nums), null, null, 指标, 次, "[0,∞)"
+  stability_connection_stream_videos_ratio, double, 流媒体视频时连接的稳定性是良好比例, A, null, sum(good_stability_connection_stream_videos_nums)/sum(stability_connection_stream_videos_nums), null, null, 指标, 比例, "[0,1]"
+  stability_connection_stream_videos_ratio_qoq, double, 流媒体视频时连接的稳定性是良好比例环比, AB, null, (a.stability_connection_stream_videos_ratio-b.stability_connection_stream_videos_ratio)/b.stability_connection_stream_videos_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_stability_connection_play_olgames_nums, bigint, 流媒体游戏时连接的稳定性是良好的次数, A, good_stability_connection_play_olgames_nums, sum(good_stability_connection_play_olgames_nums), null, null, 指标, 次, "[0,∞)"
+  stability_connection_play_olgames_nums, bigint, 流媒体游戏时连接的稳定性总数, A, stability_connection_play_olgames_nums, sum(stability_connection_play_olgames_nums), null, null, 指标, 次, "[0,∞)"
+  stability_connection_play_olgames_ratio, double, 流媒体游戏时连接的稳定性是良好比例, A, null, sum(good_stability_connection_play_olgames_nums)/sum(stability_connection_play_olgames_nums), null, null, 指标, 比例, "[0,1]"
+  stability_connection_play_olgames_ratio_qoq, double, 流媒体游戏时连接的稳定性是良好比例环比, AB, null, (a.stability_connection_play_olgames_ratio-b.stability_connection_play_olgames_ratio)/b.stability_connection_play_olgames_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_stability_connection_stream_music_nums, bigint, 流媒体音乐时连接的稳定性是良好的次数, A, good_stability_connection_stream_music_nums, sum(good_stability_connection_stream_music_nums), null, null, 指标, 次, "[0,∞)"
+  stability_connection_stream_music_nums, bigint, 流媒体音乐时连接的稳定性总数, A, stability_connection_stream_music_nums, sum(stability_connection_stream_music_nums), null, null, 指标, 次, "[0,∞)"
+  stability_connection_stream_music_ratio, double, 流媒体音乐时连接的稳定性是良好比例, A, null, sum(good_stability_connection_stream_music_nums)/sum(stability_connection_stream_music_nums), null, null, 指标, 比例, "[0,1]"
+  stability_connection_stream_music_ratio_qoq, double, 流媒体音乐时连接的稳定性是良好比例环比, AB, null, (a.stability_connection_stream_music_ratio-b.stability_connection_stream_music_ratio)/b.stability_connection_stream_music_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_video_call_qualityvia_chatapp_nums, bigint, 通过聊天应用提高视频通话质量优良次数, A, good_video_call_qualityvia_chatapp_nums, sum(good_video_call_qualityvia_chatapp_nums), null, null, 指标, 次, "[0,∞)"
+  video_call_qualityvia_chatapp_nums, bigint, 通过聊天应用提高视频通话质量总次数, A, video_call_qualityvia_chatapp_nums, sum(video_call_qualityvia_chatapp_nums), null, null, 指标, 次, "[0,∞)"
+  video_call_qualityvia_chatapp_ratio, double, 通过聊天应用提高视频通话质量优良比例, A, null, sum(good_video_call_qualityvia_chatapp_nums)/sum(video_call_qualityvia_chatapp_nums), null, null, 指标, 比例, "[0,1]"
+  video_call_qualityvia_chatapp_ratio_qoq, double, 通过聊天应用提高视频通话质量优良比例环比, AB, null, (a.video_call_qualityvia_chatapp_ratio-b.video_call_qualityvia_chatapp_ratio)/b.video_call_qualityvia_chatapp_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_voice_call_qualityvia_chatapp_nums, bigint, 通过聊天应用提高语音通话质量优良次数, A, good_voice_call_qualityvia_chatapp_nums, sum(good_voice_call_qualityvia_chatapp_nums), null, null, 指标, 次, "[0,∞)"
+  voice_call_qualityvia_chatapp_nums, bigint, 通过聊天应用提高语音通话质量总次数, A, voice_call_qualityvia_chatapp_nums, sum(voice_call_qualityvia_chatapp_nums), null, null, 指标, 次, "[0,∞)"
+  voice_call_qualityvia_chatapp_ratio, double, 通过聊天应用提高语音通话质量优良比例, A, null, sum(good_voice_call_qualityvia_chatapp_nums)/sum(voice_call_qualityvia_chatapp_nums), null, null, 指标, 比例, "[0,1]"
+  voice_call_qualityvia_chatapp_ratio_qoq, double, 通过聊天应用提高语音通话质量优良比例环比, AB, null, (a.voice_call_qualityvia_chatapp_ratio-b.voice_call_qualityvia_chatapp_ratio)/b.voice_call_qualityvia_chatapp_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_succesful_voice_call_connectionto_other_dito_num_nums, bigint, 成功连接到其他DITO号码的语音通话优良次数, A, good_succesful_voice_call_connectionto_other_dito_num_nums, sum(good_succesful_voice_call_connectionto_other_dito_num_nums), null, null, 指标, 次, "[0,∞)"
+  succesful_voice_call_connectionto_other_dito_num_nums, bigint, 成功连接到其他DITO号码的语音通话总次数, A, succesful_voice_call_connectionto_other_dito_num_nums, sum(succesful_voice_call_connectionto_other_dito_num_nums), null, null, 指标, 次, "[0,∞)"
+  succesful_voice_call_connectionto_other_dito_num_ratio, double, 成功连接到其他DITO号码的语音通话优良比例, A, null, sum(good_succesful_voice_call_connectionto_other_dito_num_nums)/sum(succesful_voice_call_connectionto_other_dito_num_nums), null, null, 指标, 比例, "[0,1]"
+  succesful_voice_call_connectionto_other_dito_num_ratio_qoq, double, 成功连接到其他DITO号码的语音通话优良比例环比, AB, null, (a.succesful_voice_call_connectionto_other_dito_num_ratio-b.succesful_voice_call_connectionto_other_dito_num_ratio)/b.succesful_voice_call_connectionto_other_dito_num_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_voice_call_quality_within_dito_network_nums, bigint, DITO网络中的语音通话质量优良次数, A, good_voice_call_quality_within_dito_network_nums, sum(good_voice_call_quality_within_dito_network_nums), null, null, 指标, 次, "[0,∞)"
+  voice_call_quality_within_dito_network_nums, bigint, DITO网络中的语音通话质量总次数, A, voice_call_quality_within_dito_network_nums, sum(voice_call_quality_within_dito_network_nums), null, null, 指标, 次, "[0,∞)"
+  voice_call_quality_within_dito_network_ratio, double, DITO网络中的语音通话质量优良比例, A, null, sum(good_voice_call_quality_within_dito_network_nums)/sum(voice_call_quality_within_dito_network_nums), null, null, 指标, 比例, "[0,1]"
+  voice_call_quality_within_dito_network_ratio_qoq, double, DITO网络中的语音通话质量优良比例环比, AB, null, (a.voice_call_quality_within_dito_network_ratio-b.voice_call_quality_within_dito_network_ratio)/b.voice_call_quality_within_dito_network_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_succesful_voice_call_connectionto_other_networks_nums, bigint, 成功连接到其他网络的语音通话优良次数, A, good_succesful_voice_call_connectionto_other_networks_nums, sum(good_succesful_voice_call_connectionto_other_networks_nums), null, null, 指标, 次, "[0,∞)"
+  succesful_voice_call_connectionto_other_networks_nums, bigint, 成功连接到其他网络的语音通话总次数, A, succesful_voice_call_connectionto_other_networks_nums, sum(succesful_voice_call_connectionto_other_networks_nums), null, null, 指标, 次, "[0,∞)"
+  succesful_voice_call_connectionto_other_networks_ratio, double, 成功连接到其他网络的语音通话优良比例, A, null, sum(good_succesful_voice_call_connectionto_other_networks_nums)/sum(succesful_voice_call_connectionto_other_networks_nums), null, null, 指标, 比例, "[0,1]"
+  succesful_voice_call_connectionto_other_networks_ratio_qoq, double, 成功连接到其他网络的语音通话优良比例环比, AB, null, (a.succesful_voice_call_connectionto_other_networks_ratio-b.succesful_voice_call_connectionto_other_networks_ratio)/b.succesful_voice_call_connectionto_other_networks_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_voice_call_qualitywith_other_network_nums, bigint, 与其他网络的语音通话质量优良次数, A, good_voice_call_qualitywith_other_network_nums, sum(good_voice_call_qualitywith_other_network_nums), null, null, 指标, 次, "[0,∞)"
+  voice_call_qualitywith_other_network_nums, bigint, 与其他网络的语音通话质量总次数, A, voice_call_qualitywith_other_network_nums, sum(voice_call_qualitywith_other_network_nums), null, null, 指标, 次, "[0,∞)"
+  voice_call_qualitywith_other_network_ratio, double, 与其他网络的语音通话质量优良比例, A, null, sum(good_voice_call_qualitywith_other_network_nums)/sum(voice_call_qualitywith_other_network_nums), null, null, 指标, 比例, "[0,1]"
+  voice_call_qualitywith_other_network_ratio_qoq, double, 与其他网络的语音通话质量优良比例环比, AB, null, (a.voice_call_qualitywith_other_network_ratio-b.voice_call_qualitywith_other_network_ratio)/b.voice_call_qualitywith_other_network_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_sms_receipt_speed_within_dito_network_nums, bigint, DITO网络内的短信接收速度优良次数, A, good_sms_receipt_speed_within_dito_network_nums, sum(good_sms_receipt_speed_within_dito_network_nums), null, null, 指标, 次, "[0,∞)"
+  sms_receipt_speed_within_dito_network_nums, bigint, DITO网络内的短信接收速度总次数, A, sms_receipt_speed_within_dito_network_nums, sum(sms_receipt_speed_within_dito_network_nums), null, null, 指标, 次, "[0,∞)"
+  sms_receipt_speed_within_dito_network_ratio, double, DITO网络内的短信接收速度优良比例, A, null, sum(good_sms_receipt_speed_within_dito_network_nums)/sum(sms_receipt_speed_within_dito_network_nums), null, null, 指标, 比例, "[0,1]"
+  sms_receipt_speed_within_dito_network_ratio_qoq, double, DITO网络内的短信接收速度优良比例环比, AB, null, (a.sms_receipt_speed_within_dito_network_ratio-b.sms_receipt_speed_within_dito_network_ratio)/b.sms_receipt_speed_within_dito_network_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_sms_sending_speed_within_dito_network_nums, bigint, DITO网络内的短信发送速度优良次数, A, good_sms_sending_speed_within_dito_network_nums, sum(good_sms_sending_speed_within_dito_network_nums), null, null, 指标, 次, "[0,∞)"
+  sms_sending_speed_within_dito_network_nums, bigint, DITO网络内的短信发送速度总次数, A, sms_sending_speed_within_dito_network_nums, sum(sms_sending_speed_within_dito_network_nums), null, null, 指标, 次, "[0,∞)"
+  sms_sending_speed_within_dito_network_ratio, double, DITO网络内的短信发送速度优良比例, A, null, sum(good_sms_sending_speed_within_dito_network_nums)/sum(sms_sending_speed_within_dito_network_nums), null, null, 指标, 比例, "[0,1]"
+  sms_sending_speed_within_dito_network_ratio_qoq, double, DITO网络内的短信发送速度优良比例环比, AB, null, (a.sms_sending_speed_within_dito_network_ratio-b.sms_sending_speed_within_dito_network_ratio)/b.sms_sending_speed_within_dito_network_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_sms_receipt_speed_with_other_network_nums, bigint, 与其他网络的短信接收速度优良次数, A, good_sms_receipt_speed_with_other_network_nums, sum(good_sms_receipt_speed_with_other_network_nums), null, null, 指标, 次, "[0,∞)"
+  sms_receipt_speed_with_other_network_nums, bigint, 与其他网络的短信接收速度总次数, A, sms_receipt_speed_with_other_network_nums, sum(sms_receipt_speed_with_other_network_nums), null, null, 指标, 次, "[0,∞)"
+  sms_receipt_speed_with_other_network_ratio, double, 与其他网络的短信接收速度优良比例, A, null, sum(good_sms_receipt_speed_with_other_network_nums)/sum(sms_receipt_speed_with_other_network_nums), null, null, 指标, 比例, "[0,1]"
+  sms_receipt_speed_with_other_network_ratio_qoq, double, 与其他网络的短信接收速度优良比例环比, AB, null, (a.sms_receipt_speed_with_other_network_ratio-b.sms_receipt_speed_with_other_network_ratio)/b.sms_receipt_speed_with_other_network_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_sms_sending_speed_with_other_network_nums, bigint, 与其他网络的短信发送速度优良次数, A, good_sms_sending_speed_with_other_network_nums, sum(good_sms_sending_speed_with_other_network_nums), null, null, 指标, 次, "[0,∞)"
+  sms_sending_speed_with_other_network_nums, bigint, 与其他网络的短信发送速度总次数, A, sms_sending_speed_with_other_network_nums, sum(sms_sending_speed_with_other_network_nums), null, null, 指标, 次, "[0,∞)"
+  sms_sending_speed_with_other_network_ratio, double, 与其他网络的短信发送速度优良比例, A, null, sum(good_sms_sending_speed_with_other_network_nums)/sum(sms_sending_speed_with_other_network_nums), null, null, 指标, 比例, "[0,1]"
+  sms_sending_speed_with_other_network_ratio_qoq, double, 与其他网络的短信发送速度优良比例环比, AB, null, (a.sms_sending_speed_with_other_network_ratio-b.sms_sending_speed_with_other_network_ratio)/b.sms_sending_speed_with_other_network_ratio, null, null, 指标, 比例, "[-∞,∞]"

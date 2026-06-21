@@ -1,0 +1,25 @@
+theme_domain: /
+table_name: ods_lte_mro_q_location
+table_name_chinese: 4G电联经纬度详单表
+data_frequency: hour
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 备注}:
+  fact_lte_mro_usrbackfill_q, 4G电联MRO用户回填详单表, A, 过滤条件：data_source=0
+fields[17]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  datetime, string, 测量时间, null, datetime, 直取, null, null, 详单, 无, 无
+  imsi, string, 用户IMSI, null, imsi, 直取, null, null, 详单, 无, 无
+  mdn, string, 用户号码, null, msisdn, 直取, null, null, 详单, 无, 无
+  imei, string, 用户imei号, null, imei, 直取, null, null, 详单, 无, 无
+  enodebid, int, 基站ID, null, enodebid, 直取, null, null, 详单, 无, 无
+  cellid, int, 小区ID, null, cellid, 直取, null, null, 详单, 无, 无
+  provincecode, int, 省编码, null, p_provincecode, 直取, null, null, 详单, 无, 无
+  mrlon, double, MR经度, null, mrlon, 直取, null, null, 详单, 无, 无
+  mrlat, double, MR纬度, null, mrlat, 直取, null, null, 详单, 无, 无
+  locationtype, int, 定位类型, null, locationtype, 直取, null, null, 详单, 无, 无
+  ta, int, TADV值, null, ta, 直取, null, 新增字段, 详单, 无, 无
+  rsrp, int, RSRP, null, rsrp, 直取, null, 新增字段, 详单, 无, 无
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null
+  p_region, int, "厂家分区：100001:中兴|100002:华为|100003:诺基亚|100004:爱立信|100005:大唐", null, vendor, 直取, null, null, null, null, null
+  p_quarter, int, 15分钟分区, null, null, null, null, null, null, null, null

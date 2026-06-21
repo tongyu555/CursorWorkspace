@@ -1,0 +1,20 @@
+theme_domain: 信令感知
+table_name: aggr_lte_dpi_s1mme_dcnr_usrcel_h
+table_name_chinese: S1MME用户小区清单小时表
+data_frequency: hour
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 是否主表}:
+  aggr_lte_dpi_s1mme_base_q, 4G_DPI_S1MME基础维度15分钟汇聚表(含定界定位), A, 是
+fields[12]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 日期, A, p_date, 直取, null, null, 维度, 无, 无
+  hour, int, 小时, A, p_hour, 直取, null, null, 维度, 无, 无
+  imsi, string, 永久用户标识。4G 填写用户IMSI。, A, imsi, 直取, null, null, 维度, 无, 无
+  imei, string, 永久设备标识。4G填写IMEI/IMEISV。保持信令抽取的原样，无需进行IMEI和IMEISV间的转化。, A, imei, 直取, null, null, 维度, 无, 无
+  msisdn, string, 用户号码。, A, msisdn, 直取, null, null, 维度, 无, 无
+  home_province, string, 用户的归属地省份，枚举定义参见附录G。对国际漫入用户时，该字段填写用户归属运营商PLMN。, A, home_province, 直取, null, null, 维度, 无, 无
+  cellkey, string, 小区cellkey, A, cellkey, 直取, null, null, 维度, 无, 无
+  ue_dcnr, bigint, 是否支持双连接, A, null, max(ue_dcnr), null, null, 指标, 无, "0,1,null"
+  n1_mode, bigint, 当终端 SA 开关已打开，则 N1 MODE=1；当终端未打开 SA 开关，则 N1 MODE=0, A, null, max(n1_mode), null, null, 指标, 无, "0,1,null"
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null

@@ -1,0 +1,40 @@
+theme_domain: 数据感知
+table_name: aggr_lte_dpi_dns_cel_d
+table_name_chinese: 4G_DPI_dns小区维度天表
+data_frequency: day
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 是否主表}:
+  aggr_lte_dpi_dns_cel_h, 4G_DPI_dns小区维度小时表, A, 是
+fields[32]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 日期, A, p_date, 直取, null, null, 维度, 无, yyyy-mm-dd
+  interface, int, 接口类型, A, interface, 直取, null, null, 维度, 无, <=101
+  rattype, int, 网络类型（4G：6；5G：10）, A, rattype, 直取, null, null, 维度, 无, "6,10"
+  provincecode, int, 省编码, A, p_provincecode, 直取, null, null, 维度, 无, 6位数编码
+  citycode, int, 市编码, B, citycode, 直取, null, null, 维度, 无, 6位数编码
+  districtcode, int, 区编码, B, districtcode, 直取, null, null, 维度, 无, 6位数编码
+  province, string, 省名称, B, province, 直取, null, null, 维度, 无, 无
+  city, string, 地市名称, B, city, 直取, null, null, 维度, 无, 无
+  district, string, 区县名称, B, district, 直取, null, null, 维度, 无, 无
+  cellkey, string, 小区cellkey, A, cellkey, 直取, null, null, 维度, 无, 无
+  dnssuctime_sum, bigint, DNS查询成功时延_求和, A, null, sum(dnssuctime_sum), null, null, 指标, 无, >=0
+  dnssuc_over2s_cnt, bigint, DNS查询时延>2s次数, A, null, sum(dnssuc_over2s_cnt), null, null, 指标, 无, >=0
+  replycode1_cnt, bigint, DNS格式错误次数, A, null, sum(replycode1_cnt), null, null, 指标, 无, >=0
+  replycode2_cnt, bigint, DNS服务器错误次数, A, null, sum(replycode2_cnt), null, null, 指标, 无, >=0
+  replycode3_cnt, bigint, DNS域名错误次数, A, null, sum(replycode3_cnt), null, null, 指标, 无, >=0
+  replycode4_cnt, bigint, DNS未实现次数, A, null, sum(replycode4_cnt), null, null, 指标, 无, >=0
+  replycode5_cnt, bigint, DNS服务器拒绝次数, A, null, sum(replycode5_cnt), null, null, 指标, 无, >=0
+  replycode_null_cnt, bigint, DNS无响应次数, A, null, sum(replycode_null_cnt), null, null, 指标, 无, >=0
+  xdr_suc_cnt, bigint, xdr成功条数, A, null, sum(xdr_suc_cnt), null, null, 指标, 无, >=0
+  abnormal_cnt, bigint, 质差话单数量, A, null, sum(abnormal_cnt), null, null, 指标, 无, >=0
+  dns_query_cnt, int, DNS请求次数, A, null, sum(dns_query_cnt), null, null, 指标, 无, >=0
+  dns_suc_cnt, int, DNS成功次数, A, null, sum(dns_suc_cnt), null, null, 指标, 无, >=0
+  dns_suc_rate, double, DNS查询成功率, A, null, sum(dns_suc_cnt)/sum(dns_query_cnt), null, null, 指标, 无, "[0,1]"
+  dns_delay, double, DNS时延, A, null, sum(dns_delay*dns_query_cnt)/sum(dns_query_cnt), null, null, 指标, 无, >=0
+  dns_delay_custom, double, DNS时延（自定义：剔除时延大于100ms的详单数据）, A, null, sum(dns_delay_custom*dns_query_cnt)/sum(dns_query_cnt), null, null, 指标, 无, "[0,100]"
+  dns_delay_cnt_0_50, bigint, "DNS查询时延在(0,50]的次数", A, null, sum(dns_delay_cnt_0_50), null, null, 指标, 无, >=0
+  dns_delay_cnt_50_100, bigint, "DNS查询时延在(50,100]的次数", A, null, sum(dns_delay_cnt_50_100), null, null, 指标, 无, >=0
+  dns_delay_cnt_100_150, bigint, "DNS查询时延在(100,150]的次数", A, null, sum(dns_delay_cnt_100_150), null, null, 指标, 无, >=0
+  dns_delay_cnt_150_200, bigint, "DNS查询时延在(150,200]的次数", A, null, sum(dns_delay_cnt_150_200), null, null, 指标, 无, >=0
+  dns_delay_cnt_greater_200, bigint, "DNS查询时延在(200,200000]的次数", A, null, sum(dns_delay_cnt_greater_200), null, null, 指标, 无, >=0
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

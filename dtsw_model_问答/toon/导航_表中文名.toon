@@ -1,0 +1,49 @@
+theme_domain: 表英文名
+table_name: 表中文名
+table_name_chinese: 数据描述
+data_frequency: 最小时间分区
+primary_key: null
+source_table_name[0]:
+fields[42]{内部编号, 索引, 项目名称, 数据层级, 主题域, 表英文名, 表中文名, 数据描述, 汇聚维度, 数据时间粒度, 最小时间分区, 计算位置, 是否同步, 生命周期（存储周期单位：天）, 前向表, 支撑应用/系统, 新建/升级, 备注, 同步数据库}:
+  1, 1, 网络数据处理系统, 贴源层, /, ods_lte_mro_analysis_q, 4G电联MRO解析详单表, 4G电联MRO解析详单表, /, 详单, 15分钟, 前置, null, 3, 原始数据解析, null, 新建, null, null
+  2, 2, 网络数据处理系统, 整合层, /, fact_lte_mro_location_q, 4G电联MRO位置定位详单表, 4G电联MRO位置定位详单表, /, 详单, 15分钟, 前置, null, 3, ods_lte_mro_analysis_q, null, 新建, null, null
+  3, 3, 网络数据处理系统, 整合层, /, fact_lte_mro_usrbackfill_q, 4G电联MRO用户回填详单表, 4G电联MRO用户回填详单表, /, 详单, 15分钟, 前置, null, 3, fact_lte_mro_location_q、ods_pscp_s1mme_front_5min, 建维优, 新建, null, null
+  3.2, 3.2, 网络数据处理系统, 整合层, /, fact_lte_mro_iov_refactor_q, 4G电联车载用户MRO事实表, 4G电联车载用户MRO事实表, /, 详单, 15分钟, 前置, 是, 3, fact_lte_mro_usrbackfill_q、cfg_iov_usr_list, null, 新建, null, null
+  4, 4, 网络数据处理系统, 整合层, /, fact_lte_mro_neighbor_q, 4G电联MRO邻区事实表, 4G电联MRO邻区事实表, /, 详单, 15分钟, 前置, null, 3, fact_lte_mro_usrbackfill_q、lte_cm_projdata、lte_cucc_cm_projdata, null, 新建, null, null
+  5, 5, 网络数据处理系统, 整合层, /, ods_lte_mro_q_location, 4G电信经纬度详单表, 4G电联经纬度详单表, /, 详单, 15分钟, 前置, 是, 3, fact_lte_mro_usrbackfill_q, 位置能力系统, 升级, null, null
+  7, 7, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_sncell_problem_h, MR数据主邻小区对覆盖问题分析汇聚小时表(重叠覆盖与MOD3), MR数据主邻小区对重叠覆盖分析汇聚小时表, 邻区对, 小时, 小时, 前置, 是, 7, fact_lte_mro_neighbor_q、lte_cm_projdata、lte_cucc_cm_projdata, null, 新建, null, null
+  8, 8, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_sncell_problem_d, MR数据主邻小区对覆盖问题分析汇聚天表(重叠覆盖与MOD3), MR数据主邻小区对重叠覆盖分析汇聚天表, 邻区对, 天, 天, 核心, null, 30, aggr_lte_sncell_problem_h, 建维优, 新建, null, null
+  12, 12, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_problem_usrcelgrd_q, 4G MR主小区覆盖问题汇聚指标15分钟表, 4G MR主小区覆盖问题汇聚指标15分钟表, 用户小区栅格, 15分钟, 15分钟, 前置, null, 7, fact_lte_mro_neighbor_q, null, 新建, null, null
+  13, 13, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_base_q, 4G MR用户小区栅格覆盖指标15分钟表(无问题打标), 4G MR用户小区栅格覆盖指标15分钟表(无问题打标), 用户小区栅格, 15分钟, 15分钟, 前置, null, 7, fact_lte_mro_usrbackfill_q、lte_cm_projdata、lte_cucc_cm_projdata, null, 新建, null, null
+  14, 14, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_base_usr_refactor_q, 4G MR用户小区栅格覆盖指标15分钟表, 4G MR用户小区栅格覆盖指标15分钟表, 用户小区栅格, 15分钟, 15分钟, 前置, 是, 7, aggr_lte_coverage_base_q、aggr_lte_coverage_problem_usrcelgrd_q, null, 升级, null, null
+  15, 15, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_base_usr_refactor_h, 4G MR用户小区栅格覆盖指标小时表, 4G MR用户小区栅格覆盖指标小时表, 用户小区栅格, 小时, 小时, 核心, null, 14, aggr_lte_coverage_base_usr_refactor_q, 建维优, 升级, null, null
+  17, 17, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_base_refactor_h, 4G MR小区栅格覆盖指标小时表, 4G MR小区栅格覆盖指标小时表, 小区栅格, 小时, 小时, 核心, null, 14, aggr_lte_coverage_base_usr_refactor_h, 建维优, 升级, null, null
+  17.1, 17.1, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_grd_h, 4G MR栅格覆盖指标小时表, 4G MR栅格覆盖指标小时表, 栅格, 小时, 小时, 核心, null, 14, aggr_lte_coverage_base_refactor_h, 建维优, 新建, null, null
+  18, 18, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_base_refactor_d, 4G MR小区栅格覆盖指标天表, 4G MR小区栅格覆盖指标天表, 小区栅格, 天, 天, 核心, null, 30, aggr_lte_coverage_base_refactor_h, 建维优, 升级, null, null
+  19, 19, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_reduce_usrcelgrd_q, 4G MR用户小区栅格覆盖指标裁剪15分钟表, 4G MR用户小区栅格覆盖指标裁剪15分钟表, 用户小区栅格, 15分钟, 15分钟, 核心, null, 14, aggr_lte_coverage_base_usr_refactor_q, null, 新建, null, null
+  19.1, 19.1, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_reduce_usrcelgrd_h, 4G MR用户小区栅格覆盖指标裁剪小时表, 4G MR用户小区栅格覆盖指标裁剪小时表, 用户小区栅格, 小时, 小时, 核心, null, 14, aggr_lte_coverage_reduce_usrcelgrd_q, null, 新建, null, null
+  19.2, 19.2, 网络数据处理系统, 中间层, 用户常驻, aggr_lte_coverage_resident_usrgrd_d, 4G MR用户常驻栅格覆盖指标天表, 4G MR用户常驻栅格覆盖指标天表, 用户栅格, 天, 天, 核心, null, 30, aggr_lte_coverage_reduce_usrcelgrd_h, null, 新建, null, null
+  20, 20, 网络数据处理系统, 中间层, 用户常驻, aggr_lte_usrareagrd_d, 4G用户区域栅格聚区天表, 4G用户区域栅格聚区天表, 用户区域栅格, 天, 天, 核心, null, 30, aggr_lte_coverage_resident_usrgrd_d, null, 新建, null, null
+  21, 21, 网络数据处理系统, 中间层, 用户级感知, aggr_lte_usrareatime_cel_refactor_d, 4G MR用户聚区区域用户小区天表, 4G MR用户聚区区域用户小区天表, 用户小区栅格, 15分钟, 天, 核心, null, 30, aggr_lte_usrareagrd_d、aggr_lte_coverage_reduce_usrcelgrd_q, 建维优, 升级, null, null
+  21.1, 21.1, 网络数据处理系统, 中间层, 用户级感知, aggr_lte_usrarea_coverarea_cel_refactor_d, 4G用户区域小区覆盖天表, 4G用户区域小区覆盖天表, 用户小区区域, 天, 天, 核心, null, 30, aggr_lte_usrareatime_cel_refactor_d, null, 升级, null, null
+  21.2, 21.2, 网络数据处理系统, 中间层, 用户级感知, aggr_lte_usrarea_coverarea_refactor_d, 4G用户区域覆盖天表, 4G用户区域覆盖天表, 用户区域, 天, 天, 核心, null, 30, aggr_lte_usrarea_coverarea_cel_refactor_d, null, 升级, null, null
+  22, 22, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_cel_refactor_d, 4G MR小区覆盖指标天表, 4G MR小区覆盖指标天表, 小区, 天, 天, 核心, null, 30, aggr_lte_coverage_base_refactor_d, 共建共享、5GR、客户感知CEM、建维优, 升级, null, null
+  23, 23, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_grd_refactor_d, 4G MR栅格覆盖指标天表, 4G MR栅格覆盖指标天表, 栅格, 天, 天, 核心, null, 30, aggr_lte_coverage_base_refactor_d, 5GR、建维优, 升级, null, null
+  24, 24, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_reduce_base_refactor_d, 4G MR小区栅格覆盖指标裁剪天表, 4G MR小区栅格覆盖指标裁剪天表, 小区栅格, 天, 天, 核心, null, 30, aggr_lte_coverage_base_refactor_d, 共建共享, 升级, null, null
+  25, 25, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_base_reduce_refactor_d, 4G电信用户产生的MR小区栅格覆盖指标裁剪天表, 4G电信用户产生的MR小区栅格覆盖指标裁剪天表, 小区栅格, 天, 天, 核心, null, 30, aggr_lte_coverage_reduce_base_refactor_d, 5G定制网, 升级, null, null
+  26, 26, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverageagps_base_refactor_d, 4G AGPS MR小区栅格覆盖指标天表, 4G AGPS MR小区栅格覆盖指标天表, 小区栅格, 天, 天, 核心, null, 30, aggr_lte_coverage_base_refactor_d, 建维优, 升级, null, null
+  27, 27, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverageagps_cel_d, 4G AGPS MR小区覆盖指标天表, 4G AGPS MR小区覆盖指标天表, 小区, 天, 天, 核心, null, 30, aggr_lte_coverageagps_base_refactor_d, 建维优, 新建, null, null
+  28, 28, 网络数据处理系统, 中间层, 覆盖分析, ts_glc_coverageagps_celgrd_refactor_d, 4G AGPS MR小区栅格共享天表, 4G AGPS MR小区栅格共享天表, 小区栅格, 天, 天, 核心, null, 30, aggr_lte_coverageagps_base_refactor_d, 基站节能, 升级, null, null
+  29, 29, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_usrcel_h, 4G MR用户小区覆盖小时表, 4G MR用户小区覆盖小时表, 用户小区, 小时, 小时, 核心, null, 14, aggr_lte_coverage_base_usr_refactor_h, null, 新建, null, null
+  29.0, 29.0, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_iov_coverage_usrcel_h, 4G车联网用户小区覆盖分析小时表, 4G车联网用户小区覆盖分析小时表, 用户小区, 小时, 小时, 核心, null, 14, aggr_lte_coverage_usrcel_h、cfg_iov_usr_list, null, 升级, null, null
+  29.1, 29.1, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_base_reduce_refactor_h, 4G MR小区指标裁剪天表, 4G MR小区指标裁剪天表, 小区, 天, 天, 核心, null, 14, aggr_lte_coverage_cel_h, 移动业务感知保障系统, 升级, null, null
+  29.2, 29.2, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_usr_h, 4G MR用户覆盖小时表, 4G MR用户覆盖小时表, 用户, 小时, 小时, 核心, null, 14, aggr_lte_coverage_usrcel_h, null, 新建, null, null
+  29.3, 29.3, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_cel_h, 4G MR小区覆盖小时表, 4G MR小区覆盖小时表, 小区, 小时, 小时, 核心, null, 14, aggr_lte_coverage_usrcel_h, 建维优, 新建, null, null
+  30, 30, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_usrcel_refactor_d, 4G MR用户小区覆盖天表, 4G MR用户小区覆盖天表, 用户小区, 天, 天, 核心, null, 30, aggr_lte_coverage_usrcel_h, 建维优, 升级, null, null
+  31, 31, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_usr_refactor_d, 4G MR用户覆盖天表, 4G MR用户覆盖天表, 用户, 天, 天, 核心, null, 30, aggr_lte_coverage_usrcel_refactor_d, null, 升级, null, null
+  32, 32, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_imsi_refactor_d, 4G MR用户覆盖共享天表, 4G MR用户覆盖共享天表, 用户, 天, 天, 核心, null, 30, aggr_lte_coverage_usr_refactor_d, 核心系统, 升级, null, null
+  33, 33, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_usrgrd_h, 4G MR用户栅格覆盖小时表, 4G MR用户栅格覆盖小时表, 用户栅格, 天, 天, 核心, null, 14, aggr_lte_coverage_base_usr_refactor_h, 建维优, 新建, null, null
+  34, 34, 网络数据处理系统, 中间层, 覆盖分析, aggr_lte_coverage_usrgrd_refactor_d, 4G MR用户栅格覆盖天表, 4G MR用户栅格覆盖天表, 用户栅格, 天, 天, 核心, null, 30, aggr_lte_coverage_usrgrd_h, 建维优, 升级, null, null
+  35.1, 35.1, 网络数据处理系统, 中间层, 高铁优化, aggr_highrail_user_platform_cell_user_q, 高铁上站台小区的用户指标分钟表, 高铁上站台小区的用户指标分钟表, 详单, 详单, 15分钟, 前置, null, 7, cfg_highspeedrail_platform_cell、fact_lte_mro_usrbackfill_q、ods_nr_mro_northctcc_q、ods_pscp_s1mme_front_5min、ods_5gdpi_n1n2_e2e_telecom_5min, null, 升级, 算法逻辑不变，处理位置变更为前置, null
+  35.2, 35.2, 网络数据处理系统, 中间层, 高铁优化, aggr_highrail_user_platform_cell_user_refactor_d, 高铁上站台小区的用户指标天表（分省）, 高铁上站台小区的用户指标天表（分省）, 详单, 详单, 天, 前置, 是, 7, aggr_highrail_user_platform_cell_user_q, null, 升级, 算法逻辑不变，处理位置变更为前置, null
+  35, 35, 网络数据处理系统, 中间层, 高铁优化, aggr_lte_highspeedrail_coverage_base_refactor_h, 高铁4G覆盖用户小区栅格小时表, 高铁4G覆盖用户小区栅格小时表, 用户小区栅格, 小时, 小时, 核心, null, 14, aggr_lte_coverage_base_usr_refactor_q、aggr_highspeedrail_usrlist_d、lte_cm_projdata、lte_cucc_cm_projdata, null, 升级, null, null

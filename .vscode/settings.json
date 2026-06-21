@@ -1,0 +1,16 @@
+{
+    // 核心：统一存储位置
+    "pasteImage.path": "${projectRoot}/assets/images",
+    "pasteImage.basePath": "${projectRoot}/assets",
+    "pasteImage.prefix": "/",
+    
+    // 文件命名
+    "pasteImage.namePrefix": "",
+    "pasteImage.defaultName": "YYYYMMDDHHmmss",
+    
+    // 插入格式（自动带 alt）
+    "pasteImage.insertPattern": "![${imageFileNameWithoutExt}](${imageFilePath})",
+    
+    // 可选：每次粘贴时确认路径
+    "pasteImage.showFilePathConfirmInputBox": false
+  }

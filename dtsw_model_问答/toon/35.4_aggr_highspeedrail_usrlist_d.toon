@@ -1,0 +1,18 @@
+theme_domain: highrail_user
+table_name: aggr_highspeedrail_usrlist_d
+table_name_chinese: 高铁上站台小区的用户指标分钟表
+data_frequency: quarter
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 任务描述, 是否主表}:
+  aggr_highrail_user_all_platform_cell_user_d, 整条高铁上小区上产生业务的所有用户的指标详情, A, 主键：line_id+groupid+cellkey+imsi+datetime, 是
+fields[10]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  line_id, string, 高铁道路ID, null, null, null, "1、先按照line_id+imsi+groupid汇总，获取到用户在出现的每个站台组\n2、再取出在两个站台组以上出现过的用户，即为D1\n3、取出D1中用户每个小时出现的第一条数据，然后记为D2\n4、D2错位相减，判断前后两个小时的groupid是否一致 \n…", null, null, null, null
+  line_name, string, 高铁道路名称, null, null, null, null, null, null, null, null
+  msisdn, string, 用户手机号码, null, null, null, null, null, null, null, null
+  imsi, string, imsi, null, null, null, null, null, null, null, null
+  travel_id, string, 旅行线路ID, null, null, null, null, null, null, null, null
+  first_time, string, 起始时间, null, null, null, null, null, null, null, null
+  end_time, string, 终止时间, null, null, null, null, null, null, null, null
+  first_groupid, string, 起始站台组ID, null, null, null, null, null, null, null, null
+  end_groupid, string, 终止站台组ID, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

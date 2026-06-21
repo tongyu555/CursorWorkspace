@@ -1,0 +1,1562 @@
+[
+  {
+    "table": "dm_valueoperation_city_stat_d",
+    "suffix": "_d",
+    "partition": [
+      "p_provincecode",
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_stat"
+    ]
+  },
+  {
+    "table": "cfg_city",
+    "suffix": "",
+    "partition": [],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_city_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city",
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_servicetype_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_city_stat_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_stat"
+    ]
+  },
+  {
+    "table": "dm_regionalanalysis_cdr_share_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_valueoperation_province_stat_m",
+    "suffix": "_m",
+    "partition": [
+      "p_provincecode",
+      "p_year",
+      "p_month"
+    ],
+    "geo_cols_std": [
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "province_stat"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_region_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_wirelesskpi_city_stat_d",
+    "suffix": "_d",
+    "partition": [
+      "p_provincecode",
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_name",
+      "province_name",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_stat"
+    ]
+  },
+  {
+    "table": "dm_regionalanalysis_channelnetwork_share_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_clustering_w",
+    "suffix": "_w",
+    "partition": [
+      "p_year",
+      "p_week"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_gisallregion_barangay_d_webgis",
+    "suffix": "",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_lte_user_city_top20_stat_w",
+    "suffix": "_w",
+    "partition": [
+      "p_year",
+      "p_week"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "dm_lte_user_city_top20_stat_m",
+    "suffix": "_m",
+    "partition": [
+      "p_year",
+      "p_month"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "dm_valueoperation_city_stat_m",
+    "suffix": "_m",
+    "partition": [
+      "p_provincecode",
+      "p_year",
+      "p_month"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_stat"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_clustering_m",
+    "suffix": "_m",
+    "partition": [
+      "p_year",
+      "p_month"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_wirelesskpi_city_stat_area_d",
+    "suffix": "_d",
+    "partition": [
+      "p_provincecode",
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_name",
+      "province_name",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_stat"
+    ]
+  },
+  {
+    "table": "dim_questionnaire_region_config",
+    "suffix": "",
+    "partition": [],
+    "geo_cols_std": [
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_compliant_stat_w",
+    "suffix": "_w",
+    "partition": [
+      "p_year",
+      "p_week"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_wirelesskpi_city_statistic_w",
+    "suffix": "_w",
+    "partition": [
+      "p_provincecode",
+      "p_year",
+      "p_week"
+    ],
+    "geo_cols_std": [
+      "city_name",
+      "province_name",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_stat"
+    ]
+  },
+  {
+    "table": "dm_wirelesskpi_city_statistic_area_w",
+    "suffix": "_w",
+    "partition": [
+      "p_provincecode",
+      "p_year",
+      "p_week"
+    ],
+    "geo_cols_std": [
+      "city_name",
+      "province_name",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_stat"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_city_stat_w",
+    "suffix": "_w",
+    "partition": [
+      "p_year",
+      "p_week"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_stat"
+    ]
+  },
+  {
+    "table": "dm_valueoperation_province_stat_d",
+    "suffix": "_d",
+    "partition": [
+      "p_provincecode",
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "province_stat"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_heatmap_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_area_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_city_stat_m",
+    "suffix": "_m",
+    "partition": [
+      "p_year",
+      "p_month"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_stat"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_barangay_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_compliant_stat_m",
+    "suffix": "_m",
+    "partition": [
+      "p_year",
+      "p_month"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "ods_dm_ct_xdr_lte_5g_s1u_n3_ohvd_usrcity_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "aggr_fwa_city_developreport_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_compliant_stat_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_province_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_province",
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dq_kpi_province_d",
+    "suffix": "_d",
+    "partition": [
+      "p_provincecode",
+      "p_date",
+      "index_code"
+    ],
+    "geo_cols_std": [],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_province"
+    ]
+  },
+  {
+    "table": "ods_a_city_subs_usage_m",
+    "suffix": "_m",
+    "partition": [
+      "p_year",
+      "p_month"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_heatmap_m",
+    "suffix": "_m",
+    "partition": [
+      "p_year",
+      "p_month"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "aggr_brg_city_coveragegrade_share_m",
+    "suffix": "_m",
+    "partition": [
+      "p_year",
+      "p_month"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "dm_a_city_subs_usage_m",
+    "suffix": "_m",
+    "partition": [
+      "p_year",
+      "p_month"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "aggr_city_cellindicator_share_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "aggr_region_site_utilization_share_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "aggr_city_site_utilization_share_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_name",
+      "province_name",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_clustering_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "aggr_province_penetration_qual_share_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "province_name",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_province"
+    ]
+  },
+  {
+    "table": "aggr_city_penetration_qual_share_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_name",
+      "province_name",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "dw_cityutilization_share_d",
+    "suffix": "_d",
+    "partition": [
+      "p_provincecode",
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "dm_lte_user_city_top20_stat_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "dm_lte_user_city_stat_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_stat"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_deepcover_day",
+    "suffix": "",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_wirelesskpi_5gcity_index_gis_dh",
+    "suffix": "_dh",
+    "partition": [
+      "p_provincecode",
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_name",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_index"
+    ]
+  },
+  {
+    "table": "dm_wirelesskpi_5gcity_index_gis_d",
+    "suffix": "_d",
+    "partition": [
+      "p_provincecode",
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_name",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_index"
+    ]
+  },
+  {
+    "table": "dm_wirelesskpi_4gcity_index_gis_dh",
+    "suffix": "_dh",
+    "partition": [
+      "p_provincecode",
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_name",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_index"
+    ]
+  },
+  {
+    "table": "dm_wirelesskpi_4gcity_index_gis_d",
+    "suffix": "_d",
+    "partition": [
+      "p_provincecode",
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_name",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_index"
+    ]
+  },
+  {
+    "table": "dm_wirelesskpi_busy_city_index_d",
+    "suffix": "_d",
+    "partition": [
+      "p_provincecode",
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_name",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_index"
+    ]
+  },
+  {
+    "table": "cfg_fwa_custom_area_city_rel_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "aggr_brg_city_coverage_grade_m",
+    "suffix": "_m",
+    "partition": [
+      "p_year",
+      "p_month"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "dm_wirelesskpi_city_stat_w",
+    "suffix": "_w",
+    "partition": [
+      "p_provincecode",
+      "p_year",
+      "p_week"
+    ],
+    "geo_cols_std": [
+      "city_name",
+      "province_name",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_stat"
+    ]
+  },
+  {
+    "table": "dm_wirelesskpi_city_statistic_d",
+    "suffix": "_d",
+    "partition": [
+      "p_provincecode",
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_name",
+      "province_name",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "city_stat"
+    ]
+  },
+  {
+    "table": "aggr_region_penetration_qual_share_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_lte_city_cover_pop_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "dm_gis_assist_optimize_city_cover_score_m",
+    "suffix": "_m",
+    "partition": [
+      "p_provincecode",
+      "p_year",
+      "p_month"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "dq_kpi_province_merge_h",
+    "suffix": "_h",
+    "partition": [
+      "p_provincecode",
+      "p_date",
+      "p_hour"
+    ],
+    "geo_cols_std": [],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_province"
+    ]
+  },
+  {
+    "table": "aggr_province_site_utilization_share_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "province_name",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_province"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_promo_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_launchedcity_d",
+    "suffix": "_d",
+    "partition": [
+      "p_provincecode",
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city",
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_ct_xdr_lte_5g_s1u_n3_ohvd_usrcity_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_city_apptype_h",
+    "suffix": "_h",
+    "partition": [
+      "p_date",
+      "p_hour"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_region_app_h",
+    "suffix": "_h",
+    "partition": [
+      "p_date",
+      "p_hour"
+    ],
+    "geo_cols_std": [
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_province_app_h",
+    "suffix": "_h",
+    "partition": [
+      "p_date",
+      "p_hour"
+    ],
+    "geo_cols_std": [
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_province"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_province_perception_h",
+    "suffix": "_h",
+    "partition": [
+      "p_date",
+      "p_hour"
+    ],
+    "geo_cols_std": [
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_province"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_region_perception_h",
+    "suffix": "_h",
+    "partition": [
+      "p_date",
+      "p_hour"
+    ],
+    "geo_cols_std": [
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_region_apptype_h",
+    "suffix": "_h",
+    "partition": [
+      "p_date",
+      "p_hour"
+    ],
+    "geo_cols_std": [
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_province_apptype_h",
+    "suffix": "_h",
+    "partition": [
+      "p_date",
+      "p_hour"
+    ],
+    "geo_cols_std": [
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_province"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_city_perception_h",
+    "suffix": "_h",
+    "partition": [
+      "p_date",
+      "p_hour"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_city_app_h",
+    "suffix": "_h",
+    "partition": [
+      "p_date",
+      "p_hour"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_gisallregion_deepcover_d_webgis",
+    "suffix": "",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "province_id",
+      "region_id"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_heatmap_w",
+    "suffix": "_w",
+    "partition": [
+      "p_year",
+      "p_week"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_userprcv_regionalanalysis_utilization_d",
+    "suffix": "_d",
+    "partition": [
+      "p_provincecode",
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "dm_biznet_5g_drivertest_city_d_2gis",
+    "suffix": "",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "dq_kpi_province_h",
+    "suffix": "_h",
+    "partition": [
+      "p_provincecode",
+      "p_date",
+      "p_hour",
+      "index_code"
+    ],
+    "geo_cols_std": [],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_province"
+    ]
+  },
+  {
+    "table": "dm_biznet_4g_drivertest_city_d_2gis",
+    "suffix": "",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_city_app_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_city_apptype_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_city_perception_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "city_id",
+      "city_name",
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": true,
+    "match_reason": [
+      "name_keyword_city"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_province_perception_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_province"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_province_app_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_province"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_province_apptype_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "province_id",
+      "province_name",
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_province"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_region_app_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_region_perception_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  },
+  {
+    "table": "aggr_lte_dpi_region_apptype_d",
+    "suffix": "_d",
+    "partition": [
+      "p_date"
+    ],
+    "geo_cols_std": [
+      "region_id",
+      "region_name"
+    ],
+    "dup_risk_city_dual_parent_geo": false,
+    "match_reason": [
+      "name_substr_region"
+    ]
+  }
+]

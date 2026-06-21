@@ -1,0 +1,76 @@
+数据大类	数据子类型	数据采集进度	入库表名	备注
+第一批采集				
+5GC CGF	5GC CGF	采集完成	ods_5gcgf_local_telecom_q
+ods_5gcgf_roam_telecom_q
+ods_5gcgf_abnor_telecom_q	
+5G MR	5G MR	采集完成	ods_nr_mro_northctcc_temp_new
+ods_nr_mre_northctcc_temp	推送kafka有积压数据
+4G XDR	S1mme	采集完成	/	推送kafka
+Volte	gmslice	采集完成	ods_gmsession_telecom	
+	cx		ods_cx_telecom	
+	gm		ods_gm_telecom	
+	gx		ods_gx_telecom	
+	mg		ods_mg_telecom	
+	mj		ods_mj_telecom	
+	rx		ods_rx_telecom	
+	mw		ods_mw_telecom	
+	sh		ods_sh_telecom	
+	zh		ods_zh_telecom	
+	gmsession		ods_gmsession_telecom	
+5GC DPI	n1n2	采集完成	ods_5gdpi_n1n2_e2e_telecom_5min	
+	n10		ods_5gdpi_n10_e2e_telecom_q	
+	n15		ods_5gdpi_n15_e2e_telecom_q	
+	N3	采集完成	ods_5gdpi_dns_e2e_telecom_q	
+			ods_5gdpi_email_e2e_telecom_q	
+			ods_5gdpi_mqtt_e2e_telecom_q	
+			ods_5gdpi_video_e2e_telecom_q	
+			ods_5gdpi_http_e2e_telecom_q	
+			ods_5gdpi_ftp_e2e_telecom_q	该表每小时的数据量不全 , 只有两个分区 , 生产环境也是
+			ods_5gdpi_other_e2e_telecom_q	
+			ods_5gdpi_game_e2e_telecom_q	
+			ods_5gdpi_https_e2e_telecom_q	
+			ods_5gdpi_coap_e2e_telecom_q	
+			ods_5gdpi_vr_e2e_telecom_q	
+			ods_5gdpi_hdvideo_e2e_telecom_q	
+	l2tp	采集完成	ods_5gdpi_l2tp_e2e_telecom_q	
+	n4		ods_5gdpi_n4_e2e_telecom_q	
+	n11		ods_5gdpi_n11_e2e_telecom_q	
+	n16		ods_5gdpi_n16_e2e_telecom_q	
+	radius		ods_5gdpi_radius_e2e_telecom_q	
+	volte		ods_5gdpi_volte_e2e_telecom_q	
+	n5		ods_5gdpi_n5_e2e_telecom_q	
+	n12		ods_5gdpi_n12_e2e_telecom_q	
+	n22		ods_5gdpi_n22_e2e_telecom_q	
+	s5s8		ods_5gdpi_s5s8_e2e_telecom_q	
+	volteslice		ods_5gdpi_volteslice_e2e_telecom_q	
+	n7		ods_5gdpi_n7_e2e_telecom_q	
+	n13		ods_5gdpi_n13_e2e_telecom_q	
+	n26		ods_5gdpi_n26_e2e_telecom_q	
+	s1mme		ods_5gdpi_s1mme_e2e_telecom_q	
+	voltess		ods_5gdpi_voltess_e2e_telecom_q	
+	n8		ods_5gdpi_n8_e2e_telecom_q	
+	n14		ods_5gdpi_n14_e2e_telecom_q	
+	n40		ods_5gdpi_n40_e2e_telecom_q	
+	s11		ods_5gdpi_s11_e2e_telecom_q	
+	s6a		ods_5gdpi_s6a_e2e_telecom_q	
+第二批采集				
+4G	MRO	联通采集完成	需要设计表名	
+	CDR	直采	ods_lte_cdr_hw_q
+ods_lte_cdr_er_q
+ods_lte_cdr_zx_q	需要分厂商入库(表名 , 字段) 
+聚合表 : ods_lte_cdr_q_compress
+4G DPI	HTTP	直采(jar包任务)	ods_psup_http_e2e_telecom_q	依赖该表的输出表 : temp_fact_psup_http_e2e_telecom
+	VIDEO	直采(jar包任务)	ods_psup_video_e2e_telecom_q	依赖该表的输出表 : temp_fact_psup_video_e2e_telecom
+	HTTPS	采集完成	ods_4gdpi_https_e2e_telecom_q	完成
+	DNS	直采(jar包任务)	ods_psup_dns_e2e_front_q	依赖该表的输出表 : fact_psup_dns_e2e_front
+移动DPI	/	采集完成	ods_mbl_dpi_h	完成
+固网DPI	/	文件(直采)	itf_fixdpi_get	完成 (吉林无aaa类型数据)
+5G	CM	吉林无该数据		不需要采集
+	PM	吉林无该数据		
+4G XDR	S1mme	文件(直采)	ods_pscp_s1mme_front_5min	先入库到临时表
+4G(电信)	mrs_celsfm	nifi侧解析	ods_lte_mrs_celsfm_q_compress	暂未开发
+	mre	nifi侧解析	ods_lte_mre_q_compress	直接采集入库
+	mrs_cell	nifi侧解析	ods_lte_mrs_cell_q_compress	暂未开发
+	mro	nifi侧解析	ods_lte_mro_q	直接采集入库(原time_ods_lte_mro_q)
+5G	AMF	采集完成	ods_5g_amf_telecom_q	完成
+	SMF	采集完成	ods_5g_smf_telecom_q	

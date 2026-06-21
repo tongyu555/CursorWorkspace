@@ -1,0 +1,20 @@
+theme_domain: 信令感知
+table_name: dm_quality_45g_dpi_mdn_imsi_d
+table_name_chinese: 45G_DPI数据中mdn与imsi对应关系表
+data_frequency: day
+primary_key: 数据描述
+source_table_name[2]{源表英文名, 源表中文名, 别名, 备注, 是否主表}:
+  aggr_nr_dpi_n1n2_usr_d, 5G_DPI_N1N2用户维度天表, A, 调用A表逻辑不变, 是
+  aggr_lte_dpi_s1mme_usr_d, 4G_DPI_S1MME用户维度天表, B, "将输入表由aggr_4gxdr_n1mode_usr_cel_h替换为aggr_lte_dpi_s1mme_usr_d。且字段s1mme_message_count使用proceduretype_valid_cnt替换；去掉过滤条件：procedure_type not in (22, 23, 24, 25, 26, 27, 28)，其余逻辑完全不变", null
+fields[11]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 账期, "A|B", p_date, 直取, null, null, 维度, 无, 无
+  provincecode, int, 省编码, "A|B", p_provincecode, 直取, null, null, 维度, 无, 无
+  net_type, string, 网络类型, "A|B", null, 根据数据来源判断，来源于A则赋值为'5G'，来源于B则赋值为'4G', null, null, 维度, 无, "4G,5G"
+  total_cnt, bigint, 总记录数, "A|B", null, "A:sum(procedureType_valid_cnt)\nB:sum(proceduretype_valid_cnt)", null, null, 维度, 无, >0
+  mdn_fill_cnt, bigint, MDN非空记录数, "A|B", null, "A：sum(case when msisdn is not null and msisdn != '' then procedureType_valid_cnt else 0 end)\nB：sum(case when msisdn is not null and msisdn != '' then proceduretype_valid_cnt else 0 end)", null, null, 维度, 无, >0
+  mdn_fill_rate, double, MDN非空率, "A|B", null, "A：sum(case when msisdn is not null and msisdn != '' then procedureType_valid_cnt else 0 end) / sum(procedureType_valid_cnt)\nB：sum(case when msisdn is not null and msisdn != '' then proceduretype_valid_cnt else 0 end) / sum(proceduretype_valid_cnt)", null, null, 指标, 无, "(0,1]"
+  mdn_count, bigint, 用户数, "A|B", null, count(distinct msisdn), null, null, 指标, 无, >0
+  mdn_ismi_count, bigint, 用户号码与imsi一一对应用户数, "A|B", null, 用户号码与imsi一一对应用户数, null, null, 指标, 无, >0
+  mdn_ismi_rate, double, 用户号码与imsi一一对应占比, "A|B", null, 用户号码与imsi一一对应用户数 / 总用户数, null, null, 指标, 无, "(0,1]"
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null

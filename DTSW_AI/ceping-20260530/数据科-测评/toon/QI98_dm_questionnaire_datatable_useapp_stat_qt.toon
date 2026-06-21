@@ -1,0 +1,55 @@
+theme_domain: 问卷调查
+table_name: dm_questionnaire_datatable_useapp_stat_qt
+table_name_chinese: 我使用app统计datatable季表
+data_frequency: season(季度)
+primary_key: 数据描述
+source_table_name[2]{来源系统, 源表英文名, 源表中文名, 别名, 任务描述, 备注, 是否主表}:
+  dtsw, dm_questionnaire_useapp_stat_qt_d, 我使用-APP统计整季详情天表, A, 取当季最后一天, A先按主键汇聚出指标，再A left join B on 主键字段关联计算环比。, 是
+  dtsw, dm_questionnaire_datatable_useapp_stat_qt, 我使用app统计datatable季表, B, 取p_season-1, null, null
+fields[46]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  p_year, int, 年分区, null, null, null, null, null, null, null, null
+  p_season, int, 季分区, null, null, null, null, null, null, null, null
+  year, int, 年, null, null, null, null, null, null, null, null
+  season, int, 季, null, null, null, null, null, null, null, null
+  area_id, int, 地区编码, A, areacode, 直取, null, null, 维度, 枚举, "2,3,4,5,6"
+  area_name, string, 地区名称, A, area_name, 直取，其它置other, null, null, 维度, 枚举, "{NLZ,VIS,MIN,NCR,SLZ,other,NationWide}"
+  region_id, int, 大区编码, A, regioncode, 直取, null, null, 维度, null, null
+  region_name, string, 大区名称, A, region_name, 直取，其它置other, null, null, 维度, null, null
+  province_id, int, 省编码, A, provincecode, 直取, null, null, 维度, null, null
+  province_name, string, 省名称, A, province_name, 直取，其它置other, null, null, 维度, null, null
+  city_id, int, 城市编码, A, citycode, 直取, null, null, 维度, null, null
+  city_name, string, 城市名称, A, city_name, 直取，其它置other, null, null, 维度, null, null
+  barangay_id, int, barangayID, A, barangay_id, 直取, null, null, 维度, null, null
+  barangay_name, string, barangay名称, A, barangay_name, 直取，其它置other, null, null, 维度, null, null
+  data_level, int, 数据分级, null, null, "(0~5,分别表示全网~barangy)；data_level=0代表全网，area~barangay都置为null", null, null, 维度, 枚举, {0，1，2，3，4，5}
+  service_type, string, 服务类型, A, service_type, 直取，并汇总TOTAL, null, null, 维度, 枚举, "fwa prepaid\nfwa postpaid\nmobile prepaid\nmobile postpaid\nother brands(fmo)\nTOTAL"
+  questionnaire_feedback_cnt, bigint, 问卷反馈量, A, pay_user_nums, sum(pay_user_nums), null, base, 指标, 次, "[0,∞)"
+  questionnaire_feedback_cnt_qoq, doble, 问卷反馈量环比, AB, null, (a.questionnaire_feedback_cnt-b.questionnaire_feedback_cnt)/b.questionnaire_feedback_cnt, null, null, 指标, 比例, "[-∞,∞]"
+  good_ovsat_cnt, bigint, ovsat满意度是良好的次数, A, good_ovsat_nums, sum(good_ovsat_nums), null, null, 指标, 次, "[0,∞)"
+  ovsat_cnt, bigint, ovsat满意度总数, A, ovsat_nums, sum(ovsat_nums), null, null, 指标, 次, "[0,∞)"
+  ovsat_ratio, double, ovsat满意度, A, null, sum(good_ovsat_nums)/sum(ovsat_nums), null, 0vSat, 指标, 比例, "[0,1]"
+  ovsat_ratio_qoq, double, ovsat满意度环比, AB, null, (a.ovsat_ratio-b.ovsat_ratio)/b.ovsat_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_ces_cnt, bigint, ces满意度是良好的次数, A, good_ces_nums, sum(good_ces_nums), null, null, 指标, 次, "[0,∞)"
+  ces_cnt, bigint, ces满意度总数, A, ces_nums, sum(ces_nums), null, null, 指标, 次, "[0,∞)"
+  ces_ratio, double, ces满意度, A, null, sum(good_ces_nums)/sum(ces_nums), null, CES, 指标, 比例, "[0,1]"
+  ces_ratio_qoq, double, ces满意度环比, AB, null, (a.ces_ratio-b.ces_ratio)/b.ces_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_easy_signin_cnt, bigint, 登录难易程度是良好的次数, A, good_easy_signin_nums, sum(good_easy_signin_nums), null, null, 指标, 次, "[0,∞)"
+  easy_signin_cnt, bigint, 登录难易程度总数, A, easy_signin_nums, sum(easy_signin_nums), null, null, 指标, 次, "[0,∞)"
+  easy_signin_ratio, double, 登录难易程度良好比例, A, null, sum(good_ces_nums)/sum(ces_nums), null, null, 指标, 比例, "[0,1]"
+  easy_signin_ratio_qoq, double, 登录难易程度良好比例环比, AB, null, (a.easy_signin_ratio-b.easy_signin_ratio)/b.easy_signin_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_overall_look_ditoapp_cnt, bigint, DITO App的整体外观是良好的次数, A, good_overall_look_ditoapp_nums, sum(good_overall_look_ditoapp_nums), null, null, 指标, 次, "[0,∞)"
+  overall_look_ditoapp_cnt, bigint, DITO App的整体外观总数, A, overall_look_ditoapp_nums, sum(overall_look_ditoapp_nums), null, null, 指标, 次, "[0,∞)"
+  overall_look_ditoapp_ratio, double, DITO App的整体外观良好比例, A, null, sum(good_ces_nums)/sum(ces_nums), null, null, 指标, 比例, "[0,1]"
+  overall_look_ditoapp_ratio_qoq, double, DITO App的整体外观良好比例环比, AB, null, (a.overall_look_ditoapp_ratio-b.overall_look_ditoapp_ratio)/b.overall_look_ditoapp_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_fast_download_ditoapp_cnt, bigint, 快速下载DITO App是良好的次数, A, good_fast_download_ditoapp_nums, sum(good_fast_download_ditoapp_nums), null, null, 指标, 次, "[0,∞)"
+  fast_download_ditoapp_cnt, bigint, 快速下载DITO App总数, A, fast_download_ditoapp_nums, sum(fast_download_ditoapp_nums), null, null, 指标, 次, "[0,∞)"
+  fast_download_ditoapp_ratio, double, 快速下载DITO App良好比例, A, null, sum(good_ces_nums)/sum(ces_nums), null, null, 指标, 比例, "[0,1]"
+  fast_download_ditoapp_ratio_qoq, double, 快速下载DITO App良好比例环比, AB, null, (a.fast_download_ditoapp_ratio-b.fast_download_ditoapp_ratio)/b.fast_download_ditoapp_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_user_friendly_content_inditoapp_cnt, bigint, 用户友好的内容在DITO应用程序是良好的次数, A, good_user_friendly_content_inditoapp_nums, sum(good_user_friendly_content_inditoapp_nums), null, null, 指标, 次, "[0,∞)"
+  user_friendly_content_inditoapp_cnt, bigint, 用户友好的内容在DITO应用程序总数, A, user_friendly_content_inditoapp_nums, sum(user_friendly_content_inditoapp_nums), null, null, 指标, 次, "[0,∞)"
+  user_friendly_content_inditoapp_ratio, double, 用户友好的内容在DITO应用程序良好比例, A, null, sum(good_ces_nums)/sum(ces_nums), null, null, 指标, 比例, "[0,1]"
+  user_friendly_content_inditoapp_ratio_qoq, double, 用户友好的内容在DITO应用程序良好比例环比, AB, null, (a.user_friendly_content_inditoapp_ratio-b.user_friendly_content_inditoapp_ratio)/b.user_friendly_content_inditoapp_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  justenough_opinion_on_access_permissions_cnt, bigint, 对访问权限的意见是Justenough的次数, A, justenough_opinion_on_access_permissions_nums, sum(justenough_opinion_on_access_permissions_nums), null, null, 指标, 次, "[0,∞)"
+  opinion_on_access_permissions_cnt, bigint, 对访问权限的意见总数, A, opinion_on_access_permissions_nums, sum(opinion_on_access_permissions_nums), null, null, 指标, 次, "[0,∞)"
+  opinion_on_access_permissions_ratio, double, 对访问权限的意见良好比例, A, null, sum(good_ces_nums)/sum(ces_nums), null, null, 指标, 比例, "[0,1]"
+  opinion_on_access_permissions_ratio_qoq, double, 对访问权限的意见良好比例环比, AB, null, (a.opinion_on_access_permissions_ratio-b.opinion_on_access_permissions_ratio)/b.opinion_on_access_permissions_ratio, null, null, 指标, 比例, "[-∞,∞]"

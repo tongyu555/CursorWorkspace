@@ -1,0 +1,271 @@
+theme_domain: 车联网
+table_name: aggr_4gdpi_celluserappip_q
+table_name_chinese: 用户4G小区app等多维度感知时刻表
+data_frequency: quarter
+primary_key: 数据描述
+source_table_name[6]{来源系统, 源表英文名, 别名, 是否主表, 源表中文名}:
+  dtsw, aggr_4gdpi_http_base_q, A, 是, null
+  dtsw, aggr_4gdpi_https_base_q, B, 是, null
+  dtsw, aggr_5gdpi_s1uhttp_base_q, C, 是, 待接入
+  dtsw, aggr_5gdpi_s1uhttps_base_q, D, 是, 待接入
+  dtsw, aggr_4gdpi_video_base_q, F, 是, null
+  dtsw, cfg_dpi_servicetype, E, null, app维表
+fields[258]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 上报时间, ABCDF, null, day, null, null, null, null, null
+  hour, int, 小时，0~23, ABCDF, null, hour, null, null, null, null, null
+  quarter, int, "时刻(0,15,30,45)", ABCDF, null, quarter, null, null, null, null, null
+  provincecode, int, 省编码, ABCDF, null, provincecode, null, null, null, null, null
+  citycode, int, 市编码, ABCDF, null, citycode, null, null, null, null, null
+  districtcode, int, 区县编码, ABCDF, null, districtcode, null, null, null, null, null
+  cellkey, string, "小区唯一标识：\"小区基站号\"_\"小区编号\"", ABCDF, null, "concat(enodebid,'_',cellid) as cellkey", null, null, null, null, null
+  imsi, string, 国际移动用户识别码, ABCDF, null, imsi, null, null, null, null, null
+  msisdn, string, 用户号码, ABCDF, null, msisdn, null, null, null, null, null
+  servicetype, string, 业务应用分类ID, ABCDF, null, servicetype, null, null, null, null, null
+  app_name, string, servicetype与DPI业务类型表关联获取具体业务名称, E, null, service_small_category_name, null, null, null, null, null
+  tacid, string, IMEI的前8位，移动终端识别码, ABCDF, null, tacid, null, null, null, null, null
+  upfip, string, UPF的IPv4或IPv6地址, ABCDF, null, sgwip as upfip, null, null, null, null, null
+  visitedplmnid, string, 拜访位置plmn编码, ABCDF, null, visitedplmnid, null, null, null, null, null
+  total_cnt, bigint, 总话单数, ABCDF, total_num, sum(total_num) as total_cnt, null, null, null, null, null
+  total_badcnt, bigint, 总质差话单数, ABCDF, abnormal_cnt, sum(abnormal_cnt) as total_badcnt, null, null, null, null, null
+  total_badcnt_ratio, double, 总质差话单占比, ABCDF, abnormal_cnt, sum(abnormal_cnt)/count(abnormal_cnt), null, null, null, null, null
+  ultcp_retrans_badcnt, bigint, tcp上行重传率质差话单数, ABCDF, null, sum(is_poor_ultcp_retranspacket_num) as ultcp_retrans_badcnt, null, null, null, null, null
+  dltcp_retrans_badcnt, bigint, tcp下行重传率质差话单数, ABCDF, null, sum(is_poor_dltcp_retranspacket_num) as dltcp_retrans_badcnt, null, null, null, null, null
+  ultcp_reordering_badcnt, bigint, tcp上行乱序率质差话单数, ABCDF, null, sum(is_poor_ultcpreorderingpacket_num) as ultcp_reordering_badcnt, null, null, null, null, null
+  dltcp_reordering_badcnt, bigint, tcp下行乱序率质差话单数, ABCDF, null, sum(is_poor_dltcpreorderingpacket_num) as dltcp_reordering_badcnt, null, null, null, null, null
+  tcpsetupresponsedelay_badcnt, bigint, tcp建链响应时延质差话单数, ABCDF, null, sum(is_poor_tcpsetupresponsedelay_num) as tcpsetupresponsedelay_badcnt, null, null, null, null, null
+  tcpsetupackdelay_badcnt, bigint, tcp建链确认时延质差话单数, ABCDF, null, sum(is_poor_tcpsetupackdelay_num) as tcpsetupackdelay_badcnt, null, null, null, null, null
+  service_duration, bigint, 业务时长, ABCDF, duration_sum, sum(duration_sum) as service_duration, null, null, null, null, null
+  service_flux, bigint, 业务流量, ABCDF, null, "sum(nvl(inputoctets_sum,0)+nvl(outputoctets_sum,0)) as service_flux", null, null, null, null, null
+  outputpacket, bigint, tcp上行总包数, ABCDF, null, sum(outputpacket_sum) as outputpacket_sum, null, null, null, null, null
+  inputpacket, bigint, tcp下行总包数, ABCDF, null, sum(inputpacket_sum) as inputpacket_sum  , null, null, null, null, null
+  ultcpretranspacket, bigint, tcp上行总重传报文数, ABCDF, null, sum(ultcpretranspacket_sum) as ultcpretranspacket_sum, null, null, null, null, null
+  dltcpretranspacket, bigint, tcp下行总重传报文数, ABCDF, null, sum(dltcpretranspacket_sum) as dltcpretranspacket_sum, null, null, null, null, null
+  ultcpreorderingpacket, bigint, tcp上行总乱序报文数, ABCDF, null, sum(ultcpreorderingpacket_sum) as ultcpreorderingpacket_sum, null, null, null, null, null
+  dltcpreorderingpacket, bigint, tcp下行总乱序报文数, ABCDF, null, sum(dltcpreorderingpacket_sum) as dltcpreorderingpacket_sum, null, null, null, null, null
+  ultcp_retrans_rate, double, tcp上行重传率, ABCDF, null, sum(ultcpretranspacket_sum)/sum(outputpacket_sum), null, null, null, null, null
+  dltcp_retrans_rate, double, tcp下行重传率, ABCDF, null, sum(dltcpretranspacket_sum)/sum(inputpacket_sum) as dltcp_retrans_rate, null, null, null, null, null
+  retrans_rate, double, tcp重传率, ABCDF, null, (sum(ultcpretranspacket_sum)+sum(dltcpretranspacket_sum))/(sum(outputpacket_sum)+sum(inputpacket_sum)) as retrans_rate, null, null, null, null, null
+  ultcp_reordering_rate, double, tcp上行乱序率, ABCDF, null, sum(ultcpreorderingpacket_sum)/sum(outputpacket_sum) as ultcp_reordering_rate, null, null, null, null, null
+  dltcp_reordering_rate, double, tcp下行乱序率, ABCDF, null, sum(dltcpreorderingpacket_sum)/sum(inputpacket_sum) as dltcp_reordering_rate, null, null, null, null, null
+  reordering_rate, double, tcp乱序率, ABCDF, null, (sum(ultcpreorderingpacket_sum)+sum(dltcpreorderingpacket_sum))/(sum(outputpacket_sum)+sum(inputpacket_sum)) as reordering_rate, null, null, null, null, null
+  tcpsetupresponsedelay_sum, bigint, tcp总建链响应时延, ABCDF, tcpsetupresponsedelay_sum, sum(tcpsetupresponsedelay_sum) as tcpsetupresponsedelay_sum, null, null, null, null, null
+  tcpsetupackdelay_sum, double, tcp总建链确认时延, ABCDF, tcpsetupackdelay_sum, sum(tcpsetupackdelay_avg*TCPConnectSuccNumber_sum) as tcpsetupackdelay_sum, null, null, null, null, null
+  tcpsetupresponsedelay_cnt, bigint, tcp总建链响应次数, ABCDF, null, sum(tcpsetupresponsedelay_cnt) as tcpsetupresponsedelay_cnt, null, null, null, null, null
+  tcpsetupackdelay_cnt, bigint, tcp总建链确认次数, ABCDF, null, sum(tcpsetupackdelay_cnt) as tcpsetupackdelay_cnt, null, null, null, null, null
+  avg_tcpsetupresponsedelay, double, 平均tcp建链响应时延, ABCDF, null, sum(tcpsetupresponsedelay_avg*tcpsetupresponsedelay_cnt)/sum(tcpsetupresponsedelay_cnt) as avg_tcpsetupresponsedelay, null, null, null, null, null
+  avg_tcpsetupackdelay, double, 平均tcp建链确认时延, ABCDF, null, sum(tcpsetupackdelay_avg*tcpsetupackdelay_cnt)/sum(tcpsetupackdelay_cnt) as avg_tcpsetupackdelay, null, null, null, null, null
+  avg_tcpsetupdelay, double, 平均tcp建链时延, ABCDF, null, sum((tcpsetupresponsedelay_avg*tcpsetupresponsedelay_cnt+tcpsetupackdelay_avg*tcpsetupackdelay_cnt)/sum(tcpsetupresponsedelay_cnt+tcpsetupackdelay_cnt)*2 as avg_tcpsetupresponsedelay, null, null, null, null, null
+  tcpsynnumber_sum, bigint, TCP建链尝试次数, ABCDF, null, sum(TCPSynNumber_sum) as TCPSynNumber_sum, null, null, null, null, null
+  tcpconnectsuccnumber_sum, bigint, TCP连接成功次数, ABCDF, null, sum(TCPConnectSuccNumber_sum) as TCPConnectSuccNumber_sum, null, null, null, null, null
+  ulipfragpacks_sum, bigint, UL_IP_FRAG_PACKETS, ABCD, null, sum(ULIPFragPacks_sum) as ULIPFragPacks_sum, null, null, null, null, null
+  dlipfragpacks_sum, bigint, DL_IP_FRAG_PACKETS, ABCD, null, sum(DLIPFragPacks_sum) as DLIPFragPacks_sum, null, null, null, null, null
+  dnsqueryreqcount, bigint, DNS查询请求次数, ABCD, null, sum(dnsqueryreqcount) as dnsqueryreqcount, null, null, null, null, null
+  dnsqueryrspcount, bigint, DNS查询响应次数, ABCD, null, sum(dnsqueryrspcount) as dnsqueryrspcount, null, null, null, null, null
+  httpwebreqcount, bigint, Http请求次数, ABCD, null, sum(httpwebreqcount) as httpwebreqcount, null, null, null, null, null
+  httpwebrspcount, bigint, Http请求成功次数, ABCD, null, sum(httpwebrspcount) as httpwebrspcount, null, null, null, null, null
+  httpwebrsprate, double, 网页响应成功率(%), ABCD, null, sum(httpwebrspcount)/sum(httpwebreqcount) as httpwebrsprate, null, null, null, null, null
+  throughput, double, 下载速率_根据IP报文统计, ABCD, null, sum(InputOctets_sum)*8000/(sum(httpwebdspdelay_avg)*1024) as throughput, null, null, null, null, null
+  throughput_seg_1, bigint, 下载速率_根据IP报文统计_seg_1，统计下载速率在seg_1中的次数, ABCD, null, sum(throughput_seg_1) as throughput_seg_1, null, null, null, null, null
+  throughput_seg_2, bigint, 下载速率_根据IP报文统计_seg_2, ABCD, null, sum(throughput_seg_2) as throughput_seg_2, null, null, null, null, null
+  throughput_seg_3, bigint, 下载速率_根据IP报文统计_seg_3, ABCD, null, sum(throughput_seg_3) as throughput_seg_3, null, null, null, null, null
+  throughput_seg_4, bigint, 下载速率_根据IP报文统计_seg_4, ABCD, null, sum(throughput_seg_4) as throughput_seg_4, null, null, null, null, null
+  throughput_seg_5, bigint, 下载速率_根据IP报文统计_seg_5, ABCD, null, sum(throughput_seg_5) as throughput_seg_5, null, null, null, null, null
+  tcpsetupresponsedelay_avg, double, TCP建链响应时延_avg, ABCDF, null, "sum(TCPSetupResponseDelay_avg*httpwebrspcount)/sum(httpwebrspcount) as TCPSetupResponseDelay_avg\nF:sum(tcpsetupresponsedelay_sum)/sum(tcpsetupresponsedelay_cnt)", null, null, null, null, null
+  tcpsetupresponsedelay_seg_1, bigint, TCP建链响应时延_seg_1, ABCDF, null, sum(TCPSetupResponseDelay_seg_1) as TCPSetupResponseDelay_seg_1, null, null, null, null, null
+  tcpsetupresponsedelay_seg_2, bigint, TCP建链响应时延_seg_2, ABCDF, null, sum(TCPSetupResponseDelay_seg_2) as TCPSetupResponseDelay_seg_2, null, null, null, null, null
+  tcpsetupresponsedelay_seg_3, bigint, TCP建链响应时延_seg_3, ABCDF, null, sum(TCPSetupResponseDelay_seg_3) as TCPSetupResponseDelay_seg_3, null, null, null, null, null
+  tcpsetupresponsedelay_seg_4, bigint, TCP建链响应时延_seg_4, ABCDF, null, sum(TCPSetupResponseDelay_seg_4) as TCPSetupResponseDelay_seg_4, null, null, null, null, null
+  tcpsetupresponsedelay_seg_5, bigint, TCP建链响应时延_seg_5, ABCDF, null, sum(TCPSetupResponseDelay_seg_5) as TCPSetupResponseDelay_seg_5, null, null, null, null, null
+  tcpsetupackdelay_avg, double, TCP建链确认时延_avg, ABCDF, null, "sum(TCPSetupACKDelay_avg*httpwebrspcount)/sum(httpwebrspcount) as TCPSetupACKDelay_avg\nF:sum(tcpsetupackdelay_sum)/sum(tcpsetupackdelay_cnt)", null, null, null, null, null
+  tcpsetupackdelay_seg_1, bigint, TCP建链确认时延_seg_1, ABCDF, null, sum(TCPSetupACKDelay_seg_1) as TCPSetupACKDelay_seg_1, null, null, null, null, null
+  tcpsetupackdelay_seg_2, bigint, TCP建链确认时延_seg_2, ABCDF, null, sum(TCPSetupACKDelay_seg_2) as TCPSetupACKDelay_seg_2, null, null, null, null, null
+  tcpsetupackdelay_seg_3, bigint, TCP建链确认时延_seg_3, ABCDF, null, sum(TCPSetupACKDelay_seg_3) as TCPSetupACKDelay_seg_3, null, null, null, null, null
+  tcpsetupackdelay_seg_4, bigint, TCP建链确认时延_seg_4, ABCDF, null, sum(TCPSetupACKDelay_seg_4) as TCPSetupACKDelay_seg_4, null, null, null, null, null
+  tcpsetupackdelay_seg_5, bigint, TCP建链确认时延_seg_5, ABCDF, null, sum(TCPSetupACKDelay_seg_5) as TCPSetupACKDelay_seg_5, null, null, null, null, null
+  tcpsetupdelay_avg, double, TCP建立时延(ms)_avg, ABCDF, null, sum((tcpsetupresponsedelay_avg*tcpsetupresponsedelay_cnt+tcpsetupackdelay_avg*tcpsetupackdelay_cnt)/sum(tcpsetupresponsedelay_cnt+tcpsetupackdelay_cnt)*2, null, null, null, null, null
+  tcpsetupdelay_seg_1, bigint, TCP建立时延(ms)_seg_1, ABCDF, null, sum(tcpsetupdelay_seg_1) as tcpsetupdelay_seg_1, null, null, null, null, null
+  tcpsetupdelay_seg_2, bigint, TCP建立时延(ms)_seg_2, ABCDF, null, sum(tcpsetupdelay_seg_2) as tcpsetupdelay_seg_2, null, null, null, null, null
+  tcpsetupdelay_seg_3, bigint, TCP建立时延(ms)_seg_3, ABCDF, null, sum(tcpsetupdelay_seg_3) as tcpsetupdelay_seg_3, null, null, null, null, null
+  tcpsetupdelay_seg_4, bigint, TCP建立时延(ms)_seg_4, ABCDF, null, sum(tcpsetupdelay_seg_4) as tcpsetupdelay_seg_4, null, null, null, null, null
+  tcpsetupdelay_seg_5, bigint, TCP建立时延(ms)_seg_5, ABCDF, null, sum(tcpsetupdelay_seg_5) as tcpsetupdelay_seg_5, null, null, null, null, null
+  delay_setup_firsttransaction_avg, double, TCP建链成功到第一条事务请求的时延_avg（ms）, ABCD, null, sum(Delay_Setup_FirstTransaction_avg*httpwebrspcount)/sum(httpwebrspcount) as Delay_Setup_FirstTransaction_avg, null, null, null, null, null
+  delay_setup_firsttransaction_seg_1, bigint, TCP建链成功到第一条事务请求的时延_seg_1, ABCD, null, sum(Delay_Setup_FirstTransaction_seg_1) as Delay_Setup_FirstTransaction_seg_1, null, null, null, null, null
+  delay_setup_firsttransaction_seg_2, bigint, TCP建链成功到第一条事务请求的时延_seg_2, ABCD, null, sum(Delay_Setup_FirstTransaction_seg_2) as Delay_Setup_FirstTransaction_seg_2, null, null, null, null, null
+  delay_setup_firsttransaction_seg_3, bigint, TCP建链成功到第一条事务请求的时延_seg_3, ABCD, null, sum(Delay_Setup_FirstTransaction_seg_3) as Delay_Setup_FirstTransaction_seg_3, null, null, null, null, null
+  delay_setup_firsttransaction_seg_4, bigint, TCP建链成功到第一条事务请求的时延_seg_4, ABCD, null, sum(Delay_Setup_FirstTransaction_seg_4) as Delay_Setup_FirstTransaction_seg_4, null, null, null, null, null
+  delay_setup_firsttransaction_seg_5, bigint, TCP建链成功到第一条事务请求的时延_seg_5, ABCD, null, sum(Delay_Setup_FirstTransaction_seg_5) as Delay_Setup_FirstTransaction_seg_5, null, null, null, null, null
+  delay_firsttransaction_firstrespackt_avg, double, 第一条事务请求到其第一个响应包时延_avg（ms）, ABCD, null, sum(Delay_FirstTransaction_FirstResPackt_avg*httpwebrspcount)/sum(httpwebrspcount) as Delay_FirstTransaction_FirstResPackt_avg, null, null, null, null, null
+  delay_firsttransaction_firstrespackt_seg_1, bigint, 第一条事务请求到其第一个响应包时延_seg_1, ABCD, null, sum(Delay_FirstTransaction_FirstResPackt_seg_1) as Delay_FirstTransaction_FirstResPackt_seg_1, null, null, null, null, null
+  delay_firsttransaction_firstrespackt_seg_2, bigint, 第一条事务请求到其第一个响应包时延_seg_2, ABCD, null, sum(Delay_FirstTransaction_FirstResPackt_seg_2) as Delay_FirstTransaction_FirstResPackt_seg_2, null, null, null, null, null
+  delay_firsttransaction_firstrespackt_seg_3, bigint, 第一条事务请求到其第一个响应包时延_seg_3, ABCD, null, sum(Delay_FirstTransaction_FirstResPackt_seg_3) as Delay_FirstTransaction_FirstResPackt_seg_3, null, null, null, null, null
+  delay_firsttransaction_firstrespackt_seg_4, bigint, 第一条事务请求到其第一个响应包时延_seg_4, ABCD, null, sum(Delay_FirstTransaction_FirstResPackt_seg_4) as Delay_FirstTransaction_FirstResPackt_seg_4, null, null, null, null, null
+  delay_firsttransaction_firstrespackt_seg_5, bigint, 第一条事务请求到其第一个响应包时延_seg_5, ABCD, null, sum(Delay_FirstTransaction_FirstResPackt_seg_5) as Delay_FirstTransaction_FirstResPackt_seg_5, null, null, null, null, null
+  dnsquerydelay_avg, double, DNS查询时延_avg, ABCD, null, sum(dnsquerydelay_avg*httpwebrspcount)/sum(httpwebrspcount) as dnsquerydelay_avg, null, null, null, null, null
+  dnsquerydelay_seg_1, bigint, DNS查询时延_seg_1, ABCD, null, sum(dnsquerydelay_seg_1) as dnsquerydelay_seg_1, null, null, null, null, null
+  dnsquerydelay_seg_2, bigint, DNS查询时延_seg_2, ABCD, null, sum(dnsquerydelay_seg_2) as dnsquerydelay_seg_2, null, null, null, null, null
+  dnsquerydelay_seg_3, bigint, DNS查询时延_seg_3, ABCD, null, sum(dnsquerydelay_seg_3) as dnsquerydelay_seg_3, null, null, null, null, null
+  dnsquerydelay_seg_4, bigint, DNS查询时延_seg_4, ABCD, null, sum(dnsquerydelay_seg_4) as dnsquerydelay_seg_4, null, null, null, null, null
+  dnsquerydelay_seg_5, bigint, DNS查询时延_seg_5, ABCD, null, sum(dnsquerydelay_seg_5) as dnsquerydelay_seg_5, null, null, null, null, null
+  delay_syntime_dnsresponsetime_avg, double, DNS到TCP建链的时延_avg, ABCD, null, sum(delay_SYNtime_DNSResponseTime_avg*httpwebrspcount)/sum(httpwebrspcount) as delay_SYNtime_DNSResponseTime_avg, null, null, null, null, null
+  delay_syntime_dnsresponsetime_seg_1, bigint, DNS到TCP建链的时延_seg_1, ABCD, null, sum(delay_SYNtime_DNSResponseTime_seg_1) as delay_SYNtime_DNSResponseTime_seg_1, null, null, null, null, null
+  delay_syntime_dnsresponsetime_seg_2, bigint, DNS到TCP建链的时延_seg_2, ABCD, null, sum(delay_SYNtime_DNSResponseTime_seg_2) as delay_SYNtime_DNSResponseTime_seg_2, null, null, null, null, null
+  delay_syntime_dnsresponsetime_seg_3, bigint, DNS到TCP建链的时延_seg_3, ABCD, null, sum(delay_SYNtime_DNSResponseTime_seg_3) as delay_SYNtime_DNSResponseTime_seg_3, null, null, null, null, null
+  delay_syntime_dnsresponsetime_seg_4, bigint, DNS到TCP建链的时延_seg_4, ABCD, null, sum(delay_SYNtime_DNSResponseTime_seg_4) as delay_SYNtime_DNSResponseTime_seg_4, null, null, null, null, null
+  delay_syntime_dnsresponsetime_seg_5, bigint, DNS到TCP建链的时延_seg_5, ABCD, null, sum(delay_SYNtime_DNSResponseTime_seg_5) as delay_SYNtime_DNSResponseTime_seg_5, null, null, null, null, null
+  httpwebrspdelay_avg, double, 网页响应(首包)时延_avg(ms), ABCD, null, sum(httpwebrspdelay_avg*httpwebrspcount)/sum(httpwebrspcount) as httpwebrspdelay_avg, null, null, null, null, null
+  httpwebrspdelay_seg_1, bigint, 网页响应(首包)时延_seg_1, ABCD, null, sum(httpwebrspdelay_seg_1) as httpwebrspdelay_seg_1, null, null, null, null, null
+  httpwebrspdelay_seg_2, bigint, 网页响应(首包)时延_seg_2, ABCD, null, sum(httpwebrspdelay_seg_2) as httpwebrspdelay_seg_2, null, null, null, null, null
+  httpwebrspdelay_seg_3, bigint, 网页响应(首包)时延_seg_3, ABCD, null, sum(httpwebrspdelay_seg_3) as httpwebrspdelay_seg_3, null, null, null, null, null
+  httpwebrspdelay_seg_4, bigint, 网页响应(首包)时延_seg_4, ABCD, null, sum(httpwebrspdelay_seg_4) as httpwebrspdelay_seg_4, null, null, null, null, null
+  httpwebrspdelay_seg_5, bigint, 网页响应(首包)时延_seg_5, ABCD, null, sum(httpwebrspdelay_seg_5) as httpwebrspdelay_seg_5, null, null, null, null, null
+  httpwebdspdelay_avg, double, 网页显示(打开)时长_avg(ms), ABCD, null, sum(httpwebdspdelay_avg*httpwebrspcount)/sum(httpwebrspcount) as httpwebdspdelay_avg, null, null, null, null, null
+  httpwebdspdelay_seg_1, bigint, 网页显示(打开)时长_seg_1, ABCD, null, sum(httpwebdspdelay_seg_1) as httpwebdspdelay_seg_1, null, null, null, null, null
+  httpwebdspdelay_seg_2, bigint, 网页显示(打开)时长_seg_2, ABCD, null, sum(httpwebdspdelay_seg_2) as httpwebdspdelay_seg_2, null, null, null, null, null
+  httpwebdspdelay_seg_3, bigint, 网页显示(打开)时长_seg_3, ABCD, null, sum(httpwebdspdelay_seg_3) as httpwebdspdelay_seg_3, null, null, null, null, null
+  httpwebdspdelay_seg_4, bigint, 网页显示(打开)时长_seg_4, ABCD, null, sum(httpwebdspdelay_seg_4) as httpwebdspdelay_seg_4, null, null, null, null, null
+  httpwebdspdelay_seg_5, bigint, 网页显示(打开)时长_seg_5, ABCD, null, sum(httpwebdspdelay_seg_5) as httpwebdspdelay_seg_5, null, null, null, null, null
+  httpwebscreendelay_avg, double, 网页首屏时延_avg(ms), ABCD, null, sum(httpwebscreendelay_avg*httpwebrspcount)/sum(httpwebrspcount) as httpwebscreendelay_avg, null, null, null, null, null
+  httpwebscreendelay_seg_1, bigint, 网页首屏时延_seg_1, ABCD, null, sum(httpwebscreendelay_seg_1) as httpwebscreendelay_seg_1, null, null, null, null, null
+  httpwebscreendelay_seg_2, bigint, 网页首屏时延_seg_2, ABCD, null, sum(httpwebscreendelay_seg_2) as httpwebscreendelay_seg_2, null, null, null, null, null
+  httpwebscreendelay_seg_3, bigint, 网页首屏时延_seg_3, ABCD, null, sum(httpwebscreendelay_seg_3) as httpwebscreendelay_seg_3, null, null, null, null, null
+  httpwebscreendelay_seg_4, bigint, 网页首屏时延_seg_4, ABCD, null, sum(httpwebscreendelay_seg_4) as httpwebscreendelay_seg_4, null, null, null, null, null
+  httpwebscreendelay_seg_5, bigint, 网页首屏时延_seg_5, ABCD, null, sum(httpwebscreendelay_seg_5) as httpwebscreendelay_seg_5, null, null, null, null, null
+  delay_acktime_actiontime_avg, double, TCP建链成功到首个HTTP请求的时延_avg（ms）, ABCD, null, sum(delay_acktime_actiontime_avg*httpwebrspcount)/sum(httpwebrspcount) as delay_acktime_actiontime_avg, null, null, null, null, null
+  delay_acktime_actiontime_seg_1, bigint, TCP建链成功到首个HTTP请求的时延_seg_1, ABCD, null, sum(delay_acktime_actiontime_seg_1) as delay_acktime_actiontime_seg_1, null, null, null, null, null
+  delay_acktime_actiontime_seg_2, bigint, TCP建链成功到首个HTTP请求的时延_seg_2, ABCD, null, sum(delay_acktime_actiontime_seg_2) as delay_acktime_actiontime_seg_2, null, null, null, null, null
+  delay_acktime_actiontime_seg_3, bigint, TCP建链成功到首个HTTP请求的时延_seg_3, ABCD, null, sum(delay_acktime_actiontime_seg_3) as delay_acktime_actiontime_seg_3, null, null, null, null, null
+  delay_acktime_actiontime_seg_4, bigint, TCP建链成功到首个HTTP请求的时延_seg_4, ABCD, null, sum(delay_acktime_actiontime_seg_4) as delay_acktime_actiontime_seg_4, null, null, null, null, null
+  delay_acktime_actiontime_seg_5, bigint, TCP建链成功到首个HTTP请求的时延_seg_5, ABCD, null, sum(delay_acktime_actiontime_seg_5) as delay_acktime_actiontime_seg_5, null, null, null, null, null
+  delay_actiontime_firstpackettime_avg, double, 首个HTTP请求到第一个数据响应包的时延_avg（ms）, ABCD, null, sum(delay_actiontime_firstpackettime_avg*httpwebrspcount)/sum(httpwebrspcount) as delay_actiontime_firstpackettime_avg, null, null, null, null, null
+  delay_actiontime_firstpackettime_seg_1, bigint, 首个HTTP请求到第一个数据响应包的时延_seg_1, ABCD, null, sum(delay_actiontime_firstpackettime_seg_1) as delay_actiontime_firstpackettime_seg_1, null, null, null, null, null
+  delay_actiontime_firstpackettime_seg_2, bigint, 首个HTTP请求到第一个数据响应包的时延_seg_2, ABCD, null, sum(delay_actiontime_firstpackettime_seg_2) as delay_actiontime_firstpackettime_seg_2, null, null, null, null, null
+  delay_actiontime_firstpackettime_seg_3, bigint, 首个HTTP请求到第一个数据响应包的时延_seg_3, ABCD, null, sum(delay_actiontime_firstpackettime_seg_3) as delay_actiontime_firstpackettime_seg_3, null, null, null, null, null
+  delay_actiontime_firstpackettime_seg_4, bigint, 首个HTTP请求到第一个数据响应包的时延_seg_4, ABCD, null, sum(delay_actiontime_firstpackettime_seg_4) as delay_actiontime_firstpackettime_seg_4, null, null, null, null, null
+  delay_actiontime_firstpackettime_seg_5, bigint, 首个HTTP请求到第一个数据响应包的时延_seg_5, ABCD, null, sum(delay_actiontime_firstpackettime_seg_5) as delay_actiontime_firstpackettime_seg_5, null, null, null, null, null
+  delay_actiontime_firstresptime_avg, double, 首个HTTP请求到第一个HTTP响应包的时延_avg（ms）, ABCD, null, sum(delay_actiontime_firstresptime_avg*httpwebrspcount)/sum(httpwebrspcount) as delay_actiontime_firstresptime_avg, null, null, null, null, null
+  delay_actiontime_firstresptime_seg_1, bigint, 首个HTTP请求到第一个HTTP响应包的时延_seg_1, ABCD, null, sum(delay_actiontime_firstresptime_seg_1) as delay_actiontime_firstresptime_seg_1, null, null, null, null, null
+  delay_actiontime_firstresptime_seg_2, bigint, 首个HTTP请求到第一个HTTP响应包的时延_seg_2, ABCD, null, sum(delay_actiontime_firstresptime_seg_2) as delay_actiontime_firstresptime_seg_2, null, null, null, null, null
+  delay_actiontime_firstresptime_seg_3, bigint, 首个HTTP请求到第一个HTTP响应包的时延_seg_3, ABCD, null, sum(delay_actiontime_firstresptime_seg_3) as delay_actiontime_firstresptime_seg_3, null, null, null, null, null
+  delay_actiontime_firstresptime_seg_4, bigint, 首个HTTP请求到第一个HTTP响应包的时延_seg_4, ABCD, null, sum(delay_actiontime_firstresptime_seg_4) as delay_actiontime_firstresptime_seg_4, null, null, null, null, null
+  delay_actiontime_firstresptime_seg_5, bigint, 首个HTTP请求到第一个HTTP响应包的时延_seg_5, ABCD, null, sum(delay_actiontime_firstresptime_seg_5) as delay_actiontime_firstresptime_seg_5, null, null, null, null, null
+  delay_lastpacktime_dnsortcp_avg, double, 首个HTTP请求到最后一个数据包的时延_avg, ABCD, null, sum(delay_lastpacktime_dnsortcp_avg*httpwebrspcount)/sum(httpwebrspcount) as delay_lastpacktime_dnsortcp_avg, null, null, null, null, null
+  delay_lastpacktime_dnsortcp_seg_1, bigint, 首个HTTP请求到最后一个数据包的时延_seg_1, ABCD, null, sum(delay_lastpacktime_dnsortcp_seg_1) as delay_lastpacktime_dnsortcp_seg_1, null, null, null, null, null
+  delay_lastpacktime_dnsortcp_seg_2, bigint, 首个HTTP请求到最后一个数据包的时延_seg_2, ABCD, null, sum(delay_lastpacktime_dnsortcp_seg_2) as delay_lastpacktime_dnsortcp_seg_2, null, null, null, null, null
+  delay_lastpacktime_dnsortcp_seg_3, bigint, 首个HTTP请求到最后一个数据包的时延_seg_3, ABCD, null, sum(delay_lastpacktime_dnsortcp_seg_3) as delay_lastpacktime_dnsortcp_seg_3, null, null, null, null, null
+  delay_lastpacktime_dnsortcp_seg_4, bigint, 首个HTTP请求到最后一个数据包的时延_seg_4, ABCD, null, sum(delay_lastpacktime_dnsortcp_seg_4) as delay_lastpacktime_dnsortcp_seg_4, null, null, null, null, null
+  delay_lastpacktime_dnsortcp_seg_5, bigint, 首个HTTP请求到最后一个数据包的时延_seg_5, ABCD, null, sum(delay_lastpacktime_dnsortcp_seg_5) as delay_lastpacktime_dnsortcp_seg_5, null, null, null, null, null
+  delay_firstresptime_lastpacktime_avg, double, 第一个HTTP响应包到最后一个数据包时延_avg, ABCD, null, sum(delay_firstresptime_lastpacktime_avg*httpwebrspcount)/sum(httpwebrspcount) as delay_firstresptime_lastpacktime_avg, null, null, null, null, null
+  delay_firstresptime_lastpacktime_seg_1, bigint, 第一个HTTP响应包到最后一个数据包时延_seg_1, ABCD, null, sum(delay_firstresptime_lastpacktime_seg_1) as delay_firstresptime_lastpacktime_seg_1, null, null, null, null, null
+  delay_firstresptime_lastpacktime_seg_2, bigint, 第一个HTTP响应包到最后一个数据包时延_seg_2, ABCD, null, sum(delay_firstresptime_lastpacktime_seg_2) as delay_firstresptime_lastpacktime_seg_2, null, null, null, null, null
+  delay_firstresptime_lastpacktime_seg_3, bigint, 第一个HTTP响应包到最后一个数据包时延_seg_3, ABCD, null, sum(delay_firstresptime_lastpacktime_seg_3) as delay_firstresptime_lastpacktime_seg_3, null, null, null, null, null
+  delay_firstresptime_lastpacktime_seg_4, bigint, 第一个HTTP响应包到最后一个数据包时延_seg_4, ABCD, null, sum(delay_firstresptime_lastpacktime_seg_4) as delay_firstresptime_lastpacktime_seg_4, null, null, null, null, null
+  delay_firstresptime_lastpacktime_seg_5, bigint, 第一个HTTP响应包到最后一个数据包时延_seg_5, ABCD, null, sum(delay_firstresptime_lastpacktime_seg_5) as delay_firstresptime_lastpacktime_seg_5, null, null, null, null, null
+  delay_firstpackettime_pageopentime_avg, double, 第一个数据响应包到首页打开的时延_avg（ms）, ABCD, null, sum(delay_firstpackettime_pageopentime_avg*httpwebrspcount)/sum(httpwebrspcount) as delay_firstpackettime_pageopentime_avg, null, null, null, null, null
+  delay_firstpackettime_pageopentime_seg_1, bigint, 第一个数据响应包到首页打开的时延_seg_1, ABCD, null, sum(delay_firstpackettime_pageopentime_seg_1) as delay_firstpackettime_pageopentime_seg_1, null, null, null, null, null
+  delay_firstpackettime_pageopentime_seg_2, bigint, 第一个数据响应包到首页打开的时延_seg_2, ABCD, null, sum(delay_firstpackettime_pageopentime_seg_2) as delay_firstpackettime_pageopentime_seg_2, null, null, null, null, null
+  delay_firstpackettime_pageopentime_seg_3, bigint, 第一个数据响应包到首页打开的时延_seg_3, ABCD, null, sum(delay_firstpackettime_pageopentime_seg_3) as delay_firstpackettime_pageopentime_seg_3, null, null, null, null, null
+  delay_firstpackettime_pageopentime_seg_4, bigint, 第一个数据响应包到首页打开的时延_seg_4, ABCD, null, sum(delay_firstpackettime_pageopentime_seg_4) as delay_firstpackettime_pageopentime_seg_4, null, null, null, null, null
+  delay_firstpackettime_pageopentime_seg_5, bigint, 第一个数据响应包到首页打开的时延_seg_5, ABCD, null, sum(delay_firstpackettime_pageopentime_seg_5) as delay_firstpackettime_pageopentime_seg_5, null, null, null, null, null
+  delay_firstpackettime_lastpacktime_avg, double, 第一个数据响应包到最后一个数据包的时延_avg, ABCD, null, sum(delay_firstpackettime_lastpacktime_avg*httpwebrspcount)/sum(httpwebrspcount) as delay_firstpackettime_lastpacktime_avg, null, null, null, null, null
+  delay_firstpackettime_lastpacktime_seg_1, bigint, 第一个数据响应包到最后一个数据包的时延_seg_1, ABCD, null, sum(delay_firstpackettime_lastpacktime_seg_1) as delay_firstpackettime_lastpacktime_seg_1, null, null, null, null, null
+  delay_firstpackettime_lastpacktime_seg_2, bigint, 第一个数据响应包到最后一个数据包的时延_seg_2, ABCD, null, sum(delay_firstpackettime_lastpacktime_seg_2) as delay_firstpackettime_lastpacktime_seg_2, null, null, null, null, null
+  delay_firstpackettime_lastpacktime_seg_3, bigint, 第一个数据响应包到最后一个数据包的时延_seg_3, ABCD, null, sum(delay_firstpackettime_lastpacktime_seg_3) as delay_firstpackettime_lastpacktime_seg_3, null, null, null, null, null
+  delay_firstpackettime_lastpacktime_seg_4, bigint, 第一个数据响应包到最后一个数据包的时延_seg_4, ABCD, null, sum(delay_firstpackettime_lastpacktime_seg_4) as delay_firstpackettime_lastpacktime_seg_4, null, null, null, null, null
+  delay_firstpackettime_lastpacktime_seg_5, bigint, 第一个数据响应包到最后一个数据包的时延_seg_5, ABCD, null, sum(delay_firstpackettime_lastpacktime_seg_5) as delay_firstpackettime_lastpacktime_seg_5, null, null, null, null, null
+  delay_lastpacktime_lastacktime_avg, double, 最后一个数据包到最后一个ACK的时延_avg, ABCD, null, sum(delay_lastpacktime_lastacktime_avg*httpwebrspcount)/sum(httpwebrspcount) as delay_lastpacktime_lastacktime_avg, null, null, null, null, null
+  delay_lastpacktime_lastacktime_seg_1, bigint, 最后一个数据包到最后一个ACK的时延_seg_1, ABCD, null, sum(delay_lastpacktime_lastacktime_seg_1) as delay_lastpacktime_lastacktime_seg_1, null, null, null, null, null
+  delay_lastpacktime_lastacktime_seg_2, bigint, 最后一个数据包到最后一个ACK的时延_seg_2, ABCD, null, sum(delay_lastpacktime_lastacktime_seg_2) as delay_lastpacktime_lastacktime_seg_2, null, null, null, null, null
+  delay_lastpacktime_lastacktime_seg_3, bigint, 最后一个数据包到最后一个ACK的时延_seg_3, ABCD, null, sum(delay_lastpacktime_lastacktime_seg_3) as delay_lastpacktime_lastacktime_seg_3, null, null, null, null, null
+  delay_lastpacktime_lastacktime_seg_4, bigint, 最后一个数据包到最后一个ACK的时延_seg_4, ABCD, null, sum(delay_lastpacktime_lastacktime_seg_4) as delay_lastpacktime_lastacktime_seg_4, null, null, null, null, null
+  delay_lastpacktime_lastacktime_seg_5, bigint, 最后一个数据包到最后一个ACK的时延_seg_5, ABCD, null, sum(delay_lastpacktime_lastacktime_seg_5) as delay_lastpacktime_lastacktime_seg_5, null, null, null, null, null
+  delay_firstfinacktime_lastacktime_avg, double, 最后一个ACK到首次挥手的时延_avg, ABCD, null, sum(delay_FirstFinAckTime_lastacktime_avg*httpwebrspcount)/sum(httpwebrspcount) as delay_FirstFinAckTime_lastacktime_avg, null, null, null, null, null
+  delay_firstfinacktime_lastacktime_seg_1, bigint, 最后一个ACK到首次挥手的时延_seg_1, ABCD, null, sum(delay_FirstFinAckTime_lastacktime_seg_1) as delay_FirstFinAckTime_lastacktime_seg_1, null, null, null, null, null
+  delay_firstfinacktime_lastacktime_seg_2, bigint, 最后一个ACK到首次挥手的时延_seg_2, ABCD, null, sum(delay_FirstFinAckTime_lastacktime_seg_2) as delay_FirstFinAckTime_lastacktime_seg_2, null, null, null, null, null
+  delay_firstfinacktime_lastacktime_seg_3, bigint, 最后一个ACK到首次挥手的时延_seg_3, ABCD, null, sum(delay_FirstFinAckTime_lastacktime_seg_3) as delay_FirstFinAckTime_lastacktime_seg_3, null, null, null, null, null
+  delay_firstfinacktime_lastacktime_seg_4, bigint, 最后一个ACK到首次挥手的时延_seg_4, ABCD, null, sum(delay_FirstFinAckTime_lastacktime_seg_4) as delay_FirstFinAckTime_lastacktime_seg_4, null, null, null, null, null
+  delay_firstfinacktime_lastacktime_seg_5, bigint, 最后一个ACK到首次挥手的时延_seg_5, ABCD, null, sum(delay_FirstFinAckTime_lastacktime_seg_5) as delay_FirstFinAckTime_lastacktime_seg_5, null, null, null, null, null
+  respdelay_avg, double, 响应时延_avg, ABCD, null, sum(RESPDELAY_avg*httpwebrspcount)/sum(httpwebrspcount) as RESPDELAY_avg, null, null, null, null, null
+  respdelay_seg_1, bigint, 响应时延_seg_1, ABCD, null, sum(RESPDELAY_seg_1) as RESPDELAY_seg_1, null, null, null, null, null
+  respdelay_seg_2, bigint, 响应时延_seg_2, ABCD, null, sum(RESPDELAY_seg_2) as RESPDELAY_seg_2, null, null, null, null, null
+  respdelay_seg_3, bigint, 响应时延_seg_3, ABCD, null, sum(RESPDELAY_seg_3) as RESPDELAY_seg_3, null, null, null, null, null
+  respdelay_seg_4, bigint, 响应时延_seg_4, ABCD, null, sum(RESPDELAY_seg_4) as RESPDELAY_seg_4, null, null, null, null, null
+  respdelay_seg_5, bigint, 响应时延_seg_5, ABCD, null, sum(RESPDELAY_seg_5) as RESPDELAY_seg_5, null, null, null, null, null
+  tcpreorderingpacketratio, double, TCP乱序占比, ABCDF, null, sum(ultcpreorderingpacket_sum+dltcpreorderingpacket_sum)/sum(inputpacket_sum+outputpacket_sum) as TCPReorderingPacketRatio, null, null, null, null, null
+  tcpreorderingpacketratio_seg_1, bigint, TCP乱序占比_seg_1, ABCDF, null, sum(TCPReorderingPacketRatio_seg_1) as TCPReorderingPacketRatio_seg_1, null, null, null, null, null
+  tcpreorderingpacketratio_seg_2, bigint, TCP乱序占比_seg_2, ABCDF, null, sum(TCPReorderingPacketRatio_seg_2) as TCPReorderingPacketRatio_seg_2, null, null, null, null, null
+  tcpreorderingpacketratio_seg_3, bigint, TCP乱序占比_seg_3, ABCDF, null, sum(TCPReorderingPacketRatio_seg_3) as TCPReorderingPacketRatio_seg_3, null, null, null, null, null
+  tcpreorderingpacketratio_seg_4, bigint, TCP乱序占比_seg_4, ABCDF, null, sum(TCPReorderingPacketRatio_seg_4) as TCPReorderingPacketRatio_seg_4, null, null, null, null, null
+  tcpreorderingpacketratio_seg_5, bigint, TCP乱序占比_seg_5, ABCDF, null, sum(TCPReorderingPacketRatio_seg_5) as TCPReorderingPacketRatio_seg_5, null, null, null, null, null
+  ultcpreorderingpacketratio, double, 上行TCP乱序占比, ABCDF, null, sum(ultcpreorderingpacket_sum)/sum(outputpacket_sum) as ULTCPReorderingPacketRatio, null, null, null, null, null
+  ultcpreorderingpacketratio_seg_1, bigint, 上行TCP乱序占比_seg_1, ABCDF, null, sum(ULTCPReorderingPacketRatio_seg_1) as ULTCPReorderingPacketRatio_seg_1, null, null, null, null, null
+  ultcpreorderingpacketratio_seg_2, bigint, 上行TCP乱序占比_seg_2, ABCDF, null, sum(ULTCPReorderingPacketRatio_seg_2) as ULTCPReorderingPacketRatio_seg_2, null, null, null, null, null
+  ultcpreorderingpacketratio_seg_3, bigint, 上行TCP乱序占比_seg_3, ABCDF, null, sum(ULTCPReorderingPacketRatio_seg_3) as ULTCPReorderingPacketRatio_seg_3, null, null, null, null, null
+  ultcpreorderingpacketratio_seg_4, bigint, 上行TCP乱序占比_seg_4, ABCDF, null, sum(ULTCPReorderingPacketRatio_seg_4) as ULTCPReorderingPacketRatio_seg_4, null, null, null, null, null
+  ultcpreorderingpacketratio_seg_5, bigint, 上行TCP乱序占比_seg_5, ABCDF, null, sum(ULTCPReorderingPacketRatio_seg_5) as ULTCPReorderingPacketRatio_seg_5, null, null, null, null, null
+  dltcpreorderingpacketratio, double, 下行TCP乱序占比, ABCDF, null, sum(dltcpreorderingpacket_sum)/sum(inputpacket_sum) as DLTCPReorderingPacketRatio, null, null, null, null, null
+  dltcpreorderingpacketratio_seg_1, bigint, 下行TCP乱序占比_seg_1, ABCDF, null, sum(DLTCPReorderingPacketRatio_seg_1) as DLTCPReorderingPacketRatio_seg_1, null, null, null, null, null
+  dltcpreorderingpacketratio_seg_2, bigint, 下行TCP乱序占比_seg_2, ABCDF, null, sum(DLTCPReorderingPacketRatio_seg_2) as DLTCPReorderingPacketRatio_seg_2, null, null, null, null, null
+  dltcpreorderingpacketratio_seg_3, bigint, 下行TCP乱序占比_seg_3, ABCDF, null, sum(DLTCPReorderingPacketRatio_seg_3) as DLTCPReorderingPacketRatio_seg_3, null, null, null, null, null
+  dltcpreorderingpacketratio_seg_4, bigint, 下行TCP乱序占比_seg_4, ABCDF, null, sum(DLTCPReorderingPacketRatio_seg_4) as DLTCPReorderingPacketRatio_seg_4, null, null, null, null, null
+  dltcpreorderingpacketratio_seg_5, bigint, 下行TCP乱序占比_seg_5, ABCDF, null, sum(DLTCPReorderingPacketRatio_seg_5) as DLTCPReorderingPacketRatio_seg_5, null, null, null, null, null
+  tcp_retranspacketratio, double, TCP重传占比, ABCDF, null, sum(ultcpretranspacket_sum+dltcpretranspacket_sum)/sum(inputpacket_sum+outputpacket_sum) as TCP_RetransPacketRatio, null, null, null, null, null
+  tcp_retranspacketratio_seg_1, bigint, TCP重传占比_seg_1, ABCDF, null, sum(TCPRetransPacketRatio_seg_1) as TCP_RetransPacketRatio_seg_1, null, null, null, null, null
+  tcp_retranspacketratio_seg_2, bigint, TCP重传占比_seg_2, ABCDF, null, sum(TCPRetransPacketRatio_seg_2) as TCP_RetransPacketRatio_seg_2, null, null, null, null, null
+  tcp_retranspacketratio_seg_3, bigint, TCP重传占比_seg_3, ABCDF, null, sum(TCPRetransPacketRatio_seg_3) as TCP_RetransPacketRatio_seg_3, null, null, null, null, null
+  tcp_retranspacketratio_seg_4, bigint, TCP重传占比_seg_4, ABCDF, null, sum(TCPRetransPacketRatio_seg_4) as TCP_RetransPacketRatio_seg_4, null, null, null, null, null
+  tcp_retranspacketratio_seg_5, bigint, TCP重传占比_seg_5, ABCDF, null, sum(TCPRetransPacketRatio_seg_5) as TCP_RetransPacketRatio_seg_5, null, null, null, null, null
+  ultcp_retranspacketratio, double, 上行TCP重传占比, ABCDF, null, sum(ultcpretranspacket_sum)/sum(outputpacket_sum) as ULTCP_RetransPacketRatio, null, null, null, null, null
+  ultcp_retranspacketratio_seg_1, bigint, 上行TCP重传占比_seg_1, ABCDF, null, sum(ULTCPRetransPacketRatio_seg_1) as ULTCP_RetransPacketRatio_seg_1, null, null, null, null, null
+  ultcp_retranspacketratio_seg_2, bigint, 上行TCP重传占比_seg_2, ABCDF, null, sum(ULTCPRetransPacketRatio_seg_2) as ULTCP_RetransPacketRatio_seg_2, null, null, null, null, null
+  ultcp_retranspacketratio_seg_3, bigint, 上行TCP重传占比_seg_3, ABCDF, null, sum(ULTCPRetransPacketRatio_seg_3) as ULTCP_RetransPacketRatio_seg_3, null, null, null, null, null
+  ultcp_retranspacketratio_seg_4, bigint, 上行TCP重传占比_seg_4, ABCDF, null, sum(ULTCPRetransPacketRatio_seg_4) as ULTCP_RetransPacketRatio_seg_4, null, null, null, null, null
+  ultcp_retranspacketratio_seg_5, bigint, 上行TCP重传占比_seg_5, ABCDF, null, sum(ULTCPRetransPacketRatio_seg_5) as ULTCP_RetransPacketRatio_seg_5, null, null, null, null, null
+  dltcp_retranspacketratio, double, 下行TCP重传占比, ABCDF, null, sum(dltcpretranspacket_sum)/sum(inputpacket_sum) as DLTCP_RetransPacketRatio, null, null, null, null, null
+  dltcp_retranspacketratio_seg_1, bigint, 下行TCP重传占比_seg_1, ABCDF, null, sum(DLTCPRetransPacketRatio_seg_1) as DLTCP_RetransPacketRatio_seg_1, null, null, null, null, null
+  dltcp_retranspacketratio_seg_2, bigint, 下行TCP重传占比_seg_2, ABCDF, null, sum(DLTCPRetransPacketRatio_seg_2) as DLTCP_RetransPacketRatio_seg_2, null, null, null, null, null
+  dltcp_retranspacketratio_seg_3, bigint, 下行TCP重传占比_seg_3, ABCDF, null, sum(DLTCPRetransPacketRatio_seg_3) as DLTCP_RetransPacketRatio_seg_3, null, null, null, null, null
+  dltcp_retranspacketratio_seg_4, bigint, 下行TCP重传占比_seg_4, ABCDF, null, sum(DLTCPRetransPacketRatio_seg_4) as DLTCP_RetransPacketRatio_seg_4, null, null, null, null, null
+  dltcp_retranspacketratio_seg_5, bigint, 下行TCP重传占比_seg_5, ABCDF, null, sum(DLTCPRetransPacketRatio_seg_5) as DLTCP_RetransPacketRatio_seg_5, null, null, null, null, null
+  ul_flux, bigint, 上行流量(byte), ABCDF, null, sum(outputoctets_sum), null, null, null, null, null
+  dl_flux, bigint, 下行流量(byte), ABCDF, null, sum(inputoctets_sum), null, null, null, null, null
+  ul_packet, bigint, 用户发出的业务数据包数量, ABCDF, null, sum(outputpacket_sum), null, null, null, null, null
+  dl_packet, bigint, 小区发出的业务数据包数量, ABCDF, null, sum(inputpacket_sum), null, null, null, null, null
+  times_excellentgamedelay, bigint, 交互时延优秀次数, ABCD, null, sum(times_excellentgamedelay), null, null, null, null, null
+  times_inferiorgamedelay, bigint, 交互时延劣质次数, ABCD, null, sum(times_inferiorgamedelay), null, null, null, null, null
+  times_wellgamedelay, bigint, 交互时延良好次数, ABCD, null, sum(times_wellgamedelay), null, null, null, null, null
+  times_excellentrspdelay, bigint, 首屏时延优秀次数, ABCD, null, sum(times_excellentrspdelay), null, null, null, null, null
+  times_inferiorrspdelay, bigint, 首屏时延质差次数, ABCD, null, sum(times_inferiorrspdelay), null, null, null, null, null
+  times_wellrspdelay, bigint, 首屏时延良好次数, ABCD, null, sum(times_wellrspdelay), null, null, null, null, null
+  times_excellentcmpltdelay, bigint, 打开时延优秀次数, ABCD, null, sum(times_excellentcmpltdelay), null, null, null, null, null
+  times_inferiorcmpltdelay, bigint, 打开时延质差次数, ABCD, null, sum(times_inferiorcmpltdelay), null, null, null, null, null
+  times_wellcmpltdelay, bigint, 打开时延良好次数, ABCD, null, sum(times_wellcmpltdelay), null, null, null, null, null
+  ul_text_cnt, bigint, 发送请求次数, ABCD, null, sum(case when httpaction=5 then httpwebreqcount end), null, null, null, null, null
+  ul_text_succ_cnt, bigint, 发送成功次数, ABCD, null, sum(case when httpaction=5 then httpwebrspcount end), null, null, null, null, null
+  ul_text_duration, bigint, 发送时延, ABCD, null, sum(case when httpaction=5 then httpwebdspdelay_avg end), null, null, null, null, null
+  dl_text_cnt, bigint, 接收请求次数, ABCD, null, sum(case when httpaction=6 then httpwebreqcount end), null, null, null, null, null
+  dl_text_succ_cnt, bigint, 接收成功次数, ABCD, null, sum(case when httpaction=6 then httpwebrspcount end), null, null, null, null, null
+  dl_text_duration, bigint, 接收时延, ABCD, null, sum(case when httpaction=6 then httpwebdspdelay_avg end), null, null, null, null, null
+  times_excellentsentrate, bigint, 发送成功率优秀次数, ABCD, null, sum(times_excellentsentrate), null, null, null, null, null
+  times_inferiorsentrate, bigint, 发送成功率劣质次数, ABCD, null, sum(times_inferiorsentrate), null, null, null, null, null
+  times_wellsentrate, bigint, 发送成功率优良次数, ABCD, null, SUM(times_wellsentrate), null, null, null, null, null
+  videoplayrequestcount, long, 视频播放请求次数, F, null, count(1), null, null, null, null, null
+  videoplaysuccesscount, long, 视频播放成功次数, F, null, SUM(videoplaysuccess), null, null, null, null, null
+  videoplayfailurecount, long, 视频播放失败次数, F, null, count(1)-SUM(videoplaysuccess), null, null, null, null, null
+  videoplayhaltcount, bigint, 视频播放卡顿次数, F, null, sum(videoplayhaltcount), null, null, null, null, null
+  videoplaynohaltcount, bigint, 视频播放0卡顿的次数, F, null, sum(videoplaynohaltcount), null, null, null, null, null
+  times_excellentdownlink, bigint, 视频下载速率优秀次数, F, null, SUM(times_excellentdownlink), null, null, null, null, null
+  times_inferiordownlink, bigint, 视频下载速率劣质次数, F, null, SUM(times_inferiordownlink), null, null, null, null, null
+  times_welldownlink, bigint, 视频下载速率良好次数, F, null, SUM(times_welldownlink), null, null, null, null, null
+  times_excellentstallfrequ, bigint, 卡顿频次优秀次数, F, null, SUM(times_excellentstallfrequ), null, null, null, null, null
+  times_inferiorstallfrequ, bigint, 卡顿频次质差次数, F, null, SUM(times_inferiorstallfrequ), null, null, null, null, null
+  times_wellstallfrequ, bigint, 卡顿频次良好次数, F, null, SUM(times_wellstallfrequ), null, null, null, null, null
+  videoplaytime_sum, bigint, 视频播放总时长, F, null, SUM(videoplaytime_sum), null, null, null, null, null
+  VideoPlayWaitTime_sum, bigint, 视频播放等待总时长, F, null, SUM(videoplaywaittime), null, null, null, null, null
+  VideoRecoverTime_sum, bigint, 视频卡顿总时长, F, null, SUM(videorecovertime), null, null, null, null, null
+  VideoThroughput_avg, double, 视频平均下载速率, F, null, avg(VideoThroughput_avg), null, null, null, null, null
+  VideoBitRate_avg, double, 视频平均比特率, F, null, AVG(VideoBitRate), null, null, null, null, null
+  CachedVideoDuration_sum, bigint, 视频缓冲段总时长, F, null, sum(CachedVideoDuration_sum), null, null, null, null, null
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null
+  p_quarter, int, 时刻分区, null, null, null, null, null, null, null, null

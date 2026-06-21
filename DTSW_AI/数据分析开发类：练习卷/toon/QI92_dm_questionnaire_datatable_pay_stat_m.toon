@@ -1,0 +1,71 @@
+theme_domain: 问卷调查
+table_name: dm_questionnaire_datatable_pay_stat_m
+table_name_chinese: 我支付统计datatable月表
+data_frequency: month
+primary_key: 数据描述
+source_table_name[2]{来源系统, 源表英文名, 源表中文名, 别名, 任务描述, 备注, 是否主表}:
+  dtsw, dm_questionnaire_pay_stat_m_d, 我支付统计整月详情天表, A, 取当月最后一天, A先按主键汇聚出指标，再A left join B on 主键字段关联计算环比。, 是
+  dtsw, dm_questionnaire_datatable_pay_stat_m, 我支付统计datatable月表, B, 取p_month-1, null, null
+fields[62]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  p_year, int, 年分区, null, null, null, null, null, null, null, null
+  p_week, int, 周分区, null, null, null, null, null, null, null, null
+  year, int, 年, null, null, null, null, null, null, null, null
+  week, int, 周, null, null, null, null, null, null, null, null
+  area_id, int, 地区编码, A, areacode, 直取, null, null, 维度, 枚举, "2,3,4,5,6"
+  area_name, string, 地区名称, A, area_name, 直取，其它置other, null, null, 维度, 枚举, "{NLZ,VIS,MIN,NCR,SLZ,other,NationWide}"
+  region_id, int, 大区编码, A, regioncode, 直取, null, null, 维度, null, null
+  region_name, string, 大区名称, A, region_name, 直取，其它置other, null, null, 维度, null, null
+  province_id, int, 省编码, A, provincecode, 直取, null, null, 维度, null, null
+  province_name, string, 省名称, A, province_name, 直取，其它置other, null, null, 维度, null, null
+  city_id, int, 城市编码, A, citycode, 直取, null, null, 维度, null, null
+  city_name, string, 城市名称, A, city_name, 直取，其它置other, null, null, 维度, null, null
+  barangay_id, int, barangayID, A, barangay_id, 直取, null, null, 维度, null, null
+  barangay_name, string, barangay名称, A, barangay_name, 直取，其它置other, null, null, 维度, null, null
+  data_level, int, 数据分级, null, null, "(0~5,分别表示全网~barangy)；data_level=0代表全网，area~barangay都置为null", null, null, 维度, 枚举, {0，1，2，3，4，5}
+  service_type, string, 服务类型, A, service_type, 直取，并汇总TOTAL, null, null, 维度, 枚举, "fwa prepaid\nfwa postpaid\nmobile prepaid\nmobile postpaid\nother brands(fmo)\nTOTAL"
+  questionnaire_feedback_cnt, bigint, 问卷反馈量, A, pay_user_nums, sum(pay_user_nums), null, base, 指标, 次, "[0,∞)"
+  questionnaire_feedback_cnt_qoq, doble, 问卷反馈量环比, AB, null, (a.questionnaire_feedback_cnt-b.questionnaire_feedback_cnt)/b.questionnaire_feedback_cnt, null, null, 指标, 比例, "[-∞,∞]"
+  good_ovsat_cnt, bigint, ovsat满意度是良好的次数, A, good_ovsat_nums, sum(good_ovsat_nums), null, null, 指标, 次, "[0,∞)"
+  ovsat_cnt, bigint, ovsat满意度总数, A, ovsat_nums, sum(ovsat_nums), null, null, 指标, 次, "[0,∞)"
+  ovsat_ratio, double, ovsat满意度, A, null, sum(good_ovsat_nums)/sum(ovsat_nums), null, 0vSat, 指标, 比例, "[0,1]"
+  ovsat_ratio_qoq, double, ovsat满意度环比, AB, null, (a.ovsat_ratio-b.ovsat_ratio)/b.ovsat_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_ces_cnt, bigint, ces满意度是良好的次数, A, good_ces_nums, sum(good_ces_nums), null, null, 指标, 次, "[0,∞)"
+  ces_cnt, bigint, ces满意度总数, A, ces_nums, sum(ces_nums), null, null, 指标, 次, "[0,∞)"
+  ces_ratio, double, ces满意度, A, null, sum(good_ces_nums)/sum(ces_nums), null, CES, 指标, 比例, "[0,1]"
+  ces_ratio_qoq, double, ces满意度环比, AB, null, (a.ces_ratio-b.ces_ratio)/b.ces_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_clear_topup_cnt, bigint, 清除充值满意度是良好的次数, A, good_clear_topup_nums, sum(good_clear_topup_nums), null, null, 指标, 次, "[0,∞)"
+  clear_topup_cnt, bigint, 清除充值满意度总数, A, clear_topup_nums, sum(clear_topup_nums), null, null, 指标, 次, "[0,∞)"
+  clear_topup_ratio, double, 清除充值满意度比例, A, null, sum(good_clear_topup_nums)/sum(clear_topup_nums), null, null, 指标, 比例, "[0,1]"
+  clear_topup_ratio_qoq, double, 清除充值满意度比例环比, AB, null, (a.clear_topup_ratio-b.clear_topup_ratio)/b.clear_topup_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_complete_instructions_provided_cnt, bigint, 提供完整说明满意度是良好的次数, A, good_complete_instructions_provided_nums, sum(good_complete_instructions_provided_nums), null, null, 指标, 次, "[0,∞)"
+  complete_instructions_provided_cnt, bigint, 提供完整说明满意度总数, A, complete_instructions_provided_nums, sum(complete_instructions_provided_nums), null, null, 指标, 次, "[0,∞)"
+  complete_instructions_provided_ratio, double, 提供完整说明满意度比例, A, null, sum(good_complete_instructions_provided_nums)/sum(complete_instructions_provided_nums), null, null, 指标, 比例, "[0,1]"
+  complete_instructions_provided_ratio_qoq, double, 提供完整说明满意度比例环比, AB, null, (a.complete_instructions_provided_ratio-b.complete_instructions_provided_ratio)/b.complete_instructions_provided_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_fast_topup_cnt, bigint, 快速充值满意度是良好的次数, A, good_fast_topup_nums, sum(good_fast_topup_nums), null, null, 指标, 次, "[0,∞)"
+  fast_topup_cnt, bigint, 快速充值满意度总数, A, fast_topup_nums, sum(fast_topup_nums), null, null, 指标, 次, "[0,∞)"
+  fast_topup_ratio, double, 快速充值满意度比例, A, null, sum(good_fast_topup_nums)/sum(fast_topup_nums), null, null, 指标, 比例, "[0,1]"
+  fast_topup_ratio_qoq, double, 快速充值满意度比例环比, AB, null, (a.fast_topup_ratio-b.fast_topup_ratio)/b.fast_topup_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_correct_amount_topup_cnt, bigint, 充值是否正确是良好的次数, A, good_correct_amount_topup_nums, sum(good_correct_amount_topup_nums), null, null, 指标, 次, "[0,∞)"
+  correct_amount_topup_cnt, bigint, 充值是否正确总数, A, correct_amount_topup_nums, sum(correct_amount_topup_nums), null, null, 指标, 次, "[0,∞)"
+  correct_amount_topup_ratio, double, 充值是否正确比例, A, null, sum(good_correct_amount_topup_nums)/sum(correct_amount_topup_nums), null, null, 指标, 比例, "[0,1]"
+  correct_amount_topup_ratio_qoq, double, 充值是否正确比例环比, AB, null, (a.correct_amount_topup_ratio-b.correct_amount_topup_ratio)/b.correct_amount_topup_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_complete_transaction_details_received_via_sms_cnt, bigint, 交易短信通知情况是良好的次数, A, good_complete_transaction_details_received_via_sms_nums, sum(good_complete_transaction_details_received_via_sms_nums), null, null, 指标, 次, "[0,∞)"
+  complete_transaction_details_received_via_sms_cnt, bigint, 交易短信通知情况总数, A, complete_transaction_details_received_via_sms_nums, sum(complete_transaction_details_received_via_sms_nums), null, null, 指标, 次, "[0,∞)"
+  complete_transaction_details_received_via_sms_ratio, double, 交易短信通知情况比例, A, null, sum(good_complete_transaction_details_received_via_sms_nums)/sum(complete_transaction_details_received_via_sms_nums), null, null, 指标, 比例, "[0,1]"
+  complete_transaction_details_received_via_sms_ratio_qoq, double, 交易短信通知情况比例环比, AB, null, (a.complete_transaction_details_received_via_sms_ratio-b.complete_transaction_details_received_via_sms_ratio)/b.complete_transaction_details_received_via_sms_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_transaction_his_show_ditoapp_cnt, bigint, 交易历史显示是良好的次数, A, good_transaction_his_show_ditoapp_nums, sum(good_transaction_his_show_ditoapp_nums), null, null, 指标, 次, "[0,∞)"
+  transaction_his_show_ditoapp_cnt, bigint, 交易历史显示总数, A, transaction_his_show_ditoapp_nums, sum(transaction_his_show_ditoapp_nums), null, null, 指标, 次, "[0,∞)"
+  transaction_his_show_ditoapp_ratio, double, 交易历史显示良好比例, A, null, sum(good_transaction_his_show_ditoapp_nums)/sum(transaction_his_show_ditoapp_nums), null, null, 指标, 比例, "[0,1]"
+  transaction_his_show_ditoapp_ratio_qoq, double, 交易历史显示良好比例环比, AB, null, (a.transaction_his_show_ditoapp_ratio-b.transaction_his_show_ditoapp_ratio)/b.transaction_his_show_ditoapp_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_realtime_balance_update_cnt, bigint, 实时更新是良好的次数, A, good_realtime_balance_update_nums, sum(good_realtime_balance_update_nums), null, null, 指标, 次, "[0,∞)"
+  realtime_balance_update_cnt, bigint, 实时更新总数, A, realtime_balance_update_nums, sum(realtime_balance_update_nums), null, null, 指标, 次, "[0,∞)"
+  realtime_balance_update_ratio, double, 实时更新良好比例, A, null, sum(good_realtime_balance_update_nums)/sum(realtime_balance_update_nums), null, null, 指标, 比例, "[0,1]"
+  realtime_balance_update_ratio_qoq, double, 实时更新良好比例环比, AB, null, (a.realtime_balance_update_ratio-b.realtime_balance_update_ratio)/b.realtime_balance_update_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_payment_options_can_conveniently_use_cnt, bigint, 支付选项可以方便使用是良好的次数, A, good_payment_options_can_conveniently_use_nums, sum(good_payment_options_can_conveniently_use_nums), null, null, 指标, 次, "[0,∞)"
+  payment_options_can_conveniently_use_cnt, bigint, 支付选项可以方便使用总数, A, payment_options_can_conveniently_use_nums, sum(payment_options_can_conveniently_use_nums), null, null, 指标, 次, "[0,∞)"
+  payment_options_can_conveniently_use_ratio, double, 支付选项可以方便使用比例, A, null, sum(good_payment_options_can_conveniently_use_nums)/sum(payment_options_can_conveniently_use_nums), null, null, 指标, 比例, "[0,1]"
+  payment_options_can_conveniently_use_ratio_qoq, double, 支付选项可以方便使用比例环比, AB, null, (a.payment_options_can_conveniently_use_ratio-b.payment_options_can_conveniently_use_ratio)/b.payment_options_can_conveniently_use_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_promo_inclusions_fit_my_needs_cnt, bigint, 促销套餐符合需求是良好的次数, A, good_promo_inclusions_fit_my_needs_nums, sum(good_promo_inclusions_fit_my_needs_nums), null, null, 指标, 次, "[0,∞)"
+  promo_inclusions_fit_my_needs_cnt, bigint, 促销套餐符合需求总数, A, promo_inclusions_fit_my_needs_nums, sum(promo_inclusions_fit_my_needs_nums), null, null, 指标, 次, "[0,∞)"
+  promo_inclusions_fit_my_needs_ratio, double, 促销套餐符合需求良好比例, A, null, sum(good_promo_inclusions_fit_my_needs_nums)/sum(promo_inclusions_fit_my_needs_nums), null, null, 指标, 比例, "[0,1]"
+  promo_inclusions_fit_my_needs_ratio_qoq, double, 促销套餐符合需求良好比例环比, AB, null, (a.promo_inclusions_fit_my_needs_ratio-b.promo_inclusions_fit_my_needs_ratio)/b.promo_inclusions_fit_my_needs_ratio, null, null, 指标, 比例, "[-∞,∞]"

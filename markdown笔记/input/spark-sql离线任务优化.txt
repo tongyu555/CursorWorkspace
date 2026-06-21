@@ -1,0 +1,60 @@
+生产常用的调优参数 :
+set spark.sql.shuffle.partitions = 350;
+set spark.sql.adaptive.enabled=true;
+set spark.sql.adaptive.minNumPostShufflePartitions = 1;
+set spark.sql.adaptive.maxNumPostShufflePartitions = 1000;
+set spark.sql.adaptive.shuffle.targetPostShuffleInputSize = 512435456;
+set spark.sql.adaptive.shuffle.targetPostShuffleRowCount = 100000000;
+set spark.network.timeout=360s
+SET spark.sql.adaptive.skewJoin.enabled=true;
+set spark.sql.adaptive.skewJoin.skewedPartitionFactor=4;
+set spark.sql.autoBroadcastJoinThreshold = 157286400;
+
+
+调优参数详解与适用场景
+参数	详解	适用调优场景
+Shuffle 并行度	spark.sql.shuffle.partitions = 350
+设置shuffle后默认的分区数（如GROUP BY、JOIN）。350是一个经验值，兼顾了并发和文件数，避免因默认200个分区导致单个任务处理数据量过大或小文件过多。	通用场景：作为基础水位设置，适用于大多数ETL作业。需根据数据量调整：
+• 小数据（几GB）：设为50-100，减少任务调度开销。
+• 大数据（几百GB - TB级）：设为500-1000+，确保每任务处理数据适中（~200MB）。
+动态执行框架 (AQE)	spark.sql.adaptive.enabled=true
+开启AQE是Spark 3.x最重要的优化。它允许Spark在运行时根据已完成的Stage的输出统计信息，动态优化后续执行计划，解决静态规划时的“盲猜”问题。	所有场景：建议始终开启，尤其在以下场景效果显著：
+• 数据倾斜：动态合并或拆分分区。
+• Join优化：运行时将小表动态转为广播Join。
+• 分区数动态调整：避免分区数固定导致的资源浪费。
+AQE - 动态分区合并	spark.sql.adaptive.minNumPostShufflePartitions = 1
+spark.sql.adaptive.maxNumPostShufflePartitions = 1000
+spark.sql.adaptive.shuffle.targetPostShuffleInputSize = 512435456
+spark.sql.adaptive.shuffle.targetPostShuffleRowCount = 100000000
+AQE根据目标文件大小和行数，自动将多个小分区合并成大分区。min/max限制合并后的分区数范围，防止分区过少（OOM）或过多（小文件）。	数据倾斜/大小分区不均：
+• 当Shuffle后部分分区数据量极小，AQE会将它们合并，减少下游任务数，避免资源空转。
+• 示例：targetPostShuffleInputSize=512MB，若某stage输出100个10MB的小分区，AQE会合并成约2个512MB的分区，提升处理效率。
+AQE - 动态分区拆分	spark.sql.adaptive.skewJoin.enabled=true
+spark.sql.adaptive.skewJoin.skewedPartitionFactor=4
+专门解决Join中的数据倾斜。当一个分区的大小>中位数分区大小的skewedPartitionFactor倍，且大于预设阈值时，AQE会将这个大分区拆分成多个小分区，单独处理，避免单个任务拖慢整体。	大表Join发生数据倾斜：
+• 现象：Join任务卡在某个任务（如200个任务中199个完成，剩1个长时间运行）。
+• skewedPartitionFactor=4：如果一个分区大小是其他分区中位数大小的4倍以上，将被视为倾斜分区并拆分。
+广播Join阈值	spark.sql.autoBroadcastJoinThreshold = 157286400 (150MB)
+当某张表（或经过过滤后的子表）大小小于此阈值时，Spark会自动采用Broadcast Hash Join，将小表广播到各Executor，避免Shuffle，极大提升效率。	大小表Join：
+• 默认值通常为10MB，可根据集群内存压力适当调高。
+• 注意：广播表会占用Executor内存，若集群内存紧张或小表实际大小接近阈值，不建议盲目调大，以免频繁GC或内存溢出。
+网络超时	spark.network.timeout=360s
+设置所有网络交互的超时时间（包括Fetch、IO等待等）。默认120s，在任务处理数据量大、GC时间长或网络波动时容易超时失败。调大此值可提高任务稳定性。	处理大任务/GC严重：
+• 当任务拉取Shuffle数据量大、或Executor频繁Full GC导致超过120s未响应时，适当调高此参数（如360s或600s）可避免任务被误判为失败。
+整体调优思路与逻辑链
+基础设定（并行度350）：先为整个作业设定一个较合理的并行度，这是AQE发挥作用的前提。
+
+开启自适应框架：通过spark.sql.adaptive.enabled=true启动动态优化能力。
+
+优化Shuffle数据分布：
+
+利用动态分区合并，解决小分区过多问题，减少下游任务数量。
+
+利用动态倾斜处理，解决大分区拖累问题，避免数据倾斜。
+
+优化Join策略：利用动态广播Join（AQE特性之一，依赖上述参数）或静态阈值，将Shuffle Join降级为Broadcast Join。
+
+兜底保障：通过调整spark.network.timeout，为任务执行留出充裕时间，避免因偶然波动导致失败。
+
+这组参数覆盖了从“预防”（并行度）到“治理”（AQE解决倾斜和合并小分区），再到“兜底”（网络超时）的完整调优链路，是一套非常经典且实用的Spark SQL配置组合。
+

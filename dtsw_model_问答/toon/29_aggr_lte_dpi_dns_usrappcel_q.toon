@@ -1,0 +1,31 @@
+theme_domain: 数据感知
+table_name: aggr_lte_dpi_dns_usrappcel_q
+table_name_chinese: 4G_DPI_dns用户小区app维度15分钟表
+data_frequency: quarter
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 是否主表}:
+  aggr_lte_dpi_dns_base_q, 4G_DPI_dns基础维度15分钟表, A, 是
+fields[23]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 日期, A, p_date, 直取, null, null, 维度, 无, yyyy-mm-dd
+  hour, int, 小时, A, p_hour, 直取, null, null, 维度, 无, 0~23
+  quarter, int, 15分钟, A, p_quarter, 直取, null, null, 维度, 无, 0~3
+  interface, int, 接口类型, A, interface, 直取, null, null, 维度, 无, <=101
+  cellkey, string, 小区cellkey, A, cellkey, 直取, null, null, 维度, 无, 无
+  imsi, string, 用户imsi, A, imsi, 直取, null, null, 维度, 无, 无
+  msisdn, string, 用户号码, A, msisdn, 直取, null, null, 维度, 无, 无
+  imei, string, 用户终端, A, imei, 直取, null, null, 维度, 无, 无
+  servicetype, string, 业务应用, A, servicetype, 直取, null, null, 维度, 无, 无
+  abnormal_cnt, bigint, 质差话单数量, A, null, sum(abnormal_cnt), null, null, 指标, 无, >=0
+  dns_query_cnt, int, DNS请求次数, A, null, sum(dns_query_cnt), null, null, 指标, 无, >=0
+  dns_suc_cnt, int, DNS成功次数, A, null, sum(dns_suc_cnt), null, null, 指标, 无, >=0
+  dns_delay, double, DNS时延, A, null, sum(dns_delay*dns_query_cnt)/sum(dns_query_cnt), null, null, 指标, 无, >=0
+  dns_delay_custom, double, DNS时延（自定义：剔除时延大于100ms的详单数据）, A, null, sum(dns_delay_custom*dns_query_cnt)/sum(dns_query_cnt), null, null, 指标, 无, "[0,100]"
+  dns_delay_cnt_0_50, bigint, "DNS查询时延在(0,50]的次数", A, null, sum(dns_delay_cnt_0_50), null, null, 指标, 无, >=0
+  dns_delay_cnt_50_100, bigint, "DNS查询时延在(50,100]的次数", A, null, sum(dns_delay_cnt_50_100), null, null, 指标, 无, >=0
+  dns_delay_cnt_100_150, bigint, "DNS查询时延在(100,150]的次数", A, null, sum(dns_delay_cnt_100_150), null, null, 指标, 无, >=0
+  dns_delay_cnt_150_200, bigint, "DNS查询时延在(150,200]的次数", A, null, sum(dns_delay_cnt_150_200), null, null, 指标, 无, >=0
+  dns_delay_cnt_greater_200, bigint, "DNS查询时延在(200,200000]的次数", A, null, sum(dns_delay_cnt_greater_200), null, null, 指标, 无, >=0
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null
+  p_quarter, int, 15分钟分区, null, null, null, null, null, null, null, null

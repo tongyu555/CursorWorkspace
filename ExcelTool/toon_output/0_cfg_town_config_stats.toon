@@ -1,0 +1,16 @@
+theme_domain: /
+table_name: cfg_town_config_stats
+table_name_chinese: 统计局省市区乡镇配置表
+data_frequency: null
+primary_key: 数据描述
+source_table_name[0]:
+fields[9]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  provincecode, int, 省编码, null, null, null, null, null, null, null, null
+  province, string, 省名称, null, null, null, null, null, null, null, null
+  citycode, int, 市编码, null, null, null, null, null, null, null, null
+  city, string, 地市名称, null, null, null, null, null, null, null, null
+  districtcode, int, 区编码, null, null, null, null, null, null, null, null
+  district, string, 区县名称, null, null, null, null, null, null, null, null
+  towncode, bigint, 乡镇编码, null, null, null, null, null, null, null, null
+  town, string, 乡镇名称, null, null, null, null, null, null, null, null
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null

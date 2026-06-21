@@ -1,0 +1,16 @@
+theme_domain: 信令感知
+table_name: aggr_lte_dpi_s1mme_dcnr_cel_q
+table_name_chinese: 4G小区下NSA用户数统计15分钟表
+data_frequency: quarter
+primary_key: 数据描述
+source_table_name[2]{源表英文名, 源表中文名, 别名, 任务描述, 是否主表, 备注}:
+  fact_4g_xdr_signal_min, S1MME实时位置15分钟表, A, "A inner join B，关联条件：regexp_replace(trim(A.msisdn),'^86','') = B.msisdn", 是, null
+  aggr_lte_dpi_s1mme_dcnr_usr_d, S1MME话单中dcnr与n1mode用户清单, B, null, null, B表取T-1账期数据，过滤条件：dcnr = 1
+fields[7]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  enodebid, int, 基站ID, A, null, "split(cellkey,'_')[0]", null, null, 维度, 无, 无
+  cellid, int, 小区ID, A, null, "split(cellkey,'_')[1]", null, null, 维度, 无, 无
+  5g_user_count, bigint, 5G用户数, A, null, count(distinct msisdn), null, null, 指标, 个, >=0
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null
+  p_quarter, int, 15分钟分区, null, null, null, null, null, null, null, null

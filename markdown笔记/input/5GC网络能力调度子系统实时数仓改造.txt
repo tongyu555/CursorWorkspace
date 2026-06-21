@@ -1,0 +1,10 @@
+1. 支撑业务 : 5G DPI , AMF/SMF业务日志 , 5G CGF话单
+2. 项目背景 : 5g-amf , 5g-smf , 5g-dpi , 5g-cgf 共15类数据 , 原本是使用flink实时程序读取kafka , 实时写入到HBase表中 , 但是因为数据量较大 , 实时写HBase对kafka以及hbase集群带来了很大的负载 , 故计划采用Spark离线任务读取hdfs数据 , 使用bulkload方式离线写入HBase表 , 这样贴源数据可以不入kafka , 同时大大降低了对HBase集群的读写请求压力
+3. 改造方案 : 5CG数据 => HDFS => DS离线任务调度平台(SPARK任务) => BulkLoadLoad => HBase
+4. 功能点 :
+  • 根据HBase表前一天的HDFS的数据量 , 计算出HBase表的预分区数量 ( size/60 + 1 , 一个region 60GB) 
+  • 每天创建一个HBase表 (预分区数 + 生命周期)
+  • 读取hive的HDFS文件进行清洗 , 生成HFile文件
+  • 将生成的HFile文件通过BulkLoad方式导入HBase
+  • 每天删除过期的HBase表
+5. rowkey设计 : 分区随机数 + 反转手机号 + 时间戳 + 序列号后5位

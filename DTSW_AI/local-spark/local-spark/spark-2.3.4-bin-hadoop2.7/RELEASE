@@ -1,0 +1,2 @@
+Spark 2.3.4 built for Hadoop 2.7.3
+Build flags: -B -Pmesos -Pyarn -Pkubernetes -Psparkr -Pkafka-0-8 -Pflume -Pscala-2.11 -Phadoop-2.7 -Phive -Phive-thriftserver -DzincPort=3036

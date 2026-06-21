@@ -1,0 +1,37 @@
+theme_domain: highrail_user
+table_name: aggr_highrail_user_platform_cell_user_q
+table_name_chinese: 高铁上站台小区的用户指标分钟表
+data_frequency: quarter
+primary_key: 数据描述
+source_table_name[5]{源表英文名, 源表中文名, 别名, 任务描述, 是否主表, 备注}:
+  cfg_highspeedrail_platform_cell, 高铁上站台小区清单配置表, A, 主键：provincecode+net_type+nodebid+cellid, 是, null
+  ods_pscp_s1mme_front_5min, 4GDPI指标详单分钟表, B1, 每一天数据都是不重复的，主键：？？？, null, B1/B2/B3/B4的数据合并之后，使用小区编码+网络类型内关联A表cellkey+net_type
+  fact_lte_mro_usrbackfill_q, 4GMR指标详单分钟表, B2, 每一天数据都是不重复的，主键：？？？, null, null
+  ods_nr_mro_northctcc_q, 5GMR指标详单分钟表, B3, 每一天数据都是不重复的，主键：？？？, null, null
+  ods_5gdpi_n1n2_e2e_telecom_5min, 5GDPI指标详单分钟表, B4, 每一天数据都是不重复的，主键：？？？, null, null
+fields[25]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  datetime, string, 事件发生时间, B1/B2/B3B4, "B1:from_unixtime(substr(t1.procedure_starttime, 0, 10), 'yyyy-MM-dd HH:mm:ss')\nB2:date_format(datetime, 'yyyy-MM-dd HH:mm:ss')\nB3:date_format(datetime, 'yyyy-MM-dd HH:mm:ss')\nB4:from_unixtime(substr(procedure_start_time, 0, 10), 'yyyy-MM-dd HH:mm:ss')", null, null, null, null, null, null
+  enbid, int, 基站ID, B1/B2/B3B4, "B1:enbid\nB2:enodebid\nB3:gnbid\nB4:FLOOR(ci / 4096)", null, null, null, null, null, null
+  cellid, int, 小区ID, B1/B2/B3B4, "B1:cellid\nB2:cellid\nB3:cellid\nB4:ci%4096", null, null, null, null, null, null
+  msisdn, string, 用户电话号码, B1/B2/B3B4, "B1:regexp_replace(trim(msisdn),'^86','')\nB2:regexp_replace(trim(mdn),'^86','')\nB3:regexp_replace(trim(msisdn),'^86','')\nB4:regexp_replace(trim(msisdn),'^86','')", null, null, null, null, null, null
+  imsi, string, imsi, B1/B2/B3B4, "B1:imsi\nB2:imsi\nB3:imsi\nB4:supi", null, null, null, null, null, null
+  cellkey, string, 小区编码, B1/B2/B3B4, "B1:concat(enbid, '_', cellid)  \nB2:concat(enodebid, '_', cellid)\nB3:concat(gnbid, '_', cellid)\nB4:concat(FLOOR(ci/4096),'_',ci%4096)", null, null, null, null, null, null
+  mrlat, double, mr经度, B1/B2/B3B4, "B1:null\nB2:mrlat\nB3:mrlat\nB4:null", null, null, null, null, null, null
+  mrlon, double, mr纬度, B1/B2/B3B4, "B1:null\nB2:mrlon\nB3:mrlon\nB4:null", null, null, null, null, null, null
+  net_type, string, 网络类型, A, "B1:'LTE'\nB2:'LTE'\nB3:'MR'\nB4:'MR'", null, "LTE\nNR", null, null, null, null
+  rsrp, double, rsrp, B1/B2/B3B4, "B1:null\nB2:rsrp-140\nB3:nrscssrsrp-156 \nB4:null", null, null, null, null, null, null
+  rsrq, double, rsrq, B1/B2/B3B4, "B1:null\nB2:rsrq/2-20\nB3:nrscssrsrq/2-43\nB4:null", null, null, null, null, null, null
+  sinr, double, sinr, B1/B2/B3B4, "B1:null\nB2:ulsinr-10\nB3:nrscsssinr/2-23\nB4:null", null, null, null, null, null, null
+  regionid, int, 大区ID, B1/B2/B3B4, "B1:null\nB2:regionid\nB3:regionid\nB4:null", null, null, null, null, null, null
+  x_offset, int, x轴偏移量, B1/B2/B3B4, "B1:null\nB2:x_offset_original\nB3:x_offset_original\nB4:null", null, null, null, null, null, null
+  y_offset, int, y轴偏移量, B1/B2/B3B4, "B1:null\nB2:y_offset_original\nB3:y_offset_original\nB4:null", null, null, null, null, null, null
+  x_offset_20, int, x轴偏移量20米, B1/B2/B3B4, "B1:null\nB2:floor(x_offset_original / 20)\nB3:floor(x_offset_original / 20)\nB4:null", null, null, null, null, null, null
+  y_offset_20, int, y轴偏移量20米, B1/B2/B3B4, "B1:null\nB2:floor(y_offset_original / 20)\nB3:floor(y_offset_original / 20)\nB4:null", null, null, null, null, null, null
+  data_type, string, 数据类型, B1/B2/B3B4, "B1:'DPI'\nB2:'MR'\nB3:'MR'\nB4:'DPI'", null, "MR\nDPI", null, null, null, null
+  line_id, string, 高铁线路ID, A, 直接取, null, null, null, null, null, null
+  line_name, string, 高铁线路名称, A, 直接取, null, null, null, null, null, null
+  groupid, string, 高铁站台组ID, A, 直接取, null, null, null, null, null, null
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null
+  p_quarter, int, 分钟分区, null, null, null, null, null, null, null, null

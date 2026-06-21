@@ -1,0 +1,155 @@
+theme_domain: null
+table_name: fact_5gdpi_s1uhttp_e2e_telecom_q
+table_name_chinese: 5G DPI S1U-HTTP业务事实表
+data_frequency: hour
+primary_key: 数据描述
+source_table_name[3]{源表英文名, 源表中文名, 别名, 备注}:
+  ods_5gdpi_s1uhttp_e2e_telecom_q, 5G DPI S1U-HTTP业务明细表, A, null
+  lte_cm_projdata, 4G电信工参, B, 先将B表与B1表合并，若存在相同cellkey，则保留B表数据；
+  lte_cucc_cm_projdata, 4G联通工参, B1, null
+fields[145]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围, nan}:
+  interface, int, 接口, null, null, null, null, null, null, null, null, null
+  supi, string, 永久用户标识, null, null, null, null, null, null, null, null, null
+  msisdn, string, 用户号码, null, null, null, null, null, null, null, null, null
+  pei, string, 永久设备标识, null, null, null, null, null, null, null, null, null
+  dnn_apn, string, 网络接入标识, null, null, null, null, null, null, null, null, null
+  destinationip, string, 用户访问的目标IPv4或IPv6地址, null, null, null, null, null, null, null, null, null
+  destinationport, int, 用户访问的目标端口号, null, null, null, null, null, null, null, null, null
+  sourceip, string, 用户访问外部网络时使用的IPv4或IPv6地址, null, null, null, null, null, null, null, null, null
+  sourceport, int, 用户访问外部网络时使用的端口号, null, null, null, null, null, null, null, null, null
+  upfip, string, UPF的IPv4或IPv6地址, null, null, null, null, null, null, null, null, null
+  ncgi_ecgi, string, NCGI：NR 小区全局标识符，MCC+MNC+NRCELLID；, null, null, null, null, null, null, null, null, null
+  tai, string, 跟踪区标识, null, null, null, null, null, null, null, null, null
+  visitedplmnid, string, 拜访网络标识, null, null, null, null, null, null, null, null, null
+  rattype, int, 用户所接入的网络类型, null, null, null, null, null, null, null, null, null
+  protocolid, int, 协议类型，参见附录J, null, null, null, null, null, null, null, null, null
+  servicetype, string, 业务应用, null, null, null, null, null, null, null, null, null
+  starttime, string, 业务流开始时间，格式为YYYYMMDDhhmmss（24小时制），如果开启中间记录模式，每条记录都填写相同的开始时间。, null, null, null, null, null, null, null, null, null
+  endtime, string, 业务流结束时间，格式为YYYYMMDDhhmmss（24小时制），如果开启中间记录模式，只在最后一条记录填写结束时间。, null, null, null, null, null, null, null, null, null
+  duration, bigint, 持续时间，单位毫秒, null, null, null, null, null, null, null, null, null
+  inputoctets, bigint, 发给用户的业务字节数, null, null, null, null, null, null, null, null, null
+  outputoctets, bigint, 用户发出的业务字节数, null, null, null, null, null, null, null, null, null
+  inputpacket, bigint, 发给用户的业务数据包数量, null, null, null, null, null, null, null, null, null
+  outputpacket, bigint, 用户发出的业务数据包数量, null, null, null, null, null, null, null, null, null
+  pduconnectionid, string, PDU连接的ID标识号, null, null, null, null, null, null, null, null, null
+  recordclosecause, int, 记录关闭原因, null, null, null, null, null, null, null, null, null
+  gnbip, string, gNB的IPv4或IPv6地址, null, null, null, null, null, null, null, null, null
+  gnbgtp_teid, int, 填写该业务对应承载的gNB侧GTP-TEID, null, null, null, null, null, null, null, null, null
+  upfgtp_teid, int, 填写该业务对应承载的UPF侧GTP-TEID, null, null, null, null, null, null, null, null, null
+  home_province, string, 归属省份, null, null, null, null, null, null, null, null, null
+  l4protocol, int, L4 protocol, null, null, null, null, null, null, null, null, null
+  ultcpreorderingpacket, bigint, 上行TCP乱序报文数, null, null, null, null, null, null, null, null, null
+  dltcpreorderingpacket, bigint, 下行TCP乱序报文数, null, null, null, null, null, null, null, null, null
+  ultcp_retranspacket, bigint, 上行TCP重传报文数, null, null, null, null, null, null, null, null, null
+  dltcp_retranspacket, bigint, 下行TCP重传报文数, null, null, null, null, null, null, null, null, null
+  tcpsetupresponsedelay, bigint, TCP建链响应时延（ms）, null, null, null, null, null, null, null, null, null
+  tcpsetupackdelay, bigint, TCP建链确认时延（ms）, null, null, null, null, null, null, null, null, null
+  ulipfragpacks, bigint, UL_IP_FRAG_PACKETS, null, null, null, null, null, null, null, null, null
+  dlipfragpacks, bigint, DL_IP_FRAG_PACKETS, null, null, null, null, null, null, null, null, null
+  delay_setup_firsttransaction, bigint, TCP建链成功到第一条事务请求的时延（ms）, null, null, null, null, null, null, null, null, null
+  delay_firsttransaction_firstrespackt, bigint, 第一条事务请求到其第一个响应包时延（ms）, null, null, null, null, null, null, null, null, null
+  msssize, int, MSS大小, null, null, null, null, null, null, null, null, null
+  tcpsynnumber, int, TCP建链尝试次数, null, null, null, null, null, null, null, null, null
+  tcpconnectstate, int, TCP连接状态指示, null, null, null, null, null, null, null, null, null
+  sessionstopflag, int, 会话是否结束标志, null, null, null, null, null, null, null, null, null
+  nssai_sst, int, Slice Service Type (SST), null, null, null, null, null, null, null, null, null
+  nssai_sd, int, Slice Differentiator（SD）, null, null, null, null, null, null, null, null, null
+  ul_session_ambr, bigint, 0, null, null, null, null, null, null, null, null, null
+  dl_session_ambr, bigint, 0, null, null, null, null, null, null, null, null, null
+  5qi, int, 0, null, null, null, null, null, null, null, null, null
+  userfirsttcpwindow, int, 用户侧初始有效TCP窗口大小, null, null, null, null, null, null, null, null, null
+  serverfirsttcpwindow, int, 服务器侧初始有效TCP窗口大小, null, null, null, null, null, null, null, null, null
+  userlasttcpwindow, int, 用户侧结束有效TCP窗口大小, null, null, null, null, null, null, null, null, null
+  serverlasttcpwindow, int, 服务器侧结束有效TCP窗口大小, null, null, null, null, null, null, null, null, null
+  usermintcpwindow, int, 用户侧最小有效TCP窗口大小, null, null, null, null, null, null, null, null, null
+  servermintcpwindow, int, 服务器侧最小有效TCP窗口大小, null, null, null, null, null, null, null, null, null
+  usermaxtcpwindow, int, 用户侧最大有效TCP窗口大小, null, null, null, null, null, null, null, null, null
+  servermaxtcpwindow, int, 服务器侧最大有效TCP窗口大小, null, null, null, null, null, null, null, null, null
+  ul_data_transduration, bigint, TCP上行数传时长，单位为毫秒, null, null, null, null, null, null, null, null, null
+  dl_datatransduration, bigint, TCP下行数传时长，单位为毫秒, null, null, null, null, null, null, null, null, null
+  ul_packet_number_stg1, int, UDP上行包大小个数：包大小 < 15 Byte, null, null, null, null, null, null, null, null, null
+  ul_packet_number_stg2, int, UDP上行包大小个数：15Byte< 包大小 < 36 Byte, null, null, null, null, null, null, null, null, null
+  ul_packet_number_stg3, int, UDP上行包大小个数：36Byte<= 包大小<= 56Byte, null, null, null, null, null, null, null, null, null
+  ul_packet_number_stg4, int, UDP上行包大小个数：包大小 > 56 Byte, null, null, null, null, null, null, null, null, null
+  dl_packet_number_stg1, int, UDP下行包大小个数：包大小 < 15 Byte, null, null, null, null, null, null, null, null, null
+  dl_packet_number_stg2, int, UDP下行包大小个数：15Byte< 包大小 < 36 Byte, null, null, null, null, null, null, null, null, null
+  dl_packet_number_stg3, int, UDP下行包大小个数：36Byte<=包大小<= 56Byte, null, null, null, null, null, null, null, null, null
+  dl_packet_number_stg4, int, UDP下行包大小个数：包大小 > 56 Byte, null, null, null, null, null, null, null, null, null
+  ul_average_packet_size, int, UDP上行平均包大小, null, null, null, null, null, null, null, null, null
+  dl_average_packet_size, int, UDP下行平均包大小, null, null, null, null, null, null, null, null, null
+  ul_average_interval, int, UDP上行平均包间隔, null, null, null, null, null, null, null, null, null
+  dl_average_interval, int, UDP下行平均包间隔, null, null, null, null, null, null, null, null, null
+  ul_average_jitter, int, UDP上行平均包间隔抖动, null, null, null, null, null, null, null, null, null
+  dl_average_jitter, int, UDP下行平均包间隔抖动, null, null, null, null, null, null, null, null, null
+  user_agent, string, User Agent信息, null, null, null, null, null, null, null, null, null
+  destination_url, string, 用户访问的目标网站的URL。, null, null, null, null, null, null, null, null, null
+  domain_name, string, 外部网站的域名, null, null, null, null, null, null, null, null, null
+  host, string, 主机名, null, null, null, null, null, null, null, null, null
+  content_len, bigint, 内容大小, null, null, null, null, null, null, null, null, null
+  content_type, string, 内容类型, null, null, null, null, null, null, null, null, null
+  if_link, int, 是否是链接访问，0=否，1=是, null, null, null, null, null, null, null, null, null
+  referer, string, 链接源信息, null, null, null, null, null, null, null, null, null
+  httpaction, int, "HTTP操作类型（1-CONNECT,2-HEAD,3-PUT,4-DELETE,5-POST,6-GET,7-TRACE,8-OPTIONS,9-PATCH,10-MOVE,11-COPY,12-LINK,13-UNLINK,14-WRAPPED,15-其它）", null, null, null, null, null, null, null, null, null
+  httpstatus, int, HTTP状态码，请参照附录A.1 HTTPSTATUS表, null, null, null, null, null, null, null, null, null
+  resp_delay, bigint, 响应时延，单位毫秒, null, null, null, null, null, null, null, null, null
+  behavior_target, int, 目标行为，0：会话是用户主动点击的页面；1：站点目标而产生的页面。, null, null, null, null, null, null, null, null, null
+  syntime, bigint, SYN时间戳, null, null, null, null, null, null, null, null, null
+  synacktime, bigint, SYNACK时间戳, null, null, null, null, null, null, null, null, null
+  acktime, bigint, ACK时间戳, null, null, null, null, null, null, null, null, ta
+  action_time, bigint, 首个HTTP请求的时间戳, null, null, null, null, null, null, null, null, ta
+  first_packet_time, bigint, 第一个数据响应包的时间戳, null, null, null, null, null, null, null, null, ta
+  lastpacktime, bigint, 最后一个数据包时间戳, null, null, null, null, null, null, null, null, null
+  http_version, int, HTTP版本, null, null, null, null, null, null, null, null, null
+  first_resptime, bigint, 第一个HTTP响应包时间戳, null, null, null, null, null, null, null, null, null
+  last_acktime, bigint, 最后一个ACK确认包的时间戳, null, null, null, null, null, null, null, null, null
+  cookie, string, 0, null, null, null, null, null, null, null, null, null
+  flow_id, bigint, 事务所属的流ID, null, null, null, null, null, null, null, null, null
+  transaction_order, int, 事务编号, null, null, null, null, null, null, null, null, null
+  title, string, 0, null, null, null, null, null, null, null, null, ta
+  key_word, string, 0, null, null, null, null, null, null, null, null, ta
+  web_browser, int, 浏览工具，参考附录F, null, null, null, null, null, null, null, null, ta
+  first_fin_ack_time, bigint, 第一个TCP FinAck包时间戳, null, null, null, null, null, null, null, null, null
+  dnsquery_time, bigint, DNS关联流的请求时间戳。无关联流，此字段填写0, null, null, null, null, null, null, null, null, ta
+  dnsresponse_time, bigint, DNS关联流的应答时间戳。无关联流，此字段填写0, null, null, null, null, null, null, null, null, null
+  dnsflow_id, bigint, HTTP流与DNS流的关联ID。无关联流时，此字段填写0, null, null, null, null, null, null, null, null, null
+  first_screen_fin_time, bigint, 首屏完成时间戳，默认值0。算法见《中国电信移动互联网业务感知质量评价细则》, null, null, null, null, null, null, null, null, null
+  transactions, int, 同一个流中的事务计数, null, null, null, null, null, null, null, null, null
+  nodebid, bigint, 4G eNodeBID/5G gNBID, null, null, null, null, null, null, null, null, null
+  cellid, bigint, 小区ID, null, null, null, null, null, null, null, null, null
+  cellname, string, 小区名称, "B|B1", "B：cellname\nB1：cell_name", 直取, null, 升级算法, 详单, 无, 无, null
+  tacid, bigint, tacid，取PEI前8位, null, null, null, null, null, null, null, null, null
+  provincecode, int, 拜访地省份, A, p_provincecode, 直取, null, 升级算法, 详单, 无, 无, null
+  citycode, int, 拜访地地市, "B|B1", "B：citycode\nB1：citycode", 直取, null, 升级算法, 详单, 无, 无, null
+  districtcode, int, 拜访地区县, "B|B1", "B：districtcode\nB1：districtcode", 直取, null, 升级算法, 详单, 无, 无, null
+  province, string, 拜访地省份, "B|B1", "B：province\nB1：province_name", 直取, null, 升级算法, 详单, 无, 无, null
+  city, string, 拜访地地市, "B|B1", "B：city\nB1：city_name", 直取, null, 升级算法, 详单, 无, 无, null
+  district, string, 拜访地区县, "B|B1", "B：district\nB1：district_name", 直取, null, 升级算法, 详单, 无, 无, null
+  http_req_cnt, bigint, http请求次数, null, null, null, null, null, null, null, null, null
+  http_succ_cnt, bigint, http请求成功次数, null, null, null, null, null, null, null, null, null
+  http_complete_cnt, bigint, http请求完成次数, null, null, null, null, null, null, null, null, null
+  http_no_response_cnt, int, http无响应次数, null, null, null, null, null, null, null, null, null
+  dnsquerydelay, bigint, DNS查询时延, null, null, null, null, null, null, null, null, null
+  delay_syntime_dnsresponse_time, bigint, DNS建立完成到TCP握手时延, null, null, null, null, null, null, null, null, null
+  tcpsetupdelay, bigint, TCP建立时延, null, null, null, null, null, null, null, null, null
+  httpwebrspdelay, bigint, 网页首包时延，也叫网页响应时延, null, null, null, null, null, null, null, null, null
+  httpwebdspdelay, bigint, 网页显示时延，也叫网页完整打开时延, null, null, null, null, null, null, null, null, null
+  httpwebscreendelay, bigint, 网页首屏时延, null, null, null, null, null, null, null, null, null
+  delay_acktime_actiontime, bigint, TCP建立完成到首个HTTP请求的时延, null, null, null, null, null, null, null, null, null
+  delay_actiontime_firstpackettime, bigint, 首个HTTP请求到第一个数据响应包的时延, null, null, null, null, null, null, null, null, null
+  delay_actiontime_firstresptime, bigint, 首个HTTP请求到第一个HTTP数据响应包的时延, null, null, null, null, null, null, null, null, null
+  delay_lastpacktime_dnsortcp, bigint, DNS请求/TCP请求到最后一个数据包的时延, null, null, null, null, null, null, null, null, null
+  delay_firstresptime_lastpacktime, bigint, 第一个HTTP响应包到最后一个数据包的时延, null, null, null, null, null, null, null, null, null
+  delay_firstpackettime_lastpacktime, bigint, 第一个数据响应包到最后一个数据包的时延, null, null, null, null, null, null, null, null, null
+  delay_lastpacktime_lastacktime, bigint, 最后一个数据包到最后一个ACK的时延, null, null, null, null, null, null, null, null, null
+  delay_firstfinacktime_lastacktime, int, 最后一个ACK到首次挥手的时延, null, null, null, null, null, null, null, null, null
+  http_throughput_size, double, HTTP下载文件大小（Kbit）, null, null, null, null, null, null, null, null, null
+  http_throughput_duartion, double, HTTP下载时长（s）, null, null, null, null, null, null, null, null, null
+  http_throughput, int, HTTP下载速率, null, null, null, null, null, null, null, null, null
+  ul_or_dl, int, 是否是用户发给服务器的数据, null, null, null, null, null, null, null, null, null
+  perception_type, int, 话单类型, null, null, null, null, null, null, null, null, null
+  business_type, string, 业务类型（im、web、game、other）, null, null, null, null, null, null, null, null, null
+  abnormal, int, 是否质差话单, null, null, null, null, null, null, null, null, null
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null, null
+  p_quarter, int, 15分钟分区, null, null, null, null, null, null, null, null, null

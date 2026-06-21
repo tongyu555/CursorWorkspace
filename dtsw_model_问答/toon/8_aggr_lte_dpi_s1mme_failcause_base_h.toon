@@ -1,0 +1,42 @@
+theme_domain: 信令感知
+table_name: aggr_lte_dpi_s1mme_failcause_base_h
+table_name_chinese: S1MME接口失败原因基础小时表
+data_frequency: hour
+primary_key: 数据描述
+source_table_name[1]{源表英文名, 源表中文名, 别名, 备注, 是否主表}:
+  aggr_lte_dpi_s1mme_base_h, 4G_DPI_s1mme基础维度小时汇聚表(含定界定位), A, "过滤条件：(record_cnt - procedure_normal_cnt > 0) or procedure_status in (1,255) ", 是
+fields[34]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  day, string, 日期, A, p_date, 直取, null, null, 维度, 无, 无
+  hour, int, 小时, A, p_hour, 直取, null, null, 维度, 无, 无
+  citycode, int, 城市编码, A, citycode, 直取, null, null, 维度, 无, 无
+  city, string, 城市名称, A, city, 直取, null, null, 维度, 无, 无
+  districtcode, int, 区县编码, A, districtcode, 直取, null, null, 维度, 无, 无
+  district, string, 区县名称, A, district, 直取, null, null, 维度, 无, 无
+  interface, int, "必填字段。接口类型：\n1：S1-U\n2：S1-MME\n3：S6a\n4：S11\n6：S5-C\n14：L2TP\n16：Gm信令面\n28：Gm接口VoLTE会话xDR（Gm Session xDR）\n29：Gm接口VoLTE切片xDR（Gm Slice xDR）\n31：S1-U接口VoLTE切片xDR（S1-U Slice xDR）\n35：Radius\n50：N1N2\n51：N4\n52：N5\n53：N7\n54：N8\n55：N10\n56：N11\n57：N12\n58：N14\n59：N15\n66：N16\n60：N22\n61：N26\n62：N40\n63：N13\n100：User Plane（5G SA指N3接口）\n", A, interface, 直取, null, null, 维度, 无, 无
+  imsi, string, 永久用户标识。4G 填写用户IMSI。, A, imsi, 直取, null, null, 维度, 无, 无
+  imei, string, 永久设备标识。4G填写IMEI/IMEISV。保持信令抽取的原样，无需进行IMEI和IMEISV间的转化。, A, imei, 直取, null, null, 维度, 无, 无
+  msisdn, string, 用户号码。, A, msisdn, 直取, null, null, 维度, 无, 无
+  rat, int, RAT类型：取各接口码流中携带的值。如果接入类型为5G NR，将RAT值改写为10。, A, rat, 直取, null, null, 维度, 无, 无
+  home_province, string, 用户的归属地省份，枚举定义参见附录G。对国际漫入用户时，该字段填写用户归属运营商PLMN。, A, home_province, 直取, null, null, 维度, 无, 无
+  mmeipadd, string, MME信令面IP地址, A, mmeipadd, 直取, null, null, 维度, 无, 无
+  enbipadd, string, eNB信令面或用户面IP地址, A, enbipadd, 直取, null, null, 维度, 无, 无
+  other_eci, bigint, 对端小区的ECI，只在切换过程填写, A, other_eci, 直取, null, null, 维度, 无, 无
+  cellkey, string, 小区cellkey, A, cellkey, 直取, null, null, 维度, 无, 无
+  apn, string, APN地址, A, apn, 直取, null, null, 维度, 无, 无
+  procedure_type, int, "流程类型编码，具体取值如下：\n0： Registration\n1： De-registration\n2： Service Request\n3： UE Configuration Update\n4： SMS\n30： PDU Session Establishment\n31： PDU Session Modification\n32： PDU Session Release\n60： N2 HO Out\n61： N2 HO In\n62： N2 HO Cancel\n63： Xn HO\n64： UE Context Release\n73： UE Capability Info Indication\n74： UE Radio Capability Check\n75： Trace Start\n76： Deactivate Trace\n77： Cell traffic Trace\n78： NG Reset\n79： Error indication\n80： NG Setup\n81： RAN Configuration Update\n82： AMF Configuration Update\n83： Overload Start\n84： Overload Stop", A, procedure_type, 直取, null, null, 维度, 无, 无
+  procedure_status, int, "流程状态\n0：成功；\n1：失败；\n255：超时\n", A, procedure_status, 直取, null, null, 维度, 无, 无
+  problem_demarcation, string, 问题定界, A, problem_demarcation, 直取, null, null, 维度, 无, 无
+  problem_position, string, 问题定位, A, problem_position, 直取, null, null, 维度, 无, 无
+  request_cause_group, int, 标识流程请求消息中cause字段所对应的Cause Group, A, request_cause_group, 直取, null, null, 维度, 无, 无
+  request_cause, int, 流程的请求消息中所包含的Cause值, A, request_cause, 直取, null, null, 维度, 无, 无
+  failure_cause_group, int, "标识流程失败响应消息中cause字段所对应的Cause Group。\n失败原因类型，对于5G NAS流程：\n1：5GMM\n2：5GSM\n对于NGAP流程：\n1：Radio Network Layer\n2：Transport Layer\n3：NAS\n4：Protocol\n5：Misc\n对于SMS流程：\n1：CP Cause\n2：RP Cause", A, failure_cause_group, 直取, null, null, 维度, 无, 无
+  failure_cause, int, "流程失败响应消息中的值。\nCauseValue，规范参见：\n> 5GMM具体CauseValue取值参见3GPP 24.501第9.11.3.2节Table 9.11.3.2.1；\n> 5GSM具体CauseValue取值参见3GPP 24.501第9.11.4.2节Table 9.11.4.2.1；\n> NGAP具体CauseValue取值参见3GPP 38.413第9.3.1.2节；\n详见5.3.2.2.16", A, failure_cause, 直取, null, null, 维度, 无, 无
+  keyword, int, 辅助流程类型的关键参数信息，具体取值方式参见算法, A, keyword, 直取, null, null, 维度, 无, 无
+  record_cnt, bigint, 记录数, A, null, sum(record_cnt), null, null, 指标, 次, >=0
+  abnor_release_cnt, bigint, 异常释放次数, A, null, sum(abnor_release_cnt), null, null, 指标, 次, >=0
+  normal_release_cnt, bigint, 正常释放次数, A, null, sum(normal_release_cnt), null, null, 指标, 次, >=0
+  procedure_normal_cnt, bigint, 正常业务流程次数, A, null, sum(procedure_normal_cnt), null, null, 指标, 次, >=0
+  procedure_abnor_cnt, bigint, 异常业务流程次数, A, null, "sum(nvl(record_cnt,0)-nvl(procedure_normal_cnt,0))", null, null, 指标, 次, >=0
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null

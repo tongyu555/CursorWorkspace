@@ -1,0 +1,158 @@
+theme_domain: 覆盖分析
+table_name: aggr_lte_coverage_base_q
+table_name_chinese: 4G MR用户小区栅格覆盖指标15分钟表(无问题打标)
+data_frequency: quarter
+primary_key: 数据描述
+source_table_name[3]{源表英文名, 源表中文名, 别名}:
+  fact_lte_mro_usrbackfill_q, 4G电联MRO用户回填详单表, A
+  lte_cm_projdata, 电信4G工参, B
+  lte_cucc_cm_projdata, 联通4G工参, B1
+fields[148]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围, nan}:
+  day, string, 日期, A, p_date, 直取, null, null, 维度, 无, 无, null
+  hour, int, 小时, A, p_hour, 直取, null, null, 维度, 无, 无, null
+  quarter, int, 刻度, A, p_quarter, 直取, null, null, 维度, 无, 无, null
+  cellkey, string, 小区唯一标识, A, cellkey, 直取, null, null, 维度, 无, 无, null
+  dlearfcn, int, 下行频点号, A, dlearfcn, 直取, null, null, 维度, 无, 无, null
+  freq, string, 频段, A, null, "case WHEN dlearfcn >= 0    AND dlearfcn <= 599 THEN '2.1G' \nWHEN dlearfcn >= 1200 AND dlearfcn <= 1949 THEN '1.8G' \nWHEN dlearfcn >= 2400 AND dlearfcn <= 2649 THEN '800M' \nWHEN dlearfcn >= 3450 AND dlearfcn <= 3799 THEN '900M'", null, null, 维度, 无, 无, null
+  citycode, int, 城市编码, "B|B1", citycode, 直取, null, null, 维度, 无, 无, null
+  districtcode, int, 区县编码, "B|B1", districtcode, 直取, null, null, 维度, 无, 无, null
+  province_name, string, 省名称, "B|B1", province_name, 直取, null, null, 维度, 无, 无, null
+  city_name, string, 城市名称, "B|B1", city_name, 直取, null, null, 维度, 无, 无, null
+  district_name, string, 区县名称, "B|B1", district_name, 直取, null, null, 维度, 无, 无, null
+  rattypeid, int, "频点所属制式：6:LTEFDD 7:LTETDD 8:NB-IOT 14:IP-Integrate 255:Plat", A, rattypeid, 直接赋值：6, null, null, 维度, 无, 无, null
+  imsi, string, 用户IMSI号, A, imsi, 直取, null, null, 维度, 无, 无, null
+  msisdn, string, 电话号码, A, msisdn, 直取, null, null, 维度, 无, 无, null
+  imei, string, 终端业务过程用户终端IMEI号码, A, imei, 直取, null, null, 维度, 无, 无, null
+  is_agps, int, 是否AGPS采样点（0：否；1：是）, A, null, case when locationtype=0 then 1 else 0 end, null, null, 维度, 无, 无, null
+  regionid, int, 栅格编码, A, regionid, 直取, null, null, 维度, 无, 无, null
+  x_offset_20, int, 栅格坐标x轴偏移, A, x_offset_20, 直取, null, null, 维度, 无, 无, null
+  y_offset_20, int, 栅格坐标y轴偏移, A, y_offset_20, 直取, null, null, 维度, 无, 无, null
+  center_lon, double, 栅格中心经度, A, null, 栅格转经纬度, null, null, 维度, 无, 无, null
+  center_lat, double, 栅格中心纬度, A, null, 栅格转经纬度, null, null, 维度, 无, 无, null
+  plmn, string, UE接入E-utran网络使用的PLMN号。, A, plmn, 直取, null, null, 维度, 无, 无, null
+  data_source, int, "数据类型标识，根据数据来源打标。\n电信承建：0\n联通承建：1", A, data_source, 直取, null, null, 维度, 无, 无, null
+  positionmark, int, "室内外位置区分结果，0：室内，1：室外，2:未知", A, positionmark, 直取, null, null, 维度, 无, 无, null
+  mrlon_total, double, MR经度总值, A, null, sum(case when mrlon>=73 and mrlon<=136 and mrlat>=2 and mrlat<=54 then mrlon else 0 end), null, null, 指标, 无, >=0, null
+  mrlat_total, double, MR纬度总值, A, null, sum(case when mrlon>=73 and mrlon<=136 and mrlat>=2 and mrlat<=54 then mrlat else 0 end), null, null, 指标, 无, >=0, null
+  validlonlat_totalcnt, bigint, 经纬度有效的MR数目, A, null, sum(case when mrlon>=73 and mrlon<=136 and mrlat>=2 and mrlat<=54 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  mrlon_avg, double, MR平均经度, A, null, sum(case when mrlon>=73 and mrlon<=136 and mrlat>=2 and mrlat<=54 then mrlon else 0 end) / sum(case when mrlon>=73 and mrlon<=136 and mrlat>=2 and mrlat<=54 then 1 else 0 end), null, null, 指标, 无, "[73,136]", null
+  mrlat_avg, double, MR平均纬度, A, null, sum(case when mrlon>=73 and mrlon<=136 and mrlat>=2 and mrlat<=54 then mrlat else 0 end) / sum(case when mrlon>=73 and mrlon<=136 and mrlat>=2 and mrlat<=54 then 1 else 0 end), null, null, 指标, 无, "[2,54]", null
+  mr_period_totalcnt, bigint, 周期性MR数目, A, null, count(1), null, null, 指标, 无, >=0, null
+  rsrp_total, bigint, RSRP总值, A, null, sum(case when rsrp>=-140 and rsrp<=-43 then rsrp else 0 end), null, null, 指标, 无, <0, null
+  rsrp_cnt, bigint, RSRP有效数目, A, null, sum(case when rsrp>=-140 and rsrp<=-43 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrp_avg, double, RSRP平均值, A, null, sum(case when rsrp>=-140 and rsrp<=-43 then rsrp else 0 end) / sum(case when rsrp>=-140 and rsrp<=-43 then 1 else 0 end), null, null, 指标, 无, "[-140,-43]", null
+  rsrp_cnt_f75_f43, bigint, "RSRP在[-75,-43]范围内的MR数目", A, null, sum(case when rsrp>=-75 and rsrp<=-43 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrp_cnt_f80_f75, bigint, "RSRP在[-80,-75)范围内的MR数目", A, null, sum(case when rsrp>=-80 and rsrp<-75 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrp_cnt_f85_f80, bigint, "RSRP在[-85,-80)范围内的MR数目", A, null, sum(case when rsrp>=-85 and rsrp<-80 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrp_cnt_f90_f85, bigint, "RSRP在[-90,-85)范围内的MR数目", A, null, sum(case when rsrp>=-90 and rsrp<-85 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrp_cnt_f95_f90, bigint, "RSRP在[-95,-90)范围内的MR数目", A, null, sum(case when rsrp>=-95 and rsrp<-90 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrp_cnt_f100_f95, bigint, "RSRP在[-100,-95)范围内的MR数目", A, null, sum(case when rsrp>=-100 and rsrp<-95 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrp_cnt_f105_f100, bigint, "RSRP在[-105,-100)范围内的MR数目", A, null, sum(case when rsrp>=-105 and rsrp<-100 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrp_cnt_f110_f105, bigint, "RSRP在[-110,-105)范围内的MR数目", A, null, sum(case when rsrp>=-110 and rsrp<-105 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrp_cnt_f112_f110, bigint, "RSRP在[-112,-110)范围内的MR数目", A, null, sum(case when rsrp>=-112 and rsrp<-110 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrp_cnt_f115_f112, bigint, "RSRP在[-115,-112)范围内的MR数目", A, null, sum(case when rsrp>=-115 and rsrp<-112 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrp_cnt_f120_f115, bigint, "RSRP在[-120,-115)范围内的MR数目", A, null, sum(case when rsrp>=-120 and rsrp<-115 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrp_cnt_f140_f120, bigint, "RSRP在[-140,-120)范围内的MR数目", A, null, sum(case when rsrp>=-140 and rsrp<-120 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrp_good_cnt_f105, bigint, RSRP优良数目(>=-105), A, null, sum(case when rsrp>=-105 and rsrp<=-43 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrp_good_rate_f105, double, RSRP优良比(>=-105), A, null, sum(case when rsrp>=-105 and rsrp<=-43 then 1 else 0 end) / sum(case when rsrp>=-140 and rsrp<=-43 then 1 else 0 end), null, null, 指标, 无, "[0,1]", null
+  rsrp_bad_cnt_f110, bigint, RSRP质差数目(<-110), A, null, sum(case when rsrp<-110 and rsrp>=-140 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrp_bad_totalrsrp_f110, bigint, RSRP质差总RSRP值(<-110), A, null, sum(case when rsrp<-110 and rsrp>=-140 then rsrp else 0 end), null, null, 指标, 无, <=0, null
+  rsrq_total, double, RSRQ总值, A, null, sum(case when rsrq>=-20 and rsrq<=-3 then rsrq else 0 end), null, null, 指标, 无, <=0, null
+  rsrq_cnt, bigint, RSRQ有效数目, A, null, sum(case when rsrq>=-20 and rsrq<=-3 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrq_avg, double, RSRQ平均值, A, null, sum(case when rsrq>=-20 and rsrq<=-3 then rsrq else 0 end) / sum(case when rsrq>=-20 and rsrq<=-3 then 1 else 0 end), null, null, 指标, 无, "[-20,-3]", null
+  rsrq_cnt_f4_f3, bigint, "RSRQ在[-4,-3]范围内的MR数目", A, null, sum(case when rsrq>=-4 and rsrq<=-3 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrq_cnt_f7_f4, bigint, "RSRQ在[-7,-4)范围内的MR数目", A, null, sum(case when rsrq>=-7 and rsrq<-4 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrq_cnt_f10_f7, bigint, "RSRQ在[-10,-7)范围内的MR数目", A, null, sum(case when rsrq>=-10 and rsrq<-7 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrq_cnt_f13_f10, bigint, "RSRQ在[-13,-10)范围内的MR数目", A, null, sum(case when rsrq>=-13 and rsrq<-10 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrq_cnt_f16_f13, bigint, "RSRQ在[-16,-13)范围内的MR数目", A, null, sum(case when rsrq>=-16 and rsrq<-13 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrq_cnt_f19_f16, bigint, "RSRQ在[-19,-16)范围内的MR数目", A, null, sum(case when rsrq>=-19 and rsrq<-16 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrq_cnt_f20_f19, bigint, "RSRQ在[-20,-19)范围内的MR数目", A, null, sum(case when rsrq>=-20 and rsrq<-19 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrq_good_cnt_f13, bigint, RSRQ优良数目(>=-13), A, null, sum(case when rsrq>=-13 and rsrq<=-3 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrq_good_rate_f13, double, RSRQ优良比(>=-13), A, null, sum(case when rsrq>=-13 and rsrq<=-3 then 1 else 0 end) / sum(case when rsrq>=-20 and rsrq<=-3 then 1 else 0 end), null, null, 指标, 无, "[0,1]", null
+  ulsinr_total, bigint, ULSINR总值, A, null, sum(case when ulsinr>=-10 and ulsinr<=30 then ulsinr else 0 end), null, null, 指标, 无, "(-∞,+∞)", null
+  ulsinr_cnt, bigint, ULSINR有效的MR数目, A, null, sum(case when ulsinr>=-10 and ulsinr<=30 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ulsinr_avg, double, ULSINR平均值, A, null, sum(case when ulsinr>=-10 and ulsinr<=30 then ulsinr else 0 end) / sum(case when ulsinr>=-10 and ulsinr<=30 then 1 else 0 end), null, null, 指标, 无, "[-10,30]", null
+  ulsinr_cnt_20_30, bigint, ULSINR在[20;30]范围内的MR数目, A, null, sum(case when ulsinr>=20 and ulsinr<=30 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ulsinr_cnt_15_20, bigint, ULSINR在[15;20)范围内的MR数目, A, null, sum(case when ulsinr>=15 and ulsinr<20 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ulsinr_cnt_10_15, bigint, ULSINR在[10;15)范围内的MR数目, A, null, sum(case when ulsinr>=10 and ulsinr<15 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ulsinr_cnt_5_10, bigint, ULSINR在[5;10)范围内的MR数目, A, null, sum(case when ulsinr>=5 and ulsinr<10 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ulsinr_cnt_0_5, bigint, ULSINR在[0;5)范围内的MR数目, A, null, sum(case when ulsinr>=0 and ulsinr<5 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ulsinr_cnt_f3_0, bigint, ULSINR在[-3;0)范围内的MR数目, A, null, sum(case when ulsinr>=-3 and ulsinr<0 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ulsinr_cnt_f10_f3, bigint, ULSINR在[-10;-3)范围内的MR数目, A, null, sum(case when ulsinr>=-10 and ulsinr<-3 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ulsinr_good_cnt_0, bigint, ULSINR优良数(>=0), A, null, sum(case when ulsinr>=0 and ulsinr<=30 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ulsinr_good_rate_0, double, ULSINR优良比(>=0), A, null, sum(case when ulsinr>=0 and ulsinr<=30 then 1 else 0 end) / sum(case when ulsinr>=-10 and ulsinr<=30 then 1 else 0 end), null, null, 指标, 无, "[0,1]", null
+  cqi_total, bigint, CQI总值, A, null, sum(case when cqi>=0 and cqi<=15 then cqi else 0 end), null, null, 指标, 无, >=0, null
+  cqi_cnt, bigint, CQI有效的MR数目, A, null, sum(case when cqi>=0 and cqi<=15 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  cqi_avg, double, CQI平均值, A, null, sum(case when cqi>=0 and cqi<=15 then cqi else 0 end) / sum(case when cqi>=0 and cqi<=15 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  cqi_cnt_0_7, bigint, CQI在[0;7)范围内的MR数目, A, null, sum(case when cqi>=0 and cqi<7 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  cqi_cnt_7_10, bigint, CQI在[7;10)范围内的MR数目, A, null, sum(case when cqi>=7 and cqi<10 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  cqi_cnt_10_15, bigint, CQI在[10;15]范围内的MR数目, A, null, sum(case when cqi>=10 and cqi<=15 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  cqi_cnt_9_10, bigint, CQI在[9;10)范围内的MR数目, A, null, sum(case when cqi=9 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  cqi_cnt_8_9, bigint, CQI在[8;9)范围内的MR数目, A, null, sum(case when cqi=8 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  cqi_cnt_6_8, bigint, CQI在[6;8)范围内的MR数目, A, null, sum(case when cqi>=6 and cqi<8 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  cqi_cnt_3_6, bigint, CQI在[3;6)范围内的MR数目, A, null, sum(case when cqi>=3 and cqi<6 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  cqi_cnt_1_3, bigint, CQI在[1;3)范围内的MR数目, A, null, sum(case when cqi>=1 and cqi<3 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  cqi_cnt_0_1, bigint, CQI在[0;1)范围内的MR数目, A, null, sum(case when cqi=0 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  cqi_good_cnt_7, bigint, CQI优良数(>=7), A, null, sum(case when cqi>=7 and cqi<=15 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  cqi_good_rate_7, double, CQI优良比(>=7), A, null, sum(case when cqi>=7 and cqi<=15 then 1 else 0 end) / sum(case when cqi>=0 and cqi<=15 then 1 else 0 end), null, null, 指标, 无, "[0,1]", null
+  ta_total, bigint, TA总值, A, null, sum(case when ta>=0 then ta else 0 end), null, null, 指标, 无, >=0, ta
+  ta_cnt, bigint, TA有效的MR数目, A, null, sum(case when ta>=0 then 1 else 0 end), null, null, 指标, 无, >=0, ta
+  ta_avg, double, TA平均值, A, null, sum(case when ta>=0 then ta else 0 end) / sum(case when ta>=0 then 1 else 0 end), null, null, 指标, 无, >=0, ta
+  ta_cnt_0, bigint, TA为0的MR数目, A, null, sum(case when ta=0 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ta_cnt_1, bigint, TA为1的MR数目, A, null, sum(case when ta=1 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ta_cnt_2, bigint, TA为2的MR数目, A, null, sum(case when ta=2 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ta_cnt_3, bigint, TA为3的MR数目, A, null, sum(case when ta=3 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ta_cnt_4, bigint, TA为4的MR数目, A, null, sum(case when ta=4 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ta_cnt_5, bigint, TA为5的MR数目, A, null, sum(case when ta=5 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ta_cnt_6, bigint, TA为6的MR数目, A, null, sum(case when ta=6 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ta_cnt_7_9, bigint, "TA在[7,9)范围内的MR数目", A, null, sum(case when ta>=7 and ta<9 then 1 else 0 end), null, null, 指标, 无, >=0, ta
+  ta_cnt_9_12, bigint, "TA在[9,12)范围内的MR数目", A, null, sum(case when ta>=9 and ta<12 then 1 else 0 end), null, null, 指标, 无, >=0, ta
+  ta_cnt_12_15, bigint, "TA在[12,15)范围内的MR数目", A, null, sum(case when ta>=12 and ta<15 then 1 else 0 end), null, null, 指标, 无, >=0, ta
+  ta_cnt_15_19, bigint, "TA在[15,19)范围内的MR数目", A, null, sum(case when ta>=15 and ta<19 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  ta_cnt_19, bigint, "TA在[19,+∞)范围内的MR数目", A, null, sum(case when ta>=19 then 1 else 0 end), null, null, 指标, 无, >=0, ta
+  phr_total, bigint, PHR总值, A, null, sum(case when phr>=-23 and phr<=40 then phr else 0 end), null, null, 指标, 无, "(-∞,+∞)", null
+  phr_cnt, bigint, PHR有效的MR数目, A, null, sum(case when phr>=-23 and phr<=40 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  phr_avg, double, PHR平均值, A, null, sum(case when phr>=-23 and phr<=40 then phr else 0 end) / sum(case when phr>=-23 and phr<=40 then 1 else 0 end), null, null, 指标, 无, "[-23,40]", null
+  phr_cnt_30_40, bigint, PHR在[30;40]范围内的MR数目, A, null, sum(case when phr>=30 and phr<=40 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  phr_cnt_20_30, bigint, PHR在[20;30)范围内的MR数目, A, null, sum(case when phr>=20 and phr<30 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  phr_cnt_10_20, bigint, PHR在[10;20)范围内的MR数目, A, null, sum(case when phr>=10 and phr<20 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  phr_cnt_0_10, bigint, PHR在[0;10)范围内的MR数目, A, null, sum(case when phr>=0 and phr<10 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  phr_cnt_f5_0, bigint, PHR在[-5;0)范围内的MR数目, A, null, sum(case when phr>=-5 and phr<0 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  phr_cnt_f10_f5, bigint, PHR在[-10;-5)范围内的MR数目, A, null, sum(case when phr>=-10 and phr<-5 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  phr_cnt_f23_f10, bigint, PHR在[-23;-10)范围内的MR数目, A, null, sum(case when phr>=-23 and phr<-10 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  phr_good_cnt_0, bigint, PHR优良数(>=0), A, null, sum(case when phr>=0 and phr<=40 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  phr_good_rate_0, double, PHR优良比(>=0), A, null, sum(case when phr>=0 and phr<=40 then 1 else 0 end) / sum(case when phr>=-23 and phr<=40 then 1 else 0 end), null, null, 指标, 无, "[0,1]", null
+  txpower_total, bigint, TxPower总值, A, null, sum(case when txpower>=-17 and txpower<=46 then txpower else 0 end), null, null, 指标, 无, "(-∞,+∞)", null
+  txpower_cnt, bigint, TxPower有效的MR数目, A, null, sum(case when txpower>=-17 and txpower<=46 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  txpower_avg, double, TxPower平均值, A, null, sum(case when txpower>=-17 and txpower<=46 then txpower else 0 end) / sum(case when txpower>=-17 and txpower<=46 then 1 else 0 end), null, null, 指标, 无, "[-17,46]", null
+  txpower_cnt_f17_0, bigint, TxPower在[-17; 0)范围内的MR数目, A, null, sum(case when txpower>=-17 and txpower<0 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  txpower_cnt_0_3, bigint, TxPower在[0; 3)范围内的MR数目, A, null, sum(case when txpower>=0 and txpower<3 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  txpower_cnt_3_10, bigint, TxPower在[3;10)范围内的MR数目, A, null, sum(case when txpower>=3 and txpower<10 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  txpower_cnt_10_13, bigint, TxPower在[10;13)范围内的MR数目, A, null, sum(case when txpower>=10 and txpower<13 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  txpower_cnt_13_16, bigint, TxPower在[13;16)范围内的MR数目, A, null, sum(case when txpower>=13 and txpower<16 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  txpower_cnt_16_20, bigint, TxPower在[16;20)范围内的MR数目, A, null, sum(case when txpower>=16 and txpower<20 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  txpower_cnt_20_46, bigint, TxPower在[20;46]范围内的MR数目, A, null, sum(case when txpower>=20 and txpower<=46 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  txpower_good_cnt_f17, bigint, TxPower优良数(>=-17), A, null, sum(case when txpower>=-17 and txpower<16 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  txpower_good_rate_f17, double, TxPower优良比, A, null, sum(case when txpower>=-17 and txpower<16 then 1 else 0 end) / sum(case when txpower>=-17 and txpower<=46 then 1 else 0 end), null, null, 指标, 无, "[0,1]", null
+  rsrpf105_sinrf3_cnt, bigint, rsrp≥-105且SINR≥-3的采样点个数, A, null, sum(case when rsrp>=-105 and rsrp<=-43 and ulsinr>=-3 and ulsinr<=30 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrpf105_sinr0_cnt, bigint, rsrp≥-105且SINR≥0的采样点个数, A, null, sum(case when rsrp>=-105 and rsrp<=-43 and ulsinr>=0 and ulsinr<=30 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrpf105_sinr3_cnt, bigint, rsrp≥-105且SINR≥3的采样点个数, A, null, sum(case when rsrp>=-105 and rsrp<=-43 and ulsinr>=3 and ulsinr<=30 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrpf110_sinrf3_cnt, bigint, rsrp≥-110且SINR≥-3的采样点个数, A, null, sum(case when rsrp>=-110 and rsrp<=-43 and ulsinr>=-3 and ulsinr<=30 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrpf110_sinr0_cnt, bigint, rsrp≥-110且SINR≥0的采样点个数, A, null, sum(case when rsrp>=-110 and rsrp<=-43 and ulsinr>=0 and ulsinr<=30 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrpf110_sinr3_cnt, bigint, rsrp≥-110且SINR≥3的采样点个数, A, null, sum(case when rsrp>=-110 and rsrp<=-43 and ulsinr>=3 and ulsinr<=30 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  validrsrp_sinr_cnt, bigint, RSRP且SINR有效采样点个数, A, null, sum(case when rsrp>=-140 and rsrp<=-43 and ulsinr>=-10 and ulsinr<=30 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrpgood_and_sinrgood_cnt, bigint, 综合覆盖优良MR数目, A, null, sum(case when rsrp>=-110 and rsrp<=-43 and ulsinr>=0 and ulsinr<=30 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrpbad_or_sinrbad_cnt, bigint, 综合覆盖问题MR数目, A, null, sum(case when rsrp<-110 or ulsinr<0 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrpbad_and_sinrbad_cnt, bigint, 综合覆盖弱覆盖&干扰MR数目, A, null, sum(case when rsrp<-110 and ulsinr<0 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrpbad_and_sinrgood_cnt, bigint, 综合覆盖仅弱覆盖MR数目, A, null, sum(case when rsrp<-110 and ulsinr>=0 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  rsrpgood_and_sinrbad_cnt, bigint, 综合覆盖仅干扰MR数目, A, null, sum(case when rsrp>=-110 and ulsinr<0 then 1 else 0 end), null, null, 指标, 无, >=0, null
+  maxrsrp, smallint, RSRP最大值, A, null, max(rsrp), null, null, 指标, 无, "[-140,-43]", null
+  minrsrp, smallint, RSRP最小值, A, null, min(rsrp), null, null, 指标, 无, "[-140,-43]", null
+  maxrsrq, double, RSRQ最大值, A, null, max(rsrq), null, null, 指标, 无, "[-20,-3]", null
+  minrsrq, double, RSRQ最小值, A, null, min(rsrq), null, null, 指标, 无, "[-20,-3]", null
+  maxmeastime, bigint, 最晚上报时间, A, null, "max(cast(concat(unix_timestamp(concat_ws(' ',split(datetime,'T'))), substring(datetime,21,3)) as bigint))", null, null, 指标, 无, >0, null
+  minmeastime, bigint, 最早上报时间, A, null, "min(cast(concat(unix_timestamp(concat_ws(' ',split(datetime,'T'))), substring(datetime,21,3)) as bigint))", null, 新增字段, 指标, 无, >0, null
+  p_provincecode, int, 省分区, null, null, null, null, null, null, null, null, null
+  p_date, string, 天分区, null, null, null, null, null, null, null, null, null
+  p_hour, int, 小时分区, null, null, null, null, null, null, null, null, null
+  p_quarter, int, 15分钟分区, null, null, null, null, null, null, null, null, null

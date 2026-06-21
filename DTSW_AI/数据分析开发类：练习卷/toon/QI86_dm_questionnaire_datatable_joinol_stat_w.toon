@@ -1,0 +1,77 @@
+theme_domain: 问卷调查
+table_name: dm_questionnaire_datatable_joinol_stat_w
+table_name_chinese: 我加入online统计datatable周表
+data_frequency: week
+primary_key: 数据描述
+source_table_name[2]{来源系统, 源表英文名, 源表中文名, 别名, 任务描述, 备注, 是否主表}:
+  dtsw, dm_questionnaire_joinol_stat_w, 我加入online统计周表, A, 筛选条件：product_bought<>‘TOTAL' and purchase_channel<>'TOTAL'and service_type<>'TOTAL', A先按主键汇聚出指标，再A left join B on 主键字段关联计算环比。, 是
+  dtsw, dm_questionnaire_datatable_joinol_stat_w, 我加入online统计datatable周表, B, 取p_week-1, null, null
+fields[68]{PDM字段英文名, PDM字段类型, PDM字段中文名（说明）, 源表名, 源字段英文名, 算法加工逻辑, 关联与过滤条件, 备注, 字段属性, 单位, 取值范围}:
+  p_year, int, 年分区, null, null, null, null, null, null, null, null
+  p_week, int, 周分区, null, null, null, null, null, null, null, null
+  year, int, 年, null, null, null, null, null, null, null, null
+  week, int, 周, null, null, null, null, null, null, null, null
+  area_id, int, 地区编码, A, areacode, 直取, null, null, 维度, 枚举, "2,3,4,5,6"
+  area_name, string, 地区名称, A, area_name, 直取，其它置other, null, null, 维度, 枚举, "{NLZ,VIS,MIN,NCR,SLZ,other,NationWide}"
+  region_id, int, 大区编码, A, regioncode, 直取, null, null, 维度, null, null
+  region_name, string, 大区名称, A, region_name, 直取，其它置other, null, null, 维度, null, null
+  province_id, int, 省编码, A, provincecode, 直取, null, null, 维度, null, null
+  province_name, string, 省名称, A, province_name, 直取，其它置other, null, null, 维度, null, null
+  city_id, int, 城市编码, A, citycode, 直取, null, null, 维度, null, null
+  city_name, string, 城市名称, A, city_name, 直取，其它置other, null, null, 维度, null, null
+  barangay_id, int, barangayID, A, barangay_id, 直取, null, null, 维度, null, null
+  barangay_name, string, barangay名称, A, barangay_name, 直取，其它置other, null, null, 维度, null, null
+  data_level, int, 数据分级, null, null, "(0~5,分别表示全网~barangy)；data_level=0代表全网，area~barangay都置为null", null, null, 维度, 枚举, {0，1，2，3，4，5}
+  service_type, string, 服务类型, A, service_type, 直取，并汇总TOTAL, null, null, 维度, 枚举, "fwa prepaid\nfwa postpaid\nmobile prepaid\nmobile postpaid\nother brands(fmo)\nTOTAL"
+  pay_type, string, 支付类型, A, pay_type, 直取，并汇总TOTAL, null, null, 维度, 枚举, "online\noffline\nTOTAL"
+  purchase_channel, string, 购买渠道, A, purchase_channel, 直取，并汇总TOTAL, null, "字段值分别对应：\nA1:App\nA2:DITO E-shop(website)\nA3:Shopee\nA4:Lazada\nA5:DITO Experience store\nA6:Handset Retailers\nTOTAL:所有类型汇聚", 维度, 枚举, "A1\nA2\nA3\nA4\nA5\nA6\nTOTAL"
+  questionnaire_feedback_cnt, bigint, 问卷反馈量, A, pay_user_nums, sum(pay_user_nums), null, base, 指标, 次, "[0,∞)"
+  questionnaire_feedback_cnt_qoq, doble, 问卷反馈量环比, AB, null, (a.questionnaire_feedback_cnt-b.questionnaire_feedback_cnt)/b.questionnaire_feedback_cnt, null, null, 指标, 比例, "[-∞,∞]"
+  good_ovsat_cnt, bigint, ovsat满意度是良好的次数, A, good_ovsat_nums, sum(good_ovsat_nums), null, null, 指标, 次, "[0,∞)"
+  ovsat_cnt, bigint, ovsat满意度总数, A, ovsat_nums, sum(ovsat_nums), null, null, 指标, 次, "[0,∞)"
+  ovsat_ratio, double, ovsat满意度, A, null, sum(good_ovsat_nums)/sum(ovsat_nums), null, 0vSat, 指标, 比例, "[0,1]"
+  ovsat_ratio_qoq, double, ovsat满意度环比, AB, null, (a.ovsat_ratio-b.ovsat_ratio)/b.ovsat_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_ces_cnt, bigint, ces满意度是良好的次数, A, good_ces_nums, sum(good_ces_nums), null, null, 指标, 次, "[0,∞)"
+  ces_cnt, bigint, ces满意度总数, A, ces_nums, sum(ces_nums), null, null, 指标, 次, "[0,∞)"
+  ces_ratio, double, ces满意度, A, null, sum(good_ces_nums)/sum(ces_nums), null, CES, 指标, 比例, "[0,1]"
+  ces_ratio_qoq, double, ces满意度环比, AB, null, (a.ces_ratio-b.ces_ratio)/b.ces_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_complet_information_sim_purchase_cnt, bigint, SIM卡购买过程信息的完整性是良好的次数, A, good_complet_information_sim_purchase_nums, sum(good_complet_information_sim_purchase_nums), null, null, 指标, 次, "[0,∞)"
+  complet_information_sim_purchase_cnt, bigint, SIM卡购买过程信息的完整性总数, A, complet_information_sim_purchase_nums, sum(complet_information_sim_purchase_nums), null, null, 指标, 次, "[0,∞)"
+  complet_information_sim_purchase_ratio, double, SIM卡购买过程信息的完整性, A, null, sum(good_complet_information_sim_purchase_nums)/sum(complet_information_sim_purchase_nums), null, Completeness of Information, 指标, 比例, "[0,1]"
+  complet_information_sim_purchase_ratio_qoq, double, SIM卡购买过程信息的完整性环比, AB, null, (a.complet_information_sim_purchase_ratio-b.complet_information_sim_purchase_ratio)/b.complet_information_sim_purchase_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_clear_instructe_provided_sim_purchase_cnt, bigint, 购买SIM卡有明确的说明是良好的次数, A, good_clear_instructe_provided_sim_purchase_nums, sum(good_clear_instructe_provided_sim_purchase_nums), null, null, 指标, 次, "[0,∞)"
+  clear_instructe_provided_sim_purchase_cnt, bigint, 购买SIM卡有明确的说明总数, A, clear_instructe_provided_sim_purchase_nums, sum(clear_instructe_provided_sim_purchase_nums), null, null, 指标, 次, "[0,∞)"
+  clear_instructe_provided_sim_purchase_ratio, double, 购买SIM卡有明确的说明, A, null, sum(good_clear_instructe_provided_sim_purchase_nums)/sum(clear_instructe_provided_sim_purchase_nums), null, Clear Instructions on SIM Purchase, 指标, 比例, "[0,1]"
+  clear_instructe_provided_sim_purchase_ratio_qoq, double, 购买SIM卡有明确的说明环比, AB, null, (a.clear_instructe_provided_sim_purchase_ratio-b.clear_instructe_provided_sim_purchase_ratio)/b.clear_instructe_provided_sim_purchase_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_complete_information_sim_pay_cnt, bigint, SIM支付程序信息的完整性是良好的次数, A, good_complete_information_sim_pay_nums, sum(good_complete_information_sim_pay_nums), null, null, 指标, 次, "[0,∞)"
+  complete_information_sim_pay_cnt, bigint, SIM支付程序信息的完整性总数, A, complete_information_sim_pay_nums, sum(complete_information_sim_pay_nums), null, null, 指标, 次, "[0,∞)"
+  complete_information_sim_pay_ratio, double, SIM支付程序信息的完整性, A, null, sum(good_complete_information_sim_pay_nums)/sum(complete_information_sim_pay_nums), null, Completeness of Info on SIM Payment, 指标, 比例, "[0,1]"
+  complete_information_sim_pay_ratio_qoq, double, SIM支付程序信息的完整性环比, AB, null, (a.complete_information_sim_pay_ratio-b.complete_information_sim_pay_ratio)/b.complete_information_sim_pay_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_available_pay_options_cnt, bigint, 可用的支付选项，我更喜欢是良好的次数, A, good_available_pay_options_nums, sum(good_available_pay_options_nums), null, null, 指标, 次, "[0,∞)"
+  available_pay_options_cnt, bigint, 可用的支付选项，我更喜欢总数, A, available_pay_options_nums, sum(available_pay_options_nums), null, null, 指标, 次, "[0,∞)"
+  available_pay_options_ratio, double, 可用的支付选项，我更喜欢, A, null, sum(good_available_pay_options_nums)/sum(available_pay_options_nums), null, Availability of payment options, 指标, 比例, "[0,1]"
+  available_pay_options_ratio_qoq, double, 可用的支付选项，我更喜欢环比, AB, null, (a.available_pay_options_ratio-b.available_pay_options_ratio)/b.available_pay_options_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_correct_charge_amount_pay_cnt, bigint, 正确的收取我的付款来源的金额是良好的次数, A, good_correct_charge_amount_pay_nums, sum(good_correct_charge_amount_pay_nums), null, null, 指标, 次, "[0,∞)"
+  correct_charge_amount_pay_cnt, bigint, 正确的收取我的付款来源的金额总数, A, correct_charge_amount_pay_nums, sum(correct_charge_amount_pay_nums), null, null, 指标, 次, "[0,∞)"
+  correct_charge_amount_pay_ratio, double, 正确的收取我的付款来源的金额, A, null, sum(good_correct_charge_amount_pay_nums)/sum(correct_charge_amount_pay_nums), null, Correct charging of payment source, 指标, 比例, "[0,1]"
+  correct_charge_amount_pay_ratio_qoq, double, 正确的收取我的付款来源的金额环比, AB, null, (a.correct_charge_amount_pay_ratio-b.correct_charge_amount_pay_ratio)/b.correct_charge_amount_pay_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_speed_delivery_sim_ordered_cnt, bigint, SIM订单的交付速度是良好的次数, A, good_speed_delivery_sim_ordered_nums, sum(good_speed_delivery_sim_ordered_nums), null, null, 指标, 次, "[0,∞)"
+  speed_delivery_sim_ordered_cnt, bigint, SIM订单的交付速度总数, A, speed_delivery_sim_ordered_nums, sum(speed_delivery_sim_ordered_nums), null, null, 指标, 次, "[0,∞)"
+  speed_delivery_sim_ordered_ratio, double, SIM订单的交付速度, A, null, sum(good_speed_delivery_sim_ordered_nums)/sum(speed_delivery_sim_ordered_nums), null, Speed of Delivery, 指标, 比例, "[0,1]"
+  speed_delivery_sim_ordered_ratio_qoq, double, SIM订单的交付速度环比, AB, null, (a.speed_delivery_sim_ordered_ratio-b.speed_delivery_sim_ordered_ratio)/b.speed_delivery_sim_ordered_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_ease_input_delivery_information_cnt, bigint, 方便输入送货信息是良好的次数, A, good_ease_input_delivery_information_nums, sum(good_ease_input_delivery_information_nums), null, null, 指标, 次, "[0,∞)"
+  ease_input_delivery_information_cnt, bigint, 方便输入送货信息总数, A, ease_input_delivery_information_nums, sum(ease_input_delivery_information_nums), null, null, 指标, 次, "[0,∞)"
+  ease_input_delivery_information_ratio, double, 方便输入送货信息, A, null, sum(good_ease_input_delivery_information_nums)/sum(ease_input_delivery_information_nums), null, Speed of Delivery, 指标, 比例, "[0,1]"
+  ease_input_delivery_information_ratio_qoq, double, 方便输入送货信息环比, AB, null, (a.ease_input_delivery_information_ratio-b.ease_input_delivery_information_ratio)/b.ease_input_delivery_information_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_ease_activate_sim_card_cnt, bigint, 轻松激活SIM卡是良好的次数, A, good_ease_activate_sim_card_nums, sum(good_ease_activate_sim_card_nums), null, null, 指标, 次, "[0,∞)"
+  ease_activate_sim_card_cnt, bigint, 轻松激活SIM卡总数, A, ease_activate_sim_card_nums, sum(ease_activate_sim_card_nums), null, null, 指标, 次, "[0,∞)"
+  ease_activate_sim_card_ratio, double, 轻松激活SIM卡, A, null, sum(good_ease_activate_sim_card_nums)/sum(ease_activate_sim_card_nums), null, SIM Activation, 指标, 比例, "[0,1]"
+  ease_activate_sim_card_ratio_qoq, double, 轻松激活SIM卡环比, AB, null, (a.ease_activate_sim_card_ratio-b.ease_activate_sim_card_ratio)/b.ease_activate_sim_card_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_ease_activate_dito_mobile_data_cnt, bigint, 轻松激活DITO移动数据是良好的次数, A, good_ease_activate_dito_mobile_data_nums, sum(good_ease_activate_dito_mobile_data_nums), null, null, 指标, 次, "[0,∞)"
+  ease_activate_dito_mobile_data_cnt, bigint, 轻松激活DITO移动数据总数, A, ease_activate_dito_mobile_data_nums, sum(ease_activate_dito_mobile_data_nums), null, null, 指标, 次, "[0,∞)"
+  ease_activate_dito_mobile_data_ratio, double, 轻松激活DITO移动数据, A, null, sum(good_ease_activate_dito_mobile_data_nums)/sum(ease_activate_dito_mobile_data_nums), null, Mobile data activation, 指标, 比例, "[0,1]"
+  ease_activate_dito_mobile_data_ratio_qoq, double, 轻松激活DITO移动数据环比, AB, null, (a.ease_activate_dito_mobile_data_ratio-b.ease_activate_dito_mobile_data_ratio)/b.ease_activate_dito_mobile_data_ratio, null, null, 指标, 比例, "[-∞,∞]"
+  good_clarity_guidance_howtouse_dito_services_cnt, bigint, 关于如何使用DITO服务的清晰指导是良好的次数, A, good_clarity_guidance_howtouse_dito_services_nums, sum(good_clarity_guidance_howtouse_dito_services_nums), null, null, 指标, 次, "[0,∞)"
+  clarity_guidance_howtouse_dito_services_cnt, bigint, 关于如何使用DITO服务的清晰指导总数, A, clarity_guidance_howtouse_dito_services_nums, sum(clarity_guidance_howtouse_dito_services_nums), null, null, 指标, 次, "[0,∞)"
+  clarity_guidance_howtouse_dito_services_ratio, double, 关于如何使用DITO服务的清晰指导, A, null, sum(good_clarity_guidance_howtouse_dito_services_nums)/sum(clarity_guidance_howtouse_dito_services_nums), null, Clarity of onboarding details explanation (ie.where）, 指标, 比例, "[0,1]"
+  clarity_guidance_howtouse_dito_services_ratio_qoq, double, 关于如何使用DITO服务的清晰指导环比, AB, null, (a.clarity_guidance_howtouse_dito_services_ratio-b.clarity_guidance_howtouse_dito_services_ratio)/b.clarity_guidance_howtouse_dito_services_ratio, null, null, 指标, 比例, "[-∞,∞]"

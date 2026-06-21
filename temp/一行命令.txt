@@ -1,0 +1,41 @@
+# HBase建表语句导出 - 一行命令版本
+
+# 方法1：直接执行（输出到屏幕）
+hbase shell <<'EOF'
+list_namespace_tables('nifi_cache').each {|t| f="nifi_cache:#{t}"; d=describe(f); c=d.select{|k,v| v.is_a?(Hash) && v['NAME']}.map{|_,v| "{NAME => '#{v['NAME']}', BLOOMFILTER => '#{v['BLOOMFILTER']}', VERSIONS => '#{v['VERSIONS']}', IN_MEMORY => '#{v['IN_MEMORY']}', KEEP_DELETED_CELLS => '#{v['KEEP_DELETED_CELLS']}', DATA_BLOCK_ENCODING => '#{v['DATA_BLOCK_ENCODING']}', TTL => '#{v['TTL']}', COMPRESSION => '#{v['COMPRESSION']}', MIN_VERSIONS => '#{v['MIN_VERSIONS']}', BLOCKCACHE => '#{v['BLOCKCACHE']}', BLOCKSIZE => '#{v['BLOCKSIZE']}', REPLICATION_SCOPE => '#{v['REPLICATION_SCOPE']}'}"}.join(','); puts "create '#{f}',#{c}" unless c.empty?}
+exit
+EOF
+
+# 方法2：保存到文件
+hbase shell <<'EOF' 2>&1 | grep "^create" > tables.sql
+list_namespace_tables('nifi_cache').each {|t| f="nifi_cache:#{t}"; d=describe(f); c=d.select{|k,v| v.is_a?(Hash) && v['NAME']}.map{|_,v| "{NAME => '#{v['NAME']}', BLOOMFILTER => '#{v['BLOOMFILTER']}', VERSIONS => '#{v['VERSIONS']}', IN_MEMORY => '#{v['IN_MEMORY']}', KEEP_DELETED_CELLS => '#{v['KEEP_DELETED_CELLS']}', DATA_BLOCK_ENCODING => '#{v['DATA_BLOCK_ENCODING']}', TTL => '#{v['TTL']}', COMPRESSION => '#{v['COMPRESSION']}', MIN_VERSIONS => '#{v['MIN_VERSIONS']}', BLOCKCACHE => '#{v['BLOCKCACHE']}', BLOCKSIZE => '#{v['BLOCKSIZE']}', REPLICATION_SCOPE => '#{v['REPLICATION_SCOPE']}'}"}.join(','); puts "create '#{f}',#{c}" unless c.empty?}
+exit
+EOF
+
+# 方法3：可读性好的多行版本（推荐）
+hbase shell <<'EOF' 2>&1 | grep "^create" > tables.sql
+list_namespace_tables('nifi_cache').each do |table_name|
+  full_name = "nifi_cache:#{table_name}"
+  desc = describe(full_name)
+  
+  cfs = desc.select{|k,v| v.is_a?(Hash) && v['NAME']}.map do |_, cf|
+    "{NAME => '#{cf['NAME']}', BLOOMFILTER => '#{cf['BLOOMFILTER']}', VERSIONS => '#{cf['VERSIONS']}', IN_MEMORY => '#{cf['IN_MEMORY']}', KEEP_DELETED_CELLS => '#{cf['KEEP_DELETED_CELLS']}', DATA_BLOCK_ENCODING => '#{cf['DATA_BLOCK_ENCODING']}', TTL => '#{cf['TTL']}', COMPRESSION => '#{cf['COMPRESSION']}', MIN_VERSIONS => '#{cf['MIN_VERSIONS']}', BLOCKCACHE => '#{cf['BLOCKCACHE']}', BLOCKSIZE => '#{cf['BLOCKSIZE']}', REPLICATION_SCOPE => '#{cf['REPLICATION_SCOPE']}'}"
+  end.join(',')
+  
+  puts "create '#{full_name}',#{cfs}" unless cfs.empty?
+end
+exit
+EOF
+
+
+
+
+
+
+
+
+
+
+
+
+
